@@ -1,0 +1,11 @@
+.HelloWorld {
+  @apply flex flex-col justify-center;
+
+  > .text {
+    @apply text-green-500 text-sm;
+  }
+
+  > .button {
+    @apply text-sky-400 font-bold;
+  }
+}
