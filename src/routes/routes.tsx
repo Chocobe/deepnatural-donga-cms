@@ -1,42 +1,31 @@
-// router
+// routers
 import { 
   createBrowserRouter,
 } from 'react-router-dom';
+import routePathFactory from './routePathFactory';
+// layouts
+import AuthLayout from '@/layouts/AuthLayout/AuthLayout';
 // pages
-import HelloWorldPage from '@/components/pages/HelloWorldPage/HelloWorldPage';
-import LoginPage from '@/components/pages/LoginPage/LoginPage';
-// api
-import { retrieveUsersAPI } from '@/apis/jsonplaceholderAPI/jsonplaceholderAPI';
+import LoginPage from '@/pages/auth/LoginPage/LoginPage';
 
 const routes = createBrowserRouter([
   {
-    path: '/',
-    element: <HelloWorldPage />,
-    loader: async () => {
-      console.log('loder 시작');
-
-      const users = await retrieveUsersAPI();
-
-      console.log('loader - api 응답 완료');
-
-      return {
-        users,
-      };
-    },
+    path: routePathFactory
+      .auth
+      .getLayoutPath(),
+    element: (
+      <AuthLayout />
+    ),
     children: [
       {
-        path: ':id',
+        path: routePathFactory
+          .auth
+          .getLoginPagePath(),
         element: (
-          <div>
-            :id child page
-          </div>
+          <LoginPage />
         ),
       },
     ],
-  },
-  {
-    path: '/login',
-    element: <LoginPage />,
   },
 ]);
 
