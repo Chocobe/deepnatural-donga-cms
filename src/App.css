@@ -1,16 +1,4 @@
 .App {
   @apply w-full h-full;
-  @apply flex justify-center items-center flex-col gap-2;
-
-  .title {
-    @apply text-2xl;
-  }
-
-  .wrapper {
-    @apply flex justify-center;
-
-    &-description {
-      @apply text-xs;
-    }
-  }
+  @apply overflow-hidden;
 }

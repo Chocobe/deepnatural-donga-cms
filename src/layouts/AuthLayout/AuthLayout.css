@@ -1,0 +1,34 @@
+.AuthLayout {
+  --bgWrapperWidth: 56%;
+
+  @apply w-full h-full;
+  @apply flex;
+
+  @keyframes AuthLayout-fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .bgWrapper {
+    @apply flex-1;
+    @apply w-[var(--bgWrapperWidth)] h-full;
+    @apply h-full;
+
+    .bg {
+      @apply w-full h-full;
+      @apply object-cover object-center;
+
+      animation: AuthLayout-fade-in 0.5s ease-in-out both;
+    }
+  }
+
+  .main {
+    @apply flex-shrink-0;
+    @apply w-[calc(100%-var(--bgWrapperWidth))] h-full min-w-fit;
+  }
+}
