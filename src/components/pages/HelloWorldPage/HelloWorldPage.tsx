@@ -2,7 +2,13 @@ import { Outlet } from 'react-router-dom';
 import { Button } from '../../shadcn-ui/ui/button';
 import './helloWorldPage.css';
 
+import useLayoutStore from '@/store/layoutStore/layoutStore';
+
 function HelloWorldPage() {
+  const isOpenSideBar = useLayoutStore(state => state.isOpenSideBar);
+
+  const toggleIsOpenSideBar = useLayoutStore(state => state.toggleIsOpenSideBar);
+
   return (
     <div className="HelloWorld">
       <div className="text">
@@ -16,6 +22,17 @@ function HelloWorldPage() {
         }}>
         Click me!
       </Button>
+
+      <div>
+        <div>
+          isOpenSideBar: {String(isOpenSideBar)}
+        </div>
+        <div>
+          <Button onClick={toggleIsOpenSideBar}>
+            Toggle isOpenSideBar
+          </Button>
+        </div>
+      </div>
 
       <div>
         <Outlet />
