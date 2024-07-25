@@ -1,4 +1,6 @@
-import HelloWorld from './components/HelloWorld/HelloWorld';
+// router
+import RootRouter from './routes/RootRouter';
+// style
 import './App.css';
 
 function App() {
@@ -14,7 +16,9 @@ function App() {
         </h1>
       </div>
 
-      <HelloWorld />
+      <div>
+        <RootRouter />
+      </div>
     </div>
   );
 }

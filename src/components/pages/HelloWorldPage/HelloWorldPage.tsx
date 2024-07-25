@@ -1,11 +1,12 @@
-import { Button } from '../shadcn-ui/ui/button';
-import './helloWorld.css';
+import { Outlet } from 'react-router-dom';
+import { Button } from '../../shadcn-ui/ui/button';
+import './helloWorldPage.css';
 
-function HelloWorld() {
+function HelloWorldPage() {
   return (
     <div className="HelloWorld">
       <div className="text">
-        It's HelloWorld component
+        It's HelloWorld page
       </div>
 
       <Button
@@ -15,8 +16,12 @@ function HelloWorld() {
         }}>
         Click me!
       </Button>
+
+      <div>
+        <Outlet />
+      </div>
     </div>
   );
 }
 
-export default HelloWorld;
+export default HelloWorldPage;
