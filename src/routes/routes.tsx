@@ -7,6 +7,7 @@ import routePathFactory from './routePathFactory';
 import AuthLayout from '@/layouts/AuthLayout/AuthLayout';
 // pages
 import LoginPage from '@/pages/auth/LoginPage/LoginPage';
+import FindPasswordPage from '@/pages/auth/FindPasswordPage/FindPasswordPage';
 
 const routes = createBrowserRouter([
   {
@@ -23,6 +24,14 @@ const routes = createBrowserRouter([
           .getLoginPagePath(),
         element: (
           <LoginPage />
+        ),
+      },
+      {
+        path: routePathFactory
+          .auth
+          .getFindPasswordPagePath(),
+        element: (
+          <FindPasswordPage />
         ),
       },
     ],

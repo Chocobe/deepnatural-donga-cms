@@ -4,7 +4,10 @@ const routePathFactory = {
       return '/';
     },
     getLoginPagePath() {
-      return '';
+      return this.getLayoutPath();
+    },
+    getFindPasswordPagePath() {
+      return 'find-password';
     },
   },
 } as const;
