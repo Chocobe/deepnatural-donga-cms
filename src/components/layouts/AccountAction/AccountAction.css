@@ -1,0 +1,46 @@
+.AccountAction {
+  @apply flex items-center gap-4;
+
+  &-dropdown {
+    /*  */
+
+    &-trigger {
+      @apply flex items-center gap-2;
+
+      &-avata {
+        width: 32px;
+        height: 32px;
+      }
+
+      &-email {
+        color: #fff;
+        font-size: 14px;
+        line-height: 22px;
+        font-weight: 400;
+      }
+    }
+
+    &-item {
+      /*  */
+    }
+  }
+
+  &-divider {
+    @apply bg-white;
+
+    width: 1px;
+    height: 16px;
+  }
+
+  &-logoutButton {
+    /*  */
+
+    &-icon {
+      @apply w-6 h-6;
+
+      color: #fff;
+      transform: rotate(180deg);
+      stroke-width: 1px;
+    }
+  }
+}

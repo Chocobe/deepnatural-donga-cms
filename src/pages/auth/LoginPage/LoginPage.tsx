@@ -8,6 +8,7 @@ import {
 // router
 import { 
   NavLink,
+  useNavigate,
 } from 'react-router-dom';
 import routePathFactory from '@/routes/routePathFactory';
 // ui
@@ -26,6 +27,11 @@ function LoginPage() {
   //
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  //
+  // hook
+  //
+  const navigate = useNavigate();
 
   //
   // callback
@@ -51,7 +57,9 @@ function LoginPage() {
     console.log('email: ', email);
     console.log('password: ', password);
     console.groupEnd();
-  }, [email, password]);
+
+    navigate(routePathFactory.math.getTextbookPath());
+  }, [email, password, navigate]);
 
   //
   // cache
