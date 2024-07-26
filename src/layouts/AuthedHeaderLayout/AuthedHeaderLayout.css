@@ -1,0 +1,10 @@
+.AuthedHeaderLayout {
+  @apply w-full h-full;
+  @apply flex flex-col;
+  @apply overflow-hidden;
+
+  &-header {
+    @apply shrink-0;
+    @apply h-fit;
+  }
+}

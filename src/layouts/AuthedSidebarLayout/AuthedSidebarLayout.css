@@ -1,0 +1,15 @@
+.AuthedSidebarLayout {
+  --sidebar-min-width: 300px;
+
+  @apply w-full h-full;
+  @apply flex;
+  @apply overflow-hidden;
+
+  &-sidebar {
+    @apply shrink-0;
+    @apply w-fit h-full;
+    @apply overflow-auto;
+
+    min-width: var(--sidebar-min-width);
+  }
+}

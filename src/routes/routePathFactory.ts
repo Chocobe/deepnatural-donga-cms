@@ -1,13 +1,22 @@
 const routePathFactory = {
   auth: {
-    getLayoutPath() {
-      return '/';
+    getAuthRootPath() {
+      return '' as const;
     },
     getLoginPagePath() {
-      return this.getLayoutPath();
+      return `${this.getAuthRootPath()}/` as const;
     },
     getFindPasswordPagePath() {
-      return 'find-password';
+      return `${this.getAuthRootPath()}/find-password` as const;
+    },
+  },
+
+  math: {
+    getMathRootPath() {
+      return '/math' as const;
+    },
+    getTextbookPath() {
+      return `${this.getMathRootPath()}/textbook` as const;
     },
   },
 } as const;
