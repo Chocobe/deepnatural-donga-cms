@@ -10,6 +10,9 @@ import AccountAction from '@/components/layouts/AccountAction/AccountAction';
 import { cn } from '@/lib/shadcn-ui-utils';
 import './AuthedHeaderLayout.css';
 
+// FIXME: mockup
+import MockSuperAdminSwitch from './MockSuperAdminSwitch';
+
 type TAuthedHeaderLayoutProps = PropsWithChildren<{
   className?: string;
 }>;
@@ -41,6 +44,7 @@ function _AuthedHeaderLayout(props: TAuthedHeaderLayoutProps) {
         </div>
 
         <div className="AuthedHeaderLayout-header-right">
+          <MockSuperAdminSwitch />
           <AccountAction />
         </div>
       </header>

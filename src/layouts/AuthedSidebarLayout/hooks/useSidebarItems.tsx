@@ -18,15 +18,19 @@ import {
   LuUser,
   LuUsers,
 } from "react-icons/lu";
+import useMockStore from '@/store/mockStore/mockStore';
 
 type TSidebarItem = {
   text: string;
   IconComponent: IconType;
   isActive: boolean;
+  isHide?: boolean;
   onClick: () => void;
 };
 
 const useSidebarItems = () => {
+  const isSuperAdmin = useMockStore(state => state.isSuperAdmin);
+
   //
   // hook
   //
@@ -49,7 +53,7 @@ const useSidebarItems = () => {
   const settingItems = useMemo<TSidebarItem[]>(() => [
     {
       text: 'My Page',
-      IconComponent: LuUsers,
+      IconComponent: LuUser,
       isActive: isMyPagePath,
       onClick: () => navigate(routePathFactory
         .setting
@@ -58,15 +62,16 @@ const useSidebarItems = () => {
     },
     {
       text: 'Super Admin 관리',
-      IconComponent: LuUser,
+      IconComponent: LuUsers,
       isActive: isSuperAdminPagePath,
+      isHide: !isSuperAdmin,
       onClick: () => navigate(routePathFactory
         .setting
         .getSuperAdminPagePath()
       ),
     },
   ], [
-    isMyPagePath, isSuperAdminPagePath,
+    isMyPagePath, isSuperAdminPagePath, isSuperAdmin,
     navigate,
   ]);
 

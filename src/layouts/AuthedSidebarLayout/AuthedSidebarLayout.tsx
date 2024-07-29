@@ -39,10 +39,11 @@ function _AuthedSidebarLayout(props: TAuthedSidebarLayoutProps) {
             text,
             IconComponent,
             isActive,
+            isHide,
             onClick,
           } = item;
 
-          return (
+          return !isHide && (
             <Button
               key={text}
               className={cn(
