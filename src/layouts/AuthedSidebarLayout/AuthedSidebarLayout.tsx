@@ -3,6 +3,10 @@ import {
   memo,
   PropsWithChildren,
 } from 'react';
+// hook
+import useSidebarItems from './hooks/useSidebarItems';
+// ui
+import { Button } from '@/components/shadcn-ui/ui/button';
 // style
 import { cn } from '@/lib/shadcn-ui-utils';
 import './AuthedSidebarLayout.css';
@@ -17,45 +21,43 @@ function _AuthedSidebarLayout(props: TAuthedSidebarLayoutProps) {
     children,
   } = props;
 
+  //
+  // hook
+  //
+  const {
+    sidebarItems,
+  } = useSidebarItems();
+
   return (
     <div className={cn(
       'AuthedSidebarLayout',
       className
     )}>
-      <div className={cn(
-        'AuthedSidebarLayout-sidebar',
-        'p-5 flex flex-col items-center gap-5'
-      )}>
-        <div className="shrink-0 w-[150px] h-[150px] flex justify-end items-end bg-sky-200">
-          Box 1
-        </div>
-        <div className="shrink-0 w-[150px] h-[150px] flex justify-end items-end bg-sky-200">
-          Box 2
-        </div>
-        <div className="shrink-0 w-[150px] h-[150px] flex justify-end items-end bg-sky-200">
-          Box 3
-        </div>
-        <div className="shrink-0 w-[150px] h-[150px] flex justify-end items-end bg-sky-200">
-          Box 4
-        </div>
-        <div className="shrink-0 w-[150px] h-[150px] flex justify-end items-end bg-sky-200">
-          Box 5
-        </div>
-        <div className="shrink-0 w-[150px] h-[150px] flex justify-end items-end bg-sky-200">
-          Box 6
-        </div>
-        <div className="shrink-0 w-[150px] h-[150px] flex justify-end items-end bg-sky-200">
-          Box 7
-        </div>
-        <div className="shrink-0 w-[150px] h-[150px] flex justify-end items-end bg-sky-200">
-          Box 8
-        </div>
-        <div className="shrink-0 w-[150px] h-[150px] flex justify-end items-end bg-sky-200">
-          Box 9
-        </div>
-        <div className="shrink-0 w-[150px] h-[150px] flex justify-end items-end bg-sky-200">
-          Box 10
-        </div>
+      <div className="AuthedSidebarLayout-sidebar">
+        {sidebarItems?.map(item => {
+          const {
+            text,
+            IconComponent,
+            isActive,
+            onClick,
+          } = item;
+
+          return (
+            <Button
+              key={text}
+              className={cn(
+                'AuthedSidebarLayout-sidebar-button',
+                isActive ? 'active' : ''
+              )}
+              onClick={onClick}
+            >
+              <IconComponent className="AuthedSidebarLayout-sidebar-button-icon" />
+              <span className="">
+                {text}
+              </span>
+            </Button>
+          );
+        })}
       </div>
 
       <div className="AuthedSidebarLayout-main">

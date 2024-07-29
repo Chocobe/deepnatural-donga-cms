@@ -1,5 +1,5 @@
 .AuthedSidebarLayout {
-  --sidebar-min-width: 300px;
+  --sidebar-min-width: 264px;
 
   @apply w-full h-full;
   @apply flex;
@@ -8,9 +8,30 @@
   &-sidebar {
     @apply shrink-0;
     @apply w-fit h-full;
+    @apply flex flex-col gap-[10px];
     @apply overflow-auto;
 
+    padding: 35px 25px;
     min-width: var(--sidebar-min-width);
+
+    border: 1px solid #EBEBED;
+
+    &-button {
+      @apply w-full !h-fit;
+      @apply flex !justify-start !items-center gap-2;
+      @apply !bg-transparent;
+
+      padding: 7.5px 8px !important;
+      color: #334155 !important;
+
+      &.active {
+        background-color: #F4F4F5 !important;
+      }
+
+      &-icon {
+        @apply w-4 h-4;
+      }
+    }
   }
 
   &-main {
