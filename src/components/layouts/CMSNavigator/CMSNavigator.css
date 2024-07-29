@@ -1,0 +1,25 @@
+.CMSNavigator {
+  @apply flex justify-center items-center;
+
+  &-button {
+    @apply py-2 px-4;
+    @apply !w-fit !h-fit;
+    @apply bg-transparent;
+
+    color: #B9B9B9;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    font-weight: 700 !important;
+
+    &.active {
+      @apply !bg-white;
+
+      color: #0F172A !important;
+    }
+
+    &:not(.active):hover {
+      @apply !bg-transparent;
+      color: #B9B9B9 !important;
+    }
+  }
+}

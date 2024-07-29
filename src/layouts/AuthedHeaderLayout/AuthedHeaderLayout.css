@@ -28,7 +28,7 @@
     }
 
     &-center {
-      @apply flex justify-center;
+      @apply flex justify-center items-center;
     }
 
     &-right {

@@ -5,6 +5,7 @@ import {
 } from 'react';
 // components
 import AccountAction from '@/components/layouts/AccountAction/AccountAction';
+import CMSNavigator from '@/components/layouts/CMSNavigator/CMSNavigator';
 // style
 import { cn } from '@/lib/shadcn-ui-utils';
 import './AuthedHeaderLayout.css';
@@ -36,7 +37,7 @@ function _AuthedHeaderLayout(props: TAuthedHeaderLayoutProps) {
         </div>
 
         <div className="AuthedHeaderLayout-header-center">
-          Center
+          <CMSNavigator />
         </div>
 
         <div className="AuthedHeaderLayout-header-right">
