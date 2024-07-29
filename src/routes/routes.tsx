@@ -44,7 +44,7 @@ const routes = createBrowserRouter([
       {
         path: routePathFactory
           .dashboard
-          .getDashboardPagePath() + '/hello/world',
+          .getDashboardPagePath(),
         element: <div>Dashboard Page inline</div>,
       },
     ],
