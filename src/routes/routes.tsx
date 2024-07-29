@@ -9,8 +9,10 @@ import AuthedLayout from '@/layouts/AuthedLayout/AuthedLayout';
 // pages
 import LoginPage from '@/pages/auth/LoginPage/LoginPage';
 import FindPasswordPage from '@/pages/auth/FindPasswordPage/FindPasswordPage';
+import DashboardLayout from '@/layouts/DashboardLayout/DashboardLayout';
 
 const routes = createBrowserRouter([
+  // Auth
   {
     path: routePathFactory
       .auth
@@ -31,6 +33,24 @@ const routes = createBrowserRouter([
       },
     ],
   },
+
+  // Dashboard
+  {
+    path: routePathFactory
+      .dashboard
+      .getDashboardRootPath(),
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: routePathFactory
+          .dashboard
+          .getDashboardPagePath() + '/hello/world',
+        element: <div>Dashboard Page inline</div>,
+      },
+    ],
+  },
+
+  // Math
   {
     path: routePathFactory
       .math
@@ -84,6 +104,17 @@ const routes = createBrowserRouter([
           </div>
         ),
       },
+    ],
+  },
+
+  // English
+  {
+    path: routePathFactory
+      .english
+      .getTextbookPath(),
+    element: <div>English Page (inline)</div>,
+    children: [
+      //
     ],
   },
 ]);

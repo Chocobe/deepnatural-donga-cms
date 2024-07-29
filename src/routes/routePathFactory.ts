@@ -11,6 +11,15 @@ const routePathFactory = {
     },
   },
 
+  dashboard: {
+    getDashboardRootPath() {
+      return '/dashboard' as const;
+    },
+    getDashboardPagePath() {
+      return this.getDashboardRootPath();
+    },
+  },
+
   math: {
     getMathRootPath() {
       return '/math' as const;
@@ -19,6 +28,15 @@ const routePathFactory = {
       return `${this.getMathRootPath()}/textbook` as const;
     },
   },
+
+  english: {
+    getEnglishRootPath() {
+      return '/english' as const;
+    },
+    getTextbookPath() {
+      return `${this.getEnglishRootPath()}/textbook` as const;
+    },
+  }
 } as const;
 
 export default routePathFactory;
