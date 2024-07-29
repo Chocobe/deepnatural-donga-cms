@@ -43,7 +43,7 @@ const routes = createBrowserRouter([
 
   // CMS
   {
-    path: '',
+    path: '/',
     element: (
       <AuthedHeaderLayout>
         <Outlet />

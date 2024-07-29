@@ -1,13 +1,13 @@
 const routePathFactory = {
   auth: {
     getAuthRootPath() {
-      return '' as const;
+      return '/' as const;
     },
     getLoginPagePath() {
-      return `${this.getAuthRootPath()}/` as const;
+      return `${this.getAuthRootPath()}` as const;
     },
     getFindPasswordPagePath() {
-      return `${this.getAuthRootPath()}/find-password` as const;
+      return `${this.getAuthRootPath()}find-password` as const;
     },
   },
 
