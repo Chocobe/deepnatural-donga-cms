@@ -31,6 +31,13 @@ function _AccountAction() {
   //
   // callback
   //
+  const goToMyPage = useCallback(() => {
+    navigate(routePathFactory
+      .setting
+      .getMyPagePath()
+    );
+  }, [navigate]);
+
   const logout = useCallback(() => {
     navigate(routePathFactory.auth.getLoginPagePath());
   }, [navigate]);
@@ -60,7 +67,7 @@ function _AccountAction() {
         <DropdownMenuContent className="w-56">
           <DropdownMenuItem 
             className="AccountAction-dropdown-item"
-            onClick={() => console.log('onClick()')}>
+            onClick={goToMyPage}>
             My page
           </DropdownMenuItem>
         </DropdownMenuContent>

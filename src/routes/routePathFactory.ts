@@ -36,7 +36,19 @@ const routePathFactory = {
     getTextbookPath() {
       return `${this.getEnglishRootPath()}/textbook` as const;
     },
-  }
+  },
+
+  setting: {
+    getSettingRootPath() {
+      return '/setting' as const;
+    },
+    getMyPagePath() {
+      return `${this.getSettingRootPath()}/my-page` as const;
+    },
+    getSuperAdminPagePath() {
+      return `${this.getSettingRootPath()}/super-admin` as const;
+    },
+  },
 } as const;
 
 export default routePathFactory;

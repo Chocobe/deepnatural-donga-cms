@@ -12,6 +12,11 @@ import AuthedSidebarLayout from '@/layouts/AuthedSidebarLayout/AuthedSidebarLayo
 // pages
 import LoginPage from '@/pages/auth/LoginPage/LoginPage';
 import FindPasswordPage from '@/pages/auth/FindPasswordPage/FindPasswordPage';
+import DashboardPage from '@/pages/dashboard/Dashboard/DashboardPage';
+import MathTextbookPage from '@/pages/math/MathTextbookPage/MathTextbookPage';
+import EnglishTextbookPage from '@/pages/english/EnglishTextbookPage/EnglishTextbookPage';
+import MyPage from '@/pages/setting/MyPage/MyPage';
+import SuperAdminPage from '@/pages/setting/SuperAdminPage/SuperAdminPage';
 
 const routes = createBrowserRouter([
   // Auth
@@ -60,40 +65,7 @@ const routes = createBrowserRouter([
             path: routePathFactory
               .dashboard
               .getDashboardPagePath(),
-            element: (
-              <div className="p-5 flex flex-col justify-center items-center gap-5">
-                <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                  Box 1
-                </div>
-                <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                  Box 2
-                </div>
-                <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                  Box 3
-                </div>
-                <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                  Box 4
-                </div>
-                <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                  Box 5
-                </div>
-                <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                  Box 6
-                </div>
-                <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                  Box 7
-                </div>
-                <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                  Box 8
-                </div>
-                <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                  Box 9
-                </div>
-                <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                  Box 10
-                </div>
-              </div>
-            )
+            element: <DashboardPage />,
           }
         ]
       }, // Dashboard
@@ -113,46 +85,7 @@ const routes = createBrowserRouter([
             path: routePathFactory
               .math
               .getTextbookPath(),
-            element: (
-              <div style={{
-                padding: '20px',
-                height: '100%',
-                overflow: 'hidden',
-              }}>
-                <div className="h-full flex flex-col gap-5 overflow-auto">
-                  <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                    Box 1
-                  </div>
-                  <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                    Box 2
-                  </div>
-                  <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                    Box 3
-                  </div>
-                  <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                    Box 4
-                  </div>
-                  <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                    Box 5
-                  </div>
-                  <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                    Box 6
-                  </div>
-                  <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                    Box 7
-                  </div>
-                  <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                    Box 8
-                  </div>
-                  <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                    Box 9
-                  </div>
-                  <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                    Box 10
-                  </div>
-                </div>
-              </div>
-            ),
+            element: <MathTextbookPage />,
           },
         ],
       }, // Math CMS
@@ -172,48 +105,36 @@ const routes = createBrowserRouter([
             path: routePathFactory
               .english
               .getTextbookPath(),
-            element: (
-              <div style={{
-                height: '100%',
-                overflow: 'hidden',
-              }}>
-                <div className="p-5 h-full flex flex-col gap-5 overflow-auto">
-                  <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                    EN Box 1
-                  </div>
-                  <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                    EN Box 2
-                  </div>
-                  <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                    EN Box 3
-                  </div>
-                  <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                    EN Box 4
-                  </div>
-                  <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                    EN Box 5
-                  </div>
-                  <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                    EN Box 6
-                  </div>
-                  <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                    EN Box 7
-                  </div>
-                  <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                    EN Box 8
-                  </div>
-                  <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                    EN Box 9
-                  </div>
-                  <div className="flex-shrink-0 w-[300px] h-[300px] flex justify-end items-end bg-sky-200">
-                    EN Box 10
-                  </div>
-                </div>
-              </div>
-            ),
+            element: <EnglishTextbookPage />,
           },
         ],
       }, // English CMS
+
+      // Setting
+      {
+        path: routePathFactory
+          .setting
+          .getSettingRootPath(),
+        element: (
+          <AuthedSidebarLayout>
+            <Outlet />
+          </AuthedSidebarLayout>
+        ),
+        children: [
+          {
+            path: routePathFactory
+              .setting
+              .getMyPagePath(),
+            element: <MyPage />,
+          },
+          {
+            path: routePathFactory
+              .setting
+              .getSuperAdminPagePath(),
+            element: <SuperAdminPage />,
+          },
+        ],
+      }, // Setting
     ],
   }, // CMS
 ]);
