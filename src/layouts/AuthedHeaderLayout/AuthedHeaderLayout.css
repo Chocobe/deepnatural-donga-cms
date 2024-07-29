@@ -35,4 +35,9 @@
       @apply flex justify-end items-center;
     }
   }
+
+  &-main {
+    @apply w-full h-full;
+    @apply overflow-hidden;
+  }
 }

@@ -12,4 +12,9 @@
 
     min-width: var(--sidebar-min-width);
   }
+
+  &-main {
+    @apply w-full h-full;
+    @apply overflow-auto;
+  }
 }

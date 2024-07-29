@@ -58,7 +58,9 @@ function _AuthedSidebarLayout(props: TAuthedSidebarLayoutProps) {
         </div>
       </div>
 
-      {children}
+      <div className="AuthedSidebarLayout-main">
+        {children}
+      </div>
     </div>
   );
 }

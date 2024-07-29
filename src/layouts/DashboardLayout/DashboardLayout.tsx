@@ -1,21 +1,29 @@
 // react
 import {
   memo,
+  PropsWithChildren,
 } from 'react';
-// router
-import { Outlet } from 'react-router-dom';
-// layout
-import AuthedHeaderLayout from '../AuthedHeaderLayout/AuthedHeaderLayout';
 // style
+import { cn } from '@/lib/shadcn-ui-utils';
 import './DashboardLayout.css';
 
-function _DashboardLayout() {
+type TDashboardLayoutProps = PropsWithChildren<{
+  className?: string;
+}>;
+
+function _DashboardLayout(props: TDashboardLayoutProps) {
+  const {
+    className = '',
+    children,
+  } = props;
+
   return (
-    <AuthedHeaderLayout className="DashboardLayout">
-      <div className="DashboardLayout-main">
-        <Outlet />
-      </div>
-    </AuthedHeaderLayout>
+    <div className={cn(
+      'DashboardLayout',
+      className
+    )}>
+      {children}
+    </div>
   );
 }
 

@@ -1,13 +1,4 @@
 .DashboardLayout {
   @apply w-full h-full;
-  @apply overflow-hidden;
-
-  &-main {
-    @apply flex-1;
-    @apply w-full h-full;
-    @apply overflow-auto;
-
-    /* FIXME: mockup */
-    @apply flex justify-center items-center;
-  }
+  @apply overflow-auto;
 }

@@ -4,8 +4,8 @@ import {
   PropsWithChildren,
 } from 'react';
 // components
-import AccountAction from '@/components/layouts/AccountAction/AccountAction';
 import CMSNavigator from '@/components/layouts/CMSNavigator/CMSNavigator';
+import AccountAction from '@/components/layouts/AccountAction/AccountAction';
 // style
 import { cn } from '@/lib/shadcn-ui-utils';
 import './AuthedHeaderLayout.css';
@@ -45,7 +45,9 @@ function _AuthedHeaderLayout(props: TAuthedHeaderLayoutProps) {
         </div>
       </header>
 
-      {children}
+      <div className="AuthedHeaderLayout-main">
+        {children}
+      </div>
     </div>
   );
 }
