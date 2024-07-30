@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default (function createAPI() {
   const api = axios.create({
-    baseURL: 'https://jsonplaceholder.typicode.com',
+    baseURL: import.meta.env.VITE_API_BASE_URL,
     timeout: 10_000,
   });
 
