@@ -59,7 +59,7 @@ function LoginPage() {
   //
   // authStore
   //
-  const setLoginState = useAuthStore(state => state.login.action.setLoginState);
+  const setLoginState = useAuthStore(state => state.login.action.login);
 
   function  onChange(e: ChangeEvent<HTMLInputElement>) {
     const {

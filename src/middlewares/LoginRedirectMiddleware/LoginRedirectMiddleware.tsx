@@ -1,5 +1,6 @@
 // react
 import {
+  useState,
   useEffect,
   PropsWithChildren,
 } from  'react';
@@ -24,6 +25,11 @@ function LoginRedirectMiddleware(props: TLoginRedirectMiddlewareProps) {
   const loginToken = useAuthStore(state => state.login.state.data);
 
   //
+  // state
+  //
+  const [isChecked, setIsChecked] = useState(false);
+
+  //
   // hook
   //
   const navigate = useNavigate();
@@ -33,6 +39,7 @@ function LoginRedirectMiddleware(props: TLoginRedirectMiddlewareProps) {
   //
   useEffect(function redirectToLoginPage() {
     if (loginToken) {
+      setIsChecked(true);
       return;
     }
 
@@ -42,7 +49,9 @@ function LoginRedirectMiddleware(props: TLoginRedirectMiddlewareProps) {
     );
   }, [loginToken, navigate]);
 
-  return children;
+  return isChecked
+    ? children
+    : null;
 }
 
 export default LoginRedirectMiddleware;

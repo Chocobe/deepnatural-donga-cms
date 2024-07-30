@@ -1,8 +1,14 @@
-// util
-import { createIdleApiState } from '../apiStateUtils';
+// utils
+import { 
+  createIdleApiState,
+} from '../apiStateUtils';
 // type
-import { TApiState } from '../apiStateUtils.type';
-import { TLoginResponse } from '@/apis/auth/auth.type';
+import { 
+  TApiState,
+} from '../apiStateUtils.type';
+import { 
+  TLoginResponse,
+} from '@/apis/auth/auth.type';
 
 export type TAuthStoreState = {
   login: {
@@ -20,7 +26,8 @@ export type TAuthStoreAction = {
   login: {
     action: {
       initLoginState: () => void;
-      setLoginState: (apiState: TApiState<TLoginResponse>) => void;
+      login: (apiState: TApiState<TLoginResponse>) => void;
+      logout: () => void;
     },
   },
 };

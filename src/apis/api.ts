@@ -1,4 +1,7 @@
+// axios
 import axios from 'axios';
+// store
+import useAuthStore from '@/store/authStore/authStore';
 
 export default (function createAPI() {
   const api = axios.create({
@@ -8,7 +11,16 @@ export default (function createAPI() {
 
   api.interceptors.request.use(config => {
     try {
-      console.log('api request interceptors');
+      const loginToken = useAuthStore
+        .getState()
+        .login
+        .state
+        .data;
+
+      if (loginToken?.token) {
+        config.headers.Authorization = `Token ${loginToken.token}`;
+      }
+
       return config;
     } catch(error) {
       return Promise.reject(error);

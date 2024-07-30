@@ -5,6 +5,10 @@ const authUrlFactory = (() => {
     login() {
       return `${BASE_PATH}login/`;
     },
+
+    logout() {
+      return `${BASE_PATH}logout/`;
+    },
   };
 })();
 

@@ -7,6 +7,9 @@ import {
 import { 
   useNavigate,
 } from 'react-router-dom';
+import routePathFactory from '@/routes/routePathFactory';
+// store
+import useAuthStore from '@/store/authStore/authStore';
 // shadcn
 import { 
   DropdownMenu,
@@ -14,15 +17,27 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from '@/components/shadcn-ui/ui/dropdown-menu';
-import { Button } from '@/components/shadcn-ui/ui/button';
+import { 
+  Button,
+} from '@/components/shadcn-ui/ui/button';
 // react-icons
-import { CiLogout } from 'react-icons/ci';
+import { 
+  CiLogout,
+} from 'react-icons/ci';
+// api
+import ApiManager from '@/apis/ApiManager';
 // style
+import { 
+  cn,
+} from '@/lib/shadcn-ui-utils';
 import './AccountAction.css';
-import { cn } from '@/lib/shadcn-ui-utils';
-import routePathFactory from '@/routes/routePathFactory';
 
 function _AccountAction() {
+  //
+  // authStore
+  //
+  const _logout = useAuthStore(state => state.login.action.logout);
+
   //
   // hook
   //
@@ -38,9 +53,17 @@ function _AccountAction() {
     );
   }, [navigate]);
 
-  const logout = useCallback(() => {
-    navigate(routePathFactory.auth.getLoginPagePath());
-  }, [navigate]);
+  const logout = useCallback(async () => {
+    try {
+      await ApiManager
+        .auth
+        .logout();
+    } catch(error) {
+      console.error(error);
+    } finally {
+      _logout();
+    }
+  }, [_logout]);
 
   return (
     <div className="AccountAction">

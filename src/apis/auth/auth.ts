@@ -13,3 +13,9 @@ export const login = (payload: TLoginPayload) => {
     payload
   );
 };
+
+export const logout = () => {
+  return api.post<void>(
+    authUrlFactory.logout()
+  );
+};

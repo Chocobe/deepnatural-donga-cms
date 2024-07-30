@@ -1,5 +1,6 @@
 // react
 import {
+  useState,
   useEffect,
   PropsWithChildren,
 } from 'react';
@@ -27,6 +28,11 @@ function AuthGuardMiddleware(props: TAuthGuardMiddlewareProps) {
   const loginToken = useAuthStore(state => state.login.state.data);
 
   //
+  // state
+  //
+  const [isChecked, setIsChecked] = useState(false);
+
+  //
   // hook
   //
   const navigate = useNavigate();
@@ -36,13 +42,16 @@ function AuthGuardMiddleware(props: TAuthGuardMiddlewareProps) {
   //
   useEffect(function redirectTo() {
     if (!loginToken) {
+      setIsChecked(true);
       return;
     }
 
     navigate(to);
   }, [loginToken, to, navigate]);
 
-  return children;
+  return isChecked
+    ? children
+    : null;
 }
 
 export default AuthGuardMiddleware;

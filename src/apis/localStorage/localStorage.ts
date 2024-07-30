@@ -15,7 +15,15 @@ export const getToken = () =>  {
   return null;
 };
 
-export const setToken = (token: TLoginModel) => {
+export const setToken = (token?: TLoginModel) => {
+  if (!token) {
+    window.localStorage.removeItem(
+      localStorageKeyMapper.TOKEN
+    );
+
+    return;
+  }
+
   const stringToken = JSON.stringify(token);
 
   window.localStorage.setItem(

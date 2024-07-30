@@ -1,5 +1,7 @@
 // type
-import { TLoginModel } from '../models/authModel.type';
+import { 
+  TLoginModel, 
+} from '../models/authModel.type';
 
 //
 // Login API

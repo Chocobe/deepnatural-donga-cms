@@ -5,6 +5,10 @@ import {
 import { 
   devtools,
 } from 'zustand/middleware';
+// utils
+import { 
+  createIdleApiState,
+} from '../apiStateUtils';
 // api
 import ApiManager from '@/apis/ApiManager';
 // type
@@ -30,7 +34,8 @@ const useAuthStore = create(devtools<TAuthStore>((set, _get) => ({
           },
         }), false, 'initLoginState');
       },
-      setLoginState: loginState => {
+
+      login: loginState => {
         const {
           data,
           isSuccess,
@@ -45,7 +50,20 @@ const useAuthStore = create(devtools<TAuthStore>((set, _get) => ({
             ...old.login,
             state: loginState,
           },
-        }), false, 'setLoginState');
+        }), false, 'login');
+      },
+
+      logout: () => {
+        ApiManager
+          .localStorage
+          .setToken();
+
+        set(old => ({
+          login: {
+            ...old.login,
+            state: createIdleApiState(),
+          },
+        }), false, 'logout');
       },
     },
   },
