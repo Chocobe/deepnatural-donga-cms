@@ -4,6 +4,9 @@ import {
   Outlet,
 } from 'react-router-dom';
 import routePathFactory from './routePathFactory';
+// middlewares
+import AuthGuardMiddleware from '@/middlewares/AuthGuardMiddleware/AuthGuardMiddleware';
+import LoginRedirectMiddleware from '@/middlewares/LoginRedirectMiddleware/LoginRedirectMiddleware';
 // layouts
 import AuthLayout from '@/layouts/AuthLayout/AuthLayout';
 import DashboardLayout from '@/layouts/DashboardLayout/DashboardLayout';
@@ -24,7 +27,11 @@ const routes = createBrowserRouter([
     path: routePathFactory
       .auth
       .getAuthRootPath(),
-    element: <AuthLayout />,
+    element: (
+      <AuthGuardMiddleware>
+        <AuthLayout />
+      </AuthGuardMiddleware>
+    ),
     children: [
       {
         path: routePathFactory
@@ -45,9 +52,11 @@ const routes = createBrowserRouter([
   {
     path: '/',
     element: (
-      <AuthedHeaderLayout>
-        <Outlet />
-      </AuthedHeaderLayout>
+      <LoginRedirectMiddleware>
+        <AuthedHeaderLayout>
+          <Outlet />
+        </AuthedHeaderLayout>
+      </LoginRedirectMiddleware>
     ),
     children: [
       // Dashboard
