@@ -5,15 +5,15 @@ import {
 // router
 import RootRouter from './routes/RootRouter';
 // store
-import useAuthStore from './store/authStore/authStore';
+import useAuthApiStore from './store/authApiStore/authApiStore';
 // style
 import './App.css';
 
 function App() {
   //
-  // authStore
+  // authApiStore
   //
-  const initLoginState = useAuthStore(state => state.login.action.initLoginState);
+  const initLoginState = useAuthApiStore(state => state.login.action.initLoginState);
 
   //
   // effect

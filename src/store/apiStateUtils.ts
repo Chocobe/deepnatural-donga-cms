@@ -1,22 +1,22 @@
 // type
 import { 
-  apiCurrentStateMapper, 
-  TApiState,
+  apiSliceStatusMapper, 
+  TApiSliceState,
 } from './apiStateUtils.type';
 
-export const createIdleApiState = <T>(initialData?: T): TApiState<T> => ({
+export const createIdleApiSliceState = <T>(initialData?: T): TApiSliceState<T> => ({
   data: initialData ?? null,
   error: null,
-  state: apiCurrentStateMapper.IDLE,
+  status: apiSliceStatusMapper.IDLE,
   isIdle: true,
   isFetching: false,
   isSuccess: false,
   isError: false,
 });
 
-export const createFetchingApiState = <T>(flush = true): TApiState<T> => {
-  const newState: Partial<TApiState<T>> = {
-    state: apiCurrentStateMapper.FETCHING,
+export const createFetchingApiSliceState = <T>(flush = true): TApiSliceState<T> => {
+  const newState: Partial<TApiSliceState<T>> = {
+    status: apiSliceStatusMapper.FETCHING,
     isIdle: false,
     isFetching: true,
     isSuccess: false,
@@ -28,14 +28,14 @@ export const createFetchingApiState = <T>(flush = true): TApiState<T> => {
     newState.error = null;
   }
 
-  return newState as TApiState<T>;
+  return newState as TApiSliceState<T>;
 };
 
-export const createSuccessApiState = <T>(apiState: T): TApiState<T> => {
+export const createSuccessApiSliceState = <T>(apiState: T): TApiSliceState<T> => {
   return {
     data: apiState,
     error: null,
-    state: apiCurrentStateMapper.SUCCESS,
+    status: apiSliceStatusMapper.SUCCESS,
     isIdle: false,
     isFetching: false,
     isSuccess: true,
@@ -43,11 +43,11 @@ export const createSuccessApiState = <T>(apiState: T): TApiState<T> => {
   };
 };
 
-export const createErrorApiState = <T>(error: T): TApiState<null, T> => {
+export const createErrorApiSliceState = <T>(error: T): TApiSliceState<null, T> => {
   return {
     data: null,
     error,
-    state: apiCurrentStateMapper.ERROR,
+    status: apiSliceStatusMapper.ERROR,
     isIdle: false,
     isFetching: false,
     isSuccess: false,

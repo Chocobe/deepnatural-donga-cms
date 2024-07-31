@@ -10,7 +10,7 @@ import {
 } from 'react-router-dom';
 import routePathFactory from '@/routes/routePathFactory';
 // store
-import useAuthStore from '@/store/authStore/authStore';
+import useAuthApiStore from '@/store/authApiStore/authApiStore';
 
 type TAuthGuardMiddlewareProps = PropsWithChildren<{
   to?: string;
@@ -23,9 +23,9 @@ function AuthGuardMiddleware(props: TAuthGuardMiddlewareProps) {
   } = props;
 
   //
-  // authStore
+  // authApiStore
   //
-  const loginToken = useAuthStore(state => state.login.state.data);
+  const loginData = useAuthApiStore(state => state.login.state.data);
 
   //
   // state
@@ -41,13 +41,13 @@ function AuthGuardMiddleware(props: TAuthGuardMiddlewareProps) {
   // effect
   //
   useEffect(function redirectTo() {
-    if (!loginToken) {
+    if (!loginData) {
       setIsChecked(true);
       return;
     }
 
     navigate(to);
-  }, [loginToken, to, navigate]);
+  }, [loginData, to, navigate]);
 
   return isChecked
     ? children

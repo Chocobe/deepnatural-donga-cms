@@ -10,9 +10,9 @@ import {
 } from 'react-router-dom';
 import routePathFactory from '@/routes/routePathFactory';
 // store
-import useAuthStore from '@/store/authStore/authStore';
+import useAuthApiStore from '@/store/authApiStore/authApiStore';
 import { 
-  createSuccessApiState,
+  createSuccessApiSliceState,
 } from '@/store/apiStateUtils';
 // ui
 import { 
@@ -57,9 +57,9 @@ function LoginPage() {
   ];
 
   //
-  // authStore
+  // authApiStore
   //
-  const setLoginState = useAuthStore(state => state.login.action.login);
+  const setLoginState = useAuthApiStore(state => state.login.action.setLoginState);
 
   function  onChange(e: ChangeEvent<HTMLInputElement>) {
     const {
@@ -87,7 +87,7 @@ function LoginPage() {
 
       console.log('login() 성공 - data: ', data);
 
-      setLoginState(createSuccessApiState(data));
+      setLoginState(createSuccessApiSliceState(data));
     } catch(error) {
       // TODO: Sonar 컴포넌트로 메시지 렌더링하기
       console.error(error);

@@ -1,7 +1,7 @@
 // axios
 import axios from 'axios';
 // store
-import useAuthStore from '@/store/authStore/authStore';
+import useAuthApiStore from '@/store/authApiStore/authApiStore';
 
 export default (function createAPI() {
   const api = axios.create({
@@ -11,7 +11,7 @@ export default (function createAPI() {
 
   api.interceptors.request.use(config => {
     try {
-      const loginToken = useAuthStore
+      const loginToken = useAuthApiStore
         .getState()
         .login
         .state

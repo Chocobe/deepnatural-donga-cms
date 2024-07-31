@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom';
 import routePathFactory from '@/routes/routePathFactory';
 // store
-import useAuthStore from '@/store/authStore/authStore';
+import useAuthApiStore from '@/store/authApiStore/authApiStore';
 // shadcn
 import { 
   DropdownMenu,
@@ -34,9 +34,9 @@ import './AccountAction.css';
 
 function _AccountAction() {
   //
-  // authStore
+  // authApiStore
   //
-  const _logout = useAuthStore(state => state.login.action.logout);
+  const removeLoginState = useAuthApiStore(state => state.login.action.removeLoginState);
 
   //
   // hook
@@ -61,9 +61,9 @@ function _AccountAction() {
     } catch(error) {
       console.error(error);
     } finally {
-      _logout();
+      removeLoginState();
     }
-  }, [_logout]);
+  }, [removeLoginState]);
 
   return (
     <div className="AccountAction">

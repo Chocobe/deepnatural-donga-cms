@@ -10,7 +10,7 @@ import {
 } from 'react-router-dom';
 import routePathFactory from '@/routes/routePathFactory';
 // store
-import useAuthStore from '@/store/authStore/authStore';
+import useAuthApiStore from '@/store/authApiStore/authApiStore';
 
 type TLoginRedirectMiddlewareProps = PropsWithChildren;
 
@@ -20,9 +20,9 @@ function LoginRedirectMiddleware(props: TLoginRedirectMiddlewareProps) {
   } = props;
 
   //
-  // authStore
+  // authApiStore
   //
-  const loginToken = useAuthStore(state => state.login.state.data);
+  const loginData = useAuthApiStore(state => state.login.state.data);
 
   //
   // state
@@ -38,7 +38,7 @@ function LoginRedirectMiddleware(props: TLoginRedirectMiddlewareProps) {
   // effect
   //
   useEffect(function redirectToLoginPage() {
-    if (loginToken) {
+    if (loginData) {
       setIsChecked(true);
       return;
     }
@@ -47,7 +47,7 @@ function LoginRedirectMiddleware(props: TLoginRedirectMiddlewareProps) {
       .auth
       .getLoginPagePath()
     );
-  }, [loginToken, navigate]);
+  }, [loginData, navigate]);
 
   return isChecked
     ? children
