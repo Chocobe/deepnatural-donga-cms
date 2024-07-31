@@ -1,0 +1,38 @@
+.UsersTableActions {
+  @apply flex justify-between items-center;
+
+  &-leftSide {
+    @apply flex items-center gap-2.5;
+
+    &-button {
+      font-size: 14px;
+      line-height: 24px;
+      font-weight: 500;
+    }
+  }
+
+  &-rightSide {
+    @apply flex items-center gap-[50px];
+
+    &-roleSearchInput {
+      width: 351px !important;
+
+      font-size: 14px !important;
+      line-height: 20px !important;
+      font-weight: 400 !important;
+    }
+
+    &-addUserButton {
+      @apply gap-2;
+
+      font-size: 14px;
+      line-height: 24px;
+      font-weight: 500;
+
+      &-icon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}
