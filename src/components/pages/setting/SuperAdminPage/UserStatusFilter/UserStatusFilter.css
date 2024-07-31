@@ -1,0 +1,8 @@
+.UserStatusFilter {
+  /*  */
+
+  &-tabList {
+    padding: 5px !important;
+    height: fit-content !important;
+  }
+}

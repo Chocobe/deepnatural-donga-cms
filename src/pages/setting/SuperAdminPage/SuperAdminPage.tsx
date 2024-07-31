@@ -1,17 +1,28 @@
-// FIXME: mockup page
-// import MockupPage from '@/components/pages/MockupPage/MockupPage';
-import SuperAdminPageComponent from '@/components/pages/setting/SuperAdminPageComponent/SuperAdminPageComponent';
+// ui
+import UserStatusFilter from '@/components/pages/setting/SuperAdminPage/UserStatusFilter/UserStatusFilter';
+// style
+import './SuperAdminPage.css';
 
 function SuperAdminPage() {
-  // return (
-  //   <MockupPage
-  //     isTestOverflow
-  //     mockupName="SuperAdmin Page mockup" />
-  // );
+  //
 
   return (
     <div className="SuperAdminPage">
-      <SuperAdminPageComponent />
+      <div className="SuperAdminPage-filterWrapper">
+        <UserStatusFilter />
+      </div>
+
+      <div className="SuperAdminPage-tableActionsWrapper">
+        Table Actions Wrapper
+      </div>
+
+      <div className="SuperAdminPage-tableWrapper">
+        Table Wrapper
+      </div>
+
+      <div className="SuperAdminPage-tableFooterWrapper">
+        Table Footer Wrapper
+      </div>
     </div>
   );
 }

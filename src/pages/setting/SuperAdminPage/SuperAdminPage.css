@@ -1,0 +1,18 @@
+.SuperAdminPage {
+  @apply p-10;
+  @apply w-full;
+  @apply flex flex-col gap-5;
+  @apply overflow-hidden;
+
+  &-filterWrapper {
+    /*  */
+  }
+
+  &-tableActionsWrapper {
+    /*  */
+  }
+
+  &-tableFooterWrapper {
+    /*  */
+  }
+}
