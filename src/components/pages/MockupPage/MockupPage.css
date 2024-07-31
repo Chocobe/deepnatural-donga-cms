@@ -1,0 +1,22 @@
+.MockupPage {
+  /*  */
+
+  &-name {
+    @apply py-4 px-5;
+    @apply text-center;
+  }
+
+  &-testOverflow {
+    @apply p-5;
+    @apply flex flex-col justify-center items-center gap-5;
+
+    &-box {
+      @apply flex-shrink-0;
+      @apply flex justify-end items-end;
+      @apply bg-sky-200;
+
+      width: 300px;
+      height: 300px;
+    }
+  }
+}
