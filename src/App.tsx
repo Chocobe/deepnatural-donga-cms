@@ -1,5 +1,6 @@
 // react
 import {
+  useState,
   useEffect,
 } from 'react';
 // router
@@ -16,11 +17,21 @@ function App() {
   const initLoginState = useAuthApiStore(state => state.login.action.initLoginState);
 
   //
+  // state
+  //
+  const [isInit, setIsInit] = useState(false);
+
+  //
   // effect
   //
   useEffect(() => {
     initLoginState();
+    setIsInit(true);
   }, [initLoginState]);
+
+  if (!isInit) {
+    return null;
+  }
 
   return (
     <div className="App">
