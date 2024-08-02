@@ -28,6 +28,7 @@ module.exports = {
   },
   ignorePatterns: [
     'dist',
+    '*.cjs',
     '.eslintrc.cjs',
     'tailwind.config.js',
     'src/lib/shadcn-ui-utils.ts',

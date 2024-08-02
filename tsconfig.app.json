@@ -22,6 +22,11 @@
         "./src/*"
       ]
     },
+    "types": [
+      "jest", 
+      "@testing-library/jest-dom"
+    ],
+    "esModuleInterop": true,
 
     /* Linting */
     "strict": true,
@@ -30,5 +35,8 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "./jest.setup.ts"
+  ]
 }
