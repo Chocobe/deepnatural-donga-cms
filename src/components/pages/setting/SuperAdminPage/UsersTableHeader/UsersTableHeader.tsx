@@ -12,7 +12,7 @@ import {
   TabsTrigger,
 } from '@/components/shadcn-ui/ui/tabs';
 // style
-import './UserStatusFilter.css';
+import './UsersTableHeader.css';
 
 const filteringValueMapper = {
   ALL: 'all',
@@ -27,7 +27,7 @@ const mockUsersCounts = {
   [filteringValueMapper.DEACTIVE]: 100,
 };
 
-function _UserStatusFilter() {
+function _UsersTableHeader() {
   //
   // state
   //
@@ -61,12 +61,12 @@ function _UserStatusFilter() {
   }, []);
 
   return (
-    <div className="UserStatusFilter">
+    <div className="UsersTableHeader">
       <Tabs 
         value={value}
         onValueChange={onValueChange}
       >
-        <TabsList className="UserStatusFilter-tabList">
+        <TabsList className="UsersTableHeader-tabList">
           {items.map(item => {
             const {
               text,
@@ -88,5 +88,5 @@ function _UserStatusFilter() {
   );
 }
 
-const UserStatusFilter = memo(_UserStatusFilter);
-export default UserStatusFilter;
+const UsersTableHeader = memo(_UsersTableHeader);
+export default UsersTableHeader;

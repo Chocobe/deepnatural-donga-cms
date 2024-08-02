@@ -1,5 +1,5 @@
 // ui
-import UserStatusFilter from '@/components/pages/setting/SuperAdminPage/UserStatusFilter/UserStatusFilter';
+import UsersTableHeader from '@/components/pages/setting/SuperAdminPage/UsersTableHeader/UsersTableHeader';
 import UsersTableActions from '@/components/pages/setting/SuperAdminPage/UsersTableActions/UsersTableActions';
 import UsersTable from '@/components/pages/setting/SuperAdminPage/UsersTable/UsersTable';
 // style
@@ -11,7 +11,7 @@ function SuperAdminPage() {
   return (
     <div className="SuperAdminPage">
       <div className="SuperAdminPage-filterWrapper">
-        <UserStatusFilter />
+        <UsersTableHeader />
       </div>
 
       <div className="SuperAdminPage-tableActionsWrapper">
