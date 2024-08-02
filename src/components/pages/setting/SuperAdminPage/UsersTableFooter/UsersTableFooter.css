@@ -1,0 +1,109 @@
+.UsersTableFooter {
+  @apply flex items-center gap-[90px];
+
+  &-rowsPerPageWrapper {
+    @apply flex items-center gap-[10px];
+
+    .label {
+      @apply flex-shrink-0;
+
+      width: fit-content;
+
+      color: #000;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 500;
+    }
+
+    .trigger {
+      padding: 8px 16px !important;
+      width: 141px !important;
+
+      color: #71717A !important;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+    }
+
+    .item {
+      /*  */
+    }
+  }
+
+  &-paginationWrapper {
+    @apply flex items-center gap-10;
+
+    .indicator {
+      color: #000;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 500;
+    }
+
+    .pagination {
+      @apply flex items-center gap-1.5;
+
+      .paginationButton {
+        padding: 0 !important;
+        width: 36px !important;
+        height: 36px !important;
+
+        position: relative;
+
+        overflow: hidden;
+
+        &.goToThreshold {
+          /*  */
+
+          & * {
+            width: 20px;
+            height: 40px;
+
+            display: inline-block;
+
+            position: absolute;
+            top: 50%;
+          }
+
+          --offset-left: -18%;
+          --offset-right: 18%;
+
+          &.goToFirst {
+            .icon:nth-child(1) {
+              transform: translate(var(--offset-left), -50%);
+              color: #71717A;
+            }
+
+            .icon:nth-child(2) {
+              transform: translate(var(--offset-right), -50%);
+              color: #000000;
+            }
+          }
+
+          &.goToLast {
+            .icon:nth-child(1) {
+              transform: translate(var(--offset-left), -50%);
+              color: #000000;
+            }
+
+            .icon:nth-child(2) {
+              transform: translate(var(--offset-right), -50%);
+              color: #71717A;
+            }
+          }
+
+          &.goToPrev,
+          &.goToNext {
+            .icon {
+              width: 22px;
+              height: 44px;
+
+              color: #71717A;
+              transform: translateY(-50%);
+            }
+          }
+        }
+      }
+    }
+  }
+}

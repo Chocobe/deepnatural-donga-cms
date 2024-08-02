@@ -2,6 +2,7 @@
 import UsersTableHeader from '@/components/pages/setting/SuperAdminPage/UsersTableHeader/UsersTableHeader';
 import UsersTableActions from '@/components/pages/setting/SuperAdminPage/UsersTableActions/UsersTableActions';
 import UsersTable from '@/components/pages/setting/SuperAdminPage/UsersTable/UsersTable';
+import UsersTableFooter from '@/components/pages/setting/SuperAdminPage/UsersTableFooter/UsersTableFooter';
 // style
 import './SuperAdminPage.css';
 
@@ -23,7 +24,7 @@ function SuperAdminPage() {
       </div>
 
       <div className="SuperAdminPage-tableFooterWrapper">
-        Table Footer Wrapper
+        <UsersTableFooter />
       </div>
     </div>
   );

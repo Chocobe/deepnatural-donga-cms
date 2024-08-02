@@ -13,6 +13,6 @@
   }
 
   &-tableFooterWrapper {
-    /*  */
+    @apply flex justify-end flex-shrink-0;
   }
 }
