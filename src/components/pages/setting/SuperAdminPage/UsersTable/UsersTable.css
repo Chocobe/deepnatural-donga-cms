@@ -1,0 +1,81 @@
+.UsersTable {
+  @apply border;
+
+  .headerRow {
+    /*  */
+
+    & > * {
+      border-right: 1px solid hsl(var(--border));
+    }
+
+    .selector {
+      width: 66px !important;
+    }
+
+    .name {
+      width: 389px !important;
+    }
+
+    .email {
+      /*  */
+    }
+
+    .phone {
+      width: 244px !important;
+    }
+
+    .role {
+      width: 351px !important;
+    }
+
+    .status {
+      width: 156px !important;
+
+      text-align: center;
+    }
+  }
+
+  .row {
+    /*  */
+
+    & > * {
+      padding: 13px 16px !important;
+
+      color: #0F172A !important;
+      font-size: 16px !important;
+      line-height: 24px !important;
+      font-weight: 400 !important;
+
+      border-right: 1px solid hsl(var(--border)) !important;
+
+      &:last-of-type {
+        border-right: 0 !important;
+      }
+    }
+
+    .selector {
+      /*  */
+    }
+
+    .name {
+      /*  */
+    }
+
+    .email {
+      /*  */
+    }
+
+    .phone {
+      /*  */
+    }
+
+    .role {
+      padding: 0 16px !important;
+      width: auto !important;
+    }
+
+    .status {
+      text-align: center;
+    }
+  }
+}

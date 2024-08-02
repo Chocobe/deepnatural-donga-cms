@@ -1,7 +1,7 @@
 // ui
 import UserStatusFilter from '@/components/pages/setting/SuperAdminPage/UserStatusFilter/UserStatusFilter';
 import UsersTableActions from '@/components/pages/setting/SuperAdminPage/UsersTableActions/UsersTableActions';
-import MockUsersTable from '@/components/pages/setting/SuperAdminPage/MockUsersTable/MockUsersTable';
+import UsersTable from '@/components/pages/setting/SuperAdminPage/UsersTable/UsersTable';
 // style
 import './SuperAdminPage.css';
 
@@ -19,7 +19,7 @@ function SuperAdminPage() {
       </div>
 
       <div className="SuperAdminPage-tableWrapper">
-        <MockUsersTable />
+        <UsersTable />
       </div>
 
       <div className="SuperAdminPage-tableFooterWrapper">
