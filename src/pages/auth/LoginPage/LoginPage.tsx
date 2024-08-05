@@ -1,6 +1,7 @@
 // react
 import {
   useState,
+  useCallback,
   ChangeEvent,
   FormEvent,
 } from 'react';
@@ -11,6 +12,7 @@ import {
 } from '@/store/apiStateUtils';
 // ui
 import FindPasswordModal from '@/components/pages/auth/LoginPage/FindPasswordModal/FindPasswordModal';
+import FindPasswordResultModal from '@/components/pages/auth/LoginPage/FindPasswordResultModal/FindPasswordResultModal';
 import { 
   Input,
 } from '@/components/shadcn-ui/ui/input';
@@ -34,6 +36,8 @@ function LoginPage() {
     username: '',
     password: '',
   });
+
+  const [isOpenFindPasswordResultModal, setIsOpenFindPasswordResultModal] = useState(false);
 
   const formTemplates = [
     {
@@ -89,6 +93,14 @@ function LoginPage() {
       console.error(error);
     }
   }
+
+  //
+  // callback
+  //
+  const findPassword = useCallback(async () => {
+    await new Promise(res => setTimeout(res));
+    setIsOpenFindPasswordResultModal(true);
+  }, []);
 
   return (
     <div className="LoginPage">
@@ -158,7 +170,10 @@ function LoginPage() {
 
         {/* formFooter */}
         <div className="formFooter">
-          <FindPasswordModal />
+          <FindPasswordModal onSubmit={findPassword} />
+          <FindPasswordResultModal 
+            isOpen={isOpenFindPasswordResultModal}
+            setIsOpen={setIsOpenFindPasswordResultModal} />
         </div>
       </div>
     </div>

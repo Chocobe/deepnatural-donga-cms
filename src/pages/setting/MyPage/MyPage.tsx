@@ -71,8 +71,7 @@ function MyPage() {
       type: 'text',
       label: 'ID',
       placeholder: undefined,
-      disabled: true,
-      isHide: isSuperAdmin,
+      disabled: !isSuperAdmin,
       ActionButton: undefined,
     },
     {
@@ -86,6 +85,7 @@ function MyPage() {
       id: 'password',
       type: 'password',
       label: '비밀번호',
+      isHide: isSuperAdmin,
       placeholder: '비밀번호를 입력해 주세요.',
       ActionButton: () => (
         <Button
