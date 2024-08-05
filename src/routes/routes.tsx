@@ -14,7 +14,6 @@ import AuthedHeaderLayout from '@/layouts/AuthedHeaderLayout/AuthedHeaderLayout'
 import AuthedSidebarLayout from '@/layouts/AuthedSidebarLayout/AuthedSidebarLayout';
 // pages
 import LoginPage from '@/pages/auth/LoginPage/LoginPage';
-import FindPasswordPage from '@/pages/auth/FindPasswordPage/FindPasswordPage';
 import DashboardPage from '@/pages/dashboard/Dashboard/DashboardPage';
 import MathTextbookPage from '@/pages/math/MathTextbookPage/MathTextbookPage';
 import EnglishTextbookPage from '@/pages/english/EnglishTextbookPage/EnglishTextbookPage';
@@ -38,12 +37,6 @@ const routes = createBrowserRouter([
           .auth
           .getLoginPagePath(),
         element: <LoginPage />,
-      },
-      {
-        path: routePathFactory
-          .auth
-          .getFindPasswordPagePath(),
-        element: <FindPasswordPage />,
       },
     ],
   }, // Auth

@@ -6,9 +6,6 @@ const routePathFactory = {
     getLoginPagePath() {
       return `${this.getAuthRootPath()}` as const;
     },
-    getFindPasswordPagePath() {
-      return `${this.getAuthRootPath()}find-password` as const;
-    },
   },
 
   dashboard: {
