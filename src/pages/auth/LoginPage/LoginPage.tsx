@@ -4,17 +4,13 @@ import {
   ChangeEvent,
   FormEvent,
 } from 'react';
-// router
-import { 
-  NavLink,
-} from 'react-router-dom';
-import routePathFactory from '@/routes/routePathFactory';
 // store
 import useAuthApiStore from '@/store/authApiStore/authApiStore';
 import { 
   createSuccessApiSliceState,
 } from '@/store/apiStateUtils';
 // ui
+import FindPasswordModal from '@/components/pages/auth/LoginPage/FindPasswordModal/FindPasswordModal';
 import { 
   Input,
 } from '@/components/shadcn-ui/ui/input';
@@ -162,11 +158,7 @@ function LoginPage() {
 
         {/* formFooter */}
         <div className="formFooter">
-          <NavLink
-            className="findPasswordPageButton"
-            to={routePathFactory.auth.getFindPasswordPagePath()}>
-            비밀번호 찾기
-          </NavLink>
+          <FindPasswordModal />
         </div>
       </div>
     </div>
