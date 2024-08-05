@@ -1,4 +1,7 @@
 // style
+import { 
+  cn,
+} from '@/lib/shadcn-ui-utils';
 import './MockupPage.css';
 
 const boxList = Array.from(
@@ -18,7 +21,10 @@ function MockupPage(props: TMockupPageProps) {
   } = props;
 
   return (
-    <div className="MockupPage">
+    <div className={cn(
+      'MockPage',
+      isTestOverflow ? '' : 'w-full h-full flex justify-center items-center'
+    )}>
       <div className="MockupPage-name">
         {mockupName}
       </div>

@@ -9,7 +9,7 @@ import {
 function _MathTextbookPage() {
   return (
     <MockupPage 
-      isTestOverflow
+      // isTestOverflow
       mockupName="MathTextbook Page mockup" />
   );
 }

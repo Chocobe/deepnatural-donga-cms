@@ -9,7 +9,7 @@ import {
 function _DashboardPage() {
   return (
     <MockupPage 
-      isTestOverflow
+      // isTestOverflow
       mockupName="Dashboard Page mockup" />
   );
 }
