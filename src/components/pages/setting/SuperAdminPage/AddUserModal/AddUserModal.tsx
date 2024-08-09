@@ -5,9 +5,11 @@ import {
   useCallback,
   FormEvent,
   ChangeEvent,
+  useEffect,
 } from 'react';
 // ui
 import UserRoleSelect from '../UserRoleSelect/UserRoleSelect';
+import GenerateTempPasswordModal from '../GenerateTempPasswordModal/GenerateTempPasswordModal';
 import { 
   Dialog,
   DialogContent,
@@ -67,9 +69,7 @@ function AddUserModal() {
       required: true,
       disabled: true,
       ActionButton: () => (
-        <Button onClick={() => console.log('임시 비밀번호 생성')}>
-          임시 비번 발급
-        </Button>
+        <GenerateTempPasswordModal />
       ),
     },
     {
@@ -128,7 +128,26 @@ function AddUserModal() {
     console.group('onClickSubmit()');
     console.log('formState: ', formState);
     console.groupEnd();
+
+    setOpen(false);
   }, [formState]);
+
+  //
+  // effect
+  //
+  useEffect(function cleanup() {
+    return () => {
+      if (open) {
+        setFormState({
+          role: '',
+          name: '',
+          password: '',
+          email: '',
+          phone: '',
+        });
+      }
+    };
+  }, [open]);
 
   return (
     <Dialog
