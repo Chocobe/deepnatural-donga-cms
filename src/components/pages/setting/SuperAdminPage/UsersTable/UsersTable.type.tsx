@@ -25,7 +25,7 @@ export const mockUserStatusTemplateMapper = {
 } as const;
 
 // FIXME: model 에 정의하기
-export type MockUser = {
+export type TMockUser = {
   id: string;
   name: string;
   email: string;
@@ -35,7 +35,7 @@ export type MockUser = {
 };
 
 // FIXME: 지우기
-export const mockUsers: MockUser[] = [
+export const mockUsers: TMockUser[] = [
   {
     id: 'id-1',
     name: '김철수1',

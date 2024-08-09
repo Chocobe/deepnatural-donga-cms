@@ -1,6 +1,6 @@
 .SuperAdminPage {
   @apply p-10;
-  @apply w-full;
+  @apply w-full h-full;
   @apply flex flex-col gap-5;
   @apply overflow-hidden;
 
@@ -10,6 +10,15 @@
 
   &-tableActionsWrapper {
     /*  */
+  }
+
+  &-emptyData {
+    height: 100%;
+  }
+
+  &-tableWrapper {
+    height: 100%;
+    overflow: auto;
   }
 
   &-tableFooterWrapper {

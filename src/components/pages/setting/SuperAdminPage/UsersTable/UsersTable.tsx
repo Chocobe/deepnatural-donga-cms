@@ -4,6 +4,8 @@ import {
   useMemo,
   memo,
   useEffect,
+  Dispatch,
+  SetStateAction,
 } from 'react';
 // react-table
 import { 
@@ -35,17 +37,29 @@ import UserStatusToggleButton from '../UserStatusToggleButton/UserStatusToggleBu
 import './UsersTable.css';
 
 // mock
-import { MockUser, mockUsers, TMockUserStatus } from './UsersTable.type';
+import { 
+  TMockUser, 
+  TMockUserStatus,
+} from './UsersTable.type';
 
-const columnHelper = createColumnHelper<MockUser>();
+type TUserTableProps = {
+  data: TMockUser[];
+  setData: Dispatch<SetStateAction<TMockUser[]>>;
+};
 
-function _UsersTable() {
+const columnHelper = createColumnHelper<TMockUser>();
+
+function _UsersTable(props: TUserTableProps) {
+  const {
+    data,
+    setData,
+  } = props;
+
   //
   // state
   //
-  const [data, setData] = useState(mockUsers);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-  const [selectedData, setSelectedData] = useState<MockUser[]>([]);
+  const [selectedData, setSelectedData] = useState<TMockUser[]>([]);
 
   useEffect(() => {
     console.group('effect');

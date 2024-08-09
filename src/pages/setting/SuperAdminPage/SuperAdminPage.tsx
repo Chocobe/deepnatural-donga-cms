@@ -1,3 +1,8 @@
+// react
+import { 
+  useState,
+  useMemo,
+} from 'react';
 // ui
 import UsersTableHeader from '@/components/pages/setting/SuperAdminPage/UsersTableHeader/UsersTableHeader';
 import UsersTableActions from '@/components/pages/setting/SuperAdminPage/UsersTableActions/UsersTableActions';
@@ -6,8 +11,24 @@ import UsersTableFooter from '@/components/pages/setting/SuperAdminPage/UsersTab
 // style
 import './SuperAdminPage.css';
 
+// mock
+import { 
+  mockUsers,
+  TMockUser,
+} from '@/components/pages/setting/SuperAdminPage/UsersTable/UsersTable.type';
+
 function SuperAdminPage() {
   //
+  // state
+  //
+  const [data, setData] = useState<TMockUser[]>(mockUsers);
+
+  //
+  // cache
+  //
+  const isDataEmpty = useMemo(() => {
+    return !data?.length;
+  }, [data]);
 
   return (
     <div className="SuperAdminPage">
@@ -19,13 +40,25 @@ function SuperAdminPage() {
         <UsersTableActions />
       </div>
 
-      <div className="SuperAdminPage-tableWrapper">
-        <UsersTable />
-      </div>
+      {isDataEmpty
+        ? (
+          <div className="SuperAdminPage-emptyData">
+            등록된 유저가 없습니다.
+          </div>
+        ): (
+          <div className="SuperAdminPage-tableWrapper">
+            <UsersTable 
+              data={data}
+              setData={setData} />
+          </div>
+        )
+      }
 
-      <div className="SuperAdminPage-tableFooterWrapper">
-        <UsersTableFooter />
-      </div>
+      {!isDataEmpty && (
+        <div className="SuperAdminPage-tableFooterWrapper">
+          <UsersTableFooter />
+        </div>
+      )}
     </div>
   );
 }
