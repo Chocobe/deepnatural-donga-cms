@@ -16,25 +16,34 @@ import {
   Button,
 } from '@/components/shadcn-ui/ui/button';
 // style
-import './FindPasswordResultModal.css';
+import './ResultNoticeModal.css';
 
-type TFindPasswordResultModalProps = {
+type TResultNoticeModalProps = {
+  title: string;
+  description: string;
+  confirmButtonText?: string;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  onConfirm?: () => void;
 };
 
-export function FindPasswordResultModal(props: TFindPasswordResultModalProps) {
+export function ResultNoticeModal(props: TResultNoticeModalProps) {
   const {
+    title,
+    description,
+    confirmButtonText = '확인',
     isOpen,
     setIsOpen,
+    onConfirm,
   } = props;
 
   //
   // callback
   //
   const onClose = useCallback(() => {
+    onConfirm?.();
     setIsOpen(false);
-  }, [setIsOpen]);
+  }, [setIsOpen, onConfirm]);
 
   return (
     <Dialog
@@ -43,22 +52,22 @@ export function FindPasswordResultModal(props: TFindPasswordResultModalProps) {
     >
       <DialogTrigger hidden />
 
-      <DialogContent className="FindPasswordResultModal">
-        <DialogHeader className="FindPasswordResultModal-header">
+      <DialogContent className="ResultNoticeModal">
+        <DialogHeader className="ResultNoticeModal-header">
           <DialogTitle className="title"> 
-            비밀번호 찾기
+            {title}
           </DialogTitle>
 
           <DialogDescription className="description">
-            등록된 이메일로 임시발급된 비밀번호를 보내드렸습니다.
+            {description}
           </DialogDescription>
         </DialogHeader>
 
-        <DialogFooter className="FindPasswordResultModal-footer">
+        <DialogFooter className="ResultNoticeModal-footer">
           <Button 
             className="button"
             onClick={onClose}>
-            확인
+            {confirmButtonText}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -66,4 +75,4 @@ export function FindPasswordResultModal(props: TFindPasswordResultModalProps) {
   );
 }
 
-export default FindPasswordResultModal;
+export default ResultNoticeModal;
