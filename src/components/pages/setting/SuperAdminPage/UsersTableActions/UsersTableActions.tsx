@@ -7,6 +7,7 @@ import {
   ChangeEvent,
 } from 'react';
 // ui
+import AddUserModal from '../AddUserModal/AddUserModal';
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
@@ -16,7 +17,6 @@ import {
 // icon
 import { 
   LuSearch,
-  LuUserPlus,
 } from "react-icons/lu";
 // style
 import './UsersTableActions.css';
@@ -46,10 +46,6 @@ function _UsersTableActions() {
     const value = e.target.value;
 
     setRoleSearchValue(value);
-  }, []);
-
-  const onClickAddUser = useCallback(() => {
-    console.log('onClickAddUser()');
   }, []);
 
   //
@@ -97,16 +93,12 @@ function _UsersTableActions() {
       <div className="UsersTableActions-rightSide">
         <InputWithIcon 
           className="UsersTableActions-rightSide-roleSearchInput"
+          placeholder="검색어를 입력해주세요"
           value={roleSearchValue}
           onChange={onChangeRoleSearchValue}
           EndIcon={LuSearch} />
 
-        <Button
-          className="UsersTableActions-rightSide-addUserButton"
-          onClick={onClickAddUser}>
-          <LuUserPlus className="UsersTableActions-rightSide-addUserButton-icon" />
-          유저 등록
-        </Button>
+        <AddUserModal />
       </div>
     </div>
   );

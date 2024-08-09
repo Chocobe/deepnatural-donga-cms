@@ -7,14 +7,17 @@ import {
   ChangeEvent,
 } from 'react';
 // ui
+import ChangePasswordModal from '@/components/pages/setting/MyPage/ChangePasswordModal/ChangePasswordModal';
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
 // style
 import './MyPage.css';
-import useMockStore from '@/store/mockStore/mockStore';
 import { Label } from '@/components/shadcn-ui/ui/label';
 import { Input } from '@/components/shadcn-ui/ui/input';
+
+// mock
+import useMockStore from '@/store/mockStore/mockStore';
 
 function MyPage() {
   //
@@ -86,15 +89,10 @@ function MyPage() {
       type: 'password',
       label: '비밀번호',
       isHide: isSuperAdmin,
+      disabled: true,
       placeholder: '비밀번호를 입력해 주세요.',
       ActionButton: () => (
-        <Button
-          className="actionButton"
-          variant="default"
-          size="sm"
-          onClick={() => console.log('비밀 번호 변경')}>
-          비밀 번호 변경
-        </Button>
+        <ChangePasswordModal />
       ),
     },
     {

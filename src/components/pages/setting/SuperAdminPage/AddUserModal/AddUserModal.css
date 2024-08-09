@@ -1,0 +1,77 @@
+.AddUserModalTrigger {
+  padding: 8px 16px !important;
+  height: fit-content !important;
+
+  color: #fff !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+  font-weight: 500 !important;
+}
+
+.AddUserModal {
+  gap: 24px !important;
+
+  &-header {
+    /*  */
+
+    .title {
+      color: #09090B;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 600;
+    }
+
+    .description {
+      color: #71717A;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+    }
+  }
+
+  &-form {
+    @apply flex flex-col gap-4;
+
+    .formItem {
+      @apply flex flex-col gap-1.5;
+
+      .label {
+        color: #09090B;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 500;
+
+        .required {
+          margin-left: 2px;
+          color: #DC2626;
+        }
+      }
+
+      .inputWrapper {
+        @apply flex items-center gap-1.5;
+
+        .input {
+          /*  */
+        }
+      }
+    }
+
+    &-footer {
+      margin-top: 8px;
+
+      gap: 10px;
+
+      .button {
+        margin: 0 !important;
+
+        &.cancel {
+          /*  */
+        }
+
+        &.submit {
+          /*  */
+        }
+      }
+    }
+  }
+}
