@@ -2,7 +2,10 @@
 import {
   memo,
   PropsWithChildren,
+  useMemo,
 } from 'react';
+// hook
+import useCMSNavigatorItems from '@/components/layouts/CMSNavigator/hooks/useCMSNavigator';
 // components
 import CMSNavigator from '@/components/layouts/CMSNavigator/CMSNavigator';
 import AccountAction from '@/components/layouts/AccountAction/AccountAction';
@@ -23,6 +26,20 @@ function _AuthedHeaderLayout(props: TAuthedHeaderLayoutProps) {
     children,
   } = props;
 
+  //
+  // hook
+  //
+  const {
+    cmsNavigatorItems,
+  } = useCMSNavigatorItems();
+
+  const logoTitle = useMemo(() => {
+    return cmsNavigatorItems
+      .find(({ isActive }) => isActive)
+      ?.text
+      ?? '';
+  }, [cmsNavigatorItems]);
+
   return (
     <div className={cn(
       'AuthedHeaderLayout',
@@ -35,7 +52,7 @@ function _AuthedHeaderLayout(props: TAuthedHeaderLayoutProps) {
             src="/images/donga-logo-gray-scale.png"
             alt="동아출판" />
           <div className="logoTitle">
-            수학 CMS
+            {logoTitle}
           </div>
         </div>
 
