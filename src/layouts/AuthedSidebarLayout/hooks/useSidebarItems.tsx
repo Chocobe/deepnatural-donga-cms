@@ -27,6 +27,7 @@ import {
 } from "react-icons/lu";
 import useMockStore from '@/store/mockStore/mockStore';
 import useMathCMSPathMatch from './useMathCMSPathMatch';
+import useEnglishCMSPathMatch from './useEnglishCMSPathMatch';
 
 type TSidebarItem = {
   text: string;
@@ -64,6 +65,16 @@ const useSidebarItems = () => {
     isMathInstructionPath,
     isMathQuestionPath,
   } = useMathCMSPathMatch();
+
+  const {
+    isEnglishTextbookPath,
+    isEnglishChapterPath,
+    isEnglishAchievementPath,
+    isEnglishKnowledgeConceptPath,
+    isEnglishSeriesSourcePath,
+    isEnglishInstructionPath,
+    isEnglishQuestionPath,
+  } = useEnglishCMSPathMatch();
 
   //
   // cache
@@ -171,6 +182,84 @@ const useSidebarItems = () => {
     navigate,
   ]);
 
+  const englishCMSItems = useMemo<TSidebarItem[]>(() => [
+    {
+      text: '교과서',
+      IconComponent: LuBookOpen,
+      isActive: isEnglishTextbookPath,
+      isHide: false,
+      onClick: () => navigate(routePathFactory
+        .english
+        .getTextbookPath()
+      ),
+    },
+    {
+      text: '교과서 단원',
+      IconComponent: LuList,
+      isActive: isEnglishChapterPath,
+      isHide: false,
+      onClick: () => navigate(routePathFactory
+        .english
+        .getChapterPath()
+      ),
+    },
+    {
+      text: '성취기준',
+      IconComponent: LuTrophy,
+      isActive: isEnglishAchievementPath,
+      isHide: false,
+      onClick: () => navigate(routePathFactory
+        .english
+        .getAchievementPath()
+      ),
+    },
+    {
+      text: '지식개념',
+      IconComponent: LuFlagTriangleRight,
+      isActive: isEnglishKnowledgeConceptPath,
+      isHide: false,
+      onClick: () => navigate(routePathFactory
+        .english
+        .getKnowledgeConceptPath()
+      ),
+    },
+    {
+      text: '시리즈-출처',
+      IconComponent: LuTags,
+      isActive: isEnglishSeriesSourcePath,
+      isHide: false,
+      onClick: () => navigate(routePathFactory
+        .english
+        .getSeriesSourcePath()
+      ),
+    },
+    {
+      text: '지문',
+      IconComponent: LuAlignLeft,
+      isActive: isEnglishInstructionPath,
+      isHide: false,
+      onClick: () => navigate(routePathFactory
+        .english
+        .getInstructionPath()
+      ),
+    },
+    {
+      text: '문항',
+      IconComponent: LuFileSpreadsheet,
+      isActive: isEnglishQuestionPath,
+      isHide: false,
+      onClick: () => navigate(routePathFactory
+        .english
+        .getQuestionPath()
+      ),
+    },
+  ], [
+    isEnglishTextbookPath, isEnglishChapterPath, isEnglishAchievementPath,
+    isEnglishKnowledgeConceptPath, isEnglishSeriesSourcePath, isEnglishInstructionPath,
+    isEnglishQuestionPath,
+    navigate,
+  ]);
+
   const sidebarItems = useMemo(() => {
     switch(true) {
       case isSettingPath: 
@@ -178,15 +267,13 @@ const useSidebarItems = () => {
       case isMathCMSPath: 
         return mathCMSItems;
       case isEnglishCMSPath: 
-        return [
-          //
-        ];
+        return englishCMSItems;
       default: 
         return null;
     }
   }, [
     isSettingPath, isMathCMSPath, isEnglishCMSPath, 
-    settingItems, mathCMSItems,
+    settingItems, mathCMSItems, englishCMSItems,
   ]);
 
   return {
