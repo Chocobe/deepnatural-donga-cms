@@ -1,0 +1,25 @@
+.MathTextbookPage {
+  @apply flex flex-col gap-5;
+
+  padding: 40px;
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  &-header {
+    /*  */
+  }
+
+  &-actions {
+    /*  */
+  }
+
+  &-table {
+    /*  */
+  }
+
+  &-footer {
+    /*  */
+  }
+}

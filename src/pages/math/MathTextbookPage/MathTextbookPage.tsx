@@ -1,5 +1,7 @@
-// FIXME: mockup page
-import MockupPage from '@/components/pages/MockupPage/MockupPage';
+// ui
+import MathTextbookHeader from '@/components/pages/math/MathTextbook/MathTextbookHeader/MathTextbookHeader';
+// style
+import './MathTextbookPage.css';
 
 // react
 import {
@@ -8,9 +10,23 @@ import {
 
 function _MathTextbookPage() {
   return (
-    <MockupPage 
-      // isTestOverflow
-      mockupName="MathTextbook Page mockup" />
+    <div className="MathTextbookPage">
+      <div className="MathTextbookPage-header">
+        <MathTextbookHeader />
+      </div>
+
+      <div className="MathTextbookPage-actions">
+        Actions
+      </div>
+
+      <div className="MathTextbookPage-table">
+        Table
+      </div>
+
+      <div className="MathTextbookPage-footer">
+        Footer
+      </div>
+    </div>
   );
 }
 
