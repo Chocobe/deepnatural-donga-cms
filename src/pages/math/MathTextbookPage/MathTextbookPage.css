@@ -8,18 +8,24 @@
   overflow: hidden;
 
   &-header {
-    /*  */
+    flex-shrink: 0;
   }
 
   &-actions {
-    /*  */
+    flex-shrink: 0;
   }
 
   &-table {
-    /*  */
+    overflow: hidden;
+
+    border: 1px solid hsl(var(--border));
+
+    & > * {
+      height: 100%;
+    }
   }
 
   &-footer {
-    /*  */
+    flex-shrink: 0;
   }
 }

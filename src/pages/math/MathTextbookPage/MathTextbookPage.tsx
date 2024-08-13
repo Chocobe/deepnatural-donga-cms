@@ -1,13 +1,19 @@
-// ui
-import MathTextbookHeader from '@/components/pages/math/MathTextbook/MathTextbookHeader/MathTextbookHeader';
-import MathTextbookTableActions from '@/components/pages/math/MathTextbook/MathTextbookTableActions/MathTextbookTableActions';
-// style
-import './MathTextbookPage.css';
-
 // react
 import {
   memo,
 } from 'react';
+// ui
+import MathTextbookHeader from '@/components/pages/math/MathTextbook/MathTextbookHeader/MathTextbookHeader';
+import MathTextbookTableActions from '@/components/pages/math/MathTextbook/MathTextbookTableActions/MathTextbookTableActions';
+import MathTextbookTable from '@/components/pages/math/MathTextbook/MathTextbookTable/MathTextbookTable';
+import MathTextbookFooter from '@/components/pages/math/MathTextbook/MathTextbookFooter/MathTextbookFooter';
+// style
+import './MathTextbookPage.css';
+
+// moick
+import { 
+  mockMathTextbookData,
+} from './MathTextbookPage.type';
 
 function _MathTextbookPage() {
   return (
@@ -21,11 +27,12 @@ function _MathTextbookPage() {
       </div>
 
       <div className="MathTextbookPage-table">
-        Table
+        <MathTextbookTable
+          data={mockMathTextbookData} />
       </div>
 
       <div className="MathTextbookPage-footer">
-        Footer
+        <MathTextbookFooter />
       </div>
     </div>
   );
