@@ -1,5 +1,6 @@
 // ui
 import MathTextbookHeader from '@/components/pages/math/MathTextbook/MathTextbookHeader/MathTextbookHeader';
+import MathTextbookTableActions from '@/components/pages/math/MathTextbook/MathTextbookTableActions/MathTextbookTableActions';
 // style
 import './MathTextbookPage.css';
 
@@ -16,7 +17,7 @@ function _MathTextbookPage() {
       </div>
 
       <div className="MathTextbookPage-actions">
-        Actions
+        <MathTextbookTableActions />
       </div>
 
       <div className="MathTextbookPage-table">
