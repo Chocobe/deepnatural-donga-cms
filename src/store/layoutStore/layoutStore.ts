@@ -15,16 +15,18 @@ const useLayoutStore = create(devtools<TLayoutStore>((set, _get) => ({
   ...initialLayoutStoreState,
 
   resetLayoutStore: () => {
-    set(initialLayoutStoreState);
+    set(initialLayoutStoreState, false, 'resetLayoutStore');
   },
 
   setIsOpenSideBar: isOpenSideBar => {
-    set({ isOpenSideBar });
+    set({ 
+      isOpenSideBar,
+    }, false, 'setIsOpenSideBar');
   },
   toggleIsOpenSideBar: () => {
     set(state => ({
       isOpenSideBar: !state.isOpenSideBar,
-    }));
+    }), false, 'toggleIsOpenSideBar');
   },
 }), {
   name: 'LayoutStore',

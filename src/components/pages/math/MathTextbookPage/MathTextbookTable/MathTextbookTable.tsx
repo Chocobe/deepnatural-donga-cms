@@ -3,12 +3,13 @@ import {
   useState,
   useMemo,
   useCallback,
-  useEffect,
 } from 'react';
 // router
 import { 
   useNavigate,
 } from 'react-router-dom';
+// store
+import useMathTextbookDetailStore from '@/store/mathTextbookDetailStore/mathTextbookDetailStore';
 // ui
 import {
   flexRender,
@@ -51,10 +52,15 @@ function MathTextbookTable(props: TMathTextbookTableProps) {
   } = props;
 
   //
+  // mathTextbookDetail store
+  //
+  const setSelectedMathTextbook = useMathTextbookDetailStore(state => state.setSelectedMathTextbook);
+
+  //
   // state
   //
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-  const [selectedData, setSelectedData] = useState<TMathTextbookModel[]>([]);
+  const [_selectedRows, setSelectedRows] = useState<TMathTextbookModel[]>([]);
 
   //
   // cache
@@ -103,8 +109,8 @@ function MathTextbookTable(props: TMathTextbookTableProps) {
       setRowSelection(e);
 
       setTimeout(() => {
-        const selectedData = table.getSelectedRowModel().rows.map(row => row.original);
-        setSelectedData(selectedData);
+        const selectedRows = table.getSelectedRowModel().rows.map(row => row.original);
+        setSelectedRows(selectedRows);
       });
     },
   });
@@ -114,19 +120,16 @@ function MathTextbookTable(props: TMathTextbookTableProps) {
   //
   // callback
   //
-  const goToDetailPage = useCallback((textbookId: string) => {
+  const goToDetailPage = useCallback((mathTextbook: TMathTextbookModel) => {
+    const textbookId = mathTextbook.id;
+
+    setSelectedMathTextbook(mathTextbook);
+
     navigate(routePathFactory
       .math
       .getTextbookDetailPath(textbookId)
     );
-  }, [navigate]);
-
-  //
-  // effect
-  //
-  useEffect(() => {
-    console.log('selectedData: ', selectedData);
-  }, [selectedData]);
+  }, [setSelectedMathTextbook, navigate]);
 
   return (
     <Table className="MathTextbookTable">
@@ -156,7 +159,7 @@ function MathTextbookTable(props: TMathTextbookTableProps) {
             key={row.id}
             className="row"
             data-state={row.getIsSelected() && 'selected'}
-            onClick={() => goToDetailPage(row.original.id)}>
+            onClick={() => goToDetailPage(row.original)}>
             {row.getVisibleCells().map(cell => (
               <TableCell 
                 key={cell.id}
