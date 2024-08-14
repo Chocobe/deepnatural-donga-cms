@@ -1,11 +1,13 @@
-import { 
-  TMockMathTextbook,
-} from '@/components/pages/math/MathTextbookPage/MathTextbookTable/MathTextbookTable.type';
+// faker
 import { 
   faker,
 } from '@faker-js/faker';
+// type
+import { 
+  TMathTextbookModel,
+} from '@/apis/models/mathModel.type';
 
-export const mockMathTextbookData: TMockMathTextbook[] = [
+export const mockMathTextbookData: TMathTextbookModel[] = [
   {
     id: faker.string.uuid(),
     subject: '수학',

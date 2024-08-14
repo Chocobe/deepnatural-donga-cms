@@ -29,8 +29,8 @@ import {
 } from '@/components/shadcn-ui/ui/table';
 // type
 import { 
-  TMockMathTextbook,
-} from './MathTextbookTable.type';
+  TMathTextbookModel,
+} from '@/apis/models/mathModel.type';
 // util
 import { 
   extractID,
@@ -39,10 +39,10 @@ import {
 import './MathTextbookTable.css';
 import routePathFactory from '@/routes/routePathFactory';
 
-const columnHelper = createColumnHelper<TMockMathTextbook>();
+const columnHelper = createColumnHelper<TMathTextbookModel>();
 
 type TMathTextbookTableProps = {
-  data: TMockMathTextbook[];
+  data: TMathTextbookModel[];
 };
 
 function MathTextbookTable(props: TMathTextbookTableProps) {
@@ -54,7 +54,7 @@ function MathTextbookTable(props: TMathTextbookTableProps) {
   // state
   //
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-  const [selectedData, setSelectedData] = useState<TMockMathTextbook[]>([]);
+  const [selectedData, setSelectedData] = useState<TMathTextbookModel[]>([]);
 
   //
   // cache

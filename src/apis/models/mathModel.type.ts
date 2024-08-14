@@ -1,5 +1,7 @@
-// FIXME: model 에 정의하기
-export type TMockMathTextbook = {
+//
+// Math Textbook (수학 교과서)
+//
+export type TMathTextbookModel = {
   id: string;
   subject: string;
   curriculum: string;
