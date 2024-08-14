@@ -11,6 +11,7 @@ import useMathTextbookDetailStore from '@/store/mathTextbookDetailStore/mathText
 // ui
 import MathTextbookDetailHeader from '@/components/pages/math/MathTextbookDetailPage/MathTextbookDetailHeader/MathTextbookDetailHeader';
 import MathTextbookDetailMain from '@/components/pages/math/MathTextbookDetailPage/MathTextbookDetailMain/MathTextbookDetailMain';
+import MathTextbookDetailFooter from '@/components/pages/math/MathTextbookDetailPage/MathTextbookDetailFooter/MathTextbookDetailFooter';
 // style
 import './MathTextbookDetailPage.css';
 
@@ -51,7 +52,7 @@ function MathTextbookDetailPage() {
       <div className="MathTextbookDetailPage-divider" />
 
       <div className="MathTextbookDetailPage-footer">
-        Footer
+        <MathTextbookDetailFooter isDetailMode={isDetailMode} />
       </div>
     </div>
   );
