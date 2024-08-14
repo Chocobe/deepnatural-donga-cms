@@ -11,6 +11,7 @@
     "test": "jest --watch",
     "test:cov": "jest --watch --coverage",
     "test:clearCache": "jest --clearCache",
+    "tsc": "tsc -p tsconfig.app.json",
     "preview": "vite preview"
   },
   "dependencies": {
