@@ -27,34 +27,41 @@
 
     .selector {
       width: 66px !important;
+      min-width: 66px !important;
     }
 
     .subject {
       width: 200px !important;
+      min-width: 200px !important;
     }
 
     .curriculum {
       width: 200px !important;
+      min-width: 200px !important;
     }
 
     .name {
-      /*  */
+      min-width: 200px;
     }
 
     .author {
       width: 200px !important;
+      min-width: 200px !important;
     }
 
     .classType {
       width: 170px !important;
+      min-width: 170px !important;
     }
 
     .grade {
       width: 150px !important;
+      min-width: 150px !important;
     }
 
     .term {
       width: 150px !important;
+      min-width: 150px !important;
     }
   }
 
