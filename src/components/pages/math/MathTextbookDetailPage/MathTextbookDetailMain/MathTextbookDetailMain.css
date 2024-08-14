@@ -1,0 +1,37 @@
+.MathTextbookDetailMain {
+  /*  */
+
+  &-textbookName {
+    margin: 20px 0;
+  }
+
+  &-form {
+    /*  */
+
+    .itemWrapper {
+      @apply flex items-center gap-1;
+
+      padding: 10px 0;
+
+      border-top: 1px solid hsl(var(--border));
+
+      &:last-of-type {
+        border-bottom: 1px solid hsl(var(--border));
+      }
+
+      .label {
+        width: 123px;
+
+        color: #09090B !important;
+        font-size: 14px !important;
+        line-height: 20px !important;
+        font-weight: 500 !important;
+      }
+
+      .formItem {
+        width: 100%;
+        max-width: 424px;
+      }
+    }
+  }
+}

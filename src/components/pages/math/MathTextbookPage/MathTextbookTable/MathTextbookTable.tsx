@@ -77,7 +77,7 @@ function MathTextbookTable(props: TMathTextbookTableProps) {
     columnHelper.accessor('curriculum', {
       header: '교육과정',
     }),
-    columnHelper.accessor('name', {
+    columnHelper.accessor('title', {
       header: '교과서명',
     }),
     columnHelper.accessor('author', {

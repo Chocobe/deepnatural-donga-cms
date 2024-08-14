@@ -18,7 +18,7 @@ function MathTextbookDetailPage() {
   //
   // mathTextbook store
   //
-  const clearSelectedMathTextbook = useMathTextbookDetailStore(state => state.clearSelectedMathTextbook);
+  const clearMathTextbookDetailStore = useMathTextbookDetailStore(state => state.clearMathTextbookDetailStore);
 
   //
   // hook
@@ -32,9 +32,9 @@ function MathTextbookDetailPage() {
   //
   useEffect(function cleanup() {
     return () => {
-      clearSelectedMathTextbook();
+      clearMathTextbookDetailStore();
     };
-  }, [clearSelectedMathTextbook]);
+  }, [clearMathTextbookDetailStore]);
 
   return (
     <div className="MathTextbookDetailPage">
@@ -45,7 +45,7 @@ function MathTextbookDetailPage() {
       <div className="MathTextbookDetailPage-divider" />
 
       <div className="MathTextbookDetailPage-main">
-        <MathTextbookDetailMain isDetailMode={isDetailMode} />
+        <MathTextbookDetailMain />
       </div>
 
       <div className="MathTextbookDetailPage-divider" />

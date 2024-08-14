@@ -1,5 +1,6 @@
 // react
 import {
+  useMemo,
   useCallback,
   memo,
   ReactNode,
@@ -33,7 +34,7 @@ type TFormSelectProps = {
     value: string,
     id?: string
   ) => void;
-  displayValue?: (value: string) => ReactNode;
+  displayValue?: (targetOption: TFormSelectOptionItem) => ReactNode;
 };
 
 function _FormSelect(props: TFormSelectProps) {
@@ -47,6 +48,13 @@ function _FormSelect(props: TFormSelectProps) {
     onChange,
     displayValue,
   } = props;
+
+  //
+  // cache
+  //
+  const targetOption = useMemo(() => {
+    return options.find(option => option.value === value);
+  }, [value, options]);
 
   //
   // callback
@@ -69,7 +77,11 @@ function _FormSelect(props: TFormSelectProps) {
         <SelectValue 
           className="FormSelect-value"
           placeholder={placeholder}>
-          {displayValue?.(value) ?? value}
+          {displayValue && targetOption
+            ? displayValue(targetOption)
+            : targetOption?.text 
+              ?? ''
+          }
         </SelectValue>
       </SelectTrigger>
 
