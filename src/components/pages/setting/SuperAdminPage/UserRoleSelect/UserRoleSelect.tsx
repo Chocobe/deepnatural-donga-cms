@@ -12,7 +12,7 @@ import {
 } from '@/components/shadcn-ui/ui/select';
 // type
 import { 
-  mockUserRoleTemplateMapper,
+  userRoleTemplateMapper,
 } from '../UsersTable/UsersTable.type';
 // style
 import './UserRoleSelect.css';
@@ -38,7 +38,7 @@ function _UserRoleSelect(props: TuserRoleSelectProps) {
       </SelectTrigger>
 
       <SelectContent>
-        {Object.entries(mockUserRoleTemplateMapper).map(([value, text]) => (
+        {Object.entries(userRoleTemplateMapper).map(([value, text]) => (
           <SelectItem
             key={value}
             className="UserRoleSelect-item"
