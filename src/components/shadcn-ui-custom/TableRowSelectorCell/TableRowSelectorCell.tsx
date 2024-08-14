@@ -2,6 +2,7 @@
 import {
   useMemo,
   useCallback,
+  MouseEvent,
 } from 'react';
 // ui
 import {
@@ -30,6 +31,10 @@ function TableRowSelectorCell<T extends object>(props: TTableRowSelectorCellProp
   //
   // callback
   //
+  const onClick = useCallback((e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+  }, []);
+
   const onChange = useCallback((checked: boolean) => {
     props.row.getToggleSelectedHandler()(checked);
   }, [props]);
@@ -39,6 +44,7 @@ function TableRowSelectorCell<T extends object>(props: TTableRowSelectorCellProp
       className="TableRowSelectorCell"
       disabled={disabled}
       checked={checked}
+      onClick={onClick}
       onCheckedChange={onChange} />
   );
 }
