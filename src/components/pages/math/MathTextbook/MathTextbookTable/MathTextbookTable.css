@@ -1,0 +1,118 @@
+.MathTextbookTable {
+  /*  */
+
+  .headerRow {
+    position: sticky;
+    top: 0;
+
+    background-color: #fff;
+    box-shadow: -1px 1px 1px hsl(var(--border));
+
+    &:hover {
+      background-color: #fff;
+    }
+
+    & > * {
+      color: #0F172A;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 700;
+
+      border-right: 1px solid hsl(var(--border));
+
+      &:last-of-type {
+        border-right: none;
+      }
+    }
+
+    .selector {
+      width: 66px !important;
+      min-width: 66px !important;
+    }
+
+    .subject {
+      width: 200px !important;
+      min-width: 200px !important;
+    }
+
+    .curriculum {
+      width: 200px !important;
+      min-width: 200px !important;
+    }
+
+    .name {
+      min-width: 200px;
+    }
+
+    .author {
+      width: 200px !important;
+      min-width: 200px !important;
+    }
+
+    .classType {
+      width: 170px !important;
+      min-width: 170px !important;
+    }
+
+    .grade {
+      width: 150px !important;
+      min-width: 150px !important;
+    }
+
+    .term {
+      width: 150px !important;
+      min-width: 150px !important;
+    }
+  }
+
+  .row {
+    /*  */
+
+    & > * {
+      padding: 13px 16px !important;
+
+      color: #0F172A !important;
+      font-size: 16px !important;
+      line-height: 24px !important;
+      font-weight: 400 !important;
+
+      border-right: 1px solid hsl(var(--border)) !important;
+
+      &:last-of-type {
+        border-right: 0 !important;
+      }
+    }
+
+    .selector {
+      /*  */
+    }
+
+    .subject {
+      /*  */
+    }
+
+    .curriculum {
+      /*  */
+    }
+
+    .name {
+      /*  */
+    }
+
+    .author {
+      /*  */
+    }
+
+    .classType {
+      /*  */
+    }
+
+    .grade {
+      /*  */
+    }
+
+    .term {
+      /*  */
+    }
+  }
+}

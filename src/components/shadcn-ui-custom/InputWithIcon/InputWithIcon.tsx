@@ -8,11 +8,13 @@ import { IconType } from 'react-icons';
 
 export interface InputWithIconProps
   extends InputHTMLAttributes<HTMLInputElement> {
+  containerClassName?: string;
   StartIcon?: IconType
   EndIcon?: IconType
 }
 
 const _InputWithIcon = forwardRef<HTMLInputElement, InputWithIconProps>(({ 
+  containerClassName,
   className,
   type,
   StartIcon,
@@ -20,7 +22,11 @@ const _InputWithIcon = forwardRef<HTMLInputElement, InputWithIconProps>(({
   ...props 
 }, ref) => {
   return (
-    <div className="w-full relative">
+    <div 
+      className={cn(
+        'w-full relative',
+        containerClassName
+      )}>
       <input
         type={type}
         className={cn(

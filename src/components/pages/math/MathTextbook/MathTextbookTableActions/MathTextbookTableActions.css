@@ -1,0 +1,41 @@
+.MathTextbookTableActions {
+  @apply flex justify-between gap-5;
+
+  &-leftSide {
+    @apply flex items-center gap-2.5;
+
+    .searchTypeSelect {
+      width: 155px;
+
+      &[data-placeholder] {
+        color: #71717A;
+      }
+    }
+
+    .searchValue {
+      width: 335px;
+
+      &::placeholder {
+        color: #71717A;
+      }
+    }
+  }
+
+  &-rightSide {
+    @apply flex items-center gap-2.5;
+
+    .actionButton {
+      @apply flex items-center gap-2;
+
+      color: #fff;
+      font-size: 14px;
+      line-height: 24px;
+      font-weight: 500;
+
+      .icon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}
