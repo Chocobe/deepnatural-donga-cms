@@ -2,8 +2,13 @@
 import { 
   useState,
   useMemo,
+  useCallback,
   useEffect,
 } from 'react';
+// router
+import { 
+  useNavigate,
+} from 'react-router-dom';
 // ui
 import {
   flexRender,
@@ -32,6 +37,7 @@ import {
 } from '@/lib/tanstack-reactTable-utils/tanstack-reactTable-utils';
 // style
 import './MathTextbookTable.css';
+import routePathFactory from '@/routes/routePathFactory';
 
 const columnHelper = createColumnHelper<TMockMathTextbook>();
 
@@ -103,6 +109,18 @@ function MathTextbookTable(props: TMathTextbookTableProps) {
     },
   });
 
+  const navigate = useNavigate();
+
+  //
+  // callback
+  //
+  const goToDetailPage = useCallback((textbookId: string) => {
+    navigate(routePathFactory
+      .math
+      .getTextbookDetailPath(textbookId)
+    );
+  }, [navigate]);
+
   //
   // effect
   //
@@ -138,7 +156,7 @@ function MathTextbookTable(props: TMathTextbookTableProps) {
             key={row.id}
             className="row"
             data-state={row.getIsSelected() && 'selected'}
-          >
+            onClick={() => goToDetailPage(row.original.id)}>
             {row.getVisibleCells().map(cell => (
               <TableCell 
                 key={cell.id}

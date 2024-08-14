@@ -37,6 +37,9 @@ const routePathFactory = {
     getTextbookPath() {
       return `${this.getMathRootPath()}/textbook` as const;
     },
+    getTextbookDetailPath(textbookId: string) {
+      return `${this.getTextbookPath()}/${textbookId}`;
+    },
     // 교과서 단원
     getChapterPath() {
       return `${this.getMathRootPath()}/chapter` as const;

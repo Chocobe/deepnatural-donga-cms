@@ -18,6 +18,7 @@ import LoginPage from '@/pages/auth/LoginPage/LoginPage';
 import DashboardPage from '@/pages/dashboard/Dashboard/DashboardPage';
 // pages - math
 import MathTextbookPage from '@/pages/math/MathTextbookPage/MathTextbookPage';
+import MathTextbookDetailPage from '@/pages/math/MathTextbookDetailPage/MathTextbookDetailPage';
 import MathChapterPage from '@/pages/math/MathChapterPage/MathChapterPage';
 import MathAchievementPage from '@/pages/math/MathAchievementPage/MathAchievementPage';
 import MathKnowledgeConceptPage from '@/pages/math/MathKnowledgeConceptPage/MathKnowledgeConceptPage';
@@ -105,6 +106,12 @@ const routes = createBrowserRouter([
               .math
               .getTextbookPath(),
             element: <MathTextbookPage />,
+          },
+          {
+            path: routePathFactory
+              .math
+              .getTextbookDetailPath(':id'),
+            element: <MathTextbookDetailPage />,
           },
           // 수학: 단원정보
           {
