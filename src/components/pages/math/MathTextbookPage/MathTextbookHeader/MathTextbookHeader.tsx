@@ -5,6 +5,11 @@ import {
   useCallback,
   memo,
 } from 'react';
+// router
+import { 
+  useNavigate,
+} from 'react-router-dom';
+import routePathFactory from '@/routes/routePathFactory';
 // ui
 import {
   Accordion,
@@ -69,6 +74,11 @@ function _MathTextbookHeader() {
   });
 
   //
+  // hook
+  //
+  const navigate = useNavigate();
+
+  //
   // callback
   //
   const onChangeClassType = useCallback((classType: string) => {
@@ -100,6 +110,13 @@ function _MathTextbookHeader() {
       classification,
     }));
   }, []);
+
+  const addMathTextbook = useCallback(() => {
+    navigate(routePathFactory
+      .math
+      .getTextbookAddPath()
+    );
+  }, [navigate]);
 
   //
   // cache
@@ -220,7 +237,8 @@ function _MathTextbookHeader() {
         </Button>
 
         <Button
-          className="actionButton">
+          className="actionButton"
+          onClick={addMathTextbook}>
           <LuPlus className="icon" />
           Add 교과서
         </Button>

@@ -1,6 +1,6 @@
 import { 
   TMockMathTextbook,
-} from '@/components/pages/math/MathTextbook/MathTextbookTable/MathTextbookTable.type';
+} from '@/components/pages/math/MathTextbookPage/MathTextbookTable/MathTextbookTable.type';
 import { 
   faker,
 } from '@faker-js/faker';

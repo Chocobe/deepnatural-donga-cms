@@ -110,7 +110,13 @@ const routes = createBrowserRouter([
           {
             path: routePathFactory
               .math
-              .getTextbookDetailPath(':id'),
+              .getTextbookAddPath(),
+            element: <MathTextbookDetailPage />,
+          },
+          {
+            path: routePathFactory
+              .math
+              .getTextbookDetailPath(':textbookId'),
             element: <MathTextbookDetailPage />,
           },
           // 수학: 단원정보
