@@ -4,6 +4,7 @@
   max-width: none !important;
   max-height: 80% !important;
 
+  grid-template-rows: max-content 1fr max-content;
   gap: 24px !important;
 
   overflow: hidden !important;
@@ -98,6 +99,20 @@
 
         .action {
           /*  */
+        }
+      }
+
+      .placeholder {
+        /*  */
+
+        .cell {
+          padding: 150px 0 !important;
+
+          color: #989898 !important;
+          font-size: 16px !important;
+          line-height: 24px !important;
+          font-weight: 500 !important;
+          text-align: center !important;
         }
       }
     }

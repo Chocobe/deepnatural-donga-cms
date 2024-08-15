@@ -3,6 +3,8 @@ import {
   useCallback,
   memo,
 } from 'react';
+// store
+import useHistoryModalStore from '@/store/historyModalStore/historyModalStore';
 // ui
 import { 
   Button,
@@ -11,6 +13,11 @@ import {
 import { 
   LuHistory,
 } from 'react-icons/lu';
+// type
+import { 
+  mockHistoryModalData, 
+  THistoryModalData,
+} from '@/components/shadcn-ui-custom/modals/HistoryModal/HistoryModal.type';
 // style
 import './MathTextbookDetailHeader.css';
 
@@ -24,11 +31,24 @@ function _MathTextbookDetailHeader(props: TMathTextbookDetailHeaderProps) {
   } = props;
 
   //
+  // historyModal store
+  //
+  const openHistoryModal = useHistoryModalStore(state => state.openHistoryModal);
+
+  //
   // callback
   //
-  const openHistoryModal = useCallback(() => {
-    console.log('openHistoryModal()');
+  const retrieveMathTextbookHistory = useCallback(async () => {
+    return new Promise<THistoryModalData[]>(res => {
+      setTimeout(() => {
+        res(mockHistoryModalData);
+      }, Math.random() * 2_000);
+    });
   }, []);
+
+  const _openHistoryModal = useCallback(async () => {
+    openHistoryModal(retrieveMathTextbookHistory);
+  }, [retrieveMathTextbookHistory, openHistoryModal]);
 
   return (
     <div className="MathTextbookDetailHeader">
@@ -46,7 +66,7 @@ function _MathTextbookDetailHeader(props: TMathTextbookDetailHeaderProps) {
         {isDetailMode && (
           <Button
             className="historyButton"
-            onClick={openHistoryModal}>
+            onClick={_openHistoryModal}>
             <LuHistory className="icon" />
             History
           </Button>

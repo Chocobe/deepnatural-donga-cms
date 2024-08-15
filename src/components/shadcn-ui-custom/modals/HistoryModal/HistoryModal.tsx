@@ -1,9 +1,13 @@
 // react
 import {
+  useRef,
   useState,
   useMemo,
   useCallback,
+  useEffect,
 } from 'react';
+// store
+import useHistoryModalStore from '@/store/historyModalStore/historyModalStore';
 // ui
 import { 
   Dialog,
@@ -39,7 +43,6 @@ import {
 import dayjs from 'dayjs';
 // type
 import { 
-  mockHistoryModalData,
   THistoryModalData,
 } from './HistoryModal.type';
 // style
@@ -49,10 +52,24 @@ const columnHelper = createColumnHelper<THistoryModalData>();
 
 function HistoryModal() {
   //
+  // historyModal store
+  //
+  const historyModalStoreState = useHistoryModalStore(state => state);
+  const {
+    isOpen,
+    historyDataList,
+    closeHistoryModal,
+  } = historyModalStoreState;
+
+  //
+  // ref
+  //
+  const isOpenRef = useRef(isOpen);
+
+  //
   // state
   //
-  const [isOpen, setIsOpen] = useState(true);
-  const [historiesForDisplay, _setHistoriesForDisplay] = useState<THistoryModalData[]>(mockHistoryModalData);
+  const [historiesForDisplay, setHistoriesForDisplay] = useState<THistoryModalData[]>([]);
 
   //
   // cache
@@ -86,17 +103,30 @@ function HistoryModal() {
   // callback
   //
   const onAnimationEnd = useCallback(() => {
-    //
-  }, []);
+    if (isOpen) {
+      return;
+    }
 
-  const closeHistoryModal = useCallback(() => {
-    setIsOpen(false);
-  }, []);
+    setHistoriesForDisplay([]);
+  }, [isOpen]);
+
+  //
+  // effect
+  //
+  useEffect(() => {
+    isOpenRef.current = isOpen;
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (historyDataList && isOpenRef.current) {
+      setHistoriesForDisplay(historyDataList);
+    }
+  }, [historyDataList]);
 
   return (
     <Dialog
       open={isOpen}
-      onOpenChange={setIsOpen}>
+      onOpenChange={closeHistoryModal}>
       <DialogTrigger hidden />
 
       <DialogContent 
@@ -132,22 +162,31 @@ function HistoryModal() {
             </TableHeader>
 
             <TableBody>
-              {table.getRowModel().rows.map(row => (
-                <TableRow
-                  key={row.id}
-                  className="row">
-                  {row.getVisibleCells().map(cell => (
+              {historiesForDisplay?.length
+                ? table.getRowModel().rows.map(row => (
+                  <TableRow
+                    key={row.id}
+                    className="row">
+                    {row.getVisibleCells().map(cell => (
+                      <TableCell
+                        key={cell.id}
+                        className={extractID(cell.id) ?? ''}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                )): (
+                  <TableRow className="placeholder">
                     <TableCell
-                      key={cell.id}
-                      className={extractID(cell.id) ?? ''}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
+                      className="cell"
+                      colSpan={3}>
+                      히스토리가 없습니다.
                     </TableCell>
-                  ))}
-                </TableRow>
-              ))}
+                  </TableRow>
+                )}
             </TableBody>
           </Table>
         </div>
