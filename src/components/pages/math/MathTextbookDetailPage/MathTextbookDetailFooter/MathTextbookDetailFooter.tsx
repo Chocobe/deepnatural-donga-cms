@@ -1,15 +1,14 @@
 // react
 import {
-  useState,
   useCallback,
   memo,
 } from 'react';
 // store
 import useMathTextbookDetailStore from '@/store/mathTextbookDetailStore/mathTextbookDetailStore';
+import useResultNoticeModalStore from '@/store/resultNoticeModalStore/resultNoticeModalStore';
 // hook
 import useDetailPageNextActionAfterSubmit from '@/components/pages/hooks/useDetailPageNextActionAfterSubmit';
 // ui
-import ResultNoticeModal from '@/components/shadcn-ui-custom/modals/ResultNoticeModal/ResultNoticeModal';
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
@@ -35,10 +34,10 @@ function _MathTextbookDetailFooter(props: TMathTextbookDetailFooterProps) {
   const formState = useMathTextbookDetailStore(state => state.formState);
 
   //
-  // state
+  // resultNoticeModal store
   //
-  const [isOpenSuccessNoticeModal, setIsOpenSuccessNoticeModal] = useState(false);
-  const [isOpenErrorNoticeModal, setIsOpenErrorNoticeModal] = useState(false);
+  const openSuccessNoticeModal = useResultNoticeModalStore(state => state.openSuccessNoticeModal);
+  const openErrorNoticeModal = useResultNoticeModalStore(state => state.openErrorNoticeModal);
 
   //
   // hook
@@ -53,13 +52,57 @@ function _MathTextbookDetailFooter(props: TMathTextbookDetailFooterProps) {
   //
   // callback
   //
+  const _openSuccessNoticeModal = useCallback(() => {
+    openSuccessNoticeModal({
+      title: isDetailMode
+        ? '저장하기 완료'
+        : '추가하기 완료',
+      description: isDetailMode
+        ? '입력하신 내용이 성공적으로 저장되었습니다.'
+        : '입력하신 내용이 성공적으로 추가되었습니다.',
+      firstButton: {
+        text: '취소',
+        variant: 'outline',
+        onClick: () => console.log('SuccessNoticeModal - 취소'),
+      },
+      secondButton: {
+        text: '확인',
+        variant: 'default',
+        onClick: () => console.log('SuccessNoticeModal - 확인'),
+      },
+    });
+  }, [isDetailMode, openSuccessNoticeModal]);
+
+  const _openErrorNoticeModal = useCallback(() => {
+    openErrorNoticeModal({
+      title: isDetailMode
+        ? '저장하기 오류'
+        : '추가하기 오류',
+      description: isDetailMode
+        ? '오류가 발생하여 저장되지 않았습니다. 다시 시도해주세요.'
+        : '오류가 발생하여 추가되지 않았습니다. 다시 시도해주세요.',
+      firstButton: {
+        text: '취소',
+        variant: 'outline',
+        onClick: () => console.log('ErrorNoticeModal - 취소'),
+      },
+      secondButton: {
+        text: '다시 입력하기',
+        variant: 'default',
+        onClick: () => console.log('ErrorNoticeModal - 다시 입력하기'),
+      },
+    });
+  }, [isDetailMode, openErrorNoticeModal]);
+
   const submit = useCallback(() => {
     console.group('submit()');
     console.log(isDetailMode ? '저장 API 호출하기' : '추가 API 호출하기');
     console.groupEnd();
 
-    setIsOpenSuccessNoticeModal(true);
-  }, [isDetailMode]);
+    Math.random() > 0.5
+      ? _openSuccessNoticeModal()
+      : _openErrorNoticeModal();
+  }, [isDetailMode, _openSuccessNoticeModal, _openErrorNoticeModal]);
 
   const onClickSaveAndAdd = useCallback(() => {
     console.group('저장후 추가하기');
@@ -97,22 +140,6 @@ function _MathTextbookDetailFooter(props: TMathTextbookDetailFooterProps) {
     submit();
   }, [formState, defaultAfterSubmit, submit]);
 
-  const confirmSuccess = useCallback(() => {
-    console.group('confirmSuccess()');
-    console.log(isDetailMode ? '저장하기 성공 확인' : '추가하기 성공 확인');
-    console.groupEnd();
-
-    setIsOpenSuccessNoticeModal(false);
-  }, [isDetailMode]);
-
-  const closeSuccessNoticeModal = useCallback(() => {
-    setIsOpenSuccessNoticeModal(false);
-  }, []);
-
-  const closeErrorNoticeModal = useCallback(() => {
-    setIsOpenErrorNoticeModal(false);
-  }, []);
-
   return (<>
     <div className="MathTextbookDetailFooter">
       {isDetailMode
@@ -149,44 +176,6 @@ function _MathTextbookDetailFooter(props: TMathTextbookDetailFooterProps) {
         </>)
       }
     </div>
-
-    <ResultNoticeModal
-      title={isDetailMode
-        ? '저장하기 완료'
-        : '추가하기 완료'
-      }
-      description={isDetailMode
-        ? '입력하신 내용이 성공적으로 저장되었습니다.'
-        : '입력하신 내용이 성공적으로 추가되었습니다.'
-      }
-      variant="success"
-      isOpen={isOpenSuccessNoticeModal}
-      setIsOpen={setIsOpenSuccessNoticeModal}
-      firstButtonText="취소"
-      firstButtonVariant="outline"
-      onClickFirstButton={closeSuccessNoticeModal}
-      secondButtonText="확인"
-      secondButtonVariant="default"
-      onClickSecondButton={confirmSuccess} />
-
-    <ResultNoticeModal
-      title={isDetailMode
-        ? '저장하기 오류'
-        : '추가하기 오류'
-      }
-      description={isDetailMode
-        ? '오류가 발생하여 저장되지 않았습니다. 다시 시도해주세요.'
-        : '오류가 발생하여 추가되지 않았습니다. 다시 시도해주세요.'
-      }
-      variant="error"
-      isOpen={isOpenErrorNoticeModal}
-      setIsOpen={setIsOpenErrorNoticeModal}
-      firstButtonText="취소"
-      firstButtonVariant="outline"
-      onClickFirstButton={closeErrorNoticeModal}
-      secondButtonText="다시 입력하기"
-      secondButtonVariant="default"
-      onClickSecondButton={submit} />
   </>);
 }
 

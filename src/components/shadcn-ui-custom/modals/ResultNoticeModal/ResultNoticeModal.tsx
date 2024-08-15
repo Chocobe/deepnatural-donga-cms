@@ -1,11 +1,14 @@
 // react
 import {
+  useState,
   useMemo,
+  useCallback,
+  useEffect,
 } from 'react';
+// store
+import useResultNoticeModalStore from '@/store/resultNoticeModalStore/resultNoticeModalStore';
 // ui
-import SimpleNoticeModal, { 
-  TSimpleNoticeModalProps,
-} from '../SimpleNoticeModal/SimpleNoticeModal';
+import SimpleNoticeModal from '../SimpleNoticeModal/SimpleNoticeModal';
 import { 
   Button,
   ButtonProps,
@@ -20,54 +23,119 @@ import {
 } from '@/lib/shadcn-ui-utils';
 import './ResultNoticeModal.css';
 
-type TResultNoticeModalProps = Required<Pick<
-  TSimpleNoticeModalProps, 
-  'title' | 'description' | 'isOpen' | 'setIsOpen'
->> & {
-  variant?: TSimpleNoticeModalVariant;
-  firstButtonText?: string;
-  firstButtonVariant?: ButtonProps['variant'];
-  onClickFirstButton?: () => void;
-
-  secondButtonText?: string;
-  secondButtonVariant?: ButtonProps['variant'];
-  onClickSecondButton?: () => void;
-};
-
-function ResultNoticeModal(props: TResultNoticeModalProps) {
+function ResultNoticeModal() {
+  //
+  // resultNoticeModal store
+  //
+  const resultNoticeModalState = useResultNoticeModalStore(state => state);
   const {
-    firstButtonText,
-    firstButtonVariant,
-    onClickFirstButton,
+    isOpen,
+    title,
+    description,
+    variant,
+    firstButton,
+    secondButton,
+    closeResultNoticeModal,
+  } = resultNoticeModalState;
 
-    secondButtonText,
-    secondButtonVariant,
-    onClickSecondButton,
-    ..._props
-  } = props;
+  //
+  // state
+  //
+  const [stateForDisplay, setStateForDisplay] = useState<{
+    title?: string;
+    description?: string;
+    variant?: TSimpleNoticeModalVariant;
+    firstButtonText?: string;
+    firstButtonVariant?: ButtonProps['variant'];
+    secondButtonText?: string;
+    secondButtonVariant?: ButtonProps['variant'];
+  }>({
+    title,
+    description,
+    variant,
+    firstButtonText: firstButton?.text,
+    firstButtonVariant: firstButton?.variant,
+    secondButtonText: secondButton?.text,
+    secondButtonVariant: secondButton?.variant,
+  });
 
+  //
+  // cache
+  //
   const isShowFirstButton = useMemo(() => {
-    return !!(firstButtonText && onClickFirstButton);
-  }, [firstButtonText, onClickFirstButton]);
+    return !!stateForDisplay.firstButtonText;
+  }, [stateForDisplay.firstButtonText]);
 
   const isShowSecondButton = useMemo(() => {
-    return !!(secondButtonText && onClickSecondButton);
-  }, [secondButtonText, onClickSecondButton]);
+    return !!stateForDisplay.secondButtonText;
+  }, [stateForDisplay.secondButtonText]);
+
+  //
+  // callback
+  //
+  const onAnimationEnd = useCallback(() => {
+    if (isOpen) {
+      return;
+    }
+
+    setStateForDisplay({
+      title: undefined,
+      description: undefined,
+      firstButtonText: undefined,
+      secondButtonText: undefined,
+    });
+  }, [isOpen]);
+
+  const onClickFirstButton = useCallback(() => {
+    closeResultNoticeModal();
+    firstButton?.onClick?.();
+  }, [firstButton, closeResultNoticeModal]);
+
+  const onClickSecondButton = useCallback(() => {
+    closeResultNoticeModal();
+    secondButton?.onClick?.();
+  }, [secondButton, closeResultNoticeModal]);
+
+  //
+  // effect
+  //
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    setStateForDisplay({
+      title,
+      description,
+      variant,
+      firstButtonText: resultNoticeModalState.firstButton?.text,
+      firstButtonVariant: resultNoticeModalState.firstButton?.variant,
+      secondButtonText: resultNoticeModalState.secondButton?.text,
+      secondButtonVariant: resultNoticeModalState.secondButton?.variant,
+    });
+
+    // eslint-disable-next-line
+  }, [isOpen]);
 
   return (
     <SimpleNoticeModal 
-      {..._props}
+      isOpen={isOpen}
+      setIsOpen={closeResultNoticeModal}
+      onAnimationEnd={onAnimationEnd}
       className="ResultNoticeModal"
+      title={stateForDisplay.title}
+      description={stateForDisplay.description}
+      variant={stateForDisplay.variant}
       $footer={<>
         {isShowFirstButton && (
           <Button
             className={cn(
               'ResultNoticeModal-button',
-              firstButtonVariant
+              stateForDisplay?.firstButtonVariant
             )}
-            variant={firstButtonVariant}
+            variant={stateForDisplay?.firstButtonVariant}
             onClick={onClickFirstButton}>
-            {firstButtonText}
+            {stateForDisplay.firstButtonText}
           </Button>
         )}
 
@@ -75,11 +143,11 @@ function ResultNoticeModal(props: TResultNoticeModalProps) {
           <Button
             className={cn(
               'ResultNoticeModal-button',
-              secondButtonVariant
+              stateForDisplay?.secondButtonVariant
             )}
-            variant={secondButtonVariant}
+            variant={stateForDisplay.secondButtonVariant}
             onClick={onClickSecondButton}>
-            {secondButtonText}
+            {stateForDisplay.secondButtonText}
           </Button>
         )}
       </>} />

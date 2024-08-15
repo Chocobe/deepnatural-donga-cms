@@ -7,6 +7,8 @@ import {
 import RootRouter from './routes/RootRouter';
 // store
 import useAuthApiStore from './store/authApiStore/authApiStore';
+// ui
+import ResultNoticeModal from './components/shadcn-ui-custom/modals/ResultNoticeModal/ResultNoticeModal';
 // style
 import './App.css';
 
@@ -36,6 +38,7 @@ function App() {
   return (
     <div className="App">
       <RootRouter />
+      <ResultNoticeModal />
     </div>
   );
 }

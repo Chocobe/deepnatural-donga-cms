@@ -1,5 +1,6 @@
 // react
 import {
+  AnimationEvent,
   ReactNode,
 } from 'react';
 // ui
@@ -30,6 +31,7 @@ export type TSimpleNoticeModalProps = {
   variant?: TSimpleNoticeModalVariant;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  onAnimationEnd?: (e: AnimationEvent<HTMLDivElement>) => void;
   $footer?: ReactNode;
 };
 
@@ -41,6 +43,7 @@ export function SimpleNoticeModal(props: TSimpleNoticeModalProps) {
     variant = simpleNoticeModalVariantMapper.SUCCESS,
     isOpen,
     setIsOpen,
+    onAnimationEnd,
     $footer,
   } = props;
 
@@ -51,10 +54,12 @@ export function SimpleNoticeModal(props: TSimpleNoticeModalProps) {
     >
       <DialogTrigger hidden />
 
-      <DialogContent className={cn(
-        'SimpleNoticeModal',
-        className
-      )}>
+      <DialogContent 
+        className={cn(
+          'SimpleNoticeModal',
+          className
+        )}
+        onAnimationEndCapture={onAnimationEnd}>
         <DialogHeader className="SimpleNoticeModal-header">
           <DialogTitle className={cn(
             'title',
