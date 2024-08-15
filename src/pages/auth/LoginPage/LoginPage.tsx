@@ -12,7 +12,7 @@ import {
 } from '@/store/apiStateUtils';
 // ui
 import FindPasswordModal from '@/components/pages/auth/LoginPage/FindPasswordModal/FindPasswordModal';
-import ResultNoticeModal from '@/components/shadcn-ui-custom/ResultNoticeModal/ResultNoticeModal';
+import ResultNoticeModal from '@/components/shadcn-ui-custom/modals/ResultNoticeModal/ResultNoticeModal';
 import { 
   Input,
 } from '@/components/shadcn-ui/ui/input';
@@ -102,6 +102,10 @@ function LoginPage() {
     setIsOpenResultNoticeModal(true);
   }, []);
 
+  const closeResultNoticeModal = useCallback(() => {
+    setIsOpenResultNoticeModal(false);
+  }, []);
+
   return (
     <div className="LoginPage">
       <div className="form">
@@ -174,8 +178,12 @@ function LoginPage() {
           <ResultNoticeModal
             title="비밀번호 찾기"
             description="등록된 이메일로 임시발급된 비밀번호를 보내드렸습니다."
+            variant="success"
             isOpen={isOpenResultNoticeModal}
-            setIsOpen={setIsOpenResultNoticeModal} />
+            setIsOpen={setIsOpenResultNoticeModal}
+            firstButtonText="확인"
+            firstButtonVariant="default"
+            onClickFirstButton={closeResultNoticeModal} />
         </div>
       </div>
     </div>

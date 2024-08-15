@@ -8,7 +8,7 @@ import {
   FormEvent,
 } from 'react';
 // ui
-import ResultNoticeModal from '@/components/shadcn-ui-custom/ResultNoticeModal/ResultNoticeModal';
+import ResultNoticeModal from '@/components/shadcn-ui-custom/modals/ResultNoticeModal/ResultNoticeModal';
 import { 
   Dialog,
   DialogContent,
@@ -100,6 +100,10 @@ function ChangePasswordModal() {
     setOpen(false);
     setIsOpenResultNoticeModal(true);
   }, [formState]);
+
+  const closeResultNoticeModal = useCallback(() => {
+    setIsOpenResultNoticeModal(false);
+  }, []);
 
   //
   // effect
@@ -197,8 +201,12 @@ function ChangePasswordModal() {
     <ResultNoticeModal
       title="비밀번호 변경 완료"
       description="새로운 비밀번호로 변경이 완료되었습니다."
+      variant="success"
       isOpen={isOpenResultNoticeModal}
-      setIsOpen={setIsOpenResultNoticeModal} />
+      setIsOpen={setIsOpenResultNoticeModal}
+      firstButtonText="확인"
+      firstButtonVariant="default"
+      onClickFirstButton={closeResultNoticeModal} />
   </>);
 }
 
