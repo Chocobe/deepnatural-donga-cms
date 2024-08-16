@@ -7,12 +7,12 @@ import {
 } from 'react';
 // store
 import useAuthApiStore from '@/store/authApiStore/authApiStore';
+import useResultNoticeModalStore from '@/store/resultNoticeModalStore/resultNoticeModalStore';
 import { 
   createSuccessApiSliceState,
 } from '@/store/apiStateUtils';
 // ui
 import FindPasswordModal from '@/components/pages/auth/LoginPage/FindPasswordModal/FindPasswordModal';
-import ResultNoticeModal from '@/components/shadcn-ui-custom/ResultNoticeModal/ResultNoticeModal';
 import { 
   Input,
 } from '@/components/shadcn-ui/ui/input';
@@ -37,7 +37,7 @@ function LoginPage() {
     password: '',
   });
 
-  const [isOpenResultNoticeModal, setIsOpenResultNoticeModal] = useState(false);
+  // const [isOpenResultNoticeModal, setIsOpenResultNoticeModal] = useState(false);
 
   const formTemplates = [
     {
@@ -60,6 +60,10 @@ function LoginPage() {
   // authApiStore
   //
   const setLoginState = useAuthApiStore(state => state.login.action.setLoginState);
+  const {
+    openSuccessNoticeModal,
+    closeResultNoticeModal,
+  } = useResultNoticeModalStore();
 
   function  onChange(e: ChangeEvent<HTMLInputElement>) {
     const {
@@ -99,8 +103,16 @@ function LoginPage() {
   //
   const findPassword = useCallback(async () => {
     await new Promise(res => setTimeout(res));
-    setIsOpenResultNoticeModal(true);
-  }, []);
+    openSuccessNoticeModal({
+      title: '비밀번호 찾기',
+      description: '등록된 이메일로 임시발급된 비밀번호를 보내드렸습니다.',
+      firstButton: {
+        text: '확인',
+        variant: 'default',
+        onClick: closeResultNoticeModal,
+      },
+    });
+  }, [openSuccessNoticeModal, closeResultNoticeModal]);
 
   return (
     <div className="LoginPage">
@@ -171,11 +183,6 @@ function LoginPage() {
         {/* formFooter */}
         <div className="formFooter">
           <FindPasswordModal onSubmit={findPassword} />
-          <ResultNoticeModal
-            title="비밀번호 찾기"
-            description="등록된 이메일로 임시발급된 비밀번호를 보내드렸습니다."
-            isOpen={isOpenResultNoticeModal}
-            setIsOpen={setIsOpenResultNoticeModal} />
         </div>
       </div>
     </div>

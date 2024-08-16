@@ -2,8 +2,14 @@
 import { 
   useState,
   useMemo,
-  useEffect,
+  useCallback,
 } from 'react';
+// router
+import { 
+  useNavigate,
+} from 'react-router-dom';
+// store
+import useMathTextbookDetailStore from '@/store/mathTextbookDetailStore/mathTextbookDetailStore';
 // ui
 import {
   flexRender,
@@ -24,19 +30,20 @@ import {
 } from '@/components/shadcn-ui/ui/table';
 // type
 import { 
-  TMockMathTextbook,
-} from './MathTextbookTable.type';
+  TMathTextbookModel,
+} from '@/apis/models/mathModel.type';
 // util
 import { 
   extractID,
 } from '@/lib/tanstack-reactTable-utils/tanstack-reactTable-utils';
 // style
 import './MathTextbookTable.css';
+import routePathFactory from '@/routes/routePathFactory';
 
-const columnHelper = createColumnHelper<TMockMathTextbook>();
+const columnHelper = createColumnHelper<TMathTextbookModel>();
 
 type TMathTextbookTableProps = {
-  data: TMockMathTextbook[];
+  data: TMathTextbookModel[];
 };
 
 function MathTextbookTable(props: TMathTextbookTableProps) {
@@ -45,10 +52,15 @@ function MathTextbookTable(props: TMathTextbookTableProps) {
   } = props;
 
   //
+  // mathTextbookDetail store
+  //
+  const setSelectedMathTextbook = useMathTextbookDetailStore(state => state.setSelectedMathTextbook);
+
+  //
   // state
   //
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-  const [selectedData, setSelectedData] = useState<TMockMathTextbook[]>([]);
+  const [_selectedRows, setSelectedRows] = useState<TMathTextbookModel[]>([]);
 
   //
   // cache
@@ -65,7 +77,7 @@ function MathTextbookTable(props: TMathTextbookTableProps) {
     columnHelper.accessor('curriculum', {
       header: '교육과정',
     }),
-    columnHelper.accessor('name', {
+    columnHelper.accessor('title', {
       header: '교과서명',
     }),
     columnHelper.accessor('author', {
@@ -97,18 +109,27 @@ function MathTextbookTable(props: TMathTextbookTableProps) {
       setRowSelection(e);
 
       setTimeout(() => {
-        const selectedData = table.getSelectedRowModel().rows.map(row => row.original);
-        setSelectedData(selectedData);
+        const selectedRows = table.getSelectedRowModel().rows.map(row => row.original);
+        setSelectedRows(selectedRows);
       });
     },
   });
 
+  const navigate = useNavigate();
+
   //
-  // effect
+  // callback
   //
-  useEffect(() => {
-    console.log('selectedData: ', selectedData);
-  }, [selectedData]);
+  const goToDetailPage = useCallback((mathTextbook: TMathTextbookModel) => {
+    const textbookId = mathTextbook.id;
+
+    setSelectedMathTextbook(mathTextbook);
+
+    navigate(routePathFactory
+      .math
+      .getTextbookDetailPath(textbookId)
+    );
+  }, [setSelectedMathTextbook, navigate]);
 
   return (
     <Table className="MathTextbookTable">
@@ -138,7 +159,7 @@ function MathTextbookTable(props: TMathTextbookTableProps) {
             key={row.id}
             className="row"
             data-state={row.getIsSelected() && 'selected'}
-          >
+            onClick={() => goToDetailPage(row.original)}>
             {row.getVisibleCells().map(cell => (
               <TableCell 
                 key={cell.id}

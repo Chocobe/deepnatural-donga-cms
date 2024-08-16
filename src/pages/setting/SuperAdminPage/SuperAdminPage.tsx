@@ -8,20 +8,23 @@ import UsersTableHeader from '@/components/pages/setting/SuperAdminPage/UsersTab
 import UsersTableActions from '@/components/pages/setting/SuperAdminPage/UsersTableActions/UsersTableActions';
 import UsersTable from '@/components/pages/setting/SuperAdminPage/UsersTable/UsersTable';
 import UsersTableFooter from '@/components/pages/setting/SuperAdminPage/UsersTableFooter/UsersTableFooter';
+// type
+import { 
+  TUserModel,
+} from '@/apis/models/authModel.type';
 // style
 import './SuperAdminPage.css';
 
 // mock
 import { 
   mockUsers,
-  TMockUser,
 } from '@/components/pages/setting/SuperAdminPage/UsersTable/UsersTable.type';
 
 function SuperAdminPage() {
   //
   // state
   //
-  const [data, setData] = useState<TMockUser[]>(mockUsers);
+  const [data, setData] = useState<TUserModel[]>(mockUsers);
 
   //
   // cache

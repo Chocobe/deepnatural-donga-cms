@@ -9,10 +9,12 @@ import {
 } from '@/components/shadcn-ui/ui/button';
 // type
 import { 
-  mockUserStatusMapper,
-  mockUserStatusTemplateMapper,
-  TMockUserStatus,
+  userStatusTemplateMapper,
 } from '../UsersTable/UsersTable.type';
+import { 
+  TUserModelStatus, 
+  userModelStatusMapper,
+} from '@/apis/models/authModel.type';
 // style
 import { 
   cn,
@@ -20,8 +22,8 @@ import {
 import './UserStatusToggleButton.css';
 
 type TUserStatusToggleButtonProps = {
-  value: TMockUserStatus;
-  onChange: (value: TMockUserStatus) => void;
+  value: TUserModelStatus;
+  onChange: (value: TUserModelStatus) => void;
 };
 
 function _UserStatusToggleButton(props: TUserStatusToggleButtonProps) {
@@ -31,11 +33,11 @@ function _UserStatusToggleButton(props: TUserStatusToggleButtonProps) {
   } = props;
 
   const onClick = useCallback((() => {
-    const newValue = Object.values(mockUserStatusMapper).find(newValue => {
+    const newValue = Object.values(userModelStatusMapper).find(newValue => {
       return value !== newValue;
     });
 
-    onChange(newValue as TMockUserStatus);
+    onChange(newValue as TUserModelStatus);
   }), [value, onChange]);
 
   return (
@@ -44,12 +46,12 @@ function _UserStatusToggleButton(props: TUserStatusToggleButtonProps) {
         'UserStatusToggleButton',
         value
       )}
-      variant={value === mockUserStatusMapper.ACTIVE
+      variant={value === userModelStatusMapper.ACTIVE
         ? 'outline' 
         : 'destructive'
       }
       onClick={onClick}>
-      {mockUserStatusTemplateMapper[value]}
+      {userStatusTemplateMapper[value]}
     </Button>
   );
 }

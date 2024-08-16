@@ -1,50 +1,33 @@
 // faker
-import { faker } from '@faker-js/faker';
+import { 
+  faker,
+} from '@faker-js/faker';
+// type
+import { 
+  TUserModel,
+  userModelRoleMapper,
+  userModelStatusMapper,
+} from '@/apis/models/authModel.type';
 
-// FIXME: model 에 정의하기
-export const mockUserRoleMapper = {
-  WRITER: 'write',
-  REVIEWER: 'reviewer',
-} as const;
-export type TMockUserRole = typeof mockUserRoleMapper[keyof typeof mockUserRoleMapper];
-
-// FIXME: model 에 정의하기
-export const mockUserRoleTemplateMapper = {
-  [mockUserRoleMapper.WRITER]: '편집자 (문항 관리, 수정 가능)',
-  [mockUserRoleMapper.REVIEWER]: '검수자 (문항 검수 가능, 수정 불가능)',
+export const userRoleTemplateMapper = {
+  [userModelRoleMapper.WRITER]: '편집자 (문항 관리, 수정 가능)',
+  [userModelRoleMapper.REVIEWER]: '검수자 (문항 검수 가능, 수정 불가능)',
 };
 
-// FIXME: model 에 정의하기
-export const mockUserStatusMapper = {
-  ACTIVE: 'active',
-  DEACTIVE: 'deactive',
-} as const;
-export type TMockUserStatus = typeof mockUserStatusMapper[keyof typeof mockUserStatusMapper];
-
-// FIXME: model 에 정의하기
-export const mockUserStatusTemplateMapper = {
-  [mockUserStatusMapper.ACTIVE]: '사용중',
-  [mockUserStatusMapper.DEACTIVE]: '사용중지',
+export const userStatusTemplateMapper = {
+  [userModelStatusMapper.ACTIVE]: '사용중',
+  [userModelStatusMapper.DEACTIVE]: '사용중지',
 } as const;
 
-// FIXME: model 에 정의하기
-export type TMockUser = {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  role: TMockUserRole;
-  status: TMockUserStatus;
-};
 
 // FIXME: 지우기
-export const mockUsers: TMockUser[] = [
+export const mockUsers: TUserModel[] = [
   {
     id: faker.string.uuid(),
     name: faker.internet.userName(),
     email: faker.internet.email(),
     phone: faker.phone.number(),
-    role: mockUserRoleMapper.WRITER,
+    role: userModelRoleMapper.WRITER,
     status: 'active',
   },
   {
@@ -52,7 +35,7 @@ export const mockUsers: TMockUser[] = [
     name: faker.internet.userName(),
     email: faker.internet.email(),
     phone: faker.phone.number(),
-    role: mockUserRoleMapper.WRITER,
+    role: userModelRoleMapper.WRITER,
     status: 'active',
   },
   {
@@ -60,7 +43,7 @@ export const mockUsers: TMockUser[] = [
     name: faker.internet.userName(),
     email: faker.internet.email(),
     phone: faker.phone.number(),
-    role: mockUserRoleMapper.WRITER,
+    role: userModelRoleMapper.WRITER,
     status: 'deactive',
   },
   {
@@ -68,7 +51,7 @@ export const mockUsers: TMockUser[] = [
     name: faker.internet.userName(),
     email: faker.internet.email(),
     phone: faker.phone.number(),
-    role: mockUserRoleMapper.REVIEWER,
+    role: userModelRoleMapper.REVIEWER,
     status: 'active',
   },
   {
@@ -76,7 +59,7 @@ export const mockUsers: TMockUser[] = [
     name: faker.internet.userName(),
     email: faker.internet.email(),
     phone: faker.phone.number(),
-    role: mockUserRoleMapper.REVIEWER,
+    role: userModelRoleMapper.REVIEWER,
     status: 'active',
   },
   {
@@ -84,7 +67,7 @@ export const mockUsers: TMockUser[] = [
     name: faker.internet.userName(),
     email: faker.internet.email(),
     phone: faker.phone.number(),
-    role: mockUserRoleMapper.REVIEWER,
+    role: userModelRoleMapper.REVIEWER,
     status: 'active',
   },
   {
@@ -92,7 +75,7 @@ export const mockUsers: TMockUser[] = [
     name: faker.internet.userName(),
     email: faker.internet.email(),
     phone: faker.phone.number(),
-    role: mockUserRoleMapper.REVIEWER,
+    role: userModelRoleMapper.REVIEWER,
     status: 'active',
   },
   {
@@ -100,7 +83,7 @@ export const mockUsers: TMockUser[] = [
     name: faker.internet.userName(),
     email: faker.internet.email(),
     phone: faker.phone.number(),
-    role: mockUserRoleMapper.REVIEWER,
+    role: userModelRoleMapper.REVIEWER,
     status: 'active',
   },
   {
@@ -108,7 +91,7 @@ export const mockUsers: TMockUser[] = [
     name: faker.internet.userName(),
     email: faker.internet.email(),
     phone: faker.phone.number(),
-    role: mockUserRoleMapper.REVIEWER,
+    role: userModelRoleMapper.REVIEWER,
     status: 'active',
   },
   {
@@ -116,7 +99,7 @@ export const mockUsers: TMockUser[] = [
     name: faker.internet.userName(),
     email: faker.internet.email(),
     phone: faker.phone.number(),
-    role: mockUserRoleMapper.REVIEWER,
+    role: userModelRoleMapper.REVIEWER,
     status: 'active',
   },
 ];

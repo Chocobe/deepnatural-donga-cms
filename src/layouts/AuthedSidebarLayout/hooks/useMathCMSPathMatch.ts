@@ -11,49 +11,49 @@ const useMathCMSPathMatch = () => {
   // 교과서
   const mathTextbookPathMatch = useMatch(routePathFactory
     .math
-    .getTextbookPath()
+    .getTextbookPath() + '/*'
   );
   const isMathTextbookPath = !!mathTextbookPathMatch;
 
   // 교과서 단원
   const mathChapterPathMatch = useMatch(routePathFactory
     .math
-    .getChapterPath()
+    .getChapterPath() + '/*'
   );
   const isMathChapterPath = !!mathChapterPathMatch;
 
   // 성취기준
   const mathAchievementPathMatch = useMatch(routePathFactory
     .math
-    .getAchievementPath()
+    .getAchievementPath() + '/*'
   );
   const isMathAchievementPath = !!mathAchievementPathMatch;
 
   // 지식개념
   const mathKnowledgeConceptPathMatch = useMatch(routePathFactory
     .math
-    .getKnowledgeConceptPath()
+    .getKnowledgeConceptPath() + '/*'
   );
   const isMathKnowledgeConceptPath = !!mathKnowledgeConceptPathMatch;
 
   // 시리즈-출처
   const mathSeriesSourcePathMatch = useMatch(routePathFactory
     .math
-    .getSeriesSourcePath()
+    .getSeriesSourcePath() + '/*'
   );
   const isMathSeriesSourcePath = !!mathSeriesSourcePathMatch;
 
   // 지문
   const mathInstructionPathMatch = useMatch(routePathFactory
     .math
-    .getInstructionPath()
+    .getInstructionPath() + '/*'
   );
   const isMathInstructionPath = !!mathInstructionPathMatch;
 
   // 문항
   const mathQuestionPathMatch = useMatch(routePathFactory
     .math
-    .getQuestionPath()
+    .getQuestionPath() + '/*'
   );
   const isMathQuestionPath = !!mathQuestionPathMatch;
 

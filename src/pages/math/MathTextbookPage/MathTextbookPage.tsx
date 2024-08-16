@@ -3,10 +3,10 @@ import {
   memo,
 } from 'react';
 // ui
-import MathTextbookHeader from '@/components/pages/math/MathTextbook/MathTextbookHeader/MathTextbookHeader';
-import MathTextbookTableActions from '@/components/pages/math/MathTextbook/MathTextbookTableActions/MathTextbookTableActions';
-import MathTextbookTable from '@/components/pages/math/MathTextbook/MathTextbookTable/MathTextbookTable';
-import MathTextbookFooter from '@/components/pages/math/MathTextbook/MathTextbookFooter/MathTextbookFooter';
+import MathTextbookHeader from '@/components/pages/math/MathTextbookPage/MathTextbookHeader/MathTextbookHeader';
+import MathTextbookTableActions from '@/components/pages/math/MathTextbookPage/MathTextbookTableActions/MathTextbookTableActions';
+import MathTextbookTable from '@/components/pages/math/MathTextbookPage/MathTextbookTable/MathTextbookTable';
+import MathTextbookFooter from '@/components/pages/math/MathTextbookPage/MathTextbookFooter/MathTextbookFooter';
 // style
 import './MathTextbookPage.css';
 

@@ -33,21 +33,20 @@ import {
 } from '@/components/shadcn-ui/ui/checkbox';
 import UserRoleSelect from '../UserRoleSelect/UserRoleSelect';
 import UserStatusToggleButton from '../UserStatusToggleButton/UserStatusToggleButton';
+// type
+import { 
+  TUserModel, 
+  TUserModelStatus,
+} from '@/apis/models/authModel.type';
 // style
 import './UsersTable.css';
 
-// mock
-import { 
-  TMockUser, 
-  TMockUserStatus,
-} from './UsersTable.type';
-
 type TUserTableProps = {
-  data: TMockUser[];
-  setData: Dispatch<SetStateAction<TMockUser[]>>;
+  data: TUserModel[];
+  setData: Dispatch<SetStateAction<TUserModel[]>>;
 };
 
-const columnHelper = createColumnHelper<TMockUser>();
+const columnHelper = createColumnHelper<TUserModel>();
 
 function _UsersTable(props: TUserTableProps) {
   const {
@@ -59,7 +58,7 @@ function _UsersTable(props: TUserTableProps) {
   // state
   //
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-  const [selectedData, setSelectedData] = useState<TMockUser[]>([]);
+  const [selectedData, setSelectedData] = useState<TUserModel[]>([]);
 
   useEffect(() => {
     console.group('effect');
@@ -151,7 +150,7 @@ function _UsersTable(props: TUserTableProps) {
 
           return (
             <UserStatusToggleButton
-              value={cell.getValue() as TMockUserStatus}
+              value={cell.getValue() as TUserModelStatus}
               onChange={value => {
                 table.options.meta?.updateData(row.index, column.id, value);
               }} />

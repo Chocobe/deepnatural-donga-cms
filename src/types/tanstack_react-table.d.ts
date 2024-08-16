@@ -4,6 +4,11 @@ import {
 
 declare module '@tanstack/react-table' {
   export interface TableMeta<TData extends RowData> {
-    updateData: (rowIndex: number, columnId: string, value: unknown) => void;
+    updateData: (
+      rowIndex: number,
+      columnId: string,
+      value: unknown,
+      rowData?: TData
+    ) => void;
   }
 }

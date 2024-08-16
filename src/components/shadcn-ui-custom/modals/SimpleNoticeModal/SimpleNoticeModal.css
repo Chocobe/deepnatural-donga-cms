@@ -1,14 +1,21 @@
-.ResultNoticeModal {
+.SimpleNoticeModal {
   gap: 24px !important;
 
   &-header {
     /*  */
 
     .title {
-      color: #09090B;
       font-size: 16px;
       line-height: 24px;
       font-weight: 600;
+
+      &.success {
+        color: #09090B;
+      }
+
+      &.error {
+        color: #FF1F00;
+      }
     }
 
     .description {
@@ -20,10 +27,6 @@
   }
 
   &-footer {
-    /*  */
-
-    .button {
-      height: fit-content;
-    }
+    @apply flex justify-end items-center gap-2.5;
   }
 }

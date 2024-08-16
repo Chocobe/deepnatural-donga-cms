@@ -1,0 +1,128 @@
+.HistoryModal {
+  width: 80% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: 80% !important;
+
+  grid-template-rows: max-content 1fr max-content;
+  gap: 24px !important;
+
+  overflow: hidden !important;
+
+  &-header {
+    /*  */
+
+    .title {
+      color: #0F172A !important;
+      font-size: 16px !important;
+      line-height: 24px !important;
+      font-weight: 700 !important;
+    }
+  }
+
+  &-main {
+    height: 100%;
+
+    border: 1px solid hsl(var(--border));
+
+    overflow: hidden;
+
+    & > * {
+      height: 100%;
+    }
+
+    .table {
+      /*  */
+
+      .headerRow {
+        position: sticky;
+        top: 0;
+
+        background-color: #fff;
+        box-shadow: -1px 1px 1px hsl(var(--border));
+
+        &:hover {
+          background-color: #fff;
+        }
+
+        & > * {
+          color: #0F172A;
+          font-size: 16px;
+          line-height: 24px;
+          font-weight: 700;
+
+          border-right: 1px solid hsl(var(--border));
+
+          &:last-of-type {
+            border-right: none;
+          }
+        }
+
+        .createdAt {
+          width: 248px;
+        }
+
+        .username {
+          width: 200px;
+        }
+
+        .action {
+          /*  */
+        }
+      }
+
+      .row {
+        /*  */
+
+        & > * {
+          padding: 13px 16px !important;
+
+          color: #0F172A !important;
+          font-size: 16px !important;
+          line-height: 24px !important;
+          font-weight: 400 !important;
+
+          border-right: 1px solid hsl(var(--border)) !important;
+
+          &:last-of-type {
+            border-right: 0 !important;
+          }
+        }
+
+        .createdAt {
+          /*  */
+        }
+
+        .username {
+          /*  */
+        }
+
+        .action {
+          /*  */
+        }
+      }
+
+      .placeholder {
+        /*  */
+
+        .cell {
+          padding: 150px 0 !important;
+
+          color: #989898 !important;
+          font-size: 16px !important;
+          line-height: 24px !important;
+          font-weight: 500 !important;
+          text-align: center !important;
+        }
+      }
+    }
+  }
+
+  &-footer {
+    /*  */
+
+    .button {
+      height: fit-content !important;
+    }
+  }
+}

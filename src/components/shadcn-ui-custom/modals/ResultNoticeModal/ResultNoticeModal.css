@@ -1,0 +1,35 @@
+.ResultNoticeModal {
+  /*  */
+
+  &-button {
+    height: fit-content !important;
+
+    font-size: 14px !important;
+    line-height: 20px !important;
+    font-weight: 500 !important;
+
+    &.default {
+      color: #fff !important;
+    }
+
+    &.destructive {
+      color: #fff !important;
+    }
+
+    &.outline {
+      outline: none;
+    }
+
+    &.secondary {
+      /*  */
+    }
+
+    &.ghost {
+      /*  */
+    }
+
+    &.link {
+      /*  */
+    }
+  }
+}

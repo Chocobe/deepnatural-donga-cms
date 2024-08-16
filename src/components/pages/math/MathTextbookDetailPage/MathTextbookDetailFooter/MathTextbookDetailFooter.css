@@ -1,0 +1,24 @@
+.MathTextbookDetailFooter {
+  @apply flex justify-end items-center gap-2.5;
+
+  &-actionButton {
+    @apply flex items-center gap-2;
+
+    font-size: 14px !important;
+    line-height: 24px !important;
+    font-weight: 500 !important;
+
+    &.secondary {
+      color: #0F172A !important;
+    }
+
+    &.default {
+      color: #fff !important;
+
+      .icon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}
