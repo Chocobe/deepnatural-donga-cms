@@ -8,6 +8,7 @@ import {
 // store
 import useAuthApiStore from '@/store/authApiStore/authApiStore';
 import useResultNoticeModalStore from '@/store/resultNoticeModalStore/resultNoticeModalStore';
+import useLoadingModalStore from '@/store/loadingModalStore/loadingModalStore';
 import { 
   createSuccessApiSliceState,
 } from '@/store/apiStateUtils';
@@ -21,6 +22,7 @@ import {
 } from '@/components/shadcn-ui/ui/button';
 // api
 import ApiManager from '@/apis/ApiManager';
+import authLoadingMessageFactory from '@/apis/auth/authLoadingMessageFactory';
 // type
 import { 
   TLoginPayload,
@@ -36,8 +38,6 @@ function LoginPage() {
     username: '',
     password: '',
   });
-
-  // const [isOpenResultNoticeModal, setIsOpenResultNoticeModal] = useState(false);
 
   const formTemplates = [
     {
@@ -57,13 +57,19 @@ function LoginPage() {
   ];
 
   //
-  // authApiStore
+  // authApi store
   //
   const setLoginState = useAuthApiStore(state => state.login.action.setLoginState);
   const {
     openSuccessNoticeModal,
     closeResultNoticeModal,
   } = useResultNoticeModalStore();
+
+  //
+  // loadingModal store
+  //
+  const openLoadingModal = useLoadingModalStore(state => state.openLoadingModal);
+  const closeLoadingModal = useLoadingModalStore(state => state.closeLoadingModal);
 
   function  onChange(e: ChangeEvent<HTMLInputElement>) {
     const {
@@ -83,15 +89,18 @@ function LoginPage() {
     const payload: TLoginPayload = formState;
 
     try {
+      openLoadingModal(authLoadingMessageFactory
+        .getLoginMessage()
+      );
+
       const response = await ApiManager
         .auth
         .login(payload);
 
       const data = response.data;
 
-      console.log('login() 성공 - data: ', data);
-
       setLoginState(createSuccessApiSliceState(data));
+      closeLoadingModal();
     } catch(error) {
       // TODO: Sonar 컴포넌트로 메시지 렌더링하기
       console.error(error);
