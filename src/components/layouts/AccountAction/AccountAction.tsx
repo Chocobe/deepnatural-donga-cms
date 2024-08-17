@@ -10,6 +10,7 @@ import {
 import routePathFactory from '@/routes/routePathFactory';
 // store
 import useAuthApiStore from '@/store/authApiStore/authApiStore';
+import useLoadingModalStore from '@/store/loadingModalStore/loadingModalStore';
 // shadcn
 import { 
   DropdownMenu,
@@ -26,6 +27,7 @@ import {
 } from 'react-icons/ci';
 // api
 import ApiManager from '@/apis/ApiManager';
+import authLoadingMessageFactory from '@/apis/auth/authLoadingMessageFactory';
 // style
 import { 
   cn,
@@ -34,9 +36,15 @@ import './AccountAction.css';
 
 function _AccountAction() {
   //
-  // authApiStore
+  // authApi store
   //
   const removeLoginState = useAuthApiStore(state => state.login.action.removeLoginState);
+
+  //
+  // loadingModal store
+  //
+  const openLoadingModal = useLoadingModalStore(state => state.openLoadingModal);
+  const closeLoadingModal = useLoadingModalStore(state => state.closeLoadingModal);
 
   //
   // hook
@@ -55,6 +63,10 @@ function _AccountAction() {
 
   const logout = useCallback(async () => {
     try {
+      openLoadingModal(authLoadingMessageFactory
+        .getLogoutMessage()
+      );
+
       await ApiManager
         .auth
         .logout();
@@ -62,8 +74,13 @@ function _AccountAction() {
       console.error(error);
     } finally {
       removeLoginState();
+      closeLoadingModal();
     }
-  }, [removeLoginState]);
+  }, [
+    removeLoginState,
+    openLoadingModal,
+    closeLoadingModal,
+  ]);
 
   return (
     <div className="AccountAction">

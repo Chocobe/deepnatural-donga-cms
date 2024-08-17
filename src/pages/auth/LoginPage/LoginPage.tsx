@@ -100,10 +100,11 @@ function LoginPage() {
       const data = response.data;
 
       setLoginState(createSuccessApiSliceState(data));
-      closeLoadingModal();
     } catch(error) {
       // TODO: Sonar 컴포넌트로 메시지 렌더링하기
       console.error(error);
+    } finally {
+      closeLoadingModal();
     }
   }
 
