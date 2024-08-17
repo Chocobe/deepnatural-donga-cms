@@ -13,6 +13,7 @@ import initDayjs from './lib/dayjs/initDayjs';
 // ui
 import HistoryModal from './components/shadcn-ui-custom/modals/HistoryModal/HistoryModal';
 import ResultNoticeModal from './components/shadcn-ui-custom/modals/ResultNoticeModal/ResultNoticeModal';
+import LoadingModal from './components/shadcn-ui-custom/modals/LoadingModal/LoadingModal';
 // style
 import './App.css';
 
@@ -50,6 +51,7 @@ function App() {
       {/* Global modals */}
       <HistoryModal />
       <ResultNoticeModal />
+      <LoadingModal />
     </div>
   );
 }

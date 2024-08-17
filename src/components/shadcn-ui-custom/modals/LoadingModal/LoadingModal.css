@@ -1,0 +1,52 @@
+.LoadingModal {
+  width: fit-content !important;
+  min-width: 25% !important;
+  max-width: 80% !important;
+
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 20px !important;
+
+  &-spinner {
+    /*  */
+
+    @keyframes LoadingModal-spin {
+      from {
+        transform: rotate(0);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .icon {
+      width: 42px;
+      height: 42px;
+
+      display: block;
+
+      color: #64748b;
+
+      animation: LoadingModal-spin 1.5s linear infinite;
+    }
+  }
+
+  &-header {
+    /*  */
+
+    .description {
+      font-size: 12px !important;
+      line-height: 18px !important;
+      font-weight: 500 !important;
+    }
+
+    .message {
+      margin: 0 !important;
+
+      color: #09090B !important;
+      font-size: 16px !important;
+      line-height: 24px !important;
+      font-weight: 600 !important;
+    }
+  }
+}
