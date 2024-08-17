@@ -35,6 +35,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/shadcn-ui/ui/table';
+import TableBlankMessageCell from '../../TableBlankMessageCell/TableBlankMessageCell';
 // util
 import { 
   extractID,
@@ -179,12 +180,10 @@ function HistoryModal() {
                     ))}
                   </TableRow>
                 )): (
-                  <TableRow className="placeholder">
-                    <TableCell
-                      className="cell"
-                      colSpan={3}>
+                  <TableRow>
+                    <TableBlankMessageCell colSpan={3}>
                       히스토리가 없습니다.
-                    </TableCell>
+                    </TableBlankMessageCell>
                   </TableRow>
                 )}
             </TableBody>
