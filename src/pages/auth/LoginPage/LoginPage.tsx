@@ -7,8 +7,6 @@ import {
 } from 'react';
 // store
 import useAuthApiStore from '@/store/authApiStore/authApiStore';
-import useResultNoticeModalStore from '@/store/resultNoticeModalStore/resultNoticeModalStore';
-import useLoadingModalStore from '@/store/loadingModalStore/loadingModalStore';
 import { 
   createSuccessApiSliceState,
 } from '@/store/apiStateUtils';
@@ -22,11 +20,10 @@ import {
 } from '@/components/shadcn-ui/ui/button';
 // api
 import ApiManager from '@/apis/ApiManager';
-import authLoadingMessageFactory from '@/apis/auth/authLoadingMessageFactory';
 // type
 import { 
   TLoginPayload,
-} from '@/apis/auth/auth.type';
+} from '@/apis/auth/authApi.type';
 // style
 import './LoginPage.css';
 
@@ -60,17 +57,10 @@ function LoginPage() {
   // authApi store
   //
   const setLoginState = useAuthApiStore(state => state.login.action.setLoginState);
-  const {
-    openSuccessNoticeModal,
-    closeResultNoticeModal,
-  } = useResultNoticeModalStore();
 
   //
-  // loadingModal store
+  // callback
   //
-  const openLoadingModal = useLoadingModalStore(state => state.openLoadingModal);
-  const closeLoadingModal = useLoadingModalStore(state => state.closeLoadingModal);
-
   function  onChange(e: ChangeEvent<HTMLInputElement>) {
     const {
       id,
@@ -88,41 +78,22 @@ function LoginPage() {
 
     const payload: TLoginPayload = formState;
 
-    try {
-      openLoadingModal(authLoadingMessageFactory
-        .getLoginMessage()
-      );
+    const response = await ApiManager
+      .auth
+      .loginApi
+      .callWithNoticeMessageGroup(payload);
 
-      const response = await ApiManager
-        .auth
-        .login(payload);
-
-      const data = response.data;
-
-      setLoginState(createSuccessApiSliceState(data));
-    } catch(error) {
-      // TODO: Sonar 컴포넌트로 메시지 렌더링하기
-      console.error(error);
-    } finally {
-      closeLoadingModal();
+    if (response?.data) {
+      setLoginState(createSuccessApiSliceState(response.data));
     }
   }
 
-  //
-  // callback
-  //
   const findPassword = useCallback(async () => {
-    await new Promise(res => setTimeout(res));
-    openSuccessNoticeModal({
-      title: '비밀번호 찾기',
-      description: '등록된 이메일로 임시발급된 비밀번호를 보내드렸습니다.',
-      firstButton: {
-        text: '확인',
-        variant: 'default',
-        onClick: closeResultNoticeModal,
-      },
-    });
-  }, [openSuccessNoticeModal, closeResultNoticeModal]);
+    ApiManager
+      .auth
+      .findPasswordApi
+      .callWithNoticeMessageGroup();
+  }, []);
 
   return (
     <div className="LoginPage">

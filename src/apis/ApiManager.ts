@@ -1,5 +1,6 @@
 import * as localStorage from './localStorage/localStorage';
-import * as auth from './auth/auth';
+import * as auth from './auth/authApi';
+import * as math from './math/mathApis';
 
 /**
  * Manage all apis
@@ -7,6 +8,7 @@ import * as auth from './auth/auth';
 const ApiManager = {
   localStorage,
   auth,
+  math,
 };
 
 export default ApiManager;

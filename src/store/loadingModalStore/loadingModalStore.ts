@@ -14,10 +14,10 @@ import {
 const useLoadingModalStore = create(devtools<TLoadingModalStore>((set, _get) => ({
   ...initialLoadingModalStoreState,
 
-  openLoadingModal: title => {
+  openLoadingModal: message => {
     set({
       isOpen: true,
-      message: title,
+      message,
     }, false, 'openLoadingModal');
   },
 

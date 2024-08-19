@@ -9,7 +9,7 @@ export const initialLoadingModalStoreState: TLoadingModalStoreState = {
 } as const;
 
 export type TLoadingModalStoreAction = {
-  openLoadingModal: (title: string) => void;
+  openLoadingModal: (message: string) => void;
   closeLoadingModal: () => void;
 };
 

@@ -40,7 +40,9 @@ function MathTextbookDetailPage() {
   return (
     <div className="MathTextbookDetailPage">
       <div className="MathTextbookDetailPage-header">
-        <MathTextbookDetailHeader isDetailMode={isDetailMode} />
+        <MathTextbookDetailHeader 
+          isDetailMode={isDetailMode}
+          textbookId={textbookId} />
       </div>
 
       <div className="MathTextbookDetailPage-divider" />

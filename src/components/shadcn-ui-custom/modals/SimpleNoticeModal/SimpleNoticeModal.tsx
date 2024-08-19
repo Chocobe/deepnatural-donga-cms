@@ -27,7 +27,7 @@ import './SimpleNoticeModal.css';
 export type TSimpleNoticeModalProps = {
   className?: string;
   title?: string;
-  description?: string;
+  message?: string;
   variant?: TSimpleNoticeModalVariant;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
@@ -39,7 +39,7 @@ export function SimpleNoticeModal(props: TSimpleNoticeModalProps) {
   const {
     className,
     title,
-    description,
+    message,
     variant = simpleNoticeModalVariantMapper.SUCCESS,
     isOpen,
     setIsOpen,
@@ -59,6 +59,7 @@ export function SimpleNoticeModal(props: TSimpleNoticeModalProps) {
           'SimpleNoticeModal',
           className
         )}
+        hideCloseButton
         onAnimationEndCapture={onAnimationEnd}>
         <DialogHeader className="SimpleNoticeModal-header">
           <DialogTitle className={cn(
@@ -68,8 +69,8 @@ export function SimpleNoticeModal(props: TSimpleNoticeModalProps) {
             {title}
           </DialogTitle>
 
-          <DialogDescription className="description">
-            {description}
+          <DialogDescription className="message">
+            {message}
           </DialogDescription>
         </DialogHeader>
 

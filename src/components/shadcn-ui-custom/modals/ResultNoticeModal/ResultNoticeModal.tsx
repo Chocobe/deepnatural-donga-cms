@@ -31,7 +31,7 @@ function ResultNoticeModal() {
   const {
     isOpen,
     title,
-    description,
+    message,
     variant,
     firstButton,
     secondButton,
@@ -43,7 +43,7 @@ function ResultNoticeModal() {
   //
   const [stateForDisplay, setStateForDisplay] = useState<{
     title?: string;
-    description?: string;
+    message?: string;
     variant?: TSimpleNoticeModalVariant;
     firstButtonText?: string;
     firstButtonVariant?: ButtonProps['variant'];
@@ -51,7 +51,7 @@ function ResultNoticeModal() {
     secondButtonVariant?: ButtonProps['variant'];
   }>({
     title,
-    description,
+    message,
     variant,
     firstButtonText: firstButton?.text,
     firstButtonVariant: firstButton?.variant,
@@ -80,7 +80,7 @@ function ResultNoticeModal() {
 
     setStateForDisplay({
       title: undefined,
-      description: undefined,
+      message: undefined,
       firstButtonText: undefined,
       secondButtonText: undefined,
     });
@@ -106,7 +106,7 @@ function ResultNoticeModal() {
 
     setStateForDisplay({
       title,
-      description,
+      message,
       variant,
       firstButtonText: resultNoticeModalState.firstButton?.text,
       firstButtonVariant: resultNoticeModalState.firstButton?.variant,
@@ -124,7 +124,7 @@ function ResultNoticeModal() {
       onAnimationEnd={onAnimationEnd}
       className="ResultNoticeModal"
       title={stateForDisplay.title}
-      description={stateForDisplay.description}
+      message={stateForDisplay.message}
       variant={stateForDisplay.variant}
       $footer={<>
         {isShowFirstButton && (

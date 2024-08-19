@@ -17,7 +17,7 @@ import {
 import ApiManager from '@/apis/ApiManager';
 import { 
   TLoginResponse,
-} from '@/apis/auth/auth.type';
+} from '@/apis/auth/authApi.type';
 
 const createLoginApiSlice: TStateCreatorWithDevtools<
   TAuthApiStore, 

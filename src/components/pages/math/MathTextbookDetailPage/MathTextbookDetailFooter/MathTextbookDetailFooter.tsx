@@ -57,7 +57,7 @@ function _MathTextbookDetailFooter(props: TMathTextbookDetailFooterProps) {
       title: isDetailMode
         ? '저장하기 완료'
         : '추가하기 완료',
-      description: isDetailMode
+      message: isDetailMode
         ? '입력하신 내용이 성공적으로 저장되었습니다.'
         : '입력하신 내용이 성공적으로 추가되었습니다.',
       firstButton: {
@@ -78,7 +78,7 @@ function _MathTextbookDetailFooter(props: TMathTextbookDetailFooterProps) {
       title: isDetailMode
         ? '저장하기 오류'
         : '추가하기 오류',
-      description: isDetailMode
+      message: isDetailMode
         ? '오류가 발생하여 저장되지 않았습니다. 다시 시도해주세요.'
         : '오류가 발생하여 추가되지 않았습니다. 다시 시도해주세요.',
       firstButton: {
