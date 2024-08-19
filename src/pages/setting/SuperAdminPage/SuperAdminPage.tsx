@@ -11,7 +11,7 @@ import UsersTableFooter from '@/components/pages/setting/SuperAdminPage/UsersTab
 // type
 import { 
   TUserModel,
-} from '@/apis/models/authModel.type';
+} from '@/apis/models/userModel.type';
 // style
 import './SuperAdminPage.css';
 

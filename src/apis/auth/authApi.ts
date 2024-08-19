@@ -1,20 +1,21 @@
 // api
 import api from '../api';
-import autApihUrlFactory from './authApiUrlFactory';
+import authApiUrlFactory from './authApiUrlFactory';
 // util
 import createApiWithNoticeMessageGroup from '@/utils/createApiWithNoticeMessageGroup';
 // type
 import { 
-  TLoginPayload,
-  TLoginResponse,
+  TGroupsApiResponse,
+  TLoginApiPayload,
+  TLoginApiResponse,
 } from './authApi.type';
 import noticeMessageGroupFactory from '@/utils/noticeMessageGroupFactory';
 
 // 로그인
 export const loginApi = createApiWithNoticeMessageGroup({
-  apiFunction: (payload: TLoginPayload) => {
-    return api.post<TLoginResponse>(
-      autApihUrlFactory.login(),
+  apiFunction: (payload: TLoginApiPayload) => {
+    return api.post<TLoginApiResponse>(
+      authApiUrlFactory.login(),
       payload
     );
   },
@@ -28,7 +29,7 @@ export const loginApi = createApiWithNoticeMessageGroup({
 export const logoutApi = createApiWithNoticeMessageGroup({
   apiFunction: () => {
     return api.post<void>(
-      autApihUrlFactory.logout()
+      authApiUrlFactory.logout()
     );
   },
   noticeMessageGroup: noticeMessageGroupFactory
@@ -52,4 +53,17 @@ export const findPasswordApi = createApiWithNoticeMessageGroup({
     .apis
     .auth
     .findPassword,
+});
+
+// (GET) 그룹 목록
+export const retrieveGroupsApi = createApiWithNoticeMessageGroup({
+  apiFunction: () => {
+    return api.get<TGroupsApiResponse>(
+      authApiUrlFactory.retrieveGroups()
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .auth
+    .retrieveGroups,
 });

@@ -10,10 +10,12 @@
 
     .selector {
       width: 66px !important;
+      min-width: 66px !important;
     }
 
-    .name {
-      width: 389px !important;
+    .username {
+      width: 300px !important;
+      min-width: 300px !important;
     }
 
     .email {
@@ -22,21 +24,24 @@
 
     .phone {
       width: 244px !important;
+      min-width: 244px !important;
     }
 
-    .role {
+    .groups {
       width: 351px !important;
+      min-width: 351px !important;
     }
 
-    .status {
+    .active {
       width: 156px !important;
+      min-width: 156px !important;
 
       text-align: center;
     }
   }
 
   .row {
-    /*  */
+    cursor: pointer;
 
     & > * {
       padding: 13px 16px !important;
@@ -57,7 +62,7 @@
       /*  */
     }
 
-    .name {
+    .username {
       /*  */
     }
 
@@ -69,12 +74,12 @@
       /*  */
     }
 
-    .role {
+    .groups {
       padding: 0 16px !important;
       width: auto !important;
     }
 
-    .status {
+    .active {
       text-align: center;
     }
   }

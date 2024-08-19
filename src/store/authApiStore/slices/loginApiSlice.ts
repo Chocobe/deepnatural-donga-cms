@@ -16,7 +16,7 @@ import {
 // api
 import ApiManager from '@/apis/ApiManager';
 import { 
-  TLoginResponse,
+  TLoginApiResponse,
 } from '@/apis/auth/authApi.type';
 
 const createLoginApiSlice: TStateCreatorWithDevtools<
@@ -30,7 +30,7 @@ const createLoginApiSlice: TStateCreatorWithDevtools<
         const data = ApiManager.localStorage.getToken();
         const newLoginState = data
           ? createSuccessApiSliceState(data)
-          : createIdleApiSliceState<TLoginResponse>();
+          : createIdleApiSliceState<TLoginApiResponse>();
 
         set(old => ({
           login: {

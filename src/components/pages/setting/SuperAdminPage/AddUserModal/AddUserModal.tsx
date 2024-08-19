@@ -32,6 +32,10 @@ import {
 import { 
   LuUserPlus,
 } from 'react-icons/lu';
+// type
+import { 
+  TGroupModel,
+} from '@/apis/models/authModel.type';
 // style
 import './AddUserModal.css';
 
@@ -40,12 +44,18 @@ function AddUserModal() {
   // state
   //
   const [open, setOpen] = useState(false);
-  const [formState, setFormState] = useState({
-    role: '',
-    name: '',
+  const [formState, setFormState] = useState<{
+    username: string;
+    password: string;
+    email: string;
+    phone: string;
+    groups: TGroupModel[];
+  }>({
+    username: '',
     password: '',
     email: '',
     phone: '',
+    groups: [],
   });
 
   //
@@ -53,7 +63,7 @@ function AddUserModal() {
   //
   const inputItems = useMemo(() => [
     {
-      id: 'name',
+      id: 'username',
       label: '이름 (아이디)',
       type: 'text',
       placeholder: '이름을 입력해주세요.',
@@ -103,10 +113,10 @@ function AddUserModal() {
     setOpen(false);
   }, []);
 
-  const onChangeRole = useCallback((role: string) => {
+  const onChangeRole = useCallback((groups: TGroupModel[]) => {
     setFormState(formState => ({
       ...formState,
-      role,
+      groups,
     }));
   }, []);
 
@@ -139,11 +149,11 @@ function AddUserModal() {
     return () => {
       if (open) {
         setFormState({
-          role: '',
-          name: '',
+          username: '',
           password: '',
           email: '',
           phone: '',
+          groups: [],
         });
       }
     };
@@ -188,7 +198,7 @@ function AddUserModal() {
 
             <div className="inputWrapper">
               <UserRoleSelect
-                value={formState.role}
+                value={formState.groups}
                 onChange={onChangeRole}
               />
             </div>

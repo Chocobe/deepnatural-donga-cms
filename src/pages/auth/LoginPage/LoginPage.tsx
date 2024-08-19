@@ -22,7 +22,7 @@ import {
 import ApiManager from '@/apis/ApiManager';
 // type
 import { 
-  TLoginPayload,
+  TLoginApiPayload,
 } from '@/apis/auth/authApi.type';
 // style
 import './LoginPage.css';
@@ -76,7 +76,7 @@ function LoginPage() {
   async function login(e?: FormEvent) {
     e?.preventDefault();
 
-    const payload: TLoginPayload = formState;
+    const payload: TLoginApiPayload = formState;
 
     const response = await ApiManager
       .auth

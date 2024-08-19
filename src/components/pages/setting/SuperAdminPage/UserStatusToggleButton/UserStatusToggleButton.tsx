@@ -1,6 +1,7 @@
 // react
 import {
   memo,
+  MouseEvent,
   useCallback,
 } from 'react';
 // ui
@@ -9,12 +10,8 @@ import {
 } from '@/components/shadcn-ui/ui/button';
 // type
 import { 
-  userStatusTemplateMapper,
-} from '../UsersTable/UsersTable.type';
-import { 
-  TUserModelStatus, 
-  userModelStatusMapper,
-} from '@/apis/models/authModel.type';
+  userModelIsActiveTemplateMapper,
+} from '@/apis/models/userModel.type';
 // style
 import { 
   cn,
@@ -22,8 +19,8 @@ import {
 import './UserStatusToggleButton.css';
 
 type TUserStatusToggleButtonProps = {
-  value: TUserModelStatus;
-  onChange: (value: TUserModelStatus) => void;
+  value: boolean;
+  onChange: (value: boolean) => void;
 };
 
 function _UserStatusToggleButton(props: TUserStatusToggleButtonProps) {
@@ -32,13 +29,11 @@ function _UserStatusToggleButton(props: TUserStatusToggleButtonProps) {
     onChange,
   } = props;
 
-  const onClick = useCallback((() => {
-    const newValue = Object.values(userModelStatusMapper).find(newValue => {
-      return value !== newValue;
-    });
+  const onClick = useCallback((e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
 
-    onChange(newValue as TUserModelStatus);
-  }), [value, onChange]);
+    onChange(!value);
+  }, [value, onChange]);
 
   return (
     <Button
@@ -46,12 +41,12 @@ function _UserStatusToggleButton(props: TUserStatusToggleButtonProps) {
         'UserStatusToggleButton',
         value
       )}
-      variant={value === userModelStatusMapper.ACTIVE
+      variant={value
         ? 'outline' 
         : 'destructive'
       }
       onClick={onClick}>
-      {userStatusTemplateMapper[value]}
+      {userModelIsActiveTemplateMapper[String(value)]}
     </Button>
   );
 }

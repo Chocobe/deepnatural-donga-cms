@@ -13,25 +13,10 @@ export type TLoginModel = {
 };
 
 //
-// User (사용자)
+// Group (사용자 권한)
 //
-export const userModelRoleMapper = {
-  WRITER: 'write',
-  REVIEWER: 'reviewer',
-} as const;
-export type TUserModelRole = typeof userModelRoleMapper[keyof typeof userModelRoleMapper];
-
-export const userModelStatusMapper = {
-  ACTIVE: 'active',
-  DEACTIVE: 'deactive',
-} as const;
-export type TUserModelStatus = typeof userModelStatusMapper[keyof typeof userModelStatusMapper];
-
-export type TUserModel = {
-  id: string;
+export type TGroupModel = {
+  id: number;
   name: string;
-  email: string;
-  phone: string;
-  role: TUserModelRole;
-  status: TUserModelStatus;
 };
+

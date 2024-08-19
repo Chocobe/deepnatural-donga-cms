@@ -7,13 +7,13 @@ import {
   TApiSliceState,
 } from '../../apiStateUtils.type';
 import { 
-  TLoginResponse,
+  TLoginApiResponse,
 } from '@/apis/auth/authApi.type';
 
 //
 // state
 //
-export type TLoginApiSliceState = TApiSliceState<TLoginResponse>;
+export type TLoginApiSliceState = TApiSliceState<TLoginApiResponse>;
 export const initialLoginApiSliceState: TLoginApiSliceState = createIdleApiSliceState();
 
 //
@@ -21,7 +21,7 @@ export const initialLoginApiSliceState: TLoginApiSliceState = createIdleApiSlice
 //
 export type TLoginApiSliceAction = {
   initLoginState: () => void;
-  setLoginState: (apiState: TApiSliceState<TLoginResponse>) => void;
+  setLoginState: (apiState: TApiSliceState<TLoginApiResponse>) => void;
   removeLoginState: () => void;
 }
 
