@@ -7,6 +7,7 @@ import routePathFactory from './routePathFactory';
 // middlewares
 import AuthGuardMiddleware from '@/middlewares/AuthGuardMiddleware/AuthGuardMiddleware';
 import LoginRedirectMiddleware from '@/middlewares/LoginRedirectMiddleware/LoginRedirectMiddleware';
+import MyPageRedirectMiddleware from '@/middlewares/MyPageRedirectMiddleware/MyPageRedirectMiddleware';
 // layouts
 import AuthLayout from '@/layouts/AuthLayout/AuthLayout';
 import DashboardLayout from '@/layouts/DashboardLayout/DashboardLayout';
@@ -234,7 +235,9 @@ const routes = createBrowserRouter([
           .getSettingRootPath(),
         element: (
           <AuthedSidebarLayout>
-            <Outlet />
+            <MyPageRedirectMiddleware>
+              <Outlet />
+            </MyPageRedirectMiddleware>
           </AuthedSidebarLayout>
         ),
         children: [
