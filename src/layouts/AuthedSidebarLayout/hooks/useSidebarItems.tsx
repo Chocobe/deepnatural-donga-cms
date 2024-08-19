@@ -7,6 +7,8 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import routePathFactory from '@/routes/routePathFactory';
+// store
+import useAuthApiStore from '@/store/authApiStore/authApiStore';
 // hook
 import useCMSPathMatch from '@/components/layouts/CMSNavigator/hooks/useCMSPathMatch';
 import useSettingPathMatch from './useSettingPathMatch';
@@ -25,7 +27,6 @@ import {
   LuAlignLeft,
   LuFileSpreadsheet,
 } from "react-icons/lu";
-import useMockStore from '@/store/mockStore/mockStore';
 import useMathCMSPathMatch from './useMathCMSPathMatch';
 import useEnglishCMSPathMatch from './useEnglishCMSPathMatch';
 
@@ -38,7 +39,10 @@ type TSidebarItem = {
 };
 
 const useSidebarItems = () => {
-  const isSuperAdmin = useMockStore(state => state.isSuperAdmin);
+  //
+  // authApi store
+  //
+  const isSuperUser = useAuthApiStore(state => state.userInfo.state.data?.is_superuser);
 
   //
   // hook
@@ -93,14 +97,14 @@ const useSidebarItems = () => {
       text: 'Super Admin 관리',
       IconComponent: LuUsers,
       isActive: isSuperAdminPagePath,
-      isHide: !isSuperAdmin,
+      isHide: !isSuperUser,
       onClick: () => navigate(routePathFactory
         .setting
         .getSuperAdminPagePath()
       ),
     },
   ], [
-    isMyPagePath, isSuperAdminPagePath, isSuperAdmin,
+    isMyPagePath, isSuperAdminPagePath, isSuperUser,
     navigate,
   ]);
 

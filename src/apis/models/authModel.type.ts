@@ -32,7 +32,8 @@ export type TUserModel = {
   id: number;
   username: string;
   email: string;
-  phone: string;
+  phone: string | null;
   groups: TGroupModel[];
   is_active: boolean;
+  is_superuser: boolean;
 };

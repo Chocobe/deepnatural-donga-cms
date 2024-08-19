@@ -10,12 +10,12 @@ const authApiUrlFactory = (() => {
       return `${BASE_PATH}logout/`;
     },
 
-    retrieveGroups() {
-      return `${BASE_PATH}groups/`;
+    retrieveUserInfo() {
+      return `${BASE_PATH}userinfo/`;
     },
 
-    retrieveUser(id: string) {
-      return `${BASE_PATH}users/${id}/`;
+    retrieveGroups() {
+      return `${BASE_PATH}groups/`;
     },
   };
 })();

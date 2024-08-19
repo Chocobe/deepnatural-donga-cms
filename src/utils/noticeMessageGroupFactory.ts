@@ -22,8 +22,8 @@ const noticeMessageGroupFactory: {
       login: TNoticeMessageGroup;
       logout: TNoticeMessageGroup;
       findPassword: TNoticeMessageGroup;
+      retrieveUserInfo: TNoticeMessageGroup;
       retrieveGroups: TNoticeMessageGroup;
-      retrieveUser: TNoticeMessageGroup;
     };
     math: {
       retrieveMathTextbooks: TNoticeMessageGroup;
@@ -73,20 +73,8 @@ const noticeMessageGroupFactory: {
         }),
       },
 
-      // (GET) 그룹 목록
-      retrieveGroups: {
-        loadingMessage: () => ({
-          title: '',
-          message: '',
-        }),
-        errorMessage: () => ({
-          ...createNetworkErrorMessage('그룹 목록 조회 중'),
-        }),
-        successMessage: undefined,
-      },
-
       // (GET) 현재 계정의 사용자 정보
-      retrieveUser: {
+      retrieveUserInfo: {
         loadingMessage: () => ({
           title: '',
           message: '',
@@ -98,6 +86,18 @@ const noticeMessageGroupFactory: {
           title: '',
           message: '',
         }),
+      },
+
+      // (GET) 그룹 목록
+      retrieveGroups: {
+        loadingMessage: () => ({
+          title: '',
+          message: '',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('그룹 목록 조회 중'),
+        }),
+        successMessage: undefined,
       },
     } as const,
 
