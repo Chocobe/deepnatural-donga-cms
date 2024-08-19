@@ -22,6 +22,7 @@ const noticeMessageGroupFactory: {
       login: TNoticeMessageGroup;
       logout: TNoticeMessageGroup;
       findPassword: TNoticeMessageGroup;
+      retrieveGroups: TNoticeMessageGroup;
     };
     math: {
       retrieveMathTextbooks: TNoticeMessageGroup;
@@ -69,6 +70,18 @@ const noticeMessageGroupFactory: {
           title: '비밀번호 찾기',
           message: '등록된 이메일로 임시발급된 비밀번호를 보내드렸습니다.',
         }),
+      },
+
+      // (GET) 그룹 목록
+      retrieveGroups: {
+        loadingMessage: () => ({
+          title: '',
+          message: '',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('그룹 목록 조회 중'),
+        }),
+        successMessage: undefined,
       },
     } as const,
 

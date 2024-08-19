@@ -1,14 +1,20 @@
 // type
 import { 
   TLoginModel, 
+  TGroupModel,
 } from '../models/authModel.type';
 
 //
 // Login API
 //
-export type TLoginPayload = {
+export type TLoginApiPayload = {
   username: string;
   password: string;
 };
 
-export type TLoginResponse = TLoginModel;
+export type TLoginApiResponse = TLoginModel;
+
+//
+// Groups API
+//
+export type TGroupsApiResponse = TGroupModel[];

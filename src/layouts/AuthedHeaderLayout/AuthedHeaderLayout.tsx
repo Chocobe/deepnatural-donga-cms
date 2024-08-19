@@ -1,22 +1,28 @@
 // react
 import {
   useMemo,
+  useEffect,
   memo,
   PropsWithChildren,
 } from 'react';
+// store
+import useAuthApiStore from '@/store/authApiStore/authApiStore';
+import { 
+  createSuccessApiSliceState,
+} from '@/store/apiStateUtils';
 // hook
 import useCMSNavigatorItems from '@/components/layouts/CMSNavigator/hooks/useCMSNavigator';
+import useIsLoggedIn from '@/hooks/useIsLoggedIn';
 // ui
 import CMSNavigator from '@/components/layouts/CMSNavigator/CMSNavigator';
 import AccountAction from '@/components/layouts/AccountAction/AccountAction';
+// api
+import ApiManager from '@/apis/ApiManager';
 // style
 import { 
   cn,
 } from '@/lib/shadcn-ui-utils';
 import './AuthedHeaderLayout.css';
-
-// FIXME: mockup
-// import MockSuperAdminSwitch from './MockSuperAdminSwitch';
 
 type TAuthedHeaderLayoutProps = PropsWithChildren<{
   className?: string;
@@ -29,18 +35,50 @@ function _AuthedHeaderLayout(props: TAuthedHeaderLayoutProps) {
   } = props;
 
   //
+  // authApi store
+  //
+  const setGroupsState = useAuthApiStore(state => state.groups.action.setGroupsState);
+
+  //
   // hook
   //
   const {
     cmsNavigatorItems,
   } = useCMSNavigatorItems();
 
+  const {
+    isLoggedIn,
+  } = useIsLoggedIn();
+
+  //
+  // cache
+  //
   const logoTitle = useMemo(() => {
     return cmsNavigatorItems
       .find(({ isActive }) => isActive)
       ?.text
       ?? '';
   }, [cmsNavigatorItems]);
+
+  //
+  // effect
+  //
+  useEffect(() => {
+    const retrieveGroups = async () => {
+      const response = await ApiManager
+        .auth
+        .retrieveGroupsApi();
+
+      if (response.data) {
+        setGroupsState(createSuccessApiSliceState(response.data));
+      }
+    };
+
+    if (isLoggedIn) {
+      console.log('Group 목록 조회');
+      retrieveGroups();
+    }
+  }, [isLoggedIn, setGroupsState]);
 
   return (
     <div className={cn(

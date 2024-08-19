@@ -2,6 +2,7 @@
 import {
   useState,
   useMemo,
+  useCallback,
   memo,
   useEffect,
   Dispatch,
@@ -35,9 +36,8 @@ import UserRoleSelect from '../UserRoleSelect/UserRoleSelect';
 import UserStatusToggleButton from '../UserStatusToggleButton/UserStatusToggleButton';
 // type
 import { 
-  TUserModel, 
-  TUserModelStatus,
-} from '@/apis/models/authModel.type';
+  TUserModel,
+} from '@/apis/models/userModel.type';
 // style
 import './UsersTable.css';
 
@@ -105,7 +105,7 @@ function _UsersTable(props: TUserTableProps) {
         },
       }),
 
-      columnHelper.accessor('name', {
+      columnHelper.accessor('username', {
         header: '이름'
       }),
 
@@ -117,7 +117,7 @@ function _UsersTable(props: TUserTableProps) {
         header: '휴대전화',
       }),
 
-      columnHelper.accessor('role', {
+      columnHelper.accessor('groups', {
         header: '권한',
         cell: props => {
           const {
@@ -132,13 +132,12 @@ function _UsersTable(props: TUserTableProps) {
               value={getValue()}
               onChange={value => {
                 table.options.meta?.updateData(row.index, column.id, value);
-              }}
-            />
+              }} />
           );
         },
       }),
 
-      columnHelper.accessor('status', {
+      columnHelper.accessor('is_active', {
         header: '상태',
         cell: props => {
           const {
@@ -150,7 +149,7 @@ function _UsersTable(props: TUserTableProps) {
 
           return (
             <UserStatusToggleButton
-              value={cell.getValue() as TUserModelStatus}
+              value={cell.getValue()}
               onChange={value => {
                 table.options.meta?.updateData(row.index, column.id, value);
               }} />
@@ -200,6 +199,15 @@ function _UsersTable(props: TUserTableProps) {
     },
   });
 
+  //
+  // callback
+  //
+  const goToDetailPage = useCallback((user: TUserModel) => {
+    console.group('User 상세 페이지 이동');
+    console.log('user: ', user);
+    console.groupEnd();
+  }, []);
+
   return (
     <Table className="UsersTable">
       <TableHeader className="">
@@ -228,7 +236,7 @@ function _UsersTable(props: TUserTableProps) {
             key={row.id}
             className="row"
             data-state={row.getIsSelected() && 'selected'}
-          >
+            onClick={() => goToDetailPage(row.original)}>
             {row.getVisibleCells().map(cell => (
               <TableCell 
                 key={cell.id}

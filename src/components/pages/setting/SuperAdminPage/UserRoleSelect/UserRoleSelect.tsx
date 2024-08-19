@@ -1,7 +1,10 @@
 // React
 import {
   memo,
+  useCallback,
 } from 'react';
+// store
+import useAuthApiStore from '@/store/authApiStore/authApiStore';
 // ui
 import { 
   Select,
@@ -12,14 +15,14 @@ import {
 } from '@/components/shadcn-ui/ui/select';
 // type
 import { 
-  userRoleTemplateMapper,
-} from '../UsersTable/UsersTable.type';
+  TGroupModel,
+} from '@/apis/models/authModel.type';
 // style
 import './UserRoleSelect.css';
 
 type TuserRoleSelectProps = {
-  value: string;
-  onChange: (value: string) => void;
+  value: TGroupModel[];
+  onChange: (value: TGroupModel[]) => void;
 };
 
 function _UserRoleSelect(props: TuserRoleSelectProps) {
@@ -28,22 +31,38 @@ function _UserRoleSelect(props: TuserRoleSelectProps) {
     onChange,
   } = props;
 
+  //
+  // authApi store
+  //
+  const groupsState = useAuthApiStore(state => state.groups.state.data);
+
+  //
+  // callback
+  //
+  const onValueChange = useCallback((value: string) => {
+    const newValue = groupsState?.find(group => String(group.id) === value);
+
+    if (newValue) {
+      onChange([newValue]);
+    }
+  }, [groupsState, onChange]);
+
   return (
     <Select
-      value={value}
-      onValueChange={onChange}
+      value={String(value?.[0]?.id)}
+      onValueChange={onValueChange}
     >
       <SelectTrigger className="UserRoleSelect-trigger">
         <SelectValue placeholder="권한을 선택해 주세요." />
       </SelectTrigger>
 
       <SelectContent>
-        {Object.entries(userRoleTemplateMapper).map(([value, text]) => (
+        {groupsState?.map(group => (
           <SelectItem
-            key={value}
+            key={group.id}
             className="UserRoleSelect-item"
-            value={value}>
-            {text}
+            value={String(group.id)}>
+            {group.name}
           </SelectItem>
         ))}
       </SelectContent>
