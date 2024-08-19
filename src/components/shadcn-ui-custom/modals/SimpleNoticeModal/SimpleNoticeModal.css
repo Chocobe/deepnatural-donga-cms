@@ -18,11 +18,12 @@
       }
     }
 
-    .description {
+    .message {
       color: #71717A;
       font-size: 14px;
       line-height: 20px;
       font-weight: 400;
+      white-space: pre-wrap;
     }
   }
 

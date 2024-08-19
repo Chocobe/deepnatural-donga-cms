@@ -7,7 +7,6 @@ import {
 } from 'react';
 // store
 import useAuthApiStore from '@/store/authApiStore/authApiStore';
-import useResultNoticeModalStore from '@/store/resultNoticeModalStore/resultNoticeModalStore';
 import { 
   createSuccessApiSliceState,
 } from '@/store/apiStateUtils';
@@ -24,7 +23,7 @@ import ApiManager from '@/apis/ApiManager';
 // type
 import { 
   TLoginPayload,
-} from '@/apis/auth/auth.type';
+} from '@/apis/auth/authApi.type';
 // style
 import './LoginPage.css';
 
@@ -36,8 +35,6 @@ function LoginPage() {
     username: '',
     password: '',
   });
-
-  // const [isOpenResultNoticeModal, setIsOpenResultNoticeModal] = useState(false);
 
   const formTemplates = [
     {
@@ -57,14 +54,13 @@ function LoginPage() {
   ];
 
   //
-  // authApiStore
+  // authApi store
   //
   const setLoginState = useAuthApiStore(state => state.login.action.setLoginState);
-  const {
-    openSuccessNoticeModal,
-    closeResultNoticeModal,
-  } = useResultNoticeModalStore();
 
+  //
+  // callback
+  //
   function  onChange(e: ChangeEvent<HTMLInputElement>) {
     const {
       id,
@@ -82,37 +78,22 @@ function LoginPage() {
 
     const payload: TLoginPayload = formState;
 
-    try {
-      const response = await ApiManager
-        .auth
-        .login(payload);
+    const response = await ApiManager
+      .auth
+      .loginApi
+      .callWithNoticeMessageGroup(payload);
 
-      const data = response.data;
-
-      console.log('login() 성공 - data: ', data);
-
-      setLoginState(createSuccessApiSliceState(data));
-    } catch(error) {
-      // TODO: Sonar 컴포넌트로 메시지 렌더링하기
-      console.error(error);
+    if (response?.data) {
+      setLoginState(createSuccessApiSliceState(response.data));
     }
   }
 
-  //
-  // callback
-  //
   const findPassword = useCallback(async () => {
-    await new Promise(res => setTimeout(res));
-    openSuccessNoticeModal({
-      title: '비밀번호 찾기',
-      description: '등록된 이메일로 임시발급된 비밀번호를 보내드렸습니다.',
-      firstButton: {
-        text: '확인',
-        variant: 'default',
-        onClick: closeResultNoticeModal,
-      },
-    });
-  }, [openSuccessNoticeModal, closeResultNoticeModal]);
+    ApiManager
+      .auth
+      .findPasswordApi
+      .callWithNoticeMessageGroup();
+  }, []);
 
   return (
     <div className="LoginPage">

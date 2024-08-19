@@ -34,7 +34,7 @@ import './AccountAction.css';
 
 function _AccountAction() {
   //
-  // authApiStore
+  // authApi store
   //
   const removeLoginState = useAuthApiStore(state => state.login.action.removeLoginState);
 
@@ -54,15 +54,12 @@ function _AccountAction() {
   }, [navigate]);
 
   const logout = useCallback(async () => {
-    try {
-      await ApiManager
-        .auth
-        .logout();
-    } catch(error) {
-      console.error(error);
-    } finally {
-      removeLoginState();
-    }
+    await ApiManager
+      .auth
+      .logoutApi
+      .callWithNoticeMessageGroup();
+
+    removeLoginState();
   }, [removeLoginState]);
 
   return (

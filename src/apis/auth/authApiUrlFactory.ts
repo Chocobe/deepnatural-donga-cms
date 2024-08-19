@@ -1,4 +1,4 @@
-const authUrlFactory = (() => {
+const autApihUrlFactory = (() => {
   const BASE_PATH = import.meta.env.VITE_CMS_API_PATH;
 
   return {
@@ -12,4 +12,4 @@ const authUrlFactory = (() => {
   };
 })();
 
-export default authUrlFactory;
+export default autApihUrlFactory;

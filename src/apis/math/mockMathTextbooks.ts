@@ -7,7 +7,7 @@ import {
   TMathTextbookModel,
 } from '@/apis/models/mathModel.type';
 
-export const mockMathTextbookData: TMathTextbookModel[] = [
+export const mockMathTextbooks: TMathTextbookModel[] = [
   {
     id: faker.string.uuid(),
     subject: '수학',

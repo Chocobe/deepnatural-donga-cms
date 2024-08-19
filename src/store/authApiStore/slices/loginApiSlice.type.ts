@@ -8,7 +8,7 @@ import {
 } from '../../apiStateUtils.type';
 import { 
   TLoginResponse,
-} from '@/apis/auth/auth.type';
+} from '@/apis/auth/authApi.type';
 
 //
 // state

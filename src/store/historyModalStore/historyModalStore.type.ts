@@ -14,7 +14,7 @@ export const initialHistoryModalStoreState: THistoryModalStoreState = {
 } as const;
 
 export type THistoryModalStoreAction = {
-  openHistoryModal: (retrieveHistoryDataList: () => Promise<THistoryModalData[]>) => void;
+  openHistoryModal: (retrieveHistoryDataList: () => Promise<THistoryModalData[] | undefined>) => void;
   closeHistoryModal: () => void;
 };
 

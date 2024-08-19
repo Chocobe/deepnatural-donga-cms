@@ -105,10 +105,9 @@ function ChangePasswordModal() {
     console.groupEnd();
 
     setOpen(false);
-    // setIsOpenResultNoticeModal(true);
     openSuccessNoticeModal({
       title: '비밀번호 변경 완료',
-      description: '새로운 비밀번호로 변경이 완료되었습니다.',
+      message: '새로운 비밀번호로 변경이 완료되었습니다.',
       firstButton: {
         text: '확인',
         variant: 'default',
@@ -116,10 +115,6 @@ function ChangePasswordModal() {
       },
     });
   }, [formState, openSuccessNoticeModal, closeResultNoticeModal]);
-
-  // const closeResultNoticeModal = useCallback(() => {
-  //   setIsOpenResultNoticeModal(false);
-  // }, []);
 
   //
   // effect

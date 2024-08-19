@@ -13,21 +13,19 @@ import {
 import { 
   LuHistory,
 } from 'react-icons/lu';
-// type
-import { 
-  mockHistoryModalData, 
-  THistoryModalData,
-} from '@/components/shadcn-ui-custom/modals/HistoryModal/HistoryModal.type';
 // style
 import './MathTextbookDetailHeader.css';
+import ApiManager from '@/apis/ApiManager';
 
 type TMathTextbookDetailHeaderProps = {
   isDetailMode: boolean;
+  textbookId?: string;
 }
 
 function _MathTextbookDetailHeader(props: TMathTextbookDetailHeaderProps) {
   const {
     isDetailMode,
+    textbookId,
   } = props;
 
   //
@@ -38,17 +36,17 @@ function _MathTextbookDetailHeader(props: TMathTextbookDetailHeaderProps) {
   //
   // callback
   //
-  const retrieveMathTextbookHistory = useCallback(async () => {
-    return new Promise<THistoryModalData[]>(res => {
-      setTimeout(() => {
-        res(mockHistoryModalData);
-      }, Math.random() * 2_000);
-    });
-  }, []);
-
   const _openHistoryModal = useCallback(async () => {
-    openHistoryModal(retrieveMathTextbookHistory);
-  }, [retrieveMathTextbookHistory, openHistoryModal]);
+    if (!textbookId) {
+      return;
+    }
+
+    openHistoryModal(() => ApiManager
+      .math
+      .retrieveMathTextbookHistoriesApi
+      .callWithNoticeMessageGroup(textbookId)
+    );
+  }, [textbookId, openHistoryModal]);
 
   return (
     <div className="MathTextbookDetailHeader">

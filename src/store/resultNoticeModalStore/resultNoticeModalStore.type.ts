@@ -15,7 +15,7 @@ type TResultNoticeModalButton = {
 
 type TOpenResultNoticeModalParams = {
   title: string;
-  description: string;
+  message: string;
   firstButton?: TResultNoticeModalButton;
   secondButton?: TResultNoticeModalButton;
 };
@@ -23,7 +23,7 @@ type TOpenResultNoticeModalParams = {
 export type TResultNoticeModalStoreState = {
   isOpen: boolean;
   title?: string;
-  description?: string;
+  message?: string;
   variant: TSimpleNoticeModalVariant;
 
   firstButton?: TResultNoticeModalButton;
@@ -33,7 +33,7 @@ export type TResultNoticeModalStoreState = {
 export const initialResultNoticeModalStoreState: TResultNoticeModalStoreState = {
   isOpen: false,
   title: undefined,
-  description: undefined,
+  message: undefined,
   variant: simpleNoticeModalVariantMapper.SUCCESS,
   firstButton: undefined,
   secondButton: undefined,
