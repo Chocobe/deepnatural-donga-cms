@@ -1,6 +1,7 @@
 // type
 import { 
   TLoginModel, 
+  TUserModel,
   TGroupModel,
 } from '../models/authModel.type';
 
@@ -15,6 +16,17 @@ export type TLoginApiPayload = {
 export type TLoginApiResponse = TLoginModel;
 
 //
+// UserInfo API
+//
+export type TRetrieveUserInfoApiPayload = {
+  pathParams: {
+    userId: string;
+  };
+};
+
+export type TRetrieveUserInfoApiResponse = TUserModel;
+
+//
 // Groups API
 //
-export type TGroupsApiResponse = TGroupModel[];
+export type TRetrieveGroupsApiResponse = TGroupModel[];

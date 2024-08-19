@@ -11,7 +11,7 @@ import {
 // type
 import { 
   userModelIsActiveTemplateMapper,
-} from '@/apis/models/userModel.type';
+} from '@/apis/models/authModel.type';
 // style
 import { 
   cn,

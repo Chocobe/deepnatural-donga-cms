@@ -3,26 +3,27 @@ import {
   useState,
   useEffect,
   PropsWithChildren,
-} from  'react';
+} from 'react';
 // router
-import {
+import { 
   useNavigate,
 } from 'react-router-dom';
 import routePathFactory from '@/routes/routePathFactory';
 // store
 import useAuthApiStore from '@/store/authApiStore/authApiStore';
 
-type TLoginRedirectMiddlewareProps = PropsWithChildren;
+type TMyPageRedirectMiddlewareProps = PropsWithChildren;
 
-function LoginRedirectMiddleware(props: TLoginRedirectMiddlewareProps) {
+function MyPageRedirectMiddleware(props: TMyPageRedirectMiddlewareProps) {
   const {
     children,
   } = props;
 
   //
-  // authApi Store
+  // auApi store
   //
-  const loginData = useAuthApiStore(state => state.login.state.data);
+  const userInfoState = useAuthApiStore(state => state.userInfo.state.data);
+  const isSuperUser = userInfoState?.is_superuser;
 
   //
   // state
@@ -37,21 +38,21 @@ function LoginRedirectMiddleware(props: TLoginRedirectMiddlewareProps) {
   //
   // effect
   //
-  useEffect(function redirectToLoginPage() {
-    if (loginData) {
+  useEffect(function redirectToMyPage() {
+    if (isSuperUser) {
       setIsChecked(true);
       return;
     }
 
     navigate(routePathFactory
-      .auth
-      .getLoginPagePath()
+      .setting
+      .getMyPagePath()
     );
-  }, [loginData, navigate]);
+  }, [isSuperUser, navigate]);
 
   return isChecked
     ? children
     : null;
 }
 
-export default LoginRedirectMiddleware;
+export default MyPageRedirectMiddleware;

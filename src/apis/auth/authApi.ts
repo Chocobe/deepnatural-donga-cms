@@ -5,9 +5,10 @@ import authApiUrlFactory from './authApiUrlFactory';
 import createApiWithNoticeMessageGroup from '@/utils/createApiWithNoticeMessageGroup';
 // type
 import { 
-  TGroupsApiResponse,
   TLoginApiPayload,
   TLoginApiResponse,
+  TRetrieveUserInfoApiResponse,
+  TRetrieveGroupsApiResponse,
 } from './authApi.type';
 import noticeMessageGroupFactory from '@/utils/noticeMessageGroupFactory';
 
@@ -55,10 +56,23 @@ export const findPasswordApi = createApiWithNoticeMessageGroup({
     .findPassword,
 });
 
+// (GET) 현재 계정의 사용자 정보
+export const retrieveUserInfoApi = createApiWithNoticeMessageGroup({
+  apiFunction: () => {
+    return api.get<TRetrieveUserInfoApiResponse>(
+      authApiUrlFactory.retrieveUserInfo()
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .auth
+    .retrieveUserInfo,
+});
+
 // (GET) 그룹 목록
 export const retrieveGroupsApi = createApiWithNoticeMessageGroup({
   apiFunction: () => {
-    return api.get<TGroupsApiResponse>(
+    return api.get<TRetrieveGroupsApiResponse>(
       authApiUrlFactory.retrieveGroups()
     );
   },

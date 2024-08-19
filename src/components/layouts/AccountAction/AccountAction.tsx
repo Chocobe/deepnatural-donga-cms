@@ -37,6 +37,8 @@ function _AccountAction() {
   // authApi store
   //
   const removeLoginState = useAuthApiStore(state => state.login.action.removeLoginState);
+  const clearUserInfoState = useAuthApiStore(state => state.userInfo.action.clearUserInfoState);
+  const clearGroupsState = useAuthApiStore(state => state.groups.action.clearGroupsState);
 
   //
   // hook
@@ -60,7 +62,9 @@ function _AccountAction() {
       .callWithNoticeMessageGroup();
 
     removeLoginState();
-  }, [removeLoginState]);
+    clearUserInfoState();
+    clearGroupsState();
+  }, [removeLoginState, clearUserInfoState, clearGroupsState]);
 
   return (
     <div className="AccountAction">

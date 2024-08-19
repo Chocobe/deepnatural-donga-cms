@@ -5,7 +5,7 @@ import {
 // type
 import { 
   TUserModel,
-} from '@/apis/models/userModel.type';
+} from '@/apis/models/authModel.type';
 
 // FIXME: 지우기
 export const mockUsers: TUserModel[] = [
@@ -20,7 +20,8 @@ export const mockUsers: TUserModel[] = [
         name: '테스트그룹',
       },
     ],
-    is_active: false,
+    is_active: true,
+    is_superuser: true,
   },
   {
     id: faker.number.int(),
@@ -34,6 +35,7 @@ export const mockUsers: TUserModel[] = [
       },
     ],
     is_active: true,
+    is_superuser: false,
   },
   {
     id: faker.number.int(),
@@ -47,6 +49,7 @@ export const mockUsers: TUserModel[] = [
       },
     ],
     is_active: true,
+    is_superuser: false,
   },
   {
     id: faker.number.int(),
@@ -60,6 +63,7 @@ export const mockUsers: TUserModel[] = [
       },
     ],
     is_active: false,
+    is_superuser: false,
   },
   {
     id: faker.number.int(),
@@ -73,6 +77,7 @@ export const mockUsers: TUserModel[] = [
       },
     ],
     is_active: false,
+    is_superuser: false,
   },
   {
     id: faker.number.int(),
@@ -86,6 +91,7 @@ export const mockUsers: TUserModel[] = [
       },
     ],
     is_active: false,
+    is_superuser: false,
   },
   {
     id: faker.number.int(),
@@ -99,6 +105,7 @@ export const mockUsers: TUserModel[] = [
       },
     ],
     is_active: false,
+    is_superuser: false,
   },
   {
     id: faker.number.int(),
@@ -112,6 +119,7 @@ export const mockUsers: TUserModel[] = [
       },
     ],
     is_active: false,
+    is_superuser: false,
   },
   {
     id: faker.number.int(),
@@ -125,6 +133,7 @@ export const mockUsers: TUserModel[] = [
       },
     ],
     is_active: false,
+    is_superuser: false,
   },
   {
     id: faker.number.int(),
@@ -138,5 +147,6 @@ export const mockUsers: TUserModel[] = [
       },
     ],
     is_active: false,
+    is_superuser: false,
   },
 ];

@@ -37,6 +37,7 @@ function _AuthedHeaderLayout(props: TAuthedHeaderLayoutProps) {
   //
   // authApi store
   //
+  const setUserInfoState = useAuthApiStore(state => state.userInfo.action.setUserInfoState);
   const setGroupsState = useAuthApiStore(state => state.groups.action.setGroupsState);
 
   //
@@ -64,6 +65,16 @@ function _AuthedHeaderLayout(props: TAuthedHeaderLayoutProps) {
   // effect
   //
   useEffect(() => {
+    const retrieveUser = async () => {
+      const response = await ApiManager
+        .auth
+        .retrieveUserInfoApi();
+
+      if (response.data) {
+        setUserInfoState(createSuccessApiSliceState(response.data));
+      }
+    };
+
     const retrieveGroups = async () => {
       const response = await ApiManager
         .auth
@@ -75,10 +86,10 @@ function _AuthedHeaderLayout(props: TAuthedHeaderLayoutProps) {
     };
 
     if (isLoggedIn) {
-      console.log('Group 목록 조회');
+      retrieveUser();
       retrieveGroups();
     }
-  }, [isLoggedIn, setGroupsState]);
+  }, [isLoggedIn, setUserInfoState, setGroupsState]);
 
   return (
     <div className={cn(
