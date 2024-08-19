@@ -15,6 +15,17 @@ export type TLoginApiPayload = {
 export type TLoginApiResponse = TLoginModel;
 
 //
+// User API
+//
+export type TRetrieveUserApiPayload = {
+  pathParams: {
+    userId: string;
+  };
+};
+
+export type TRetrieveUserApiResponse = any;
+
+//
 // Groups API
 //
-export type TGroupsApiResponse = TGroupModel[];
+export type TRetrieveGroupsApiResponse = TGroupModel[];

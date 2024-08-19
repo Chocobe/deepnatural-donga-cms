@@ -23,6 +23,7 @@ const noticeMessageGroupFactory: {
       logout: TNoticeMessageGroup;
       findPassword: TNoticeMessageGroup;
       retrieveGroups: TNoticeMessageGroup;
+      retrieveUser: TNoticeMessageGroup;
     };
     math: {
       retrieveMathTextbooks: TNoticeMessageGroup;
@@ -82,6 +83,21 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('그룹 목록 조회 중'),
         }),
         successMessage: undefined,
+      },
+
+      // (GET) 현재 계정의 사용자 정보
+      retrieveUser: {
+        loadingMessage: () => ({
+          title: '',
+          message: '',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('사용자 정보 조회 중'),
+        }),
+        successMessage: () => ({
+          title: '',
+          message: '',
+        }),
       },
     } as const,
 

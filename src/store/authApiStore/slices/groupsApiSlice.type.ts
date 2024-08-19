@@ -7,13 +7,13 @@ import {
   TApiSliceState,
 } from '@/store/apiStateUtils.type';
 import { 
-  TGroupsApiResponse,
+  TRetrieveGroupsApiResponse,
 } from '@/apis/auth/authApi.type';
 
 //
 // state
 //
-export type TGroupsApiSliceState = TApiSliceState<TGroupsApiResponse>;
+export type TGroupsApiSliceState = TApiSliceState<TRetrieveGroupsApiResponse>;
 export const initialGroupsApiSliceState: TGroupsApiSliceState = createIdleApiSliceState();
 
 //
@@ -21,7 +21,7 @@ export const initialGroupsApiSliceState: TGroupsApiSliceState = createIdleApiSli
 //
 export type TGroupsApiSliceAction = {
   clearGroupsState: () => void;
-  setGroupsState: (groupsState: TApiSliceState<TGroupsApiResponse>) => void;
+  setGroupsState: (groupsState: TApiSliceState<TRetrieveGroupsApiResponse>) => void;
 };
 
 export type TGroupsApiSlice = {

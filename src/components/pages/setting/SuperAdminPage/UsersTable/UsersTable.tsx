@@ -37,7 +37,7 @@ import UserStatusToggleButton from '../UserStatusToggleButton/UserStatusToggleBu
 // type
 import { 
   TUserModel,
-} from '@/apis/models/userModel.type';
+} from '@/apis/models/authModel.type';
 // style
 import './UsersTable.css';
 

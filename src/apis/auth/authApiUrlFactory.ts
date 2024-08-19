@@ -13,6 +13,10 @@ const authApiUrlFactory = (() => {
     retrieveGroups() {
       return `${BASE_PATH}groups/`;
     },
+
+    retrieveUser(id: string) {
+      return `${BASE_PATH}users/${id}/`;
+    },
   };
 })();
 

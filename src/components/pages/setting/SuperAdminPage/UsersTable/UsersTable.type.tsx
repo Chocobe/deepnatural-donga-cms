@@ -5,7 +5,7 @@ import {
 // type
 import { 
   TUserModel,
-} from '@/apis/models/userModel.type';
+} from '@/apis/models/authModel.type';
 
 // FIXME: 지우기
 export const mockUsers: TUserModel[] = [

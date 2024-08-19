@@ -5,11 +5,14 @@ import authApiUrlFactory from './authApiUrlFactory';
 import createApiWithNoticeMessageGroup from '@/utils/createApiWithNoticeMessageGroup';
 // type
 import { 
-  TGroupsApiResponse,
+  TRetrieveGroupsApiResponse,
   TLoginApiPayload,
   TLoginApiResponse,
 } from './authApi.type';
 import noticeMessageGroupFactory from '@/utils/noticeMessageGroupFactory';
+import { 
+  TUserModel,
+} from '../models/authModel.type';
 
 // 로그인
 export const loginApi = createApiWithNoticeMessageGroup({
@@ -58,7 +61,7 @@ export const findPasswordApi = createApiWithNoticeMessageGroup({
 // (GET) 그룹 목록
 export const retrieveGroupsApi = createApiWithNoticeMessageGroup({
   apiFunction: () => {
-    return api.get<TGroupsApiResponse>(
+    return api.get<TRetrieveGroupsApiResponse>(
       authApiUrlFactory.retrieveGroups()
     );
   },
@@ -66,4 +69,18 @@ export const retrieveGroupsApi = createApiWithNoticeMessageGroup({
     .apis
     .auth
     .retrieveGroups,
+});
+
+// (GET) 현재 계정의 사용자 정보
+export const retrieveUserApi = createApiWithNoticeMessageGroup({
+  apiFunction: (id: string) => {
+    // FIXME: TRetrieveUserApiResponse 로 바꾸기
+    return api.get<TUserModel>(
+      authApiUrlFactory.retrieveUser(id)
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .auth
+    .retrieveUser,
 });
