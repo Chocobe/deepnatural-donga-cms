@@ -1,6 +1,6 @@
 // --- --- --- --- --- --- --- --- --- ---
 //
-// 수학 CMS type을 정의합니다.
+// 수학 CMS model type을 정의합니다.
 //
 // --- --- --- --- --- --- --- --- --- ---
 
@@ -17,7 +17,7 @@ import {
 //
 // Math Textbook (수학 교과서)
 //
-// 커리큘럼
+// Math Textbook (수학 교과서) - 커리큘럼
 export const mathTextbookModelCurriculumMapper = {
   '2015': '2015',
   '2022': '2022',
@@ -42,18 +42,21 @@ type TMathTextbookGenericModel<T extends TCMSCommonModelClassType> = {
   term: TCMSCommonModelTerm;
 };
 
+// Math Textbook (수학 교과서) - 초등 수학 교과서
 type TMathTextbookElementaryModel = TMathTextbookGenericModel<
   typeof cmsCommonModelClassTypeMapper.ELEMENTARY
 > & {
   grade: TCMSCommonModelElementaryGrade;
 };
 
+// Math Textbook (수학 교과서) - 중등 수학 교과서
 type TMathTextbookMiddleModel = TMathTextbookGenericModel<
   typeof cmsCommonModelClassTypeMapper.MIDDLE
 > & {
   grade: TCMSCommonModelMiddleHighGrade;
 };
 
+// Math Textbook (수학 교과서) - 고등 수학 교과서
 type TMathTextbookHighModel = TMathTextbookGenericModel<
   typeof cmsCommonModelClassTypeMapper.HIGH
 > & {

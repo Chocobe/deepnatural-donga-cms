@@ -6,7 +6,7 @@ import {
 } from '../models/authModel.type';
 
 //
-// Login API
+// 로그인
 //
 export type TLoginApiPayload = {
   username: string;
@@ -16,7 +16,7 @@ export type TLoginApiPayload = {
 export type TLoginApiResponse = TLoginModel;
 
 //
-// UserInfo API
+// (GET) 현재 계정의 사용자 정보
 //
 export type TRetrieveUserInfoApiPayload = {
   pathParams: {
@@ -27,6 +27,6 @@ export type TRetrieveUserInfoApiPayload = {
 export type TRetrieveUserInfoApiResponse = TUserModel;
 
 //
-// Groups API
+// (GET) 그룹 목록
 //
 export type TRetrieveGroupsApiResponse = TGroupModel[];
