@@ -4,9 +4,9 @@ type TNoticeMessage = {
 };
 
 export type TNoticeMessageGroup = {
-  loadingMessage: () => TNoticeMessage;
-  errorMessage: () => TNoticeMessage;
-  successMessage?: () => TNoticeMessage;
+  loadingMessage: (...params: Array<any>) => TNoticeMessage;
+  errorMessage: (...params: Array<any>) => TNoticeMessage;
+  successMessage?: (...params: Array<any>) => TNoticeMessage;
 };
 
 const createNetworkErrorMessage = (

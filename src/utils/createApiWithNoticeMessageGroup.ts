@@ -24,15 +24,24 @@ const createApiWithNoticeMessageGroup = <TResponse, TParams = void>(focParams: {
   self.callWithNoticeMessageGroup = async (
     params: TParams,
     options?: {
-      isDisabledLoadingMessage?: boolean;
-      isDisabledSuccessMessage?: boolean;
-      isDisabledErrorMessage?: boolean;
+      loadingMessage?: {
+        isDisabled?: boolean;
+        params?: Array<any>;
+      };
+      errorMessage?: {
+        isDisabled?: boolean;
+        params?: Array<any>;
+      };
+      successMessage?: {
+        isDisabled?: boolean;
+        params?: Array<any>;
+      };
     }
   ) => {
     const {
-      isDisabledLoadingMessage,
-      isDisabledSuccessMessage,
-      isDisabledErrorMessage,
+      loadingMessage: loadingMessageOptions,
+      errorMessage: errorMessageOptions,
+      successMessage: successMessageOptions,
     } = options ?? {};
 
     const {
@@ -52,31 +61,37 @@ const createApiWithNoticeMessageGroup = <TResponse, TParams = void>(focParams: {
     } = useResultNoticeModalStore.getState();
 
     try {
-      !isDisabledLoadingMessage && loadingMessage && openLoadingModal(
-        loadingMessage().message
-      );
+      !loadingMessageOptions?.isDisabled 
+        && loadingMessage 
+        && openLoadingModal(
+          loadingMessage(...(loadingMessageOptions?.params ?? [])).message
+        );
 
       const response = await self(params);
 
-      !isDisabledSuccessMessage && successMessage && openSuccessNoticeModal({
-        ...successMessage(),
-        firstButton: {
-          text: '확인',
-          variant: 'default',
-        },
-      });
+      !successMessageOptions?.isDisabled 
+        && successMessage 
+        && openSuccessNoticeModal({
+          ...successMessage(...(successMessageOptions?.params ?? [])),
+          firstButton: {
+            text: '확인',
+            variant: 'default',
+          },
+        });
 
       return response;
     } catch(error: any) {
-      !isDisabledErrorMessage && openErrorNoticeModal({
-        ...errorMessage(),
-        firstButton: {
-          text: '확인',
-          variant: 'default',
-        },
-      });
+      !errorMessageOptions?.isDisabled 
+        && openErrorNoticeModal({
+          ...errorMessage(...(errorMessageOptions?.params ?? [])),
+          firstButton: {
+            text: '확인',
+            variant: 'default',
+          },
+        });
     } finally {
-      !isDisabledLoadingMessage && closeLoadingModal();
+      !loadingMessageOptions?.isDisabled 
+        && closeLoadingModal();
     }
   };
 
