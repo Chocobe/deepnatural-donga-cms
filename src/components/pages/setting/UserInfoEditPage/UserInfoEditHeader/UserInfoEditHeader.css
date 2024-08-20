@@ -1,0 +1,17 @@
+.UserInfoEditHeader {
+  @apply flex flex-col gap-1.5;
+
+  > .title {
+    color: #09090B !important;
+    font-size: 20px !important;
+    line-height: 24px !important;
+    font-weight: 600 !important;
+  }
+
+  > .description {
+    color: #71717A;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+}
