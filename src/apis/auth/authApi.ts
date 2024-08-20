@@ -7,10 +7,20 @@ import createApiWithNoticeMessageGroup from '@/utils/createApiWithNoticeMessageG
 import { 
   TLoginApiPayload,
   TLoginApiResponse,
+
   TRetrieveUserInfoApiResponse,
+
   TRetrieveGroupsApiResponse,
+
+  TRetrieveUsersApiSearchParams,
+  TRetrieveUsersApiResponse,
+
+  TPatchUserApiPathParams,
+  TPatchUserApiPayload,
 } from './authApi.type';
+// util
 import noticeMessageGroupFactory from '@/utils/noticeMessageGroupFactory';
+import excludeNullOrUndefinedProperties from '@/utils/excludeNullOrUndefinedProperties/excludeNullOrUndefinedProperties';
 
 //
 // 로그인
@@ -90,4 +100,52 @@ export const retrieveGroupsApi = createApiWithNoticeMessageGroup({
     .apis
     .auth
     .retrieveGroups,
+});
+
+//
+// (GET) 사용자 목록
+//
+export const retrieveUsersApi = createApiWithNoticeMessageGroup({
+  apiFunction: (searchParams: TRetrieveUsersApiSearchParams) => {
+    const _searchParams = excludeNullOrUndefinedProperties(searchParams);
+
+    return api.get<TRetrieveUsersApiResponse>(
+      authApiUrlFactory.retrieveUsers(),
+      {
+        params: _searchParams,
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .auth
+    .retrieveUsers,
+});
+
+//
+// (PATCH) 사용자 수정
+//
+export const patchUserApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: {
+    pathParams: TPatchUserApiPathParams;
+    payload: TPatchUserApiPayload;
+  }) => {
+    const {
+      pathParams: {
+        userId,
+      },
+      payload,
+    } = params;
+
+    return api.patch(
+      authApiUrlFactory.patchUser({
+        userId
+      }),
+      payload
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .auth
+    .patchUser,
 });

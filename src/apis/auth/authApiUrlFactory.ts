@@ -21,6 +21,22 @@ const authApiUrlFactory = (() => {
     retrieveGroups() {
       return `${BASE_PATH}groups/`;
     },
+
+    // (GET) 사용자 목록
+    retrieveUsers() {
+      return `${BASE_PATH}users/`;
+    },
+
+    // (PATCH) 사용자 수정
+    patchUser(pathParams: {
+      userId: number
+    }) {
+      const {
+        userId,
+      } = pathParams;
+
+      return `${this.retrieveUsers()}${userId}/`;
+    },
   };
 })();
 

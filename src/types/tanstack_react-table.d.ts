@@ -4,7 +4,7 @@ import {
 
 declare module '@tanstack/react-table' {
   export interface TableMeta<TData extends RowData> {
-    updateData: (
+    updateData?: (
       rowIndex: number,
       columnId: string,
       value: unknown,

@@ -24,6 +24,8 @@ const noticeMessageGroupFactory: {
       findPassword: TNoticeMessageGroup;
       retrieveUserInfo: TNoticeMessageGroup;
       retrieveGroups: TNoticeMessageGroup;
+      retrieveUsers: TNoticeMessageGroup;
+      patchUser: TNoticeMessageGroup;
     };
     math: {
       retrieveMathTextbooks: TNoticeMessageGroup;
@@ -96,6 +98,33 @@ const noticeMessageGroupFactory: {
         }),
         errorMessage: () => ({
           ...createNetworkErrorMessage('그룹 목록 조회 중'),
+        }),
+        successMessage: undefined,
+      },
+
+      // (GET) 사용자 목록
+      retrieveUsers: {
+        loadingMessage: () => ({
+          title: '',
+          message: '사용자 목록을 조회 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('사용자 목록 조회 중'),
+        }),
+        successMessage: () => ({
+          title: '',
+          message: '',
+        }),
+      },
+
+      // (PATCH) 사용자 수정
+      patchUser: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수정 내용을 반영 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('사용자 수정 중'),
         }),
         successMessage: undefined,
       },

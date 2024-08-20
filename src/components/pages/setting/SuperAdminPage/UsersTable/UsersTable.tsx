@@ -5,9 +5,13 @@ import {
   useCallback,
   memo,
   useEffect,
-  Dispatch,
-  SetStateAction,
 } from 'react';
+// router
+import { 
+  useNavigate,
+} from 'react-router-dom';
+// store
+import useSuperAdminPageStore from '@/store/superAdminPageStore/superAdminPageStore';
 // react-table
 import { 
   extractID,
@@ -19,6 +23,7 @@ import {
   useReactTable,
   createColumnHelper,
   RowSelectionState,
+  RowData,
 } from '@tanstack/react-table';
 import {
   Table,
@@ -34,31 +39,55 @@ import {
 } from '@/components/shadcn-ui/ui/checkbox';
 import UserRoleSelect from '../UserRoleSelect/UserRoleSelect';
 import UserStatusToggleButton from '../UserStatusToggleButton/UserStatusToggleButton';
+// api
+import ApiManager from '@/apis/ApiManager';
 // type
 import { 
+  TGroupModel,
   TUserModel,
 } from '@/apis/models/authModel.type';
 // style
 import './UsersTable.css';
+import routePathFactory from '@/routes/routePathFactory';
 
-type TUserTableProps = {
-  data: TUserModel[];
-  setData: Dispatch<SetStateAction<TUserModel[]>>;
-};
+declare module '@tanstack/react-table' {
+  export interface TableMeta<TData extends RowData> {
+    updateIsActive: (
+      rowIndex: number,
+      value: boolean,
+      rowData: TData
+    ) => void;
+
+    updateGroups: (
+      rowIndex: number,
+      value: TGroupModel[],
+      rowData: TData
+    ) => void;
+  }
+}
 
 const columnHelper = createColumnHelper<TUserModel>();
 
-function _UsersTable(props: TUserTableProps) {
-  const {
-    data,
-    setData,
-  } = props;
+function _UsersTable() {
+  //
+  // superAdminPage store
+  //
+  const usersData = useSuperAdminPageStore(state => state.usersData);
+  const tableData = usersData?.results ?? [];
+
+  const setDetailTargetUser = useSuperAdminPageStore(state => state.setDetailTargetUser);
+  const updateUsersData = useSuperAdminPageStore(state => state.updateUsersData);
 
   //
   // state
   //
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
   const [selectedData, setSelectedData] = useState<TUserModel[]>([]);
+
+  //
+  // hook
+  //
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.group('effect');
@@ -121,17 +150,17 @@ function _UsersTable(props: TUserTableProps) {
         header: '권한',
         cell: props => {
           const {
-            getValue,
-            row,
-            column,
             table,
+            row,
+            // column,
+            cell,
           } = props;
 
           return (
             <UserRoleSelect
-              value={getValue()}
+              value={cell.getValue()}
               onChange={value => {
-                table.options.meta?.updateData(row.index, column.id, value);
+                table.options.meta?.updateGroups(row.index, value, row.original);
               }} />
           );
         },
@@ -141,17 +170,17 @@ function _UsersTable(props: TUserTableProps) {
         header: '상태',
         cell: props => {
           const {
-            cell,
-            column,
-            row,
             table,
+            row,
+            // column,
+            cell,
           } = props;
 
           return (
             <UserStatusToggleButton
               value={cell.getValue()}
               onChange={value => {
-                table.options.meta?.updateData(row.index, column.id, value);
+                table.options.meta?.updateIsActive(row.index, value, row.original);
               }} />
           );
         },
@@ -160,11 +189,40 @@ function _UsersTable(props: TUserTableProps) {
   }, []);
 
   //
+  // callback
+  //
+  const updateUser = useCallback((params: {
+    rowIndex: number;
+    columnID: string;
+    value: any;
+  }) => {
+    const {
+      rowIndex,
+      columnID,
+      value,
+    } = params;
+
+    updateUsersData(old => {
+      return {
+        ...old,
+        results: old?.results.map((row, index) => {
+          return rowIndex !== index
+            ? row
+            : {
+              ...row,
+              [columnID]: value,
+            };
+        }) ?? [],
+      };
+    });
+  }, [updateUsersData]);
+
+  //
   // hook
   //
   const table = useReactTable({
     columns,
-    data,
+    data: tableData,
     getCoreRowModel: getCoreRowModel(),
     enableRowSelection: true,
     state: {
@@ -180,20 +238,53 @@ function _UsersTable(props: TUserTableProps) {
     },
 
     meta: {
-      updateData: async (rowIndex, columnID, value) => {
-        await new Promise<void>(res => {
-          setTimeout(() => {
-            setData(old => old.map((row, index) => {
-              return rowIndex !== index
-                ? row
-                : {
-                  ...row,
-                  [columnID]: value,
-                };
-            }));
+      updateIsActive: async (rowIndex, value, rowData) => {
+        const response = await ApiManager
+          .auth
+          .patchUserApi
+          .callWithNoticeMessageGroup({
+            pathParams: {
+              userId: rowData.id,
+            },
+            payload: {
+              is_active: value,
+            },
+          });
 
-            res();
-          }, 1_000);
+        if (!response?.data) {
+          return;
+        }
+
+        updateUser({
+          rowIndex,
+          columnID: 'is_active',
+          value
+        });
+      },
+
+      updateGroups: async (rowIndex, value, rowData) => {
+        const response = await ApiManager
+          .auth
+          .patchUserApi
+          .callWithNoticeMessageGroup({
+            pathParams: {
+              userId: rowData.id,
+            },
+            payload: {
+              groups: value?.[0]
+                ? [value[0].id]
+                : []
+            },
+          });
+
+        if (!response?.data) {
+          return;
+        }
+
+        updateUser({
+          rowIndex,
+          columnID: 'groups',
+          value,
         });
       },
     },
@@ -203,10 +294,16 @@ function _UsersTable(props: TUserTableProps) {
   // callback
   //
   const goToDetailPage = useCallback((user: TUserModel) => {
-    console.group('User 상세 페이지 이동');
-    console.log('user: ', user);
-    console.groupEnd();
-  }, []);
+    setDetailTargetUser(user);
+
+    // navigate(routePathFactory
+    //   .setting
+    //   .getUserInfoEditPage(user.id)
+    // );
+  }, [
+    setDetailTargetUser, 
+    // navigate
+  ]);
 
   return (
     <Table className="UsersTable">

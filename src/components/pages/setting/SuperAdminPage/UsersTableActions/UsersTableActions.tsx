@@ -34,14 +34,6 @@ function _UsersTableActions() {
     console.log('onClickRemove()');
   }, []);
 
-  const onClickEdit = useCallback(() => {
-    console.log('onClickEdit()');
-  }, []);
-
-  const onClickToggleUserStatus = useCallback(() => {
-    console.log('onClickToggleUserStatus()');
-  }, []);
-
   const onChangeRoleSearchValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
@@ -56,19 +48,7 @@ function _UsersTableActions() {
       text: '삭제',
       onClick: onClickRemove,
     },
-    {
-      text: '수정',
-      onClick: onClickEdit,
-    },
-    {
-      text: '사용중지',
-      onClick: onClickToggleUserStatus,
-    },
-  ], [
-    onClickRemove,
-    onClickEdit,
-    onClickToggleUserStatus,
-  ]);
+  ], [onClickRemove]);
 
   return (
     <div className="UsersTableActions">

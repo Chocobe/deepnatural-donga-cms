@@ -1,7 +1,8 @@
 // React
 import {
-  memo,
+  useMemo,
   useCallback,
+  memo,
 } from 'react';
 // store
 import useAuthApiStore from '@/store/authApiStore/authApiStore';
@@ -34,18 +35,31 @@ function _UserRoleSelect(props: TuserRoleSelectProps) {
   //
   // authApi store
   //
-  const groupsState = useAuthApiStore(state => state.groups.state.data);
+  const groups = useAuthApiStore(state => state.groups.state.data);
+
+  //
+  // callback
+  //
+  const groupOptions = useMemo<TGroupModel[]>(() => [
+    {
+      id: -1,
+      name: '권한 해제',
+    },
+    ...groups ?? [],
+  ], [groups]);
 
   //
   // callback
   //
   const onValueChange = useCallback((value: string) => {
-    const newValue = groupsState?.find(group => String(group.id) === value);
+    const targetGroup = groups?.find(group => String(group.id) === value);
 
-    if (newValue) {
-      onChange([newValue]);
-    }
-  }, [groupsState, onChange]);
+    const newValue = targetGroup
+      ? [targetGroup]
+      : [];
+
+    onChange(newValue);
+  }, [groups, onChange]);
 
   return (
     <Select
@@ -57,12 +71,12 @@ function _UserRoleSelect(props: TuserRoleSelectProps) {
       </SelectTrigger>
 
       <SelectContent>
-        {groupsState?.map(group => (
+        {groupOptions?.map(option => (
           <SelectItem
-            key={group.id}
+            key={option.id}
             className="UserRoleSelect-item"
-            value={String(group.id)}>
-            {group.name}
+            value={String(option.id)}>
+            {option.name}
           </SelectItem>
         ))}
       </SelectContent>
