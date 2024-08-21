@@ -25,7 +25,7 @@
       }
     }
 
-    .selector {
+    .table-row-selector {
       width: 66px !important;
       min-width: 66px !important;
     }
@@ -83,7 +83,7 @@
       }
     }
 
-    .selector {
+    .table-row-selector {
       /*  */
     }
 

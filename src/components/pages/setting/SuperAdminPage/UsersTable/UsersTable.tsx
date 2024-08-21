@@ -4,17 +4,17 @@ import {
   useMemo,
   useCallback,
   memo,
-  useEffect,
 } from 'react';
 // router
 import { 
   useNavigate,
 } from 'react-router-dom';
+import routePathFactory from '@/routes/routePathFactory';
 // store
 import useSuperAdminPageStore from '@/store/superAdminPageStore/superAdminPageStore';
 // react-table
 import { 
-  extractID,
+  TABLE_ROW_SELECTION_CHECKBOX_ID,
 } from '@/lib/tanstack-reactTable-utils/tanstack-reactTable-utils';
 // ui
 import {
@@ -33,12 +33,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/shadcn-ui/ui/table';
-import { 
-  Checkbox,
-  CHECKBOX_INDETERMINATE,
-} from '@/components/shadcn-ui/ui/checkbox';
 import UserRoleSelect from '../UserRoleSelect/UserRoleSelect';
 import UserStatusToggleButton from '../UserStatusToggleButton/UserStatusToggleButton';
+import TableRowSelectorHeader from '@/components/shadcn-ui-custom/TableRowSelectorHeader/TableRowSelectorHeader';
+import TableRowSelectorCell from '@/components/shadcn-ui-custom/TableRowSelectorCell/TableRowSelectorCell';
 // api
 import ApiManager from '@/apis/ApiManager';
 // type
@@ -48,7 +46,6 @@ import {
 } from '@/apis/models/authModel.type';
 // style
 import './UsersTable.css';
-import routePathFactory from '@/routes/routePathFactory';
 
 declare module '@tanstack/react-table' {
   export interface TableMeta<TData extends RowData> {
@@ -74,26 +71,21 @@ function _UsersTable() {
   //
   const usersData = useSuperAdminPageStore(state => state.usersData);
   const tableData = usersData?.results ?? [];
+  const updateUsersData = useSuperAdminPageStore(state => state.updateUsersData);
 
   const setDetailTargetUser = useSuperAdminPageStore(state => state.setDetailTargetUser);
-  const updateUsersData = useSuperAdminPageStore(state => state.updateUsersData);
+
+  const setSelectedUsers = useSuperAdminPageStore(state => state.setSelectedUsers);
 
   //
   // state
   //
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-  const [selectedData, setSelectedData] = useState<TUserModel[]>([]);
 
   //
   // hook
   //
   const navigate = useNavigate();
-
-  useEffect(() => {
-    console.group('effect');
-    console.log('selectedData:', selectedData);
-    console.groupEnd();
-  }, [selectedData]);
 
   //
   // cache
@@ -101,37 +93,9 @@ function _UsersTable() {
   const columns = useMemo(() => {
     return [
       columnHelper.display({
-        id: 'selector',
-        header: props => {
-          return (
-            <Checkbox
-              className="block m-auto"
-              checked={
-                props.table.getIsAllPageRowsSelected() ||
-                (props.table.getIsSomePageRowsSelected() && CHECKBOX_INDETERMINATE)
-              }
-              onCheckedChange={checked => {
-                props.table.getToggleAllRowsSelectedHandler()({
-                  target: { checked },
-                });
-              }}
-              aria-label="Select all"
-            />
-          );
-        },
-        cell: props => {
-          return (
-            <Checkbox
-              className="block m-auto"
-              checked={props.row.getIsSelected()}
-              disabled={!props.row.getCanSelect()}
-              onCheckedChange={e => {
-                console.log('e: ', e);
-                props.row.getToggleSelectedHandler()(e);
-              }}
-            />
-          );
-        },
+        id: TABLE_ROW_SELECTION_CHECKBOX_ID,
+        header: TableRowSelectorHeader,
+        cell: TableRowSelectorCell,
       }),
 
       columnHelper.accessor('username', {
@@ -152,7 +116,6 @@ function _UsersTable() {
           const {
             table,
             row,
-            // column,
             cell,
           } = props;
 
@@ -172,7 +135,6 @@ function _UsersTable() {
           const {
             table,
             row,
-            // column,
             cell,
           } = props;
 
@@ -217,6 +179,15 @@ function _UsersTable() {
     });
   }, [updateUsersData]);
 
+  const goToUserInfoEditPage = useCallback((user: TUserModel) => {
+    setDetailTargetUser(user);
+
+    navigate(routePathFactory
+      .setting
+      .getUserInfoEditPage(user.id)
+    );
+  }, [setDetailTargetUser, navigate]);
+
   //
   // hook
   //
@@ -232,8 +203,8 @@ function _UsersTable() {
       setRowSelection(e);
 
       setTimeout(() => {
-        const selectedData = table.getSelectedRowModel().rows.map(row => row.original);
-        setSelectedData(selectedData);
+        const selectedUsers = table.getSelectedRowModel().rows.map(row => row.original);
+        setSelectedUsers(selectedUsers);
       });
     },
 
@@ -290,21 +261,6 @@ function _UsersTable() {
     },
   });
 
-  //
-  // callback
-  //
-  const goToDetailPage = useCallback((user: TUserModel) => {
-    setDetailTargetUser(user);
-
-    // navigate(routePathFactory
-    //   .setting
-    //   .getUserInfoEditPage(user.id)
-    // );
-  }, [
-    setDetailTargetUser, 
-    // navigate
-  ]);
-
   return (
     <Table className="UsersTable">
       <TableHeader className="">
@@ -315,8 +271,7 @@ function _UsersTable() {
             {headerGroup.headers.map(header => (
               <TableHead 
                 key={header.id}
-                className={extractID(header.id) ?? ''}
-              >
+                className={header.column.id ?? ''}>
                 {flexRender(
                   header.column.columnDef.header,
                   header.getContext()
@@ -333,11 +288,16 @@ function _UsersTable() {
             key={row.id}
             className="row"
             data-state={row.getIsSelected() && 'selected'}
-            onClick={() => goToDetailPage(row.original)}>
+            onClick={() => goToUserInfoEditPage(row.original)}>
             {row.getVisibleCells().map(cell => (
               <TableCell 
                 key={cell.id}
-                className={extractID(cell.id) ?? ''}>
+                className={cell.column.id}
+                onClick={e => {
+                  if (cell.column.id === TABLE_ROW_SELECTION_CHECKBOX_ID) {
+                    e.stopPropagation();
+                  }
+                }}>
                 {flexRender(
                   cell.column.columnDef.cell,
                   cell.getContext()

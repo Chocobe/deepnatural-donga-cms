@@ -18,9 +18,19 @@ const useSuperAdminPageStore = create(devtools<TSuperAdminPageStore>((set, _get)
   ...initialSuperAdminPageStoreState,
 
   clearSuperAdminPageStoreState: () => {
-    set(initialSuperAdminPageStoreState, false, 'clearSuperAdminPageStoreState');
+    set({
+      ...initialSuperAdminPageStoreState
+    }, false, 'clearSuperAdminPageStoreState');
   },
 
+  clearPathParamsForRetrieveUsersApi: () => {
+    set(old => ({
+      ...old,
+      pathParamsForRetrieveUsersApi: {
+        ...initialSuperAdminPageStoreState.pathParamsForRetrieveUsersApi,
+      },
+    }), false, 'clearPathParamsForRetrieveUsersApi');
+  },
   updatePathParamsForRetrieveUsersApi: pathParams => {
     set(old => ({
       ...old,
@@ -31,6 +41,13 @@ const useSuperAdminPageStore = create(devtools<TSuperAdminPageStore>((set, _get)
     }), false, 'updatePathParamsForRetrieveUsersApi');
   },
 
+  clearUsersData: () => {
+    set(old => ({
+      ...old,
+      usersData: initialSuperAdminPageStoreState.usersData,
+      superUser: initialSuperAdminPageStoreState.superUser,
+    }), false, 'clearUsersData');
+  },
   setUsersData: usersData => {
     let superUser: TUserModel;
     const users = usersData.results.filter(user => {
@@ -73,6 +90,12 @@ const useSuperAdminPageStore = create(devtools<TSuperAdminPageStore>((set, _get)
         ? detailTargetUser(old.detailTargetUser)
         : detailTargetUser,
     }), false, 'setDetailTargetUser');
+  },
+
+  clearSelectedUsers() {
+    set({
+      selectedUsers: undefined,
+    }, false, 'clearSelectedUsers');
   },
   setSelectedUsers: selectedUsers => {
     set(old => ({

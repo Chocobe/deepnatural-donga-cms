@@ -8,6 +8,7 @@ import {
 import { 
   useNavigate,
 } from 'react-router-dom';
+import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathTextbookDetailStore from '@/store/mathTextbookDetailStore/mathTextbookDetailStore';
 // ui
@@ -34,11 +35,10 @@ import {
 } from '@/apis/models/mathModel.type';
 // util
 import { 
-  extractID,
+  TABLE_ROW_SELECTION_CHECKBOX_ID,
 } from '@/lib/tanstack-reactTable-utils/tanstack-reactTable-utils';
 // style
 import './MathTextbookTable.css';
-import routePathFactory from '@/routes/routePathFactory';
 
 const columnHelper = createColumnHelper<TMathTextbookModel>();
 
@@ -67,7 +67,7 @@ function MathTextbookTable(props: TMathTextbookTableProps) {
   //
   const columns = useMemo(() => [
     columnHelper.display({
-      id: 'selector',
+      id: TABLE_ROW_SELECTION_CHECKBOX_ID,
       header: TableRowSelectorHeader,
       cell: TableRowSelectorCell,
     }),
@@ -141,8 +141,7 @@ function MathTextbookTable(props: TMathTextbookTableProps) {
             {headerGroup.headers.map(header => (
               <TableHead 
                 key={header.id}
-                className={extractID(header.id) ?? ''}
-              >
+                className={header.column.id}>
                 {flexRender(
                   header.column.columnDef.header,
                   header.getContext()
@@ -163,7 +162,12 @@ function MathTextbookTable(props: TMathTextbookTableProps) {
             {row.getVisibleCells().map(cell => (
               <TableCell 
                 key={cell.id}
-                className={extractID(cell.id) ?? ''}>
+                className={cell.column.id}
+                onClick={e => {
+                  if (cell.column.id === TABLE_ROW_SELECTION_CHECKBOX_ID) {
+                    e.stopPropagation();
+                  }
+                }}>
                 {flexRender(
                   cell.column.columnDef.cell,
                   cell.getContext()
