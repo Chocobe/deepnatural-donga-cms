@@ -18,6 +18,9 @@ import {
 import { 
   TGroupModel,
 } from '@/apis/models/authModel.type';
+import { 
+  BLANK_ROLE_GROUP,
+} from './UserRoleSelect.type';
 // style
 import './UserRoleSelect.css';
 
@@ -41,10 +44,7 @@ function _UserRoleSelect(props: TuserRoleSelectProps) {
   // callback
   //
   const groupOptions = useMemo<TGroupModel[]>(() => [
-    {
-      id: -1,
-      name: '권한 해제',
-    },
+    BLANK_ROLE_GROUP,
     ...groups ?? [],
   ], [groups]);
 
@@ -52,7 +52,10 @@ function _UserRoleSelect(props: TuserRoleSelectProps) {
   // callback
   //
   const onValueChange = useCallback((value: string) => {
-    const targetGroup = groups?.find(group => String(group.id) === value);
+    const targetGroup = groups?.find(group => {
+      return String(group.id) === value 
+        && group.id !== BLANK_ROLE_GROUP.id;
+    });
 
     const newValue = targetGroup
       ? [targetGroup]
@@ -63,9 +66,8 @@ function _UserRoleSelect(props: TuserRoleSelectProps) {
 
   return (
     <Select
-      value={String(value?.[0]?.id)}
-      onValueChange={onValueChange}
-    >
+      value={String(value?.[0]?.id ?? BLANK_ROLE_GROUP.id)}
+      onValueChange={onValueChange}>
       <SelectTrigger className="UserRoleSelect-trigger">
         <SelectValue placeholder="권한을 선택해 주세요." />
       </SelectTrigger>

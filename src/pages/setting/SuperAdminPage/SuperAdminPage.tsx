@@ -29,6 +29,9 @@ function SuperAdminPage() {
 
   const setUsersData = useSuperAdminPageStore(state => state.setUsersData);
 
+  const clearUsersData = useSuperAdminPageStore(state => state.clearUsersData);
+  const clearSelectedUsers = useSuperAdminPageStore(state => state.clearSelectedUsers);
+
   //
   // cache
   //
@@ -61,6 +64,13 @@ function SuperAdminPage() {
   useEffect(function init() {
     retrieveUsers();
   }, [retrieveUsers]);
+
+  useEffect(function cleanup() {
+    return () => {
+      clearSelectedUsers();
+      clearUsersData();
+    };
+  }, [clearSelectedUsers, clearUsersData]);
 
   return (
     <div className="SuperAdminPage">

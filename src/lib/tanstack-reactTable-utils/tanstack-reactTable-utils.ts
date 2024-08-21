@@ -7,3 +7,5 @@ export const extractID = (value: string) => {
     ? match[2]
     : null;
 };
+
+export const TABLE_ROW_SELECTION_CHECKBOX_ID = 'table-row-selector';

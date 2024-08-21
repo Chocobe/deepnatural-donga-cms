@@ -43,6 +43,7 @@ function LoginPage() {
       label: '아이디',
       value: formState.username,
       placeholder: '아이디를 입력해주세요',
+      autoFocus: true,
     },
     {
       id: 'password',
@@ -50,6 +51,7 @@ function LoginPage() {
       label: '비밀번호',
       value: formState.password,
       placeholder: '비밀번호를 입력해주세요',
+      autoFocus: false,
     },
   ];
 
@@ -129,6 +131,7 @@ function LoginPage() {
               label,
               value,
               placeholder,
+              autoFocus,
             } = template;
 
             return (
@@ -148,6 +151,7 @@ function LoginPage() {
                   type={type}
                   value={value}
                   placeholder={placeholder}
+                  autoFocus={autoFocus}
                   autoComplete="off"
                   onChange={onChange} />
               </div>

@@ -8,7 +8,7 @@
       border-right: 1px solid hsl(var(--border));
     }
 
-    .selector {
+    .table-row-selector {
       width: 66px !important;
       min-width: 66px !important;
     }
@@ -19,7 +19,7 @@
     }
 
     .email {
-      /*  */
+      min-width: 370px;
     }
 
     .phone {
@@ -32,7 +32,7 @@
       min-width: 351px !important;
     }
 
-    .active {
+    .is_active {
       width: 156px !important;
       min-width: 156px !important;
 
@@ -58,7 +58,7 @@
       }
     }
 
-    .selector {
+    .table-row-selector {
       /*  */
     }
 
@@ -79,7 +79,7 @@
       width: auto !important;
     }
 
-    .active {
+    .is_active {
       text-align: center;
     }
   }

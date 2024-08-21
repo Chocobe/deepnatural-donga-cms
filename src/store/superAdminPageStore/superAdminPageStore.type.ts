@@ -13,7 +13,9 @@ export type TSuperAdminPageStoreState = {
   superUser?: TUserModel;
   usersData?: TRetrieveUsersApiResponse;
 
+  /** Table 에서 클릭한 user 데이터 (checkbox 아님) */
   detailTargetUser?: TUserModel;
+  /** Table 에서 checkbox 로 선택한 user 목록 데이터 (row click 아님) */
   selectedUsers?: TUserModel[];
 };
 
@@ -34,15 +36,19 @@ export const initialSuperAdminPageStoreState: TSuperAdminPageStoreState = {
 export type TSuperAdminPageStoreAction = {
   clearSuperAdminPageStoreState: () => void;
 
+  clearPathParamsForRetrieveUsersApi: () => void;
   updatePathParamsForRetrieveUsersApi: (pathParams: TRetrieveUsersApiSearchParams) => void;
 
+  clearUsersData: () => void;
   setUsersData: (usersData: TRetrieveUsersApiResponse) => void;
   updateUsersData: (
     callback: (oldUsersData: TRetrieveUsersApiResponse) => TRetrieveUsersApiResponse
   ) => void;
 
   clearDetailTargetUser: () => void;
-  setDetailTargetUser: (detailTargetUser: TUserModel | ((detailTargetUser?: TUserModel) => TUserModel)) => void;
+  setDetailTargetUser: (detailTargetUser: TUserModel | ((detailTargetUser?: TUserModel) => TUserModel | undefined)) => void;
+
+  clearSelectedUsers: () => void;
   setSelectedUsers: (selectedUsers: TUserModel[]) => void;
 };
 

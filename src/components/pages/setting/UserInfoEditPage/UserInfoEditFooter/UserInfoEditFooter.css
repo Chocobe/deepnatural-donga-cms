@@ -1,0 +1,15 @@
+.UserInfoEditFooter {
+  @apply flex items-center gap-2.5;
+
+  &-button {
+    height: fit-content !important;
+
+    &.cancel {
+      padding: 7px 16px !important;
+    }
+
+    &.save {
+      /*  */
+    }
+  }
+}

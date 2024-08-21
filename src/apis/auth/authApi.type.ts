@@ -48,6 +48,8 @@ export type TPatchUserApiPathParams = {
 };
 
 export type TPatchUserApiPayload = {
+  // 계정명 username 을 수정하는 것에 대한 의구심으로, 보류
+  // username?: string;
   email?: string;
   phone?: string;
   groups?: number[];
