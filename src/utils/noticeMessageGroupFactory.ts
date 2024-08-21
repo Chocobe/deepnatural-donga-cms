@@ -121,12 +121,15 @@ const noticeMessageGroupFactory: {
       patchUser: {
         loadingMessage: () => ({
           title: '',
-          message: '수정 내용을 반영 중입니다.',
+          message: '입력하신 내용을 저장 중입니다.',
         }),
         errorMessage: () => ({
           ...createNetworkErrorMessage('사용자 수정 중'),
         }),
-        successMessage: undefined,
+        successMessage: () => ({
+          title: '',
+          message: '입력하신 내용이 성공적으로 저장되었습니다.',
+        }),
       },
     } as const,
 

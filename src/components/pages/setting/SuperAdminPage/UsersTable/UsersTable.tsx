@@ -220,6 +220,10 @@ function _UsersTable() {
             payload: {
               is_active: value,
             },
+          }, {
+            successMessage: {
+              isDisabled: true,
+            },
           });
 
         if (!response?.data) {
@@ -245,6 +249,10 @@ function _UsersTable() {
               groups: value?.[0]
                 ? [value[0].id]
                 : []
+            },
+          }, {
+            successMessage: {
+              isDisabled: true,
             },
           });
 
