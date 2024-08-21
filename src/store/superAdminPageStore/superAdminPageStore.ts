@@ -23,22 +23,22 @@ const useSuperAdminPageStore = create(devtools<TSuperAdminPageStore>((set, _get)
     }, false, 'clearSuperAdminPageStoreState');
   },
 
-  clearPathParamsForRetrieveUsersApi: () => {
+  clearSearchParamsForRetrieveUsersApi: () => {
     set(old => ({
       ...old,
-      pathParamsForRetrieveUsersApi: {
-        ...initialSuperAdminPageStoreState.pathParamsForRetrieveUsersApi,
+      searchParamsForRetrieveUsersApi: {
+        ...initialSuperAdminPageStoreState.searchParamsForRetrieveUsersApi,
       },
-    }), false, 'clearPathParamsForRetrieveUsersApi');
+    }), false, 'clearSearchParamsForRetrieveUsersApi');
   },
-  updatePathParamsForRetrieveUsersApi: pathParams => {
+  updateSearchParamsForRetrieveUsersApi: searchParams => {
     set(old => ({
       ...old,
-      pathParamsForRetrieveusersApi: {
-        ...old.pathParamsForRetrieveUsersApi,
-        ...pathParams,
+      searchParamsForRetrieveUsersApi: {
+        ...old.searchParamsForRetrieveUsersApi,
+        ...searchParams,
       },
-    }), false, 'updatePathParamsForRetrieveUsersApi');
+    }), false, 'updateSearchParamsForRetrieveUsersApi');
   },
 
   clearUsersData: () => {

@@ -15,7 +15,7 @@ import UsersTableFooter from '@/components/pages/setting/SuperAdminPage/UsersTab
 import ApiManager from '@/apis/ApiManager';
 // type
 import { 
-  TRetrieveUsersApiSearchParams,
+  TRetrieveUsersApiRequestParams,
 } from '@/apis/auth/authApi.type';
 // style
 import './SuperAdminPage.css';
@@ -43,14 +43,16 @@ function SuperAdminPage() {
   // callback
   //
   const retrieveUsers = useCallback(async () => {
-    const pathParams: TRetrieveUsersApiSearchParams = {
-      page: 1,
+    const params: TRetrieveUsersApiRequestParams = {
+      searchParams: {
+        page: 1,
+      },
     };
 
     const response = await ApiManager
       .auth
       .retrieveUsersApi
-      .callWithNoticeMessageGroup(pathParams, {
+      .callWithNoticeMessageGroup(params, {
         successMessage: {
           isDisabled: true,
         },

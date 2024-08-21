@@ -1,6 +1,6 @@
 // type
 import { 
-  TRetrieveUsersApiSearchParams,
+  TRetrieveUsersApiRequestParams,
   TRetrieveUsersApiResponse,
 } from '@/apis/auth/authApi.type';
 import { 
@@ -8,7 +8,7 @@ import {
 } from '@/apis/models/authModel.type';
 
 export type TSuperAdminPageStoreState = {
-  pathParamsForRetrieveUsersApi: TRetrieveUsersApiSearchParams;
+  searchParamsForRetrieveUsersApi: TRetrieveUsersApiRequestParams['searchParams'];
 
   superUser?: TUserModel;
   usersData?: TRetrieveUsersApiResponse;
@@ -20,7 +20,7 @@ export type TSuperAdminPageStoreState = {
 };
 
 export const initialSuperAdminPageStoreState: TSuperAdminPageStoreState = {
-  pathParamsForRetrieveUsersApi: {
+  searchParamsForRetrieveUsersApi: {
     is_active: undefined,
     page: undefined,
     search: undefined,
@@ -36,8 +36,8 @@ export const initialSuperAdminPageStoreState: TSuperAdminPageStoreState = {
 export type TSuperAdminPageStoreAction = {
   clearSuperAdminPageStoreState: () => void;
 
-  clearPathParamsForRetrieveUsersApi: () => void;
-  updatePathParamsForRetrieveUsersApi: (pathParams: TRetrieveUsersApiSearchParams) => void;
+  clearSearchParamsForRetrieveUsersApi: () => void;
+  updateSearchParamsForRetrieveUsersApi: (searchParams: TRetrieveUsersApiRequestParams) => void;
 
   clearUsersData: () => void;
   setUsersData: (usersData: TRetrieveUsersApiResponse) => void;

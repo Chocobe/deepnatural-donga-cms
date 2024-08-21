@@ -44,6 +44,9 @@ import {
   TGroupModel,
   TUserModel,
 } from '@/apis/models/authModel.type';
+import { 
+  TPatchUserApiRequestParams,
+} from '@/apis/auth/authApi.type';
 // style
 import './UsersTable.css';
 
@@ -210,17 +213,19 @@ function _UsersTable() {
 
     meta: {
       updateIsActive: async (rowIndex, value, rowData) => {
+        const params: TPatchUserApiRequestParams = {
+          pathParams: {
+            userId: rowData.id,
+          },
+          payload: {
+            is_active: value,
+          },
+        };
+
         const response = await ApiManager
           .auth
           .patchUserApi
-          .callWithNoticeMessageGroup({
-            pathParams: {
-              userId: rowData.id,
-            },
-            payload: {
-              is_active: value,
-            },
-          }, {
+          .callWithNoticeMessageGroup(params, {
             successMessage: {
               isDisabled: true,
             },
@@ -238,19 +243,21 @@ function _UsersTable() {
       },
 
       updateGroups: async (rowIndex, value, rowData) => {
+        const params: TPatchUserApiRequestParams = {
+          pathParams: {
+            userId: rowData.id,
+          },
+          payload: {
+            groups: value?.[0]
+              ? [value[0].id]
+              : [],
+          },
+        };
+
         const response = await ApiManager
           .auth
           .patchUserApi
-          .callWithNoticeMessageGroup({
-            pathParams: {
-              userId: rowData.id,
-            },
-            payload: {
-              groups: value?.[0]
-                ? [value[0].id]
-                : []
-            },
-          }, {
+          .callWithNoticeMessageGroup(params, {
             successMessage: {
               isDisabled: true,
             },

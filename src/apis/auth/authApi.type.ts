@@ -1,5 +1,9 @@
 // type
 import { 
+  TApiRequestNonBodyParams,
+  TApiRequestBodyParams,
+} from '../api.type';
+import { 
   TLoginModel, 
   TUserModel,
   TGroupModel,
@@ -8,10 +12,10 @@ import {
 //
 // 로그인
 //
-export type TLoginApiPayload = {
+export type TLoginApiRequestParams = TApiRequestBodyParams<void, void, {
   username: string;
   password: string;
-};
+}>;
 
 export type TLoginApiResponse = TLoginModel;
 
@@ -28,11 +32,14 @@ export type TRetrieveGroupsApiResponse = TGroupModel[];
 //
 // (GET) 사용자 목록
 //
-export type TRetrieveUsersApiSearchParams = {
-  is_active?: boolean;
-  page?: number;
-  search?: string;
-};
+export type TRetrieveUsersApiRequestParams = TApiRequestNonBodyParams<
+  void,
+  {
+    is_active?: boolean;
+    page?: number;
+    search?: string;
+  }
+>;
 
 export type TRetrieveUsersApiResponse = {
   current_page: number,
@@ -51,17 +58,15 @@ export type TRetrieveUsersApiResponse = {
 //
 // (PATCH) 사용자 수정
 //
-export type TPatchUserApiPathParams = {
+export type TPatchUserApiRequestParams = TApiRequestBodyParams<{
   userId: number;
-};
-
-export type TPatchUserApiPayload = {
+}, void, {
   // 계정명 username 을 수정하는 것에 대한 의구심으로, 보류
   // username?: string;
   email?: string;
   phone?: string;
   groups?: number[];
   is_active?: boolean;
-};
+}>;
 
 export type TPatchUserApiResponse = TUserModel;
