@@ -35,8 +35,16 @@ export type TRetrieveUsersApiSearchParams = {
 };
 
 export type TRetrieveUsersApiResponse = {
-  current_page: number;
-  last_page: number;
+  current_page: number,
+  last_page: number,
+  /** 페이지당 row 개수 */
+  page_size: number,
+  /** (페이지네이션 미적용) 전체 row 개수 */
+  count: number,
+  /** 이전 페이지네이션 api path */
+  previous: string | null,
+  /** 이전 페이지네이션 api path */
+  next: string | null,
   results: TUserModel[];
 };
 
