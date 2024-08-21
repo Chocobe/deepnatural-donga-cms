@@ -1,0 +1,17 @@
+.UserInfoEditForm {
+  @apply flex flex-col gap-4;
+
+  width: 100%;
+  max-width: 424px;
+
+  &-item {
+    @apply flex flex-col gap-1.5;
+
+    .label {
+      color: #09090B;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 500;
+    }
+  }
+}

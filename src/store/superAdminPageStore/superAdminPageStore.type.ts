@@ -46,7 +46,7 @@ export type TSuperAdminPageStoreAction = {
   ) => void;
 
   clearDetailTargetUser: () => void;
-  setDetailTargetUser: (detailTargetUser: TUserModel | ((detailTargetUser?: TUserModel) => TUserModel)) => void;
+  setDetailTargetUser: (detailTargetUser: TUserModel | ((detailTargetUser?: TUserModel) => TUserModel | undefined)) => void;
 
   clearSelectedUsers: () => void;
   setSelectedUsers: (selectedUsers: TUserModel[]) => void;
