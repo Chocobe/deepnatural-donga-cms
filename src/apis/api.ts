@@ -1,7 +1,11 @@
 // axios
-import axios from 'axios';
+import axios, { 
+  AxiosError,
+} from 'axios';
 // store
 import useAuthApiStore from '@/store/authApiStore/authApiStore';
+// router
+import routePathFactory from '@/routes/routePathFactory';
 
 export default (function createAPI() {
   const api = axios.create({
@@ -9,8 +13,8 @@ export default (function createAPI() {
     timeout: 10_000,
   });
 
-  api.interceptors.request.use(config => {
-    try {
+  api.interceptors.request.use(
+    config => {
       const loginToken = useAuthApiStore
         .getState()
         .login
@@ -22,19 +26,39 @@ export default (function createAPI() {
       }
 
       return config;
-    } catch(error) {
-      return Promise.reject(error);
+    },
+    (error: any) => {
+      throw error;
     }
-  });
+  );
 
-  api.interceptors.response.use(response => {
-    try {
-      console.log('api response interceptors');
+  api.interceptors.response.use(
+    response => {
       return response;
-    } catch(error) {
-      return Promise.reject(error);
+    },
+    (error: AxiosError) => {
+      const status = error.response?.status;
+      const isRootPage = window.location.pathname === routePathFactory
+        .auth
+        .getAuthRootPath();
+
+      if (status == 401 && !isRootPage) {
+        useAuthApiStore
+          .getState()
+          .login
+          .action
+          .removeLoginState();
+
+        window.location.href = routePathFactory
+          .auth
+          .getAuthRootPath();
+
+        return;
+      }
+
+      throw error;
     }
-  });
+  );
 
   return api;
 }());
