@@ -37,6 +37,7 @@ import EnglishQuestionPage from '@/pages/english/EnglishQuestionPage/EnglishQues
 // pages - setting
 import MyPage from '@/pages/setting/MyPage/MyPage';
 import SuperAdminPage from '@/pages/setting/SuperAdminPage/SuperAdminPage';
+import UserInfoEditPage from '@/pages/setting/UserInfoEditPage/UserInfoEditPage';
 
 const routes = createBrowserRouter([
   // Auth
@@ -241,17 +242,26 @@ const routes = createBrowserRouter([
           </AuthedSidebarLayout>
         ),
         children: [
+          // 설정: MyPage
           {
             path: routePathFactory
               .setting
               .getMyPagePath(),
             element: <MyPage />,
           },
+          // 설정: 유저 목록(슈퍼어드민 전용)
           {
             path: routePathFactory
               .setting
               .getSuperAdminPagePath(),
             element: <SuperAdminPage />,
+          },
+          // 설정: 유저 정보 수정(슈퍼어드민 전용)
+          {
+            path: routePathFactory
+              .setting
+              .getUserInfoEditPage(':userId'),
+            element: <UserInfoEditPage />,
           },
         ],
       }, // Setting

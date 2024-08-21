@@ -8,18 +8,6 @@ const routePathFactory = {
     },
   },
 
-  setting: {
-    getSettingRootPath() {
-      return '/setting' as const;
-    },
-    getMyPagePath() {
-      return `${this.getSettingRootPath()}/my-page` as const;
-    },
-    getSuperAdminPagePath() {
-      return `${this.getSettingRootPath()}/super-admin` as const;
-    },
-  },
-
   dashboard: {
     getDashboardRootPath() {
       return '/dashboard' as const;
@@ -100,6 +88,21 @@ const routePathFactory = {
     // 문항
     getQuestionPath() {
       return `${this.getEnglishRootPath()}/question` as const;
+    },
+  },
+
+  setting: {
+    getSettingRootPath() {
+      return '/setting' as const;
+    },
+    getMyPagePath() {
+      return `${this.getSettingRootPath()}/my-page` as const;
+    },
+    getSuperAdminPagePath() {
+      return `${this.getSettingRootPath()}/super-admin` as const;
+    },
+    getUserInfoEditPage(userId: string | number) {
+      return `${this.getSuperAdminPagePath()}/${userId}` as const;
     },
   },
 } as const;

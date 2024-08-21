@@ -1,0 +1,18 @@
+.UserInfoEditPage {
+  @apply p-10;
+  @apply w-full h-full;
+  @apply flex flex-col gap-0;
+  @apply overflow-hidden;
+
+  &-header {
+    /*  */
+  }
+
+  &-form {
+    margin-top: 86px;
+  }
+
+  &-footer {
+    margin-top: 97px;
+  }
+}
