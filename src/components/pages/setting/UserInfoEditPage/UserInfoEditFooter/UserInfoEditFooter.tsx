@@ -16,6 +16,10 @@ import ApiManager from '@/apis/ApiManager';
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
+// type
+import { 
+  TPatchUserApiRequestParams,
+} from '@/apis/auth/authApi.type';
 // style
 import './UserInfoEditFooter.css';
 
@@ -52,19 +56,21 @@ function _UserInfoEditFooter() {
       phone,
     } = detailTargetUser;
 
+    const params: TPatchUserApiRequestParams = {
+      pathParams: {
+        userId: id,
+      },
+      payload: {
+        groups: groups.map(({ id }) => id),
+        email,
+        phone: phone ?? '',
+      },
+    };
+
     await ApiManager
       .auth
       .patchUserApi
-      .callWithNoticeMessageGroup({
-        pathParams: {
-          userId: id,
-        },
-        payload: {
-          groups: groups.map(({ id }) => id),
-          email,
-          phone: phone ?? '',
-        },
-      });
+      .callWithNoticeMessageGroup(params);
   }, [detailTargetUser]);
 
   return (

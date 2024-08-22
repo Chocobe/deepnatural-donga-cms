@@ -5,79 +5,123 @@ import {
   useCallback,
   memo,
 } from 'react';
+// store
+import useSuperAdminPageStore from '@/store/superAdminPageStore/superAdminPageStore';
 // ui
 import { 
   Tabs,
   TabsList,
   TabsTrigger,
 } from '@/components/shadcn-ui/ui/tabs';
+// type
+import { 
+  usersCountTabValueMapper,
+} from './UsersTableHeader.type';
+import { 
+  TRetrieveUsersApiRequestParams,
+} from '@/apis/auth/authApi.type';
 // style
 import './UsersTableHeader.css';
 
-const filteringValueMapper = {
-  ALL: 'all',
-  ACTIVE: 'active',
-  DEACTIVE: 'deactive',
-} as const;
-type TFilteringValue = typeof filteringValueMapper[keyof typeof filteringValueMapper];
-
-const mockUsersCounts = {
-  [filteringValueMapper.ALL]: 300,
-  [filteringValueMapper.ACTIVE]: 200,
-  [filteringValueMapper.DEACTIVE]: 100,
+type TUsersTableHeaderProps = {
+  retrieveUsers: (params: TRetrieveUsersApiRequestParams) => void;
 };
 
-function _UsersTableHeader() {
+function _UsersTableHeader(props: TUsersTableHeaderProps) {
+  const {
+    retrieveUsers,
+  } = props;
+
   //
   // state
   //
-  const [value, setValue] = useState<TFilteringValue>(filteringValueMapper.ALL);
+  const [tabValue, setTabValue] = useState<string>(usersCountTabValueMapper.ALL);
+
+  //
+  // superAdminPage store
+  //
+  const usersCount = useSuperAdminPageStore(state => state.usersCount);
+  const searchParamsForRetrieveUsersApi = useSuperAdminPageStore(state => state.searchParamsForRetrieveUsersApi);
+
+  const updateSearchParamsForRetrieveUsersApi = useSuperAdminPageStore(state => state.updateSearchParamsForRetrieveUsersApi);
 
   //
   // cache
   //
   const items = useMemo(() => {
+    if (!usersCount) {
+      return null;
+    }
+
     return [
       {
-        text: `전체 사용자 (${mockUsersCounts[filteringValueMapper.ALL]})`,
-        value: filteringValueMapper.ALL,
+        text: `전체 사용자 (${usersCount.user_count})`,
+        tabValue: usersCountTabValueMapper.ALL,
       },
       {
-        text: `사용중 (${mockUsersCounts[filteringValueMapper.ACTIVE]})`,
-        value: filteringValueMapper.ACTIVE,
+        text: `사용중 (${usersCount.active_user_count})`,
+        tabValue: usersCountTabValueMapper.ACTIVE,
       },
       {
-        text: `사용중지 (${mockUsersCounts[filteringValueMapper.DEACTIVE]})`,
-        value: filteringValueMapper.DEACTIVE,
+        text: `사용중지 (${usersCount.inactive_user_count})`,
+        tabValue: usersCountTabValueMapper.INACTIVE,
       },
     ];
-  }, []);
+  }, [usersCount]);
 
   //
   // callback
   //
-  const onValueChange = useCallback((newValue: string) => {
-    setValue(newValue as typeof value);
-  }, []);
+  const onChangeTabValue = useCallback((tabValue: string) => {
+    setTabValue(tabValue);
+
+    const searchParams = searchParamsForRetrieveUsersApi;
+
+    switch (tabValue) {
+      case usersCountTabValueMapper.ALL: {
+        searchParams.is_active = undefined;
+
+        break;
+      }
+
+      case usersCountTabValueMapper.ACTIVE: {
+        searchParams.is_active = true;
+
+        break;
+      }
+
+      case usersCountTabValueMapper.INACTIVE: {
+        searchParams.is_active = false;
+
+        break;
+      }
+    }
+
+    updateSearchParamsForRetrieveUsersApi(() => searchParams);
+    retrieveUsers({
+      searchParams,
+    });
+  }, [
+    searchParamsForRetrieveUsersApi, 
+    updateSearchParamsForRetrieveUsersApi, retrieveUsers,
+  ]);
 
   return (
     <div className="UsersTableHeader">
       <Tabs 
-        value={value}
-        onValueChange={onValueChange}
-      >
+        value={tabValue}
+        onValueChange={onChangeTabValue}>
         <TabsList className="UsersTableHeader-tabList">
-          {items.map(item => {
+          {items?.map(item => {
             const {
               text,
-              value,
+              tabValue,
             } = item;
 
             return (
               <TabsTrigger
-                key={value}
-                className=""
-                value={value}>
+                key={tabValue}
+                value={tabValue}>
                 {text}
               </TabsTrigger>
             );

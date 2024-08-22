@@ -1,3 +1,8 @@
+// type
+import { 
+  TPatchUserApiRequestParams,
+} from './authApi.type';
+
 const authApiUrlFactory = (() => {
   const BASE_PATH = import.meta.env.VITE_CMS_API_PATH;
 
@@ -27,10 +32,13 @@ const authApiUrlFactory = (() => {
       return `${BASE_PATH}users/`;
     },
 
+    // (GET) 사용자 수
+    retrieveUsersCount() {
+      return `${this.retrieveUsers()}count/`;
+    },
+
     // (PATCH) 사용자 수정
-    patchUser(pathParams: {
-      userId: number
-    }) {
+    patchUser(pathParams: TPatchUserApiRequestParams['pathParams']) {
       const {
         userId,
       } = pathParams;

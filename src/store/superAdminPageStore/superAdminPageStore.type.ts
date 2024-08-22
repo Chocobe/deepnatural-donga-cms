@@ -1,14 +1,15 @@
 // type
 import { 
-  TRetrieveUsersApiSearchParams,
+  TRetrieveUsersApiRequestParams,
   TRetrieveUsersApiResponse,
+  TRetrieveUsersCountApiResponse,
 } from '@/apis/auth/authApi.type';
 import { 
   TUserModel,
 } from '@/apis/models/authModel.type';
 
 export type TSuperAdminPageStoreState = {
-  pathParamsForRetrieveUsersApi: TRetrieveUsersApiSearchParams;
+  searchParamsForRetrieveUsersApi: TRetrieveUsersApiRequestParams['searchParams'];
 
   superUser?: TUserModel;
   usersData?: TRetrieveUsersApiResponse;
@@ -17,10 +18,12 @@ export type TSuperAdminPageStoreState = {
   detailTargetUser?: TUserModel;
   /** Table 에서 checkbox 로 선택한 user 목록 데이터 (row click 아님) */
   selectedUsers?: TUserModel[];
+
+  usersCount: TRetrieveUsersCountApiResponse | undefined;
 };
 
 export const initialSuperAdminPageStoreState: TSuperAdminPageStoreState = {
-  pathParamsForRetrieveUsersApi: {
+  searchParamsForRetrieveUsersApi: {
     is_active: undefined,
     page: undefined,
     search: undefined,
@@ -31,13 +34,17 @@ export const initialSuperAdminPageStoreState: TSuperAdminPageStoreState = {
 
   detailTargetUser: undefined,
   selectedUsers: undefined,
+
+  usersCount: undefined,
 };
 
 export type TSuperAdminPageStoreAction = {
   clearSuperAdminPageStoreState: () => void;
 
-  clearPathParamsForRetrieveUsersApi: () => void;
-  updatePathParamsForRetrieveUsersApi: (pathParams: TRetrieveUsersApiSearchParams) => void;
+  clearSearchParamsForRetrieveUsersApi: () => void;
+  updateSearchParamsForRetrieveUsersApi: (
+    callback: (oldSearchParamsForRetrieveUsersApi: TRetrieveUsersApiRequestParams['searchParams']) => TRetrieveUsersApiRequestParams['searchParams']
+  ) => void;
 
   clearUsersData: () => void;
   setUsersData: (usersData: TRetrieveUsersApiResponse) => void;
@@ -50,6 +57,11 @@ export type TSuperAdminPageStoreAction = {
 
   clearSelectedUsers: () => void;
   setSelectedUsers: (selectedUsers: TUserModel[]) => void;
+
+  setUsersCount: (usersCount: TRetrieveUsersCountApiResponse) => void;
+  updateUsersCount: (
+    callback: ((usersCount: TRetrieveUsersCountApiResponse | undefined) => TRetrieveUsersCountApiResponse | undefined)
+  ) => void;
 };
 
 export type TSuperAdminPageStore =

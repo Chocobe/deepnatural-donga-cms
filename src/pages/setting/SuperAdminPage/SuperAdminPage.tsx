@@ -1,6 +1,5 @@
 // react
 import { 
-  useMemo,
   useCallback,
   useEffect,
 } from 'react';
@@ -15,7 +14,7 @@ import UsersTableFooter from '@/components/pages/setting/SuperAdminPage/UsersTab
 import ApiManager from '@/apis/ApiManager';
 // type
 import { 
-  TRetrieveUsersApiSearchParams,
+  TRetrieveUsersApiRequestParams,
 } from '@/apis/auth/authApi.type';
 // style
 import './SuperAdminPage.css';
@@ -24,33 +23,23 @@ function SuperAdminPage() {
   //
   // superAdminPage store
   //
-  const usersData = useSuperAdminPageStore(state => state.usersData);
-  const users = usersData?.results;
+  const searchParamsForRetrieveUsersApi = useSuperAdminPageStore(state => state.searchParamsForRetrieveUsersApi);
 
   const setUsersData = useSuperAdminPageStore(state => state.setUsersData);
-
   const clearUsersData = useSuperAdminPageStore(state => state.clearUsersData);
   const clearSelectedUsers = useSuperAdminPageStore(state => state.clearSelectedUsers);
-
-  //
-  // cache
-  //
-  const isUsersEmpty = useMemo(() => {
-    return !users?.length;
-  }, [users]);
+  const setUsersCount = useSuperAdminPageStore(state => state.setUsersCount);
 
   //
   // callback
   //
-  const retrieveUsers = useCallback(async () => {
-    const pathParams: TRetrieveUsersApiSearchParams = {
-      page: 1,
-    };
-
+  const retrieveUsers = useCallback(async (
+    params: TRetrieveUsersApiRequestParams
+  ) => {
     const response = await ApiManager
       .auth
       .retrieveUsersApi
-      .callWithNoticeMessageGroup(pathParams, {
+      .callWithNoticeMessageGroup(params, {
         successMessage: {
           isDisabled: true,
         },
@@ -61,9 +50,25 @@ function SuperAdminPage() {
     }
   }, [setUsersData]);
 
+  const retrieveUsersCount = useCallback(async () => {
+    const response = await ApiManager
+      .auth
+      .retrieveUsersCountApi
+      .callWithNoticeMessageGroup();
+
+    if (response?.data) {
+      setUsersCount(response.data);
+    }
+  }, [setUsersCount]);
+
   useEffect(function init() {
-    retrieveUsers();
-  }, [retrieveUsers]);
+    retrieveUsers({
+      searchParams: searchParamsForRetrieveUsersApi,
+    });
+    retrieveUsersCount();
+
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(function cleanup() {
     return () => {
@@ -75,32 +80,20 @@ function SuperAdminPage() {
   return (
     <div className="SuperAdminPage">
       <div className="SuperAdminPage-filterWrapper">
-        <UsersTableHeader />
+        <UsersTableHeader retrieveUsers={retrieveUsers} />
       </div>
 
       <div className="SuperAdminPage-tableActionsWrapper">
-        <UsersTableActions />
+        <UsersTableActions retrieveUsers={retrieveUsers} />
       </div>
 
-      {/* FIXME: SuperAdminPageStore 구현하기 */}
-      {/* FIXME: <TableBlankMessageCell /> 로 바꾸기 */}
-      {isUsersEmpty
-        ? (
-          <div className="SuperAdminPage-emptyData">
-            등록된 유저가 없습니다.
-          </div>
-        ): (
-          <div className="SuperAdminPage-tableWrapper">
-            <UsersTable />
-          </div>
-        )
-      }
+      <div className="SuperAdminPage-tableWrapper">
+        <UsersTable />
+      </div>
 
-      {!isUsersEmpty && (
-        <div className="SuperAdminPage-tableFooterWrapper">
-          <UsersTableFooter />
-        </div>
-      )}
+      <div className="SuperAdminPage-tableFooterWrapper">
+        <UsersTableFooter retrieveUsers={retrieveUsers} />
+      </div>
     </div>
   );
 }

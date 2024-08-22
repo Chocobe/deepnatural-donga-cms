@@ -9,3 +9,20 @@ export const extractID = (value: string) => {
 };
 
 export const TABLE_ROW_SELECTION_CHECKBOX_ID = 'table-row-selector';
+
+export type TListItemWithOriginItemIndex<T> = T & {
+  originItemIndex: number;
+};
+
+export const addOriginItemIndexToTableData = <T>(
+  tableData: T[]
+): TListItemWithOriginItemIndex<T>[] => {
+  return tableData.map((item, originItemIndex) => {
+    return typeof item !== 'object'
+      ? item as TListItemWithOriginItemIndex<T>
+      : {
+        ...item,
+        originItemIndex,
+      };
+  });
+};

@@ -3,6 +3,7 @@ import {
   useState,
   useMemo,
   useCallback,
+  useEffect,
   memo,
 } from 'react';
 // router
@@ -12,18 +13,24 @@ import {
 import routePathFactory from '@/routes/routePathFactory';
 // store
 import useSuperAdminPageStore from '@/store/superAdminPageStore/superAdminPageStore';
+// api
+import ApiManager from '@/apis/ApiManager';
 // react-table
 import { 
+  addOriginItemIndexToTableData,
   TABLE_ROW_SELECTION_CHECKBOX_ID,
+  TListItemWithOriginItemIndex,
 } from '@/lib/tanstack-reactTable-utils/tanstack-reactTable-utils';
 // ui
 import {
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   useReactTable,
   createColumnHelper,
   RowSelectionState,
   RowData,
+  ColumnFiltersState,
 } from '@tanstack/react-table';
 import {
   Table,
@@ -37,41 +44,46 @@ import UserRoleSelect from '../UserRoleSelect/UserRoleSelect';
 import UserStatusToggleButton from '../UserStatusToggleButton/UserStatusToggleButton';
 import TableRowSelectorHeader from '@/components/shadcn-ui-custom/TableRowSelectorHeader/TableRowSelectorHeader';
 import TableRowSelectorCell from '@/components/shadcn-ui-custom/TableRowSelectorCell/TableRowSelectorCell';
-// api
-import ApiManager from '@/apis/ApiManager';
+import TableBlankMessageCell from '@/components/shadcn-ui-custom/TableBlankMessageCell/TableBlankMessageCell';
 // type
 import { 
   TGroupModel,
   TUserModel,
 } from '@/apis/models/authModel.type';
+import { 
+  TPatchUserApiRequestParams,
+} from '@/apis/auth/authApi.type';
 // style
 import './UsersTable.css';
 
 declare module '@tanstack/react-table' {
   export interface TableMeta<TData extends RowData> {
     updateIsActive: (
-      rowIndex: number,
       value: boolean,
-      rowData: TData
+      rowData: TListItemWithOriginItemIndex<TData>,
     ) => void;
 
     updateGroups: (
-      rowIndex: number,
       value: TGroupModel[],
       rowData: TData
     ) => void;
   }
 }
 
-const columnHelper = createColumnHelper<TUserModel>();
+const columnHelper = createColumnHelper<TListItemWithOriginItemIndex<TUserModel>>();
 
 function _UsersTable() {
   //
   // superAdminPage store
   //
   const usersData = useSuperAdminPageStore(state => state.usersData);
-  const tableData = usersData?.results ?? [];
+  const searchParamsForRetrieveUsersApi = useSuperAdminPageStore(state => state.searchParamsForRetrieveUsersApi);
+  const {
+    is_active,
+  } = searchParamsForRetrieveUsersApi;
+
   const updateUsersData = useSuperAdminPageStore(state => state.updateUsersData);
+  const updateUsersCount = useSuperAdminPageStore(state => state.updateUsersCount);
 
   const setDetailTargetUser = useSuperAdminPageStore(state => state.setDetailTargetUser);
 
@@ -81,6 +93,10 @@ function _UsersTable() {
   // state
   //
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>();
+  const [tableData, setTableData] = useState(() => {
+    return addOriginItemIndexToTableData(usersData?.results ?? []);
+  });
 
   //
   // hook
@@ -123,7 +139,7 @@ function _UsersTable() {
             <UserRoleSelect
               value={cell.getValue()}
               onChange={value => {
-                table.options.meta?.updateGroups(row.index, value, row.original);
+                table.options.meta?.updateGroups(value, row.original);
               }} />
           );
         },
@@ -142,7 +158,7 @@ function _UsersTable() {
             <UserStatusToggleButton
               value={cell.getValue()}
               onChange={value => {
-                table.options.meta?.updateIsActive(row.index, value, row.original);
+                table.options.meta?.updateIsActive(value, row.original);
               }} />
           );
         },
@@ -153,22 +169,26 @@ function _UsersTable() {
   //
   // callback
   //
-  const updateUser = useCallback((params: {
-    rowIndex: number;
+  const updateUser = useCallback(<T,>(params: {
     columnID: string;
-    value: any;
+    value: T
+    rowData: TListItemWithOriginItemIndex<TUserModel>;
   }) => {
     const {
-      rowIndex,
       columnID,
       value,
+      rowData,
     } = params;
+
+    const {
+      originItemIndex,
+    } = rowData;
 
     updateUsersData(old => {
       return {
         ...old,
         results: old?.results.map((row, index) => {
-          return rowIndex !== index
+          return index !== originItemIndex
             ? row
             : {
               ...row,
@@ -195,9 +215,12 @@ function _UsersTable() {
     columns,
     data: tableData,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     enableRowSelection: true,
+    enableColumnFilters: true,
     state: {
       rowSelection,
+      columnFilters: columnFilters,
     },
     onRowSelectionChange: e => {
       setRowSelection(e);
@@ -209,18 +232,20 @@ function _UsersTable() {
     },
 
     meta: {
-      updateIsActive: async (rowIndex, value, rowData) => {
+      updateIsActive: async (value, rowData) => {
+        const params: TPatchUserApiRequestParams = {
+          pathParams: {
+            userId: rowData.id,
+          },
+          payload: {
+            is_active: value,
+          },
+        };
+
         const response = await ApiManager
           .auth
           .patchUserApi
-          .callWithNoticeMessageGroup({
-            pathParams: {
-              userId: rowData.id,
-            },
-            payload: {
-              is_active: value,
-            },
-          }, {
+          .callWithNoticeMessageGroup(params, {
             successMessage: {
               isDisabled: true,
             },
@@ -231,26 +256,52 @@ function _UsersTable() {
         }
 
         updateUser({
-          rowIndex,
           columnID: 'is_active',
-          value
+          value,
+          rowData,
+        });
+
+        updateUsersCount(usersCount => {
+          if (!usersCount) {
+            return usersCount;
+          }
+
+          const newUsersCount = usersCount;
+
+          switch (value) {
+            case true: {
+              newUsersCount.active_user_count++;
+              newUsersCount.inactive_user_count--;
+              break;
+            }
+
+            case false: {
+              newUsersCount.active_user_count--;
+              newUsersCount.inactive_user_count++;
+              break;
+            }
+          }
+
+          return newUsersCount;
         });
       },
 
-      updateGroups: async (rowIndex, value, rowData) => {
+      updateGroups: async (value, rowData) => {
+        const params: TPatchUserApiRequestParams = {
+          pathParams: {
+            userId: rowData.id,
+          },
+          payload: {
+            groups: value?.[0]
+              ? [value[0].id]
+              : [],
+          },
+        };
+
         const response = await ApiManager
           .auth
           .patchUserApi
-          .callWithNoticeMessageGroup({
-            pathParams: {
-              userId: rowData.id,
-            },
-            payload: {
-              groups: value?.[0]
-                ? [value[0].id]
-                : []
-            },
-          }, {
+          .callWithNoticeMessageGroup(params, {
             successMessage: {
               isDisabled: true,
             },
@@ -261,13 +312,33 @@ function _UsersTable() {
         }
 
         updateUser({
-          rowIndex,
           columnID: 'groups',
           value,
+          rowData
         });
       },
     },
   });
+
+  //
+  // effect
+  //
+  useEffect(function onChangeUsersData() {
+    setTableData(addOriginItemIndexToTableData(usersData?.results ?? []));
+  }, [usersData?.results]);
+
+  useEffect(function onChangeIsActive() {
+    if (typeof is_active === 'undefined') {
+      setColumnFilters([]);
+    } else {
+      setColumnFilters([
+        {
+          id: 'is_active',
+          value: is_active,
+        },
+      ]);
+    }
+  }, [is_active]);
 
   return (
     <Table className="UsersTable">
@@ -291,29 +362,37 @@ function _UsersTable() {
       </TableHeader>
 
       <TableBody>
-        {table.getRowModel().rows.map(row => (
-          <TableRow
-            key={row.id}
-            className="row"
-            data-state={row.getIsSelected() && 'selected'}
-            onClick={() => goToUserInfoEditPage(row.original)}>
-            {row.getVisibleCells().map(cell => (
-              <TableCell 
-                key={cell.id}
-                className={cell.column.id}
-                onClick={e => {
-                  if (cell.column.id === TABLE_ROW_SELECTION_CHECKBOX_ID) {
-                    e.stopPropagation();
-                  }
-                }}>
-                {flexRender(
-                  cell.column.columnDef.cell,
-                  cell.getContext()
-                )}
-              </TableCell>
-            ))}
-          </TableRow>
-        ))}
+        {tableData?.length
+          ? table.getRowModel().rows.map(row => (
+            <TableRow
+              key={row.id}
+              className="row"
+              data-state={row.getIsSelected() && 'selected'}
+              onClick={() => goToUserInfoEditPage(row.original)}>
+              {row.getVisibleCells().map(cell => (
+                <TableCell 
+                  key={cell.id}
+                  className={cell.column.id}
+                  onClick={e => {
+                    if (cell.column.id === TABLE_ROW_SELECTION_CHECKBOX_ID) {
+                      e.stopPropagation();
+                    }
+                  }}>
+                  {flexRender(
+                    cell.column.columnDef.cell,
+                    cell.getContext()
+                  )}
+                </TableCell>
+              ))}
+            </TableRow>
+          )): (
+            <TableRow>
+              <TableBlankMessageCell colSpan={6}>
+                등록된 사용자가 없습니다.
+              </TableBlankMessageCell>
+            </TableRow>
+          )
+        }
       </TableBody>
     </Table>
   );

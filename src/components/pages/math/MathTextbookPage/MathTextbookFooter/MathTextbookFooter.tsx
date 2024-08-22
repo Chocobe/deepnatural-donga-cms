@@ -18,12 +18,10 @@ function _MathTextbookFooter() {
         <TablePagination
           currentPage="1"
           lastPage="10"
-          rowsPerPage="50"
-          onChangeRowsPerPage={() => {/** */}}
-          goToFirst={() => console.log('goToFirst()')}
-          goToPrevious={() => console.log('goToPrevious()')}
-          goToNext={() => console.log('goToNext()')}
-          goToLast={() => console.log('goToLast()')} />
+          goToFirstPage={() => console.log('goToFirst()')}
+          goToPreviousPage={() => console.log('goToPrevious()')}
+          goToNextPage={() => console.log('goToNext()')}
+          goToLastPage={() => console.log('goToLast()')} />
       </div>
     </div>
   );

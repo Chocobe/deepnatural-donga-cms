@@ -5,18 +5,19 @@ import authApiUrlFactory from './authApiUrlFactory';
 import createApiWithNoticeMessageGroup from '@/utils/createApiWithNoticeMessageGroup';
 // type
 import { 
-  TLoginApiPayload,
+  TLoginApiRequestParams,
   TLoginApiResponse,
 
   TRetrieveUserInfoApiResponse,
 
   TRetrieveGroupsApiResponse,
 
-  TRetrieveUsersApiSearchParams,
+  TRetrieveUsersApiRequestParams,
   TRetrieveUsersApiResponse,
 
-  TPatchUserApiPathParams,
-  TPatchUserApiPayload,
+  TRetrieveUsersCountApiResponse,
+
+  TPatchUserApiRequestParams,
 } from './authApi.type';
 // util
 import noticeMessageGroupFactory from '@/utils/noticeMessageGroupFactory';
@@ -26,7 +27,11 @@ import excludeNullOrUndefinedProperties from '@/utils/excludeNullOrUndefinedProp
 // 로그인
 //
 export const loginApi = createApiWithNoticeMessageGroup({
-  apiFunction: (payload: TLoginApiPayload) => {
+  apiFunction: (params: TLoginApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
     return api.post<TLoginApiResponse>(
       authApiUrlFactory.login(),
       payload
@@ -56,6 +61,7 @@ export const logoutApi = createApiWithNoticeMessageGroup({
 //
 // 비밀번호 찾기
 //
+// FIXME: mockup
 export const findPasswordApi = createApiWithNoticeMessageGroup({
   apiFunction: () => {
     return new Promise<void>((resolve, reject) => {
@@ -106,7 +112,11 @@ export const retrieveGroupsApi = createApiWithNoticeMessageGroup({
 // (GET) 사용자 목록
 //
 export const retrieveUsersApi = createApiWithNoticeMessageGroup({
-  apiFunction: (searchParams: TRetrieveUsersApiSearchParams) => {
+  apiFunction: (params: TRetrieveUsersApiRequestParams) => {
+    const {
+      searchParams,
+    } = params;
+
     const _searchParams = excludeNullOrUndefinedProperties(searchParams);
 
     return api.get<TRetrieveUsersApiResponse>(
@@ -123,24 +133,32 @@ export const retrieveUsersApi = createApiWithNoticeMessageGroup({
 });
 
 //
+// (GET) 사용자 수
+//
+export const retrieveUsersCountApi = createApiWithNoticeMessageGroup({
+  apiFunction: () => {
+    return api.get<TRetrieveUsersCountApiResponse>(
+      authApiUrlFactory.retrieveUsersCount()
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .auth
+    .retrieveUsersCount,
+});
+
+//
 // (PATCH) 사용자 수정
 //
 export const patchUserApi = createApiWithNoticeMessageGroup({
-  apiFunction: (params: {
-    pathParams: TPatchUserApiPathParams;
-    payload: TPatchUserApiPayload;
-  }) => {
+  apiFunction: (params: TPatchUserApiRequestParams) => {
     const {
-      pathParams: {
-        userId,
-      },
+      pathParams,
       payload,
     } = params;
 
     return api.patch(
-      authApiUrlFactory.patchUser({
-        userId
-      }),
+      authApiUrlFactory.patchUser(pathParams),
       payload
     );
   },

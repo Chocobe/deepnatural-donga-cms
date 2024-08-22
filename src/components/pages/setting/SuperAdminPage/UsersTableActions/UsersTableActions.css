@@ -12,7 +12,7 @@
   }
 
   &-rightSide {
-    @apply flex items-center gap-[50px];
+    @apply flex items-center gap-[56px];
 
     &-roleSearchInput {
       width: 351px !important;

@@ -1,11 +1,5 @@
 // ui
 import { 
-  Select, 
-  SelectTrigger,
-  SelectContent,
-  SelectItem,
-} from '@/components/shadcn-ui/ui/select';
-import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
 // icon
@@ -16,61 +10,27 @@ import {
 // style
 import './TablePagination.css';
 
-const tableRowsPerPageItems = Array.from(
-  { length: 4 },
-  (_, i) => String((i + 1) * 50)
-);
-
 type TTablePaginationProps = {
   currentPage: number | string;
   lastPage: number | string;
-  rowsPerPage: number | string;
-  onChangeRowsPerPage: (rowsPerPage: number | string) => void;
-  goToFirst: () => void;
-  goToNext: () => void;
-  goToPrevious: () => void;
-  goToLast: () => void;
+  goToFirstPage: () => void;
+  goToNextPage: () => void;
+  goToPreviousPage: () => void;
+  goToLastPage: () => void;
 };
 
 function TablePagination(props: TTablePaginationProps) {
   const {
     currentPage,
     lastPage,
-    rowsPerPage,
-    onChangeRowsPerPage,
-    goToFirst,
-    goToPrevious,
-    goToNext,
-    goToLast,
+    goToFirstPage,
+    goToPreviousPage,
+    goToNextPage,
+    goToLastPage,
   } = props;
 
   return (
     <div className="TablePagination">
-      <div className="TablePagination-rowsPerPageWrapper">
-        <div className="label">
-          Rows per page
-        </div>
-
-        <Select
-          value={String(rowsPerPage)}
-          onValueChange={onChangeRowsPerPage}>
-          <SelectTrigger className="trigger">
-            {rowsPerPage}개씩 보기
-          </SelectTrigger>
-
-          <SelectContent>
-            {tableRowsPerPageItems.map(value => (
-              <SelectItem
-                key={value}
-                className="item"
-                value={value}>
-                {value}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
       <div className="TablePagination-paginationWrapper">
         <div className="indicator">
           Page {currentPage} of {lastPage}
@@ -80,7 +40,8 @@ function TablePagination(props: TTablePaginationProps) {
           <Button
             className="paginationButton goToThreshold goToFirst"
             variant="outline"
-            onClick={goToFirst}>
+            disabled={currentPage === 1}
+            onClick={goToFirstPage}>
             <LuChevronLeft className="icon" strokeWidth={2} />
             <LuChevronLeft className="icon" strokeWidth={2} />
           </Button>
@@ -88,21 +49,24 @@ function TablePagination(props: TTablePaginationProps) {
           <Button
             className="paginationButton goToThreshold goToPrev"
             variant="outline"
-            onClick={goToPrevious}>
+            disabled={currentPage === 1}
+            onClick={goToPreviousPage}>
             <LuChevronLeft className="icon" strokeWidth={2} />
           </Button>
 
           <Button
             className="paginationButton goToThreshold goToNext"
             variant="outline"
-            onClick={goToNext}>
+            disabled={currentPage === lastPage}
+            onClick={goToNextPage}>
             <LuChevronRight className="icon" strokeWidth={2} />
           </Button>
 
           <Button
             className="paginationButton goToThreshold goToLast"
             variant="outline"
-            onClick={goToLast}>
+            disabled={currentPage === lastPage}
+            onClick={goToLastPage}>
             <LuChevronRight className="icon" strokeWidth={2} />
             <LuChevronRight className="icon" strokeWidth={2} />
           </Button>

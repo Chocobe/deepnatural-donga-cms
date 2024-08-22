@@ -23,22 +23,19 @@ const useSuperAdminPageStore = create(devtools<TSuperAdminPageStore>((set, _get)
     }, false, 'clearSuperAdminPageStoreState');
   },
 
-  clearPathParamsForRetrieveUsersApi: () => {
+  clearSearchParamsForRetrieveUsersApi: () => {
     set(old => ({
       ...old,
-      pathParamsForRetrieveUsersApi: {
-        ...initialSuperAdminPageStoreState.pathParamsForRetrieveUsersApi,
+      searchParamsForRetrieveUsersApi: {
+        ...initialSuperAdminPageStoreState.searchParamsForRetrieveUsersApi,
       },
-    }), false, 'clearPathParamsForRetrieveUsersApi');
+    }), false, 'clearSearchParamsForRetrieveUsersApi');
   },
-  updatePathParamsForRetrieveUsersApi: pathParams => {
+  updateSearchParamsForRetrieveUsersApi: callback => {
     set(old => ({
       ...old,
-      pathParamsForRetrieveusersApi: {
-        ...old.pathParamsForRetrieveUsersApi,
-        ...pathParams,
-      },
-    }), false, 'updatePathParamsForRetrieveUsersApi');
+      searchParamsForRetrieveUsersApi: callback(old.searchParamsForRetrieveUsersApi),
+    }), false, 'updateSearchParamsForRetrieveUsersApi');
   },
 
   clearUsersData: () => {
@@ -102,6 +99,23 @@ const useSuperAdminPageStore = create(devtools<TSuperAdminPageStore>((set, _get)
       ...old,
       selectedUsers,
     }), false, 'setSelectedUsers');
+  },
+
+  setUsersCount: usersCount => {
+    set(old => ({
+      ...old,
+      usersCount,
+    }), false, 'setUsersCount');
+  },
+  updateUsersCount: callback => {
+    set(old => ({
+      ...old,
+      usersCount: old.usersCount
+        ? {
+          ...old.usersCount,
+          ...callback(old.usersCount),
+        }: old.usersCount,
+    }), false, 'updateUsersCount');
   },
 }), {
   name: 'SuperAdminPageStore',

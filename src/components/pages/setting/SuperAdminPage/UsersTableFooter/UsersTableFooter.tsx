@@ -1,93 +1,92 @@
 // react
 import {
+  useCallback,
   memo,
 } from 'react';
+// store
+import useSuperAdminPageStore from '@/store/superAdminPageStore/superAdminPageStore';
 // ui
+import TablePagination from '@/components/shadcn-ui-custom/TablePagination/TablePagination';
+// type
 import { 
-  Select, 
-  SelectTrigger,
-  SelectContent,
-  SelectItem,
-} from '@/components/shadcn-ui/ui/select';
-import { 
-  Button,
-} from '@/components/shadcn-ui/ui/button';
-// icon
-import { 
-  LuChevronLeft,
-  LuChevronRight,
-} from "react-icons/lu";
+  TRetrieveUsersApiRequestParams,
+} from '@/apis/auth/authApi.type';
 // style
 import './UsersTableFooter.css';
 
-const usersTableRowsPerPageItems = Array.from(
-  { length: 4 },
-  (_, i) => String((i + 1) * 50)
-);
+type TUsersTableFooterProps = {
+  retrieveUsers: (params: TRetrieveUsersApiRequestParams) => void;
+};
 
-function _UsersTableFooter() {
+function _UsersTableFooter(props: TUsersTableFooterProps) {
+  const {
+    retrieveUsers,
+  } = props;
+
+  //
+  // superAdminPage store
+  //
+  const usersData = useSuperAdminPageStore(state => state.usersData);
+  const {
+    current_page = 1,
+    last_page = 1,
+  } = usersData ?? {};
+
+  const searchParamsForRetrieveUsersApi = useSuperAdminPageStore(state => state.searchParamsForRetrieveUsersApi);
+
+  //
+  // callback
+  //
+  const createParams = useCallback((page: number) => {
+    const params: TRetrieveUsersApiRequestParams = {
+      searchParams: {
+        ...searchParamsForRetrieveUsersApi,
+        page,
+      },
+    };
+
+    return params;
+  }, [searchParamsForRetrieveUsersApi]);
+
+  const goToFirstPage = useCallback(() => {
+    const params = createParams(1);
+
+    retrieveUsers(params);
+  }, [createParams, retrieveUsers]);
+
+  const goToPreviousPage = useCallback(() => {
+    const previousPage = current_page - 1;
+    const params = createParams(previousPage);
+
+    retrieveUsers(params);
+  }, [current_page, createParams, retrieveUsers]);
+
+  const goToNextPage = useCallback(() => {
+    const nextPage = current_page + 1;
+    const params = createParams(nextPage);
+
+    retrieveUsers(params);
+  }, [current_page, createParams, retrieveUsers]);
+
+  const goToLastPage = useCallback(() => {
+    const params = createParams(last_page);
+
+    retrieveUsers(params);
+  }, [last_page, createParams, retrieveUsers]);
+
+  if (!usersData) {
+    return null;
+  }
+
   return (
     <div className="UsersTableFooter">
-      <div className="UsersTableFooter-rowsPerPageWrapper">
-        <div className="label">
-          Rows per page
-        </div>
-
-        <Select>
-          <SelectTrigger className="trigger">
-            200개씩 보기
-          </SelectTrigger>
-
-          <SelectContent>
-            {usersTableRowsPerPageItems.map(value => (
-              <SelectItem
-                key={value}
-                className="item"
-                value={value}>
-                {value}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="UsersTableFooter-paginationWrapper">
-        <div className="indicator">
-          Page 1 of 10
-        </div>
-
-        <div className="pagination">
-          <Button
-            className="paginationButton goToThreshold goToFirst"
-            variant="outline"
-            onClick={() => console.log('처음으로')}>
-            <LuChevronLeft className="icon" strokeWidth={2} />
-            <LuChevronLeft className="icon" strokeWidth={2} />
-          </Button>
-
-          <Button
-            className="paginationButton goToThreshold goToPrev"
-            variant="outline"
-            onClick={() => console.log('이전으로')}>
-            <LuChevronLeft className="icon" strokeWidth={2} />
-          </Button>
-
-          <Button
-            className="paginationButton goToThreshold goToNext"
-            variant="outline"
-            onClick={() => console.log('다음으로')}>
-            <LuChevronRight className="icon" strokeWidth={2} />
-          </Button>
-
-          <Button
-            className="paginationButton goToThreshold goToLast"
-            variant="outline"
-            onClick={() => console.log('마지막으로')}>
-            <LuChevronRight className="icon" strokeWidth={2} />
-            <LuChevronRight className="icon" strokeWidth={2} />
-          </Button>
-        </div>
-      </div>
+      <TablePagination
+        currentPage={usersData.current_page}
+        lastPage={usersData.last_page}
+        goToFirstPage={goToFirstPage}
+        goToPreviousPage={goToPreviousPage}
+        goToNextPage={goToNextPage}
+        goToLastPage={goToLastPage} />
     </div>
   );
 }

@@ -1,35 +1,6 @@
 .TablePagination {
   @apply flex items-center gap-[90px];
 
-  &-rowsPerPageWrapper {
-    @apply flex items-center gap-[10px];
-
-    .label {
-      @apply flex-shrink-0;
-
-      width: fit-content;
-
-      color: #000;
-      font-size: 14px;
-      line-height: 20px;
-      font-weight: 500;
-    }
-
-    .trigger {
-      padding: 8px 16px !important;
-      width: 141px !important;
-
-      color: #71717A !important;
-      font-size: 14px;
-      line-height: 20px;
-      font-weight: 400;
-    }
-
-    .item {
-      /*  */
-    }
-  }
-
   &-paginationWrapper {
     @apply flex items-center gap-10;
 
