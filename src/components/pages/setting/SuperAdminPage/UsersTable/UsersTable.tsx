@@ -3,6 +3,7 @@ import {
   useState,
   useMemo,
   useCallback,
+  useEffect,
   memo,
 } from 'react';
 // router
@@ -16,16 +17,20 @@ import useSuperAdminPageStore from '@/store/superAdminPageStore/superAdminPageSt
 import ApiManager from '@/apis/ApiManager';
 // react-table
 import { 
+  addOriginItemIndexToTableData,
   TABLE_ROW_SELECTION_CHECKBOX_ID,
+  TListItemWithOriginItemIndex,
 } from '@/lib/tanstack-reactTable-utils/tanstack-reactTable-utils';
 // ui
 import {
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   useReactTable,
   createColumnHelper,
   RowSelectionState,
   RowData,
+  ColumnFiltersState,
 } from '@tanstack/react-table';
 import {
   Table,
@@ -54,27 +59,29 @@ import './UsersTable.css';
 declare module '@tanstack/react-table' {
   export interface TableMeta<TData extends RowData> {
     updateIsActive: (
-      rowIndex: number,
       value: boolean,
-      rowData: TData
+      rowData: TListItemWithOriginItemIndex<TData>,
     ) => void;
 
     updateGroups: (
-      rowIndex: number,
       value: TGroupModel[],
       rowData: TData
     ) => void;
   }
 }
 
-const columnHelper = createColumnHelper<TUserModel>();
+const columnHelper = createColumnHelper<TListItemWithOriginItemIndex<TUserModel>>();
 
 function _UsersTable() {
   //
   // superAdminPage store
   //
   const usersData = useSuperAdminPageStore(state => state.usersData);
-  const tableData = usersData?.results ?? [];
+  const searchParamsForRetrieveUsersApi = useSuperAdminPageStore(state => state.searchParamsForRetrieveUsersApi);
+  const {
+    is_active,
+  } = searchParamsForRetrieveUsersApi;
+
   const updateUsersData = useSuperAdminPageStore(state => state.updateUsersData);
   const updateUsersCount = useSuperAdminPageStore(state => state.updateUsersCount);
 
@@ -86,6 +93,10 @@ function _UsersTable() {
   // state
   //
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>();
+  const [tableData, setTableData] = useState(() => {
+    return addOriginItemIndexToTableData(usersData?.results ?? []);
+  });
 
   //
   // hook
@@ -128,7 +139,7 @@ function _UsersTable() {
             <UserRoleSelect
               value={cell.getValue()}
               onChange={value => {
-                table.options.meta?.updateGroups(row.index, value, row.original);
+                table.options.meta?.updateGroups(value, row.original);
               }} />
           );
         },
@@ -147,7 +158,7 @@ function _UsersTable() {
             <UserStatusToggleButton
               value={cell.getValue()}
               onChange={value => {
-                table.options.meta?.updateIsActive(row.index, value, row.original);
+                table.options.meta?.updateIsActive(value, row.original);
               }} />
           );
         },
@@ -158,22 +169,26 @@ function _UsersTable() {
   //
   // callback
   //
-  const updateUser = useCallback((params: {
-    rowIndex: number;
+  const updateUser = useCallback(<T,>(params: {
     columnID: string;
-    value: any;
+    value: T
+    rowData: TListItemWithOriginItemIndex<TUserModel>;
   }) => {
     const {
-      rowIndex,
       columnID,
       value,
+      rowData,
     } = params;
+
+    const {
+      originItemIndex,
+    } = rowData;
 
     updateUsersData(old => {
       return {
         ...old,
         results: old?.results.map((row, index) => {
-          return rowIndex !== index
+          return index !== originItemIndex
             ? row
             : {
               ...row,
@@ -200,9 +215,12 @@ function _UsersTable() {
     columns,
     data: tableData,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     enableRowSelection: true,
+    enableColumnFilters: true,
     state: {
       rowSelection,
+      columnFilters: columnFilters,
     },
     onRowSelectionChange: e => {
       setRowSelection(e);
@@ -214,7 +232,7 @@ function _UsersTable() {
     },
 
     meta: {
-      updateIsActive: async (rowIndex, value, rowData) => {
+      updateIsActive: async (value, rowData) => {
         const params: TPatchUserApiRequestParams = {
           pathParams: {
             userId: rowData.id,
@@ -238,9 +256,9 @@ function _UsersTable() {
         }
 
         updateUser({
-          rowIndex,
           columnID: 'is_active',
-          value
+          value,
+          rowData,
         });
 
         updateUsersCount(usersCount => {
@@ -268,7 +286,7 @@ function _UsersTable() {
         });
       },
 
-      updateGroups: async (rowIndex, value, rowData) => {
+      updateGroups: async (value, rowData) => {
         const params: TPatchUserApiRequestParams = {
           pathParams: {
             userId: rowData.id,
@@ -294,13 +312,33 @@ function _UsersTable() {
         }
 
         updateUser({
-          rowIndex,
           columnID: 'groups',
           value,
+          rowData
         });
       },
     },
   });
+
+  //
+  // effect
+  //
+  useEffect(function onChangeUsersData() {
+    setTableData(addOriginItemIndexToTableData(usersData?.results ?? []));
+  }, [usersData?.results]);
+
+  useEffect(function onChangeIsActive() {
+    if (typeof is_active === 'undefined') {
+      setColumnFilters([]);
+    } else {
+      setColumnFilters([
+        {
+          id: 'is_active',
+          value: is_active,
+        },
+      ]);
+    }
+  }, [is_active]);
 
   return (
     <Table className="UsersTable">
