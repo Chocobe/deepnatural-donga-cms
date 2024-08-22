@@ -15,6 +15,8 @@ import {
   TRetrieveUsersApiRequestParams,
   TRetrieveUsersApiResponse,
 
+  TRetrieveUsersCountApiResponse,
+
   TPatchUserApiRequestParams,
 } from './authApi.type';
 // util
@@ -128,6 +130,21 @@ export const retrieveUsersApi = createApiWithNoticeMessageGroup({
     .apis
     .auth
     .retrieveUsers,
+});
+
+//
+// (GET) 사용자 수
+//
+export const retrieveUsersCountApi = createApiWithNoticeMessageGroup({
+  apiFunction: () => {
+    return api.get<TRetrieveUsersCountApiResponse>(
+      authApiUrlFactory.retrieveUsersCount()
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .auth
+    .retrieveUsersCount,
 });
 
 //

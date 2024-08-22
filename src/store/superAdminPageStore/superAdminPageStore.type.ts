@@ -2,6 +2,7 @@
 import { 
   TRetrieveUsersApiRequestParams,
   TRetrieveUsersApiResponse,
+  TRetrieveUsersCountApiResponse,
 } from '@/apis/auth/authApi.type';
 import { 
   TUserModel,
@@ -17,6 +18,8 @@ export type TSuperAdminPageStoreState = {
   detailTargetUser?: TUserModel;
   /** Table 에서 checkbox 로 선택한 user 목록 데이터 (row click 아님) */
   selectedUsers?: TUserModel[];
+
+  usersCount: TRetrieveUsersCountApiResponse | undefined;
 };
 
 export const initialSuperAdminPageStoreState: TSuperAdminPageStoreState = {
@@ -31,6 +34,8 @@ export const initialSuperAdminPageStoreState: TSuperAdminPageStoreState = {
 
   detailTargetUser: undefined,
   selectedUsers: undefined,
+
+  usersCount: undefined,
 };
 
 export type TSuperAdminPageStoreAction = {
@@ -52,6 +57,11 @@ export type TSuperAdminPageStoreAction = {
 
   clearSelectedUsers: () => void;
   setSelectedUsers: (selectedUsers: TUserModel[]) => void;
+
+  setUsersCount: (usersCount: TRetrieveUsersCountApiResponse) => void;
+  updateUsersCount: (
+    callback: ((usersCount: TRetrieveUsersCountApiResponse | undefined) => TRetrieveUsersCountApiResponse | undefined)
+  ) => void;
 };
 
 export type TSuperAdminPageStore =

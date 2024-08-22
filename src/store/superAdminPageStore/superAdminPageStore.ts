@@ -100,6 +100,23 @@ const useSuperAdminPageStore = create(devtools<TSuperAdminPageStore>((set, _get)
       selectedUsers,
     }), false, 'setSelectedUsers');
   },
+
+  setUsersCount: usersCount => {
+    set(old => ({
+      ...old,
+      usersCount,
+    }), false, 'setUsersCount');
+  },
+  updateUsersCount: callback => {
+    set(old => ({
+      ...old,
+      usersCount: old.usersCount
+        ? {
+          ...old.usersCount,
+          ...callback(old.usersCount),
+        }: old.usersCount,
+    }), false, 'updateUsersCount');
+  },
 }), {
   name: 'SuperAdminPageStore',
 }));

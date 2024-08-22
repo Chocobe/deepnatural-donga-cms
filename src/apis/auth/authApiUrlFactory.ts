@@ -32,6 +32,11 @@ const authApiUrlFactory = (() => {
       return `${BASE_PATH}users/`;
     },
 
+    // (GET) 사용자 수
+    retrieveUsersCount() {
+      return `${this.retrieveUsers()}count/`;
+    },
+
     // (PATCH) 사용자 수정
     patchUser(pathParams: TPatchUserApiRequestParams['pathParams']) {
       const {

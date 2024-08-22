@@ -76,6 +76,7 @@ function _UsersTable() {
   const usersData = useSuperAdminPageStore(state => state.usersData);
   const tableData = usersData?.results ?? [];
   const updateUsersData = useSuperAdminPageStore(state => state.updateUsersData);
+  const updateUsersCount = useSuperAdminPageStore(state => state.updateUsersCount);
 
   const setDetailTargetUser = useSuperAdminPageStore(state => state.setDetailTargetUser);
 
@@ -240,6 +241,30 @@ function _UsersTable() {
           rowIndex,
           columnID: 'is_active',
           value
+        });
+
+        updateUsersCount(usersCount => {
+          if (!usersCount) {
+            return usersCount;
+          }
+
+          const newUsersCount = usersCount;
+
+          switch (value) {
+            case true: {
+              newUsersCount.active_user_count++;
+              newUsersCount.inactive_user_count--;
+              break;
+            }
+
+            case false: {
+              newUsersCount.active_user_count--;
+              newUsersCount.inactive_user_count++;
+              break;
+            }
+          }
+
+          return newUsersCount;
         });
       },
 

@@ -28,6 +28,7 @@ function SuperAdminPage() {
   const setUsersData = useSuperAdminPageStore(state => state.setUsersData);
   const clearUsersData = useSuperAdminPageStore(state => state.clearUsersData);
   const clearSelectedUsers = useSuperAdminPageStore(state => state.clearSelectedUsers);
+  const setUsersCount = useSuperAdminPageStore(state => state.setUsersCount);
 
   //
   // callback
@@ -49,13 +50,25 @@ function SuperAdminPage() {
     }
   }, [setUsersData]);
 
+  const retrieveUsersCount = useCallback(async () => {
+    const response = await ApiManager
+      .auth
+      .retrieveUsersCountApi
+      .callWithNoticeMessageGroup();
+
+    if (response?.data) {
+      setUsersCount(response.data);
+    }
+  }, [setUsersCount]);
+
   useEffect(function init() {
     retrieveUsers({
       searchParams: searchParamsForRetrieveUsersApi,
     });
+    retrieveUsersCount();
 
     // eslint-disable-next-line
-  }, [retrieveUsers]);
+  }, []);
 
   useEffect(function cleanup() {
     return () => {
@@ -67,7 +80,7 @@ function SuperAdminPage() {
   return (
     <div className="SuperAdminPage">
       <div className="SuperAdminPage-filterWrapper">
-        <UsersTableHeader />
+        <UsersTableHeader retrieveUsers={retrieveUsers} />
       </div>
 
       <div className="SuperAdminPage-tableActionsWrapper">

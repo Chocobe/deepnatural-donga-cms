@@ -56,6 +56,15 @@ export type TRetrieveUsersApiResponse = {
 };
 
 //
+// (GET) 사용자 수
+//
+export type TRetrieveUsersCountApiResponse = {
+  user_count: number;
+  active_user_count: number;
+  inactive_user_count: number;
+};
+
+//
 // (PATCH) 사용자 수정
 //
 export type TPatchUserApiRequestParams = TApiRequestBodyParams<{

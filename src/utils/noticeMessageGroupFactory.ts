@@ -25,6 +25,7 @@ const noticeMessageGroupFactory: {
       retrieveUserInfo: TNoticeMessageGroup;
       retrieveGroups: TNoticeMessageGroup;
       retrieveUsers: TNoticeMessageGroup;
+      retrieveUsersCount: TNoticeMessageGroup;
       patchUser: TNoticeMessageGroup;
     };
     math: {
@@ -115,6 +116,18 @@ const noticeMessageGroupFactory: {
           title: '',
           message: '',
         }),
+      },
+
+      // (GET) 사용자 수
+      retrieveUsersCount: {
+        loadingMessage: () => ({
+          title: '',
+          message: '전체 사용자 수를 파악하고 있습니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('전체 사용자 수를 파악하는 도중'),
+        }),
+        successMessage: undefined,
       },
 
       // (PATCH) 사용자 수정
