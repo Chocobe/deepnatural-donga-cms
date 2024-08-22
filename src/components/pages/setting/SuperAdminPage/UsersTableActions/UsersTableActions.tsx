@@ -1,10 +1,12 @@
 // react
 import {
-  useState,
+  useRef,
   useMemo,
   useCallback,
+  useEffect,
   memo,
   ChangeEvent,
+  KeyboardEvent,
 } from 'react';
 // ui
 import AddUserModal from '../AddUserModal/AddUserModal';
@@ -14,18 +16,43 @@ import {
 import {
   InputWithIcon,
 } from '@/components/shadcn-ui-custom/InputWithIcon/InputWithIcon';
+// store
+import useSuperAdminPageStore from '@/store/superAdminPageStore/superAdminPageStore';
 // icon
 import { 
   LuSearch,
 } from "react-icons/lu";
+// type
+import { 
+  TRetrieveUsersApiRequestParams,
+} from '@/apis/auth/authApi.type';
 // style
 import './UsersTableActions.css';
 
-function _UsersTableActions() {
+type TUsersTableActionsProps = {
+  retrieveUsers: (params: TRetrieveUsersApiRequestParams) => Promise<void>;
+};
+
+function _UsersTableActions(props: TUsersTableActionsProps) {
+  const {
+    retrieveUsers,
+  } = props;
+
   //
-  // state
+  // superAdminPage store
   //
-  const [roleSearchValue, setRoleSearchValue] = useState('');
+  const usersData = useSuperAdminPageStore(state => state.usersData);
+
+  const searchParamsForRetrieveUsersApi = useSuperAdminPageStore(state => state.searchParamsForRetrieveUsersApi);
+  const {
+    search = '',
+  } = searchParamsForRetrieveUsersApi;
+  const updateSearchParamsForRetrieveUsersApi = useSuperAdminPageStore(state => state.updateSearchParamsForRetrieveUsersApi);
+
+  //
+  // ref
+  //
+  const $searchInputRef = useRef<HTMLInputElement | null>(null);
 
   //
   // callback
@@ -34,11 +61,51 @@ function _UsersTableActions() {
     console.log('onClickRemove()');
   }, []);
 
-  const onChangeRoleSearchValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const onKeyDown = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
+    const {
+      key,
+    } = e;
+
+    switch (key.toLowerCase()) {
+      case 'escape': {
+        e.preventDefault();
+
+        updateSearchParamsForRetrieveUsersApi(searchParamsForRetrieveUsersApi => ({
+          ...searchParamsForRetrieveUsersApi,
+          search: '',
+        }));
+
+        return;
+      }
+
+      case 'enter': {
+        e.preventDefault();
+        $searchInputRef.current?.blur();
+
+        const params: TRetrieveUsersApiRequestParams = {
+          searchParams: {
+            ...searchParamsForRetrieveUsersApi,
+          },
+        };
+
+        retrieveUsers(params);
+
+        return;
+      }
+    }
+  }, [
+    searchParamsForRetrieveUsersApi,
+    updateSearchParamsForRetrieveUsersApi, retrieveUsers,
+  ]);
+
+  const onChangeSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
-    setRoleSearchValue(value);
-  }, []);
+    updateSearchParamsForRetrieveUsersApi(searchParamsForRetrieveUsersApi => ({
+      ...searchParamsForRetrieveUsersApi,
+      search: value,
+    }));
+  }, [updateSearchParamsForRetrieveUsersApi]);
 
   //
   // cache
@@ -49,6 +116,13 @@ function _UsersTableActions() {
       onClick: onClickRemove,
     },
   ], [onClickRemove]);
+
+  //
+  // effect
+  //
+  useEffect(function focusSearchInput() {
+    $searchInputRef.current?.focus();
+  }, [usersData]);
 
   return (
     <div className="UsersTableActions">
@@ -72,10 +146,13 @@ function _UsersTableActions() {
 
       <div className="UsersTableActions-rightSide">
         <InputWithIcon 
+          ref={$searchInputRef}
           className="UsersTableActions-rightSide-roleSearchInput"
           placeholder="검색어를 입력해주세요"
-          value={roleSearchValue}
-          onChange={onChangeRoleSearchValue}
+          autoFocus
+          value={search}
+          onChange={onChangeSearch}
+          onKeyDown={onKeyDown}
           EndIcon={LuSearch} />
 
         <AddUserModal />

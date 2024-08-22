@@ -31,13 +31,10 @@ const useSuperAdminPageStore = create(devtools<TSuperAdminPageStore>((set, _get)
       },
     }), false, 'clearSearchParamsForRetrieveUsersApi');
   },
-  updateSearchParamsForRetrieveUsersApi: searchParams => {
+  updateSearchParamsForRetrieveUsersApi: callback => {
     set(old => ({
       ...old,
-      searchParamsForRetrieveUsersApi: {
-        ...old.searchParamsForRetrieveUsersApi,
-        ...searchParams,
-      },
+      searchParamsForRetrieveUsersApi: callback(old.searchParamsForRetrieveUsersApi),
     }), false, 'updateSearchParamsForRetrieveUsersApi');
   },
 

@@ -12,6 +12,8 @@ import {
 import routePathFactory from '@/routes/routePathFactory';
 // store
 import useSuperAdminPageStore from '@/store/superAdminPageStore/superAdminPageStore';
+// api
+import ApiManager from '@/apis/ApiManager';
 // react-table
 import { 
   TABLE_ROW_SELECTION_CHECKBOX_ID,
@@ -37,8 +39,7 @@ import UserRoleSelect from '../UserRoleSelect/UserRoleSelect';
 import UserStatusToggleButton from '../UserStatusToggleButton/UserStatusToggleButton';
 import TableRowSelectorHeader from '@/components/shadcn-ui-custom/TableRowSelectorHeader/TableRowSelectorHeader';
 import TableRowSelectorCell from '@/components/shadcn-ui-custom/TableRowSelectorCell/TableRowSelectorCell';
-// api
-import ApiManager from '@/apis/ApiManager';
+import TableBlankMessageCell from '@/components/shadcn-ui-custom/TableBlankMessageCell/TableBlankMessageCell';
 // type
 import { 
   TGroupModel,
@@ -298,29 +299,37 @@ function _UsersTable() {
       </TableHeader>
 
       <TableBody>
-        {table.getRowModel().rows.map(row => (
-          <TableRow
-            key={row.id}
-            className="row"
-            data-state={row.getIsSelected() && 'selected'}
-            onClick={() => goToUserInfoEditPage(row.original)}>
-            {row.getVisibleCells().map(cell => (
-              <TableCell 
-                key={cell.id}
-                className={cell.column.id}
-                onClick={e => {
-                  if (cell.column.id === TABLE_ROW_SELECTION_CHECKBOX_ID) {
-                    e.stopPropagation();
-                  }
-                }}>
-                {flexRender(
-                  cell.column.columnDef.cell,
-                  cell.getContext()
-                )}
-              </TableCell>
-            ))}
-          </TableRow>
-        ))}
+        {tableData?.length
+          ? table.getRowModel().rows.map(row => (
+            <TableRow
+              key={row.id}
+              className="row"
+              data-state={row.getIsSelected() && 'selected'}
+              onClick={() => goToUserInfoEditPage(row.original)}>
+              {row.getVisibleCells().map(cell => (
+                <TableCell 
+                  key={cell.id}
+                  className={cell.column.id}
+                  onClick={e => {
+                    if (cell.column.id === TABLE_ROW_SELECTION_CHECKBOX_ID) {
+                      e.stopPropagation();
+                    }
+                  }}>
+                  {flexRender(
+                    cell.column.columnDef.cell,
+                    cell.getContext()
+                  )}
+                </TableCell>
+              ))}
+            </TableRow>
+          )): (
+            <TableRow>
+              <TableBlankMessageCell colSpan={6}>
+                등록된 사용자가 없습니다.
+              </TableBlankMessageCell>
+            </TableRow>
+          )
+        }
       </TableBody>
     </Table>
   );

@@ -1,6 +1,5 @@
 // react
 import { 
-  useMemo,
   useCallback,
   useEffect,
 } from 'react';
@@ -25,20 +24,10 @@ function SuperAdminPage() {
   // superAdminPage store
   //
   const searchParamsForRetrieveUsersApi = useSuperAdminPageStore(state => state.searchParamsForRetrieveUsersApi);
-  const usersData = useSuperAdminPageStore(state => state.usersData);
-  const users = usersData?.results;
 
   const setUsersData = useSuperAdminPageStore(state => state.setUsersData);
-
   const clearUsersData = useSuperAdminPageStore(state => state.clearUsersData);
   const clearSelectedUsers = useSuperAdminPageStore(state => state.clearSelectedUsers);
-
-  //
-  // cache
-  //
-  const isUsersEmpty = useMemo(() => {
-    return !users?.length;
-  }, [users]);
 
   //
   // callback
@@ -82,22 +71,12 @@ function SuperAdminPage() {
       </div>
 
       <div className="SuperAdminPage-tableActionsWrapper">
-        <UsersTableActions />
+        <UsersTableActions retrieveUsers={retrieveUsers} />
       </div>
 
-      {/* FIXME: SuperAdminPageStore 구현하기 */}
-      {/* FIXME: <TableBlankMessageCell /> 로 바꾸기 */}
-      {isUsersEmpty
-        ? (
-          <div className="SuperAdminPage-emptyData">
-            등록된 유저가 없습니다.
-          </div>
-        ): (
-          <div className="SuperAdminPage-tableWrapper">
-            <UsersTable />
-          </div>
-        )
-      }
+      <div className="SuperAdminPage-tableWrapper">
+        <UsersTable />
+      </div>
 
       <div className="SuperAdminPage-tableFooterWrapper">
         <UsersTableFooter retrieveUsers={retrieveUsers} />
