@@ -24,6 +24,7 @@ function SuperAdminPage() {
   //
   // superAdminPage store
   //
+  const searchParamsForRetrieveUsersApi = useSuperAdminPageStore(state => state.searchParamsForRetrieveUsersApi);
   const usersData = useSuperAdminPageStore(state => state.usersData);
   const users = usersData?.results;
 
@@ -42,13 +43,9 @@ function SuperAdminPage() {
   //
   // callback
   //
-  const retrieveUsers = useCallback(async () => {
-    const params: TRetrieveUsersApiRequestParams = {
-      searchParams: {
-        page: 1,
-      },
-    };
-
+  const retrieveUsers = useCallback(async (
+    params: TRetrieveUsersApiRequestParams
+  ) => {
     const response = await ApiManager
       .auth
       .retrieveUsersApi
@@ -64,7 +61,11 @@ function SuperAdminPage() {
   }, [setUsersData]);
 
   useEffect(function init() {
-    retrieveUsers();
+    retrieveUsers({
+      searchParams: searchParamsForRetrieveUsersApi,
+    });
+
+    // eslint-disable-next-line
   }, [retrieveUsers]);
 
   useEffect(function cleanup() {
@@ -98,11 +99,9 @@ function SuperAdminPage() {
         )
       }
 
-      {!isUsersEmpty && (
-        <div className="SuperAdminPage-tableFooterWrapper">
-          <UsersTableFooter />
-        </div>
-      )}
+      <div className="SuperAdminPage-tableFooterWrapper">
+        <UsersTableFooter retrieveUsers={retrieveUsers} />
+      </div>
     </div>
   );
 }

@@ -13,20 +13,20 @@ import './TablePagination.css';
 type TTablePaginationProps = {
   currentPage: number | string;
   lastPage: number | string;
-  goToFirst: () => void;
-  goToNext: () => void;
-  goToPrevious: () => void;
-  goToLast: () => void;
+  goToFirstPage: () => void;
+  goToNextPage: () => void;
+  goToPreviousPage: () => void;
+  goToLastPage: () => void;
 };
 
 function TablePagination(props: TTablePaginationProps) {
   const {
     currentPage,
     lastPage,
-    goToFirst,
-    goToPrevious,
-    goToNext,
-    goToLast,
+    goToFirstPage,
+    goToPreviousPage,
+    goToNextPage,
+    goToLastPage,
   } = props;
 
   return (
@@ -40,7 +40,8 @@ function TablePagination(props: TTablePaginationProps) {
           <Button
             className="paginationButton goToThreshold goToFirst"
             variant="outline"
-            onClick={goToFirst}>
+            disabled={currentPage === 1}
+            onClick={goToFirstPage}>
             <LuChevronLeft className="icon" strokeWidth={2} />
             <LuChevronLeft className="icon" strokeWidth={2} />
           </Button>
@@ -48,21 +49,24 @@ function TablePagination(props: TTablePaginationProps) {
           <Button
             className="paginationButton goToThreshold goToPrev"
             variant="outline"
-            onClick={goToPrevious}>
+            disabled={currentPage === 1}
+            onClick={goToPreviousPage}>
             <LuChevronLeft className="icon" strokeWidth={2} />
           </Button>
 
           <Button
             className="paginationButton goToThreshold goToNext"
             variant="outline"
-            onClick={goToNext}>
+            disabled={currentPage === lastPage}
+            onClick={goToNextPage}>
             <LuChevronRight className="icon" strokeWidth={2} />
           </Button>
 
           <Button
             className="paginationButton goToThreshold goToLast"
             variant="outline"
-            onClick={goToLast}>
+            disabled={currentPage === lastPage}
+            onClick={goToLastPage}>
             <LuChevronRight className="icon" strokeWidth={2} />
             <LuChevronRight className="icon" strokeWidth={2} />
           </Button>
