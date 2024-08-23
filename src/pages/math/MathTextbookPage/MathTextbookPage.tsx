@@ -23,19 +23,16 @@ function MathTextbookPage() {
   //
   // mathTextbooksPage store
   //
+  const searchParamsForRetrieveMathTextbooksApi = useMathTextbookPageStore(state => state.searchParamsForRetrieveMathTextbooksApi);
+
   const setMathTextbooksData = useMathTextbookPageStore(state => state.setMathTextbooksData);
 
   //
   // callback
   //
-  const retrieveMathTextbooks = useCallback(async () => {
-    // FIXME: filter 연동 하기
-    const params: TRetrieveMathTextbooksApiRequestParams = {
-      searchParams: {
-        //
-      },
-    };
-
+  const retrieveMathTextbooks = useCallback(async (
+    params: TRetrieveMathTextbooksApiRequestParams
+  ) => {
     const response = await ApiManager
       .math
       .retrieveMathTextbooksApi
@@ -44,13 +41,19 @@ function MathTextbookPage() {
     if (response?.data) {
       setMathTextbooksData(response.data);
     }
-  }, [setMathTextbooksData]);
+  }, [
+    setMathTextbooksData,
+  ]);
 
   //
   // effect
   //
   useEffect(function init() {
-    retrieveMathTextbooks();
+    retrieveMathTextbooks({
+      searchParams: searchParamsForRetrieveMathTextbooksApi,
+    });
+
+    // eslint-disable-next-line
   }, [retrieveMathTextbooks]);
 
   return (
@@ -60,7 +63,7 @@ function MathTextbookPage() {
       </div>
 
       <div className="MathTextbookPage-actions">
-        <MathTextbookTableActions />
+        <MathTextbookTableActions retrieveMathTextbooks={retrieveMathTextbooks} />
       </div>
 
       <div className="MathTextbookPage-table">

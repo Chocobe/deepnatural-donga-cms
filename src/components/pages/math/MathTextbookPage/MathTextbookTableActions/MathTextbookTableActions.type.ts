@@ -1,11 +1,8 @@
+// FIXME: 제외 가능성 높은 기능
 export const mathTextbookSearchTypeOptions = [
   {
     text: 'All',
     value: ' ',
-  },
-  {
-    text: '과목',
-    value: 'subject',
   },
   {
     text: '교육과정',

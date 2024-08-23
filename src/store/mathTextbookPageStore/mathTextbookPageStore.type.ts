@@ -1,5 +1,6 @@
 // type
 import { 
+  TRetrieveMathTextbooksApiRequestParams,
   TRetrieveMathTextbooksApiResponse,
 } from '@/apis/math/mathApi.type';
 import { 
@@ -14,6 +15,8 @@ import {
 } from '@/apis/models/mathModel.type';
 
 export type TMathTextbookPageStoreState = {
+  searchParamsForRetrieveMathTextbooksApi: TRetrieveMathTextbooksApiRequestParams['searchParams'];
+
   mathTextbooksData?: TRetrieveMathTextbooksApiResponse;
 
   detailTargetMathTextbook?: TMathTextbookModel;
@@ -25,6 +28,14 @@ export type TMathTextbookPageStoreState = {
 };
 
 export const initialMathTextbookPageStoreState: TMathTextbookPageStoreState = {
+  searchParamsForRetrieveMathTextbooksApi: {
+    classtype: undefined,
+    grade: undefined,
+    page: undefined,
+    search: undefined,
+    term: undefined,
+  },
+
   mathTextbooksData: undefined,
 
   detailTargetMathTextbook: undefined,
@@ -44,6 +55,13 @@ export const initialMathTextbookPageStoreState: TMathTextbookPageStoreState = {
 
 export type TMathTextbookPageStoreAction = {
   clearMathTextbookPageStore: () => void;
+
+  clearSearchParamsForRetrieveMathTextbooksApi: () => void;
+  updateSearchParamsForRetrieveMathTextbooksApi: (
+    callback: (
+      searchParamsFormRetrieveMathTextbooksApi: TMathTextbookPageStoreState['searchParamsForRetrieveMathTextbooksApi']
+    ) => TMathTextbookPageStoreState['searchParamsForRetrieveMathTextbooksApi']
+  ) => void;
 
   clearMathTextbooksData: () => void;
   setMathTextbooksData: (mathTextbooksData: TRetrieveMathTextbooksApiResponse) => void;

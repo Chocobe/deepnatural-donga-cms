@@ -18,6 +18,19 @@ const useMathTextbookPageStore = create(devtools<TMathTextbookPageStore>((set, _
     set(initialMathTextbookPageStoreState, false, 'clearMathTextbookPageStore');
   },
 
+  clearSearchParamsForRetrieveMathTextbooksApi: () => {
+    set(old => ({
+      ...old,
+      searchParamsForRetrieveMathTextbooksApi: initialMathTextbookPageStoreState.searchParamsForRetrieveMathTextbooksApi,
+    }), false, 'clearSearchParamsForRetrieveMathTextbooksApi');
+  },
+  updateSearchParamsForRetrieveMathTextbooksApi: callback => {
+    set(old => ({
+      ...old,
+      searchParamsForRetrieveMathTextbooksApi: callback(old.searchParamsForRetrieveMathTextbooksApi),
+    }), false, 'updateSearchParamsForRetrieveMathTextbooksApi');
+  },
+
   clearMathTextbooksData: () => {
     set(old => ({
       ...old,
