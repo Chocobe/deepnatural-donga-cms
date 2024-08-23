@@ -105,6 +105,9 @@ function ChangePasswordModal() {
     console.groupEnd();
 
     setOpen(false);
+
+    // FIXME: ApiManager 의 callWithNoticeMessageGroup() 으로 사용하기
+    // FIXME: 적용 후, 지우기
     openSuccessNoticeModal({
       title: '비밀번호 변경 완료',
       message: '새로운 비밀번호로 변경이 완료되었습니다.',
@@ -138,6 +141,8 @@ function ChangePasswordModal() {
       <DialogTrigger asChild>
         <Button
           className="ChangePasswordModalTrigger"
+          // FIXME: 비밀번호 변경 API 기능 추가되면, 지우기
+          disabled
           onClick={onClickOpen}>
           비밀번호 변경
         </Button>
