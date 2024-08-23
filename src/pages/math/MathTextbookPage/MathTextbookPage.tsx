@@ -71,7 +71,7 @@ function MathTextbookPage() {
       </div>
 
       <div className="MathTextbookPage-footer">
-        <MathTextbookFooter />
+        <MathTextbookFooter retrieveMathTextbooks={retrieveMathTextbooks} />
       </div>
     </div>
   );
