@@ -169,14 +169,12 @@ export const retrieveUsersApi = createApiWithNoticeMessageGroup({
   apiFunction: (params: TRetrieveUsersApiRequestParams) => {
     const {
       searchParams,
-    } = params;
-
-    const _searchParams = excludeNullOrUndefinedProperties(searchParams);
+    } = excludeNullOrUndefinedProperties(params);
 
     return api.get<TRetrieveUsersApiResponse>(
       authApiUrlFactory.retrieveUsers(),
       {
-        params: _searchParams,
+        params: searchParams,
       }
     );
   },

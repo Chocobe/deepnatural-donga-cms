@@ -77,7 +77,7 @@ function _UsersTableActions(props: TUsersTableActionsProps) {
   const onESC = useCallback(() => {
     updateSearchParamsForRetrieveUsersApi(searchParamsForRetrieveUsersApi => ({
       ...searchParamsForRetrieveUsersApi,
-      search: '',
+      search: undefined,
     }));
   }, [updateSearchParamsForRetrieveUsersApi]);
 

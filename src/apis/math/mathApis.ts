@@ -15,6 +15,7 @@ import {
   mockHistoryModalData, 
   THistoryModalData,
 } from '@/components/shadcn-ui-custom/modals/HistoryModal/HistoryModal.type';
+import excludeNullOrUndefinedProperties from '@/utils/excludeNullOrUndefinedProperties/excludeNullOrUndefinedProperties';
 
 //
 // (GET) 수학 교과서 목록
@@ -23,13 +24,13 @@ export const retrieveMathTextbooksApi = createApiWithNoticeMessageGroup({
   apiFunction: (params: TRetrieveMathTextbooksApiRequestParams) => {
     const {
       searchParams,
-    } = params;
+    } = excludeNullOrUndefinedProperties(params);
 
     return api.get<TRetrieveMathTextbooksApiResponse>(
       mathApiUrlFactory.retrieveMathTextbooks(),
       {
         params: searchParams,
-      },
+      }
     );
   },
   noticeMessageGroup: noticeMessageGroupFactory

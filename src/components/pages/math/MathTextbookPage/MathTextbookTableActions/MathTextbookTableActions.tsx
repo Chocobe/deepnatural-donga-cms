@@ -100,7 +100,7 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
   const onESC = useCallback(() => {
     updateSearchParamsForRetrieveMathTextbooksApi(searchParamsForRetrieveMathTextbooksApi => ({
       ...searchParamsForRetrieveMathTextbooksApi,
-      search: '',
+      search: undefined,
     }));
   }, [updateSearchParamsForRetrieveMathTextbooksApi]);
 
