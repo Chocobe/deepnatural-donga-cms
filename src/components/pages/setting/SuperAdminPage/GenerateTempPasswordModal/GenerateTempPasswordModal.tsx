@@ -1,7 +1,9 @@
 // react
 import {
+  useRef,
   useState,
   useCallback,
+  useEffect,
 } from 'react';
 // ui
 import { 
@@ -18,8 +20,22 @@ import {
 } from '@/components/shadcn-ui/ui/button';
 // style
 import './GenerateTempPasswordModal.css';
+import ApiManager from '@/apis/ApiManager';
 
-function GenerateTempPasswordModal() {
+type TGenerateTempPasswordModalProps = {
+  onChangePassword: (password: string) => void;
+};
+
+function GenerateTempPasswordModal(props: TGenerateTempPasswordModalProps) {
+  const {
+    onChangePassword,
+  } = props;
+
+  //
+  // ref
+  //
+  const tempPasswordRef = useRef<string | null>(null);
+
   //
   // state
   //
@@ -28,23 +44,50 @@ function GenerateTempPasswordModal() {
   //
   // callback
   //
-  const onClickOpen = useCallback(() => {
+  const generateTempPassword = useCallback(async () => {
+    const response = await ApiManager
+      .auth
+      .randomPasswordApi
+      .callWithNoticeMessageGroup();
+
+    const tempPassword = response?.data?.password;
+
+    if (tempPassword) {
+      tempPasswordRef.current = tempPassword;
+    }
+
     setOpen(true);
   }, []);
 
-  const onClickCopy = useCallback(() => {
-    console.log('onClickCopy()');
+  const onClickCopy = useCallback(async () => {
+    const tempPassword = tempPasswordRef.current;
+
+    if (tempPassword) {
+      await window.navigator.clipboard.writeText(tempPassword);
+      onChangePassword(tempPassword);
+    }
+
     setOpen(false);
-  }, []);
+  }, [onChangePassword]);
+
+  //
+  // effect
+  //
+  useEffect(function cleanup() {
+    if (open) {
+      return () => {
+        tempPasswordRef.current = null;
+      };
+    }
+  }, [open]);
 
   return (
-    <Dialog
-      open={open}>
+    <Dialog open={open}>
       <DialogClose />
       <DialogTrigger asChild>
         <Button
           className="GenerateTempPasswordModalTrigger"
-          onClick={onClickOpen}>
+          onClick={generateTempPassword}>
           임시 비번 발급
         </Button>
       </DialogTrigger>

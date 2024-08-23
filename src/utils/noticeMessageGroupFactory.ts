@@ -21,11 +21,13 @@ const noticeMessageGroupFactory: {
     auth: {
       login: TNoticeMessageGroup;
       logout: TNoticeMessageGroup;
+      randomPassword: TNoticeMessageGroup;
+      signup: TNoticeMessageGroup;
       findPassword: TNoticeMessageGroup;
       retrieveUserInfo: TNoticeMessageGroup;
       retrieveGroups: TNoticeMessageGroup;
-      retrieveUsers: TNoticeMessageGroup;
       retrieveUsersCount: TNoticeMessageGroup;
+      retrieveUsers: TNoticeMessageGroup;
       patchUser: TNoticeMessageGroup;
     };
     math: {
@@ -59,6 +61,33 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('로그아웃 중'),
         }),
         successMessage: undefined,
+      },
+
+      // 임시 비밀번호 생성
+      randomPassword: {
+        loadingMessage: () => ({
+          title: '',
+          message: '임시 비밀번호를 생성 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('임시 비밀번호 생성 중'),
+        }),
+        successMessage: undefined,
+      },
+
+      // 회원가입
+      signup: {
+        loadingMessage: () => ({
+          title: '',
+          message: '신규 사용자를 등록하는 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('신규 사용자를 등록하는 중'),
+        }),
+        successMessage: () => ({
+          title: '',
+          message: '신규 사용자 등록이 완료되었습니다.',
+        }),
       },
 
       // 비밀번호 찾기
@@ -103,6 +132,18 @@ const noticeMessageGroupFactory: {
         successMessage: undefined,
       },
 
+      // (GET) 사용자 수
+      retrieveUsersCount: {
+        loadingMessage: () => ({
+          title: '',
+          message: '전체 사용자 수를 파악하고 있습니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('전체 사용자 수를 파악하는 도중'),
+        }),
+        successMessage: undefined,
+      },
+
       // (GET) 사용자 목록
       retrieveUsers: {
         loadingMessage: () => ({
@@ -116,18 +157,6 @@ const noticeMessageGroupFactory: {
           title: '',
           message: '',
         }),
-      },
-
-      // (GET) 사용자 수
-      retrieveUsersCount: {
-        loadingMessage: () => ({
-          title: '',
-          message: '전체 사용자 수를 파악하고 있습니다.',
-        }),
-        errorMessage: () => ({
-          ...createNetworkErrorMessage('전체 사용자 수를 파악하는 도중'),
-        }),
-        successMessage: undefined,
       },
 
       // (PATCH) 사용자 수정

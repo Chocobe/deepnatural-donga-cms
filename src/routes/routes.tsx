@@ -236,9 +236,7 @@ const routes = createBrowserRouter([
           .getSettingRootPath(),
         element: (
           <AuthedSidebarLayout>
-            <MyPageRedirectMiddleware>
-              <Outlet />
-            </MyPageRedirectMiddleware>
+            <Outlet />
           </AuthedSidebarLayout>
         ),
         children: [
@@ -254,14 +252,22 @@ const routes = createBrowserRouter([
             path: routePathFactory
               .setting
               .getSuperAdminPagePath(),
-            element: <SuperAdminPage />,
+            element: (
+              <MyPageRedirectMiddleware>
+                <SuperAdminPage />
+              </MyPageRedirectMiddleware>
+            ),
           },
           // 설정: 유저 정보 수정(슈퍼어드민 전용)
           {
             path: routePathFactory
               .setting
               .getUserInfoEditPage(':userId'),
-            element: <UserInfoEditPage />,
+            element: (
+              <MyPageRedirectMiddleware>
+                <UserInfoEditPage />
+              </MyPageRedirectMiddleware>
+            ),
           },
         ],
       }, // Setting

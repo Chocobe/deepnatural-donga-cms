@@ -7,6 +7,8 @@ import {
   ChangeEvent,
   useEffect,
 } from 'react';
+// api
+import ApiManager from '@/apis/ApiManager';
 // ui
 import UserRoleSelect from '../UserRoleSelect/UserRoleSelect';
 import GenerateTempPasswordModal from '../GenerateTempPasswordModal/GenerateTempPasswordModal';
@@ -36,6 +38,9 @@ import {
 import { 
   TGroupModel,
 } from '@/apis/models/authModel.type';
+import { 
+  TSignupApiRequestParams,
+} from '@/apis/auth/authApi.type';
 // style
 import './AddUserModal.css';
 
@@ -59,12 +64,22 @@ function AddUserModal() {
   });
 
   //
+  // callback
+  //
+  const onChangePassword = useCallback((password: string) => {
+    setFormState(formState => ({
+      ...formState,
+      password,
+    }));
+  }, []);
+
+  //
   // cache
   //
   const inputItems = useMemo(() => [
     {
       id: 'username',
-      label: '이름 (아이디)',
+      label: '아이디',
       type: 'text',
       placeholder: '이름을 입력해주세요.',
       required: true,
@@ -79,7 +94,7 @@ function AddUserModal() {
       required: true,
       disabled: true,
       ActionButton: () => (
-        <GenerateTempPasswordModal />
+        <GenerateTempPasswordModal onChangePassword={onChangePassword} />
       ),
     },
     {
@@ -100,7 +115,7 @@ function AddUserModal() {
       disabled: false,
       ActionButton: undefined,
     },
-  ], []);
+  ], [onChangePassword]);
 
   //
   // callback
@@ -132,14 +147,24 @@ function AddUserModal() {
     }));
   }, []);
 
-  const onClickSubmit = useCallback((e: FormEvent) => {
+  const onClickSubmit = useCallback(async (e: FormEvent) => {
     e.preventDefault();
 
-    console.group('onClickSubmit()');
-    console.log('formState: ', formState);
-    console.groupEnd();
+    const params: TSignupApiRequestParams = {
+      payload: {
+        ...formState,
+        groups: formState.groups.map(({ id }) => id),
+      },
+    };
 
-    setOpen(false);
+    const response = await ApiManager
+      .auth
+      .signupApi
+      .callWithNoticeMessageGroup(params);
+
+    if (response?.data) {
+      setOpen(false);
+    }
   }, [formState]);
 
   //
@@ -160,9 +185,7 @@ function AddUserModal() {
   }, [open]);
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={setOpen}>
+    <Dialog open={open}>
       <DialogTrigger asChild>
         <Button
           className="AddUserModalTrigger"
@@ -172,7 +195,9 @@ function AddUserModal() {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="AddUserModal">
+      <DialogContent 
+        className="AddUserModal"
+        hideCloseButton>
         <DialogHeader className="AddUserModal-header">
           <DialogTitle className="title">
             User 등록하기
@@ -253,6 +278,7 @@ function AddUserModal() {
             <Button
               className="button cancel"
               variant="outline"
+              type="button"
               onClick={onClickClose}>
               Cancel
             </Button>

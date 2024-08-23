@@ -17,6 +17,15 @@ const authApiUrlFactory = (() => {
       return `${BASE_PATH}logout/`;
     },
 
+    randomPassword() {
+      return `${BASE_PATH}random-password/`;
+    },
+
+    // 회원가입
+    signup() {
+      return `${BASE_PATH}signup/`;
+    },
+
     // (GET) 현재 계정의 사용자 정보
     retrieveUserInfo() {
       return `${BASE_PATH}userinfo/`;
@@ -27,14 +36,14 @@ const authApiUrlFactory = (() => {
       return `${BASE_PATH}groups/`;
     },
 
-    // (GET) 사용자 목록
-    retrieveUsers() {
-      return `${BASE_PATH}users/`;
-    },
-
     // (GET) 사용자 수
     retrieveUsersCount() {
       return `${this.retrieveUsers()}count/`;
+    },
+
+    // (GET) 사용자 목록
+    retrieveUsers() {
+      return `${BASE_PATH}users/`;
     },
 
     // (PATCH) 사용자 수정

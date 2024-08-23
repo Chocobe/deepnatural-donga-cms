@@ -3,55 +3,78 @@ import {
   useState,
   useMemo,
   useCallback,
+  useEffect,
   FC,
   ChangeEvent,
+  FormEvent,
 } from 'react';
+// store
+import useAuthApiStore from '@/store/authApiStore/authApiStore';
+// api
+import ApiManager from '@/apis/ApiManager';
 // ui
 import ChangePasswordModal from '@/components/pages/setting/MyPage/ChangePasswordModal/ChangePasswordModal';
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
+import { 
+  Label,
+} from '@/components/shadcn-ui/ui/label';
+import { 
+  Input,
+} from '@/components/shadcn-ui/ui/input';
+// type
+import { 
+  BLANK_ROLE_GROUP,
+} from '@/components/pages/setting/SuperAdminPage/UserRoleSelect/UserRoleSelect.type';
+import { 
+  TPatchUserApiRequestParams,
+} from '@/apis/auth/authApi.type';
 // style
 import './MyPage.css';
-import { Label } from '@/components/shadcn-ui/ui/label';
-import { Input } from '@/components/shadcn-ui/ui/input';
-
-// mock
-import useMockStore from '@/store/mockStore/mockStore';
 
 function MyPage() {
   //
-  // mockStore
+  // authApi store
   //
-  const isSuperAdmin = useMockStore(state => state.isSuperAdmin);
+  const userInfoState = useAuthApiStore(state => state.userInfo.state);
+  const userInfo = userInfoState.data;
+  const {
+    is_superuser,
+  } = userInfo ?? {};
 
-  // const [formState, setFormState] = useState<{
-  //   id: 'role' | 'id' | 'email' | 'password' | 'phone',
-  //   value: string;
-  // }[]>([
+  const setUserInfoState = useAuthApiStore(state => state.userInfo.action.setUserInfoState);
+
+  //
+  // state
+  //
   const [formState, setFormState] = useState<{
-    role: string;
-    id: string;
+    groups: string;
+    username: string;
     email: string;
     password: string;
     phone: string;
-  }>({
-    role: '편집자 (문항 관리, 수정 가능)',
-    id: 'michelle',
-    email: 'michelle@bookdonga.com',
-    password: 'hello',
-    phone: '010-1234-5678',
+  }>(() => {
+    const {
+      username,
+      email,
+      phone,
+      groups,
+    } = userInfo ?? {};
+
+    return {
+      groups: groups?.[0]?.name ?? BLANK_ROLE_GROUP.name,
+      username: username ?? '',
+      email: email ?? '',
+      password: '******',
+      phone: phone ?? '',
+    };
   });
 
   //
   // cache
   //
-  const description = useMemo(() => {
-    return '개인 정보를 수정하고, 권한 설정을 할 수 있습니다.';
-  }, []);
-
   const formItems = useMemo<{
-    // id: 'role' | 'id' | 'email' | 'password' | 'phone',
     id: keyof typeof formState;
     type: 'text' | 'email' | 'password' | 'tel';
     label: string;
@@ -61,20 +84,20 @@ function MyPage() {
     ActionButton?: FC
   }[]>(() => [
     {
-      id: 'role',
+      id: 'groups',
       type: 'text',
       label: '권한설정',
       placeholder: undefined,
       disabled: true,
-      isHide: isSuperAdmin,
+      isHide: is_superuser,
       ActionButton: undefined,
     },
     {
-      id: 'id',
+      id: 'username',
       type: 'text',
-      label: 'ID',
+      label: '아이디',
       placeholder: undefined,
-      disabled: !isSuperAdmin,
+      disabled: !is_superuser,
       ActionButton: undefined,
     },
     {
@@ -88,7 +111,7 @@ function MyPage() {
       id: 'password',
       type: 'password',
       label: '비밀번호',
-      isHide: isSuperAdmin,
+      isHide: is_superuser,
       disabled: true,
       placeholder: '비밀번호를 입력해 주세요.',
       ActionButton: () => (
@@ -102,7 +125,7 @@ function MyPage() {
       placeholder: '휴대전화 번호를 입력해 주세요.',
       ActionButton: undefined,
     },
-  ], [isSuperAdmin]);
+  ], [is_superuser]);
 
   //
   // callback
@@ -119,19 +142,90 @@ function MyPage() {
     }));
   }, []);
 
+  const onSubmit = useCallback(async (e: FormEvent) => {
+    e.preventDefault();
+
+    if (!userInfo) {
+      return;
+    }
+
+    const {
+      email,
+      phone,
+    } = formState;
+
+    // FIXME: 비밀번호 변경 API 적용 시, password 추가하기
+    const params: TPatchUserApiRequestParams = {
+      pathParams: {
+        userId: userInfo.id
+      },
+      payload: {
+        email,
+        phone,
+      },
+    };
+
+    const response = await ApiManager
+      .auth
+      .patchUserApi
+      .callWithNoticeMessageGroup(params);
+
+    setUserInfoState({
+      ...userInfoState,
+      data: {
+        ...userInfo,
+        email: response?.data.email ?? email,
+        phone: response?.data.phone ?? phone,
+      },
+    });
+  }, [
+    userInfoState, userInfo, formState,
+    setUserInfoState,
+  ]);
+
+  const initFormState = useCallback(() => {
+    if (!userInfo) {
+      return;
+    }
+
+    const {
+      username,
+      email,
+      phone,
+      groups,
+    } = userInfo;
+
+    setFormState({
+      groups: groups?.[0]?.name ?? BLANK_ROLE_GROUP.name,
+      username: username,
+      email: email,
+      password: '******',
+      phone: phone ?? '',
+    });
+  }, [userInfo]);
+
+  //
+  // effect
+  //
+  useEffect(function _initFormState() {
+    initFormState();
+  }, [initFormState]);
+
   return (
     <div className="MyPage">
       <div className="MyPage-header">
         <h2 className="MyPage-header-title">
-          My Page {isSuperAdmin && ('(Super Admin)')}
+          My Page {is_superuser && ('(Super Admin)')}
         </h2>
 
         <div className="MyPage-header-description">
-          {description}
+          개인 정보를 수정하고, 권한 설정을 할 수 있습니다.
         </div>
       </div>
 
-      <div className="MyPage-form">
+      <form 
+        className="MyPage-form"
+        onSubmit={onSubmit}>
         {formItems.map(item => {
           const {
             id,
@@ -170,25 +264,26 @@ function MyPage() {
             </div>
           );
         })}
-      </div>
 
-      <div className="MyPage-footer">
-        <Button
-          className=""
-          variant="outline"
-          size="sm"
-          onClick={() => console.log('취소')}>
-          취소
-        </Button>
+        <div className="footer">
+          <Button
+            className=""
+            variant="outline"
+            size="sm"
+            type="button"
+            onClick={initFormState}>
+            취소
+          </Button>
 
-        <Button
-          className=""
-          variant="default"
-          size="sm"
-          onClick={() => console.log('저장하기')}>
-          저장하기
-        </Button>
-      </div>
+          <Button
+            className=""
+            variant="default"
+            size="sm"
+            type="submit">
+            저장하기
+          </Button>
+        </div>
+      </form>
     </div>
   );
 }

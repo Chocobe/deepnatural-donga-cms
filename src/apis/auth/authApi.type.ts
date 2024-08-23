@@ -7,6 +7,7 @@ import {
   TLoginModel, 
   TUserModel,
   TGroupModel,
+  TSignupModel,
 } from '../models/authModel.type';
 
 //
@@ -20,6 +21,22 @@ export type TLoginApiRequestParams = TApiRequestBodyParams<void, void, {
 export type TLoginApiResponse = TLoginModel;
 
 //
+// 임시 비밀번호 생성
+//
+export type TRandomPasswordApiResponse = {
+  password: string;
+};
+
+//
+// 회원가입
+//
+export type TSignupApiRequestParams = TApiRequestBodyParams<void, void, TSignupModel>;
+
+export type TSignupApiResponse = {
+  message: string;
+};
+
+//
 // (GET) 현재 계정의 사용자 정보
 //
 export type TRetrieveUserInfoApiResponse = TUserModel;
@@ -28,6 +45,15 @@ export type TRetrieveUserInfoApiResponse = TUserModel;
 // (GET) 그룹 목록
 //
 export type TRetrieveGroupsApiResponse = TGroupModel[];
+
+//
+// (GET) 사용자 수
+//
+export type TRetrieveUsersCountApiResponse = {
+  user_count: number;
+  active_user_count: number;
+  inactive_user_count: number;
+};
 
 //
 // (GET) 사용자 목록
@@ -56,17 +82,9 @@ export type TRetrieveUsersApiResponse = {
 };
 
 //
-// (GET) 사용자 수
-//
-export type TRetrieveUsersCountApiResponse = {
-  user_count: number;
-  active_user_count: number;
-  inactive_user_count: number;
-};
-
-//
 // (PATCH) 사용자 수정
 //
+// FIXME: 비밀번호 변경 API 적용 시, password 추가하기
 export type TPatchUserApiRequestParams = TApiRequestBodyParams<{
   userId: number;
 }, void, {
