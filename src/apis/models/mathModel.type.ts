@@ -35,7 +35,7 @@ type TMathTextbookGenericModel<T extends TCMSCommonModelClassType> = {
   // 저자
   author: string;
   // 학교급
-  classType: T;
+  classtype: T;
   // 학년
   grade: number;
   // 학기
