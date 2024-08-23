@@ -7,7 +7,7 @@ import {
   useParams,
 } from 'react-router-dom';
 // store
-import useMathTextbookDetailStore from '@/store/mathTextbookDetailStore/mathTextbookDetailStore';
+import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
 // ui
 import MathTextbookDetailHeader from '@/components/pages/math/MathTextbookDetailPage/MathTextbookDetailHeader/MathTextbookDetailHeader';
 import MathTextbookDetailMain from '@/components/pages/math/MathTextbookDetailPage/MathTextbookDetailMain/MathTextbookDetailMain';
@@ -19,7 +19,7 @@ function MathTextbookDetailPage() {
   //
   // mathTextbook store
   //
-  const clearMathTextbookDetailStore = useMathTextbookDetailStore(state => state.clearMathTextbookDetailStore);
+  const clearMathTextbookPageStore = useMathTextbookPageStore(state => state.clearMathTextbookPageStore);
 
   //
   // hook
@@ -33,9 +33,9 @@ function MathTextbookDetailPage() {
   //
   useEffect(function cleanup() {
     return () => {
-      clearMathTextbookDetailStore();
+      clearMathTextbookPageStore();
     };
-  }, [clearMathTextbookDetailStore]);
+  }, [clearMathTextbookPageStore]);
 
   return (
     <div className="MathTextbookDetailPage">

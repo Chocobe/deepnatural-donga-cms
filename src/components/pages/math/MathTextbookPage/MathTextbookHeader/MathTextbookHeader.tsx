@@ -38,7 +38,6 @@ import {
 } from 'react-icons/lu';
 // types
 import { 
-  textbookClassificationFilterOptions,
   textbookClassTypeFilterOptions,
   textbookGradeFilterOptions,
   textbookTermFilterOptions,
@@ -59,7 +58,6 @@ function _MathTextbookHeader() {
     classType: string;
     grade: string;
     term: string;
-    classification: string;
   }>({
     // 학교급
     classType: textbookClassTypeFilterOptions[0].value,
@@ -69,8 +67,6 @@ function _MathTextbookHeader() {
     ][0].value,
     // 학기
     term: textbookTermFilterOptions[0].value,
-    // 분류
-    classification: textbookClassificationFilterOptions[0].value,
   });
 
   //
@@ -86,7 +82,6 @@ function _MathTextbookHeader() {
       classType,
       grade: textbookGradeFilterOptions[classType][0].value,
       term: textbookTermFilterOptions[0].value,
-      classification: textbookClassificationFilterOptions[0].value,
     });
   }, []);
 
@@ -101,13 +96,6 @@ function _MathTextbookHeader() {
     setFilterState(filterState => ({
       ...filterState,
       term,
-    }));
-  }, []);
-
-  const onChangeClassification = useCallback((classification: string) => {
-    setFilterState(filterState => ({
-      ...filterState,
-      classification,
     }));
   }, []);
 
@@ -143,17 +131,9 @@ function _MathTextbookHeader() {
       value: filterState.term,
       onChange: onChangeTerm,
     },
-    {
-      id: 'classification',
-      label: '분류',
-      options: textbookClassificationFilterOptions,
-      value: filterState.classification,
-      onChange: onChangeClassification,
-    },
   ], [
     filterState,
     onChangeClassType, onChangeGrade, onChangeTerm,
-    onChangeClassification,
   ]);
 
   return (

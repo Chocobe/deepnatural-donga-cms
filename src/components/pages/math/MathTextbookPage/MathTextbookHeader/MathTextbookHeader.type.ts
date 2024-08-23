@@ -118,11 +118,3 @@ export const textbookTermFilterOptions = [
     value: '2학기',
   },
 ] as const;
-
-// 분류
-export const textbookClassificationFilterOptions = [
-  {
-    text: 'All',
-    value: ' ',
-  },
-] as const;

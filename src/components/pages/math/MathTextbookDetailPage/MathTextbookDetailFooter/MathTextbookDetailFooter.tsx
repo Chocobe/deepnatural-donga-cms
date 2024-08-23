@@ -4,7 +4,7 @@ import {
   memo,
 } from 'react';
 // store
-import useMathTextbookDetailStore from '@/store/mathTextbookDetailStore/mathTextbookDetailStore';
+import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
 import useResultNoticeModalStore from '@/store/resultNoticeModalStore/resultNoticeModalStore';
 // hook
 import useDetailPageNextActionAfterSubmit from '@/components/pages/hooks/useDetailPageNextActionAfterSubmit';
@@ -29,9 +29,9 @@ function _MathTextbookDetailFooter(props: TMathTextbookDetailFooterProps) {
   } = props;
 
   //
-  // mathTextbookDetail store
+  // mathTextbookPage store
   //
-  const formState = useMathTextbookDetailStore(state => state.formState);
+  const formState = useMathTextbookPageStore(state => state.detailFormState);
 
   //
   // resultNoticeModal store
