@@ -43,7 +43,9 @@ export type TSuperAdminPageStoreAction = {
 
   clearSearchParamsForRetrieveUsersApi: () => void;
   updateSearchParamsForRetrieveUsersApi: (
-    callback: (oldSearchParamsForRetrieveUsersApi: TRetrieveUsersApiRequestParams['searchParams']) => TRetrieveUsersApiRequestParams['searchParams']
+    callback: (
+      searchParamsForRetrieveUsersApi: TSuperAdminPageStoreState['searchParamsForRetrieveUsersApi']
+    ) => TSuperAdminPageStoreState['searchParamsForRetrieveUsersApi']
   ) => void;
 
   clearUsersData: () => void;
