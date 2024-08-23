@@ -13,6 +13,17 @@ export type TLoginModel = {
 };
 
 //
+// 회원가입
+//
+export type TSignupModel = {
+  username: string;
+  password: string;
+  email: string;
+  phone: string;
+  groups: number[];
+};
+
+//
 // Group (사용자 권한)
 //
 export type TGroupModel = {

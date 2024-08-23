@@ -5,5 +5,5 @@ import {
 
 export const BLANK_ROLE_GROUP: Readonly<TGroupModel> = {
   id: -1,
-  name: '그룹 해제',
+  name: '권한 없음',
 };

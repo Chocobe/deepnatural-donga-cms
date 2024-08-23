@@ -15,13 +15,20 @@ import routePathFactory from '@/routes/routePathFactory';
 import useSuperAdminPageStore from '@/store/superAdminPageStore/superAdminPageStore';
 // api
 import ApiManager from '@/apis/ApiManager';
-// react-table
+// ui
 import { 
   addOriginItemIndexToTableData,
   TABLE_ROW_SELECTION_CHECKBOX_ID,
   TListItemWithOriginItemIndex,
 } from '@/lib/tanstack-reactTable-utils/tanstack-reactTable-utils';
-// ui
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/shadcn-ui/ui/table';
 import {
   flexRender,
   getCoreRowModel,
@@ -32,14 +39,6 @@ import {
   RowData,
   ColumnFiltersState,
 } from '@tanstack/react-table';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/shadcn-ui/ui/table';
 import UserRoleSelect from '../UserRoleSelect/UserRoleSelect';
 import UserStatusToggleButton from '../UserStatusToggleButton/UserStatusToggleButton';
 import TableRowSelectorHeader from '@/components/shadcn-ui-custom/TableRowSelectorHeader/TableRowSelectorHeader';
@@ -115,7 +114,7 @@ function _UsersTable() {
       }),
 
       columnHelper.accessor('username', {
-        header: '이름'
+        header: '아이디'
       }),
 
       columnHelper.accessor('email', {
