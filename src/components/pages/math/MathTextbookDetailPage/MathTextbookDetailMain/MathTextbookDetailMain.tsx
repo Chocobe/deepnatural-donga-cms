@@ -16,10 +16,12 @@ import {
 } from '@/components/shadcn-ui/ui/input';
 // type
 import { 
-  mathTextbookClassTypeOptions,
+  textbookClassTypeOptions,
+  textbookGradeOptions,
+  textbookTermOptions,
+} from '@/components/pages/cmsPages.type';
+import { 
   mathTextbookCurriculumOptions,
-  mathTextbookGradeOptions,
-  mathTextbookTermOptions,
 } from '../../mathPages.type';
 // style
 import './MathTextbookDetailMain.css';
@@ -77,12 +79,12 @@ function MathTextbookDetailMain() {
         <FormSelect
           id="classType"
           className="formItem"
-          options={mathTextbookClassTypeOptions}
+          options={textbookClassTypeOptions}
           value={formState.classType}
           onChange={(value, id) => {
             setFormState({
               [id as keyof typeof formState]: value,
-              grade: Number(mathTextbookGradeOptions[value][0].value) as typeof formState.grade,
+              grade: Number(textbookGradeOptions[value][0].value) as typeof formState.grade,
             });
           }} />
       ),
@@ -94,7 +96,7 @@ function MathTextbookDetailMain() {
         <FormSelect
           id="grade"
           className="formItem"
-          options={mathTextbookGradeOptions[formState.classType]}
+          options={textbookGradeOptions[formState.classType]}
           value={String(formState.grade)}
           onChange={(value, id) => {
             setFormState({
@@ -110,7 +112,7 @@ function MathTextbookDetailMain() {
         <FormSelect
           id="term"
           className="formItem"
-          options={mathTextbookTermOptions}
+          options={textbookTermOptions}
           value={String(formState.term)}
           onChange={(value, id) => {
             setFormState({
