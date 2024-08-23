@@ -57,3 +57,23 @@ export const cmsCommonModelTermMapper = {
   SECOND_TERM: 2,
 } as const;
 export type TCMSCommonModelTerm = typeof cmsCommonModelTermMapper[keyof typeof cmsCommonModelTermMapper];
+
+//
+// 페이지네이션
+//
+export type TPaginationModel<TListItemModel> = {
+  /** 현재 페이지 번호 */
+  current_page: number;
+  /** 마지막 페이지 번호 */
+  last_page: number;
+  /** 페이지당 데이터 개수 */
+  page_size: number;
+  /** (페이지네이션 미적용) 전체 데이터 개수 */
+  count: number;
+  /** 이전 페이지네이션 api path */
+  previous: string | null;
+  /** 다음 페이지네이션 api path */
+  next: string | null;
+  /** 데이터 목록 */
+  results: TListItemModel[];
+};
