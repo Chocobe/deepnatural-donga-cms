@@ -18,6 +18,7 @@ import {
   SelectContent,
   SelectItem,
 } from '@/components/shadcn-ui/ui/select';
+import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 import { 
   InputWithIcon,
 } from '@/components/shadcn-ui-custom/InputWithIcon/InputWithIcon';
@@ -122,30 +123,32 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
     <div className="MathTextbookTableActions">
       <div className="MathTextbookTableActions-leftSide">
         {/* FIXME: 제외 가능성 높은 기능 */}
-        <Select
-          value={''}
-          onValueChange={onChangeSearchType}>
-          <SelectTrigger className="searchTypeSelect">
-            <SelectValue placeholder="검색 항목 선택" />
-          </SelectTrigger>
+        <TBUTooltip>
+          <Select
+            value={''}
+            onValueChange={onChangeSearchType}>
+            <SelectTrigger className="searchTypeSelect">
+              <SelectValue placeholder="검색 항목 선택" />
+            </SelectTrigger>
 
-          <SelectContent>
-            {mathTextbookSearchTypeOptions.map(item => {
-              const {
-                text,
-                value,
-              } = item;
+            <SelectContent>
+              {mathTextbookSearchTypeOptions.map(item => {
+                const {
+                  text,
+                  value,
+                } = item;
 
-              return (
-                <SelectItem
-                  key={value}
-                  value={value}>
-                  {text}
-                </SelectItem>
-              );
-            })}
-          </SelectContent>
-        </Select>
+                return (
+                  <SelectItem
+                    key={value}
+                    value={value}>
+                    {text}
+                  </SelectItem>
+                );
+              })}
+            </SelectContent>
+          </Select>
+        </TBUTooltip>
 
         <InputWithIcon
           ref={$searchInputRef}
