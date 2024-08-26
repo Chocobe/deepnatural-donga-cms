@@ -46,7 +46,7 @@ export const initialMathTextbookPageStoreState: TMathTextbookPageStoreState = {
     title: '',
     author: '',
     classtype: cmsCommonModelClassTypeMapper.ELEMENTARY,
-    grade: cmsCommonModelElementaryGradeMapper[1],
+    grade: cmsCommonModelElementaryGradeMapper.COMMON,
     term: cmsCommonModelTermMapper.COMMON,
   },
 
@@ -68,6 +68,9 @@ export type TMathTextbookPageStoreAction = {
 
   clearDetailTargetMathTextbook: () => void;
   setDetailTargetMathTextbook: (mathTextbook: TMathTextbookModel) => void;
+  updateDetailTargetMathTextbook: (
+    callback: (detailTargetMathTextbook?: TMathTextbookModel) => TMathTextbookModel
+  ) => void;
 
   clearDetailFormState: () => void;
   setDetailFormState: (

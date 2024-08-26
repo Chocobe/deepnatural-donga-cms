@@ -1,5 +1,6 @@
 // react
 import {
+  useCallback,
   useEffect,
 } from 'react';
 // route
@@ -8,10 +9,16 @@ import {
 } from 'react-router-dom';
 // store
 import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
+// api
+import ApiManager from '@/apis/ApiManager';
 // ui
 import MathTextbookDetailHeader from '@/components/pages/math/MathTextbookDetailPage/MathTextbookDetailHeader/MathTextbookDetailHeader';
 import MathTextbookDetailMain from '@/components/pages/math/MathTextbookDetailPage/MathTextbookDetailMain/MathTextbookDetailMain';
 import MathTextbookDetailFooter from '@/components/pages/math/MathTextbookDetailPage/MathTextbookDetailFooter/MathTextbookDetailFooter';
+// type
+import { 
+  TRetrieveMathTextbookApiRequestParams,
+} from '@/apis/math/mathApi.type';
 // style
 import './MathTextbookDetailPage.css';
 
@@ -19,7 +26,9 @@ function MathTextbookDetailPage() {
   //
   // mathTextbook store
   //
-  const clearMathTextbookPageStore = useMathTextbookPageStore(state => state.clearMathTextbookPageStore);
+  const setDetailTargetMathTextbook = useMathTextbookPageStore(state => state.setDetailTargetMathTextbook);
+  const clearDetailTargetMathTextbook = useMathTextbookPageStore(state => state.clearDetailTargetMathTextbook);
+  const clearDetailFormState = useMathTextbookPageStore(state => state.clearDetailFormState);
 
   //
   // hook
@@ -29,13 +38,45 @@ function MathTextbookDetailPage() {
   const isDetailMode = !!textbookId;
 
   //
+  // callback
+  //
+  const retrieveMathTextbook = useCallback(async () => {
+    if (!textbookId) {
+      return;
+    }
+
+    const params: TRetrieveMathTextbookApiRequestParams = {
+      pathParams: {
+        textbookId,
+      },
+    };
+
+    const response = await ApiManager
+      .math
+      .retrieveMathTextbookApi
+      .callWithNoticeMessageGroup(params);
+
+    if (response?.data) {
+      setDetailTargetMathTextbook(response.data);
+    }
+  }, [
+    textbookId,
+    setDetailTargetMathTextbook,
+  ]);
+
+  //
   // effect
   //
+  useEffect(function _retrieveMathTextbook() {
+    retrieveMathTextbook();
+  }, [retrieveMathTextbook]);
+
   useEffect(function cleanup() {
     return () => {
-      clearMathTextbookPageStore();
+      clearDetailTargetMathTextbook();
+      clearDetailFormState();
     };
-  }, [clearMathTextbookPageStore]);
+  }, [clearDetailTargetMathTextbook, clearDetailFormState]);
 
   return (
     <div className="MathTextbookDetailPage">

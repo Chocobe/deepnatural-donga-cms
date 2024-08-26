@@ -1,13 +1,16 @@
 // type
 import { 
   cmsCommonModelClassTypeMapper,
-  cmsCommonModelElementaryGradeMapper,
-  cmsCommonModelMiddleHighGradeMapper,
-  cmsCommonModelTermMapper,
 } from '@/apis/models/cmsCommonModel.type';
 import { 
-  TFormSelectOptionItem,
-} from '@/components/shadcn-ui-custom/FormSelect/FormSelect.type';
+  textbookGradeOptions, 
+  textbookTermOptions,
+} from '@/components/pages/cmsPages.type';
+
+const ALL_OPTION_ITEM = {
+  text: 'All',
+  value: ' ',
+} as const;
 
 // 교과서
 export const textbookClassTypeTemplateMapper = {
@@ -18,8 +21,7 @@ export const textbookClassTypeTemplateMapper = {
 
 export const textbookClassTypeFilterOptions = [
   {
-    text: 'All',
-    value: ' ',
+    ...ALL_OPTION_ITEM,
   },
   {
     text: textbookClassTypeTemplateMapper[cmsCommonModelClassTypeMapper.ELEMENTARY],
@@ -39,69 +41,36 @@ export const textbookClassTypeFilterOptions = [
 export const textbookGradeFilterOptions = {
   [' ']: [
     {
-      text: 'All',
-      value: ' ',
+      ...ALL_OPTION_ITEM,
     },
   ],
 
-  [cmsCommonModelClassTypeMapper.ELEMENTARY]: Object
-    .values(cmsCommonModelElementaryGradeMapper)
-    .sort((a, b) => a - b > 0 ? 1 : -1)
-    .reduce((options, grade) => {
-      return [
-        ...options,
-        {
-          text: grade === 0 ? '공통' : `${grade}학년`,
-          value: String(grade),
-        },
-      ];
-    }, [{
-      text: 'All',
-      value: ' ',
-    }] as TFormSelectOptionItem[]),
+  [cmsCommonModelClassTypeMapper.ELEMENTARY]: [
+    {
+      ...ALL_OPTION_ITEM,
+    },
+    ...textbookGradeOptions[cmsCommonModelClassTypeMapper.ELEMENTARY],
+  ],
 
-  [cmsCommonModelClassTypeMapper.MIDDLE]: Object
-    .values(cmsCommonModelMiddleHighGradeMapper)
-    .sort((a, b) => a - b > 0 ? 1 : -1)
-    .reduce((options, grade) => {
-      return [
-        ...options,
-        {
-          text: grade === 0 ? '공통' : `${grade}학년`,
-          value: String(grade),
-        },
-      ];
-    }, [{
-      text: 'All',
-      value: ' ',
-    }] as TFormSelectOptionItem[]),
+  [cmsCommonModelClassTypeMapper.MIDDLE]: [
+    {
+      ...ALL_OPTION_ITEM,
+    },
+    ...textbookGradeOptions[cmsCommonModelClassTypeMapper.MIDDLE],
+  ],
 
-  [cmsCommonModelClassTypeMapper.HIGH]: Object
-    .values(cmsCommonModelMiddleHighGradeMapper)
-    .sort((a, b) => a - b > 0 ? 1 : -1)
-    .reduce((options, grade) => [
-      ...options,
-      {
-        text: grade === 0 ? '공통' : `${grade}학년`,
-        value: String(grade),
-      },
-    ], [{
-      text: 'All',
-      value: ' ',
-    }] as TFormSelectOptionItem[]),
+  [cmsCommonModelClassTypeMapper.HIGH]: [
+    {
+      ...ALL_OPTION_ITEM,
+    },
+    ...textbookGradeOptions[cmsCommonModelClassTypeMapper.HIGH],
+  ],
 } as const;
 
 // 학기
-export const textbookTermFilterOptions = Object
-  .values(cmsCommonModelTermMapper)
-  .sort((a, b) => a - b > 0 ? 1 : -1)
-  .reduce((options, term) => [
-    ...options,
-    {
-      text: term === 0 ? '공통' : `${term}학기`,
-      value: String(term),
-    },
-  ], [{
-    text: 'All',
-    value: ' ',
-  }] as TFormSelectOptionItem[]);
+export const textbookTermFilterOptions = [
+  {
+    ...ALL_OPTION_ITEM,
+  },
+  ...textbookTermOptions,
+] as const;
