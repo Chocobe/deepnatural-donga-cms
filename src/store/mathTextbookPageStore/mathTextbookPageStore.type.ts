@@ -4,7 +4,7 @@ import {
   TRetrieveMathTextbooksApiResponse,
 } from '@/apis/math/mathApi.type';
 import { 
-  cmsCommonModelSubjectMapper,
+  // cmsCommonModelSubjectMapper,
   cmsCommonModelClassTypeMapper,
   cmsCommonModelElementaryGradeMapper,
   cmsCommonModelTermMapper,
@@ -41,7 +41,8 @@ export const initialMathTextbookPageStoreState: TMathTextbookPageStoreState = {
   detailTargetMathTextbook: undefined,
   detailFormState: {
     id: undefined,
-    subject: cmsCommonModelSubjectMapper.MATH,
+    // TODO: 아직 API 미지원 속성
+    // subject: cmsCommonModelSubjectMapper.MATH,
     curriculum: mathTextbookModelCurriculumMapper[2015],
     title: '',
     author: '',
