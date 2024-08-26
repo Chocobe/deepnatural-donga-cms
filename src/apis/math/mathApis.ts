@@ -4,6 +4,7 @@ import mathApiUrlFactory from './mathApiUrlFactory';
 // util
 import createApiWithNoticeMessageGroup from '../../utils/createApiWithNoticeMessageGroup';
 import noticeMessageGroupFactory from '@/utils/noticeMessageGroupFactory';
+import excludeNullOrUndefinedProperties from '@/utils/excludeNullOrUndefinedProperties/excludeNullOrUndefinedProperties';
 // type
 import { 
   TRetrieveMathTextbooksApiRequestParams, 
@@ -11,6 +12,9 @@ import {
 
   TRetrieveMathTextbookApiRequestParams,
   TRetrieveMathTextbookApiResponse,
+
+  TPatchMathTextbookApiRequestParams,
+  TPatchMathTextbookApiResponse,
 } from './mathApi.type';
 
 // FIXME: mockup
@@ -18,7 +22,6 @@ import {
   mockHistoryModalData, 
   THistoryModalData,
 } from '@/components/shadcn-ui-custom/modals/HistoryModal/HistoryModal.type';
-import excludeNullOrUndefinedProperties from '@/utils/excludeNullOrUndefinedProperties/excludeNullOrUndefinedProperties';
 
 //
 // (GET) 수학 교과서 목록
@@ -57,6 +60,24 @@ export const retrieveMathTextbookApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .retrieveMathTextbook,
+});
+
+//
+// (PATCH) 수학 교과서
+//
+export const patchMathTextbookApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TPatchMathTextbookApiRequestParams) => {
+    const _params = excludeNullOrUndefinedProperties(params);
+
+    return api.patch<TPatchMathTextbookApiResponse>(
+      mathApiUrlFactory.patchMathTextbook(_params),
+      _params.payload
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .patchMathTextbook,
 });
 
 //

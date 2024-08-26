@@ -1,5 +1,6 @@
 // type
 import { 
+  TPatchMathTextbookApiRequestParams,
   TRetrieveMathTextbookApiRequestParams,
 } from './mathApi.type';
 
@@ -21,6 +22,11 @@ const mathApiUrlFactory = (() => {
       } = params;
 
       return `${this.retrieveMathTextbooks()}${textbookId}/`;
+    },
+
+    // (PATCH) 수학 교과서
+    patchMathTextbook(params: TPatchMathTextbookApiRequestParams) {
+      return this.retrieveMathTextbook(params);
     },
   };
 })();

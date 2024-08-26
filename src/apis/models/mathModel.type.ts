@@ -7,7 +7,7 @@
 // type
 import { 
   cmsCommonModelClassTypeMapper,
-  cmsCommonModelSubjectMapper,
+  // cmsCommonModelSubjectMapper,
   TCMSCommonModelClassType,
   TCMSCommonModelElementaryGrade,
   TCMSCommonModelMiddleHighGrade,
@@ -26,8 +26,10 @@ export type TMathTextbookModelCurriculum = typeof mathTextbookModelCurriculumMap
 
 type TMathTextbookGenericModel<T extends TCMSCommonModelClassType> = {
   id: string;
+  // TODO: 아직 API 미지원 속성
   // 과목
-  subject: typeof cmsCommonModelSubjectMapper.MATH;
+  // subject: typeof cmsCommonModelSubjectMapper.MATH;
+
   // 교육과정
   curriculum: TMathTextbookModelCurriculum;
   // 교과서명

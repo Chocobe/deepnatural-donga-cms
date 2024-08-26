@@ -5,9 +5,10 @@ import {
 } from 'react';
 // store
 import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
-import useResultNoticeModalStore from '@/store/resultNoticeModalStore/resultNoticeModalStore';
 // hook
 import useDetailPageNextActionAfterSubmit from '@/components/pages/hooks/useDetailPageNextActionAfterSubmit';
+// api
+import ApiManager from '@/apis/ApiManager';
 // ui
 import { 
   Button,
@@ -16,6 +17,10 @@ import {
 import { 
   LuSave,
 } from 'react-icons/lu';
+// type
+import { 
+  TPatchMathTextbookApiRequestParams,
+} from '@/apis/math/mathApi.type';
 // style
 import './MathTextbookDetailFooter.css';
 
@@ -31,13 +36,7 @@ function _MathTextbookDetailFooter(props: TMathTextbookDetailFooterProps) {
   //
   // mathTextbookPage store
   //
-  const formState = useMathTextbookPageStore(state => state.detailFormState);
-
-  //
-  // resultNoticeModal store
-  //
-  const openSuccessNoticeModal = useResultNoticeModalStore(state => state.openSuccessNoticeModal);
-  const openErrorNoticeModal = useResultNoticeModalStore(state => state.openErrorNoticeModal);
+  const detailFormState = useMathTextbookPageStore(state => state.detailFormState);
 
   //
   // hook
@@ -52,93 +51,68 @@ function _MathTextbookDetailFooter(props: TMathTextbookDetailFooterProps) {
   //
   // callback
   //
-  const _openSuccessNoticeModal = useCallback(() => {
-    openSuccessNoticeModal({
-      title: isDetailMode
-        ? '저장하기 완료'
-        : '추가하기 완료',
-      message: isDetailMode
-        ? '입력하신 내용이 성공적으로 저장되었습니다.'
-        : '입력하신 내용이 성공적으로 추가되었습니다.',
-      firstButton: {
-        text: '취소',
-        variant: 'outline',
-        onClick: () => console.log('SuccessNoticeModal - 취소'),
-      },
-      secondButton: {
-        text: '확인',
-        variant: 'default',
-        onClick: () => console.log('SuccessNoticeModal - 확인'),
-      },
-    });
-  }, [isDetailMode, openSuccessNoticeModal]);
+  const patchMathTextbook = useCallback(async () => {
+    const {
+      id,
+      ...payload
+    } = detailFormState;
 
-  const _openErrorNoticeModal = useCallback(() => {
-    openErrorNoticeModal({
-      title: isDetailMode
-        ? '저장하기 오류'
-        : '추가하기 오류',
-      message: isDetailMode
-        ? '오류가 발생하여 저장되지 않았습니다. 다시 시도해주세요.'
-        : '오류가 발생하여 추가되지 않았습니다. 다시 시도해주세요.',
-      firstButton: {
-        text: '취소',
-        variant: 'outline',
-        onClick: () => console.log('ErrorNoticeModal - 취소'),
-      },
-      secondButton: {
-        text: '다시 입력하기',
-        variant: 'default',
-        onClick: () => console.log('ErrorNoticeModal - 다시 입력하기'),
-      },
-    });
-  }, [isDetailMode, openErrorNoticeModal]);
+    if (!id) {
+      return;
+    }
 
-  const submit = useCallback(() => {
-    console.group('submit()');
-    console.log(isDetailMode ? '저장 API 호출하기' : '추가 API 호출하기');
-    console.groupEnd();
+    const params: TPatchMathTextbookApiRequestParams = {
+      pathParams: {
+        textbookId: id,
+      },
+      payload,
+    };
 
-    Math.random() > 0.5
-      ? _openSuccessNoticeModal()
-      : _openErrorNoticeModal();
-  }, [isDetailMode, _openSuccessNoticeModal, _openErrorNoticeModal]);
+    const response = await ApiManager
+      .math
+      .patchMathTextbookApi(params);
+
+    console.log('response.data: ', response.data);
+  }, [detailFormState]);
 
   const onClickSaveAndAdd = useCallback(() => {
     console.group('저장후 추가하기');
-    console.log('formState: ', formState);
+    console.log('formState: ', detailFormState);
     console.groupEnd();
 
     addAfterSubmit();
-    submit();
-  }, [formState, addAfterSubmit, submit]);
+    patchMathTextbook();
+  }, [detailFormState, addAfterSubmit, patchMathTextbook]);
 
   const onClickSaveAndRemain = useCallback(() => {
     console.group('저장후 계속해서 수정하기');
-    console.log('formState: ', formState);
+    console.log('formState: ', detailFormState);
     console.groupEnd();
 
     remainAfterSubmit();
-    submit();
-  }, [formState, remainAfterSubmit, submit]);
+    patchMathTextbook();
+  }, [detailFormState, remainAfterSubmit, patchMathTextbook]);
 
   const onClickSave = useCallback(() => {
     console.group('저장하기');
-    console.log('formState: ', formState);
+    console.log('formState: ', detailFormState);
     console.groupEnd();
 
     defaultAfterSubmit();
-    submit();
-  }, [formState, defaultAfterSubmit, submit]);
+    patchMathTextbook();
+  }, [detailFormState, defaultAfterSubmit, patchMathTextbook]);
 
   const onClickAdd = useCallback(() => {
     console.group('추가하기');
-    console.log('formState: ', formState);
+    console.log('formState: ', detailFormState);
     console.groupEnd();
 
     defaultAfterSubmit();
-    submit();
-  }, [formState, defaultAfterSubmit, submit]);
+    // submit();
+  }, [
+    detailFormState, defaultAfterSubmit, 
+    // submit
+  ]);
 
   return (<>
     <div className="MathTextbookDetailFooter">

@@ -33,6 +33,7 @@ const noticeMessageGroupFactory: {
     math: {
       retrieveMathTextbooks: TNoticeMessageGroup;
       retrieveMathTextbook: TNoticeMessageGroup;
+      patchMathTextbook: TNoticeMessageGroup;
       retrieveMathTextbookHistories: TNoticeMessageGroup;
     };
   };
@@ -201,6 +202,21 @@ const noticeMessageGroupFactory: {
         successMessage: undefined,
       },
 
+      // (GET) 수학 교과서
+      patchMathTextbook: {
+        loadingMessage: () => ({
+          title: '',
+          message: '교과서 정보를 수정 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('교과서 정보 수정 중'),
+        }),
+        successMessage: () => ({
+          title: '',
+          message: '입력하신 교과서 정보를 성공적으로 수정 완료하였습니다.',
+        }),
+      },
+
       // (GET) 수학 교과서 히스토리 목록
       retrieveMathTextbookHistories: {
         loadingMessage: () => ({
@@ -210,6 +226,7 @@ const noticeMessageGroupFactory: {
         errorMessage: () => ({
           ...createNetworkErrorMessage('수학 교과서 히스토리를 불러오는 중'),
         }),
+        successMessage: undefined,
       },
     },
   },

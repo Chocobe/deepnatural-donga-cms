@@ -1,5 +1,6 @@
 // type
 import { 
+  TApiRequestBodyParams,
   TApiRequestNonBodyParams,
 } from '../api.type';
 import { 
@@ -33,3 +34,12 @@ export type TRetrieveMathTextbookApiRequestParams = TApiRequestNonBodyParams<{
 }, void>;
 
 export type TRetrieveMathTextbookApiResponse = TMathTextbookModel;
+
+//
+// (PATCH) 수학 교과서
+//
+export type TPatchMathTextbookApiRequestParams = TApiRequestBodyParams<{
+  textbookId: string;
+}, void, Omit<TMathTextbookModel, 'id'>>;
+
+export type TPatchMathTextbookApiResponse = TMathTextbookModel;
