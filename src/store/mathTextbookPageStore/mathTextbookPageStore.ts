@@ -44,6 +44,14 @@ const useMathTextbookPageStore = create(devtools<TMathTextbookPageStore>((set, _
     }), false, 'setMathTextbooksData');
   },
 
+  clearDetailTargetMathTextbook: () => {
+    set({
+      detailTargetMathTextbook: undefined,
+      detailFormState: {
+        ...initialMathTextbookPageStoreState.detailFormState,
+      },
+    }, false, 'clearSelectedMathTextbook');
+  },
   setDetailTargetMathTextbook: mathTextbook => {
     set({
       detailTargetMathTextbook: mathTextbook,
@@ -52,13 +60,11 @@ const useMathTextbookPageStore = create(devtools<TMathTextbookPageStore>((set, _
       },
     }, false, 'setSelectedMathTextbook');
   },
-  clearDetailTargetMathTextbook: () => {
-    set({
-      detailTargetMathTextbook: undefined,
-      detailFormState: {
-        ...initialMathTextbookPageStoreState.detailFormState,
-      },
-    }, false, 'clearSelectedMathTextbook');
+  updateDetailTargetMathTextbook: callback => {
+    set(old => ({
+      ...old,
+      detailTargetMathTextbook: callback(old.detailTargetMathTextbook),
+    }), false, 'updateDetailTargetMathTextbook');
   },
 
   clearDetailFormState: () => {

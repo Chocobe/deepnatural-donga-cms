@@ -1,8 +1,8 @@
 // react
 import {
-  ChangeEvent,
-  useCallback,
   useMemo,
+  useCallback,
+  ChangeEvent,
 } from 'react';
 // store
 import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
@@ -23,6 +23,16 @@ import {
 import { 
   mathTextbookCurriculumOptions,
 } from '../../mathPages.type';
+import { 
+  TMathTextbookModel, 
+  TMathTextbookModelCurriculum,
+} from '@/apis/models/mathModel.type';
+import { 
+  cmsCommonModelElementaryGradeMapper,
+  TCMSCommonModelClassType,
+  TCMSCommonModelMiddleHighGrade,
+  TCMSCommonModelTerm,
+} from '@/apis/models/cmsCommonModel.type';
 // style
 import './MathTextbookDetailMain.css';
 
@@ -30,21 +40,19 @@ function MathTextbookDetailMain() {
   //
   // mathTextbookPage store
   //
-  const formState = useMathTextbookPageStore(state => state.detailFormState);
-  // FIXME: updateDetailFormState() 로 바꾸기
-  const setDetailFormState = useMathTextbookPageStore(state => state.setDetailFormState);
+  const detailFormState = useMathTextbookPageStore(state => state.detailFormState);
+  
+  const updateDetailFormState = useMathTextbookPageStore(state => state.updateDetailFormState);
 
   //
   // callback
   //
-  const onChangeSelect = useCallback((
-    value: string, 
-    id?: string
-  ) => {
-    setDetailFormState({
-      [id as keyof typeof formState]: value,
-    });
-  }, [setDetailFormState]);
+  const onChangeSelect = useCallback((params: Partial<typeof detailFormState>) => {
+    updateDetailFormState(old => ({
+      ...old,
+      ...params,
+    }));
+  }, [updateDetailFormState]);
 
   const onChangeInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -52,10 +60,11 @@ function MathTextbookDetailMain() {
       value,
     } = e.target;
 
-    setDetailFormState({
-      [id]: value,
-    });
-  }, [setDetailFormState]);
+    updateDetailFormState(old => ({
+      ...old,
+      [id as keyof TMathTextbookModel]: value,
+    } as TMathTextbookModel));
+  }, [updateDetailFormState]);
 
   //
   // cache
@@ -69,25 +78,25 @@ function MathTextbookDetailMain() {
           id="curriculum"
           className="formItem"
           options={mathTextbookCurriculumOptions}
-          value={formState.curriculum}
-          onChange={onChangeSelect} />
+          value={detailFormState.curriculum}
+          onChange={curriculum => onChangeSelect({
+            curriculum: curriculum as TMathTextbookModelCurriculum,
+          })} />
       ),
     },
     {
-      id: 'classType',
+      id: 'classtype',
       label: '학교급',
       $element: (
         <FormSelect
-          id="classType"
+          id="classtype"
           className="formItem"
           options={textbookClassTypeOptions}
-          value={formState.classtype}
-          onChange={(value, id) => {
-            setDetailFormState({
-              [id as keyof typeof formState]: value,
-              grade: Number(textbookGradeOptions[value][0].value) as typeof formState.grade,
-            });
-          }} />
+          value={detailFormState.classtype}
+          onChange={classtype => onChangeSelect({
+            classtype: classtype as TCMSCommonModelClassType,
+            grade: cmsCommonModelElementaryGradeMapper.COMMON,
+          })} />
       ),
     },
     {
@@ -97,13 +106,11 @@ function MathTextbookDetailMain() {
         <FormSelect
           id="grade"
           className="formItem"
-          options={textbookGradeOptions[formState.classtype]}
-          value={String(formState.grade)}
-          onChange={(value, id) => {
-            setDetailFormState({
-              [id as keyof typeof formState]: Number(value),
-            });
-          }} />
+          options={textbookGradeOptions[detailFormState.classtype]}
+          value={String(detailFormState.grade)}
+          onChange={grade => onChangeSelect({
+            grade: Number(grade) as TCMSCommonModelMiddleHighGrade,
+          })} />
       ),
     },
     {
@@ -114,12 +121,10 @@ function MathTextbookDetailMain() {
           id="term"
           className="formItem"
           options={textbookTermOptions}
-          value={String(formState.term)}
-          onChange={(value, id) => {
-            setDetailFormState({
-              [id as keyof typeof formState]: Number(value),
-            });
-          }} />
+          value={String(detailFormState.term)}
+          onChange={term => onChangeSelect({
+            term: Number(term) as TCMSCommonModelTerm,
+          })} />
       ),
     },
     {
@@ -129,7 +134,7 @@ function MathTextbookDetailMain() {
         <Input
           id="title"
           className="formItem"
-          value={formState.title}
+          value={detailFormState.title}
           onChange={onChangeInput} />
       ),
     },
@@ -140,22 +145,24 @@ function MathTextbookDetailMain() {
         <Input
           id="author"
           className="formItem"
-          value={formState.author}
+          value={detailFormState.author}
           onChange={onChangeInput} />
       ),
     },
   ], [
-    formState, 
-    setDetailFormState, onChangeSelect, onChangeInput,
+    detailFormState, 
+    onChangeSelect, onChangeInput,
   ]);
 
   return (
     <div className="MathTextbookDetailMain">
       <div className="MathTextbookDetailMain-textbookName">
-        {formState.title || <>&nbsp;</>}
+        {detailFormState.title || <>&nbsp;</>}
       </div>
 
-      <form className="MathTextbookDetailMain-form">
+      <form 
+        className="MathTextbookDetailMain-form"
+        onSubmit={e => e.preventDefault()}>
         {formItemTemplates.map(item => {
           const {
             id,

@@ -49,7 +49,6 @@ function MathTextbookTable() {
   const mathTextbooksData = useMathTextbookPageStore(state => state.mathTextbooksData);
   const tableData = mathTextbooksData?.results ?? [];
 
-  const setDetailTargetMathTextbook = useMathTextbookPageStore(state => state.setDetailTargetMathTextbook);
   const setSelectedMathTextbooks = useMathTextbookPageStore(state => state.setSelectedMathTextbooks);
 
   //
@@ -115,13 +114,11 @@ function MathTextbookTable() {
   const goToDetailPage = useCallback((mathTextbook: TMathTextbookModel) => {
     const textbookId = mathTextbook.id;
 
-    setDetailTargetMathTextbook(mathTextbook);
-
     navigate(routePathFactory
       .math
       .getTextbookDetailPath(textbookId)
     );
-  }, [setDetailTargetMathTextbook, navigate]);
+  }, [navigate]);
 
   return (
     <Table className="MathTextbookTable">

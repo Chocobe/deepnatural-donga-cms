@@ -24,3 +24,12 @@ export type TRetrieveMathTextbooksApiRequestParams = TApiRequestNonBodyParams<vo
 }>;
 
 export type TRetrieveMathTextbooksApiResponse = TPaginationModel<TMathTextbookModel>;
+
+//
+// (GET) 수학 교과서
+//
+export type TRetrieveMathTextbookApiRequestParams = TApiRequestNonBodyParams<{
+  textbookId: string;
+}, void>;
+
+export type TRetrieveMathTextbookApiResponse = TMathTextbookModel;

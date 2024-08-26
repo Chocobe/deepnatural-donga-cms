@@ -8,6 +8,9 @@ import noticeMessageGroupFactory from '@/utils/noticeMessageGroupFactory';
 import { 
   TRetrieveMathTextbooksApiRequestParams, 
   TRetrieveMathTextbooksApiResponse,
+
+  TRetrieveMathTextbookApiRequestParams,
+  TRetrieveMathTextbookApiResponse,
 } from './mathApi.type';
 
 // FIXME: mockup
@@ -37,6 +40,23 @@ export const retrieveMathTextbooksApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .retrieveMathTextbooks,
+});
+
+//
+// (GET) 수학 교과서
+//
+export const retrieveMathTextbookApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathTextbookApiRequestParams) => {
+    const _params = excludeNullOrUndefinedProperties(params);
+
+    return api.get<TRetrieveMathTextbookApiResponse>(
+      mathApiUrlFactory.retrieveMathTextbook(_params)
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .retrieveMathTextbook,
 });
 
 //

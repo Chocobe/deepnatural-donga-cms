@@ -37,41 +37,42 @@ export const textbookGradeOptions: {
 } = {
   [cmsCommonModelClassTypeMapper.ELEMENTARY]: Object
     .values(cmsCommonModelElementaryGradeMapper)
-    .filter(value => value !== cmsCommonModelElementaryGradeMapper.COMMON)
-    .map(value => ({
-      text: `${value}학년`,
-      value: String(value),
+    .sort((a, b) => a - b > 0 ? 1 : -1)
+    .map(grade => ({
+      text: grade === cmsCommonModelElementaryGradeMapper.COMMON
+        ? '공통'
+        : `${grade}학년`,
+      value: String(grade),
     })),
   [cmsCommonModelClassTypeMapper.MIDDLE]: Object
     .values(cmsCommonModelMiddleHighGradeMapper)
-    .filter(value => value !== cmsCommonModelMiddleHighGradeMapper.COMMON)
-    .map(value => ({
-      text: `${value}학년`,
-      value: String(value),
+    .sort((a, b) => a - b > 0 ? 1 : -1)
+    .map(grade => ({
+      text: grade === cmsCommonModelMiddleHighGradeMapper.COMMON
+        ? '공통'
+        : `${grade}학년`,
+      value: String(grade),
     })),
   [cmsCommonModelClassTypeMapper.HIGH]: Object
     .values(cmsCommonModelMiddleHighGradeMapper)
-    .filter(value => value !== cmsCommonModelMiddleHighGradeMapper.COMMON)
-    .map(value => ({
-      text: `${value}학년`,
-      value: String(value),
+    .sort((a, b) => a - b > 0 ? 1 : -1)
+    .map(grade => ({
+      text: grade === cmsCommonModelMiddleHighGradeMapper.COMMON
+        ? '공통'
+        : `${grade}학년`,
+      value: String(grade),
     })),
 } as const;
 
 //
 // 학기 선택지
 //
-export const textbookTermOptions: TFormSelectOptionItem[] = [
-  {
-    text: '공통',
-    value: String(cmsCommonModelTermMapper.COMMON),
-  },
-  {
-    text: '1학기',
-    value: String(cmsCommonModelTermMapper.FIRST_TERM),
-  },
-  {
-    text: '2학기',
-    value: String(cmsCommonModelTermMapper.SECOND_TERM),
-  },
-] as const;
+export const textbookTermOptions: TFormSelectOptionItem[] = Object
+  .values(cmsCommonModelTermMapper)
+  .sort((a, b) => a - b > 0 ? 1 : -1)
+  .map(term => ({
+    text: term === cmsCommonModelTermMapper.COMMON
+      ? '공통'
+      : `${term}학기`,
+    value: String(term),
+  }));
