@@ -15,6 +15,8 @@ import {
 
   TPatchMathTextbookApiRequestParams,
   TPatchMathTextbookApiResponse,
+  TProduceMathTextbookApiRequestParams,
+  TProduceMathTextbookApiResponse,
 } from './mathApi.type';
 
 // FIXME: mockup
@@ -46,7 +48,7 @@ export const retrieveMathTextbooksApi = createApiWithNoticeMessageGroup({
 });
 
 //
-// (GET) 수학 교과서
+// (GET) 수학 교과서 조회
 //
 export const retrieveMathTextbookApi = createApiWithNoticeMessageGroup({
   apiFunction: (params: TRetrieveMathTextbookApiRequestParams) => {
@@ -63,7 +65,7 @@ export const retrieveMathTextbookApi = createApiWithNoticeMessageGroup({
 });
 
 //
-// (PATCH) 수학 교과서
+// (PATCH) 수학 교과서 수정
 //
 export const patchMathTextbookApi = createApiWithNoticeMessageGroup({
   apiFunction: (params: TPatchMathTextbookApiRequestParams) => {
@@ -78,6 +80,26 @@ export const patchMathTextbookApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .patchMathTextbook,
+});
+
+//
+// (POST) 수학 교과서 생성
+//
+export const produceMathTextbook = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathTextbookApiRequestParams) => {
+    const {
+      payload,
+    } = excludeNullOrUndefinedProperties(params);
+
+    return api.post<TProduceMathTextbookApiResponse>(
+      mathApiUrlFactory.produceMathTextbook(),
+      payload
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathTextbook,
 });
 
 //

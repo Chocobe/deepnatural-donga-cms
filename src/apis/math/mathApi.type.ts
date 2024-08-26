@@ -27,7 +27,7 @@ export type TRetrieveMathTextbooksApiRequestParams = TApiRequestNonBodyParams<vo
 export type TRetrieveMathTextbooksApiResponse = TPaginationModel<TMathTextbookModel>;
 
 //
-// (GET) 수학 교과서
+// (GET) 수학 교과서 조회
 //
 export type TRetrieveMathTextbookApiRequestParams = TApiRequestNonBodyParams<{
   textbookId: string;
@@ -36,10 +36,17 @@ export type TRetrieveMathTextbookApiRequestParams = TApiRequestNonBodyParams<{
 export type TRetrieveMathTextbookApiResponse = TMathTextbookModel;
 
 //
-// (PATCH) 수학 교과서
+// (PATCH) 수학 교과서 수정
 //
 export type TPatchMathTextbookApiRequestParams = TApiRequestBodyParams<{
   textbookId: string;
 }, void, Omit<TMathTextbookModel, 'id'>>;
 
 export type TPatchMathTextbookApiResponse = TMathTextbookModel;
+
+//
+// (POST) 수학 교과서 생성
+//
+export type TProduceMathTextbookApiRequestParams = TApiRequestBodyParams<void, void, Omit<TMathTextbookModel, 'id'>>;
+
+export type TProduceMathTextbookApiResponse = TMathTextbookModel;

@@ -13,7 +13,7 @@ const mathApiUrlFactory = (() => {
       return `${BASE_PATH}textbooks/`;
     },
 
-    // (GET) 수학 교과서
+    // (GET) 수학 교과서 조회
     retrieveMathTextbook(params: TRetrieveMathTextbookApiRequestParams) {
       const {
         pathParams: {
@@ -24,9 +24,14 @@ const mathApiUrlFactory = (() => {
       return `${this.retrieveMathTextbooks()}${textbookId}/`;
     },
 
-    // (PATCH) 수학 교과서
+    // (PATCH) 수학 교과서 수정
     patchMathTextbook(params: TPatchMathTextbookApiRequestParams) {
       return this.retrieveMathTextbook(params);
+    },
+
+    // (POST) 수학 교과서 생성
+    produceMathTextbook() {
+      return this.retrieveMathTextbooks();
     },
   };
 })();
