@@ -1,9 +1,10 @@
 // react
 import {
-  useState,
-  useEffect,
   useCallback,
+  useEffect,
 } from 'react';
+// store
+import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
 // api
 import ApiManager from '@/apis/ApiManager';
 // ui
@@ -13,55 +14,64 @@ import MathTextbookTable from '@/components/pages/math/MathTextbookPage/MathText
 import MathTextbookFooter from '@/components/pages/math/MathTextbookPage/MathTextbookFooter/MathTextbookFooter';
 // type
 import { 
-  TMathTextbookModel,
-} from '@/apis/models/mathModel.type';
+  TRetrieveMathTextbooksApiRequestParams,
+} from '@/apis/math/mathApi.type';
 // style
 import './MathTextbookPage.css';
 
 function MathTextbookPage() {
   //
-  // state
+  // mathTextbooksPage store
   //
-  const [mathTextbooks, setMathTextbooks] = useState<TMathTextbookModel[]>([]);
+  const searchParamsForRetrieveMathTextbooksApi = useMathTextbookPageStore(state => state.searchParamsForRetrieveMathTextbooksApi);
+
+  const setMathTextbooksData = useMathTextbookPageStore(state => state.setMathTextbooksData);
 
   //
   // callback
   //
-  const retrieveMathTextbooks = useCallback(async () => {
-    const mathTextbooks = await ApiManager
+  const retrieveMathTextbooks = useCallback(async (
+    params: TRetrieveMathTextbooksApiRequestParams
+  ) => {
+    const response = await ApiManager
       .math
       .retrieveMathTextbooksApi
-      .callWithNoticeMessageGroup();
+      .callWithNoticeMessageGroup(params);
 
-    if (mathTextbooks) {
-      setMathTextbooks(mathTextbooks);
+    if (response?.data) {
+      setMathTextbooksData(response.data);
     }
-  }, []);
+  }, [
+    setMathTextbooksData,
+  ]);
 
   //
   // effect
   //
   useEffect(function init() {
-    retrieveMathTextbooks();
+    retrieveMathTextbooks({
+      searchParams: searchParamsForRetrieveMathTextbooksApi,
+    });
+
+    // eslint-disable-next-line
   }, [retrieveMathTextbooks]);
 
   return (
     <div className="MathTextbookPage">
       <div className="MathTextbookPage-header">
-        <MathTextbookHeader />
+        <MathTextbookHeader retrieveMathTextbooks={retrieveMathTextbooks} />
       </div>
 
       <div className="MathTextbookPage-actions">
-        <MathTextbookTableActions />
+        <MathTextbookTableActions retrieveMathTextbooks={retrieveMathTextbooks} />
       </div>
 
       <div className="MathTextbookPage-table">
-        <MathTextbookTable
-          data={mathTextbooks} />
+        <MathTextbookTable />
       </div>
 
       <div className="MathTextbookPage-footer">
-        <MathTextbookFooter />
+        <MathTextbookFooter retrieveMathTextbooks={retrieveMathTextbooks} />
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import {
   useMemo,
 } from 'react';
 // store
-import useMathTextbookDetailStore from '@/store/mathTextbookDetailStore/mathTextbookDetailStore';
+import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
 // ui
 import FormSelect from '@/components/shadcn-ui-custom/FormSelect/FormSelect';
 import { 
@@ -16,20 +16,23 @@ import {
 } from '@/components/shadcn-ui/ui/input';
 // type
 import { 
-  mathTextbookClassTypeOptions,
+  textbookClassTypeOptions,
+  textbookGradeOptions,
+  textbookTermOptions,
+} from '@/components/pages/cmsPages.type';
+import { 
   mathTextbookCurriculumOptions,
-  mathTextbookGradeOptions,
-  mathTextbookTermOptions,
 } from '../../mathPages.type';
 // style
 import './MathTextbookDetailMain.css';
 
 function MathTextbookDetailMain() {
   //
-  // mathTextbookDetail store
+  // mathTextbookPage store
   //
-  const formState = useMathTextbookDetailStore(state => state.formState);
-  const setFormState = useMathTextbookDetailStore(state => state.setFormState);
+  const formState = useMathTextbookPageStore(state => state.detailFormState);
+  // FIXME: updateDetailFormState() 로 바꾸기
+  const setDetailFormState = useMathTextbookPageStore(state => state.setDetailFormState);
 
   //
   // callback
@@ -38,10 +41,10 @@ function MathTextbookDetailMain() {
     value: string, 
     id?: string
   ) => {
-    setFormState({
+    setDetailFormState({
       [id as keyof typeof formState]: value,
     });
-  }, [setFormState]);
+  }, [setDetailFormState]);
 
   const onChangeInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -49,10 +52,10 @@ function MathTextbookDetailMain() {
       value,
     } = e.target;
 
-    setFormState({
+    setDetailFormState({
       [id]: value,
     });
-  }, [setFormState]);
+  }, [setDetailFormState]);
 
   //
   // cache
@@ -77,12 +80,12 @@ function MathTextbookDetailMain() {
         <FormSelect
           id="classType"
           className="formItem"
-          options={mathTextbookClassTypeOptions}
-          value={formState.classType}
+          options={textbookClassTypeOptions}
+          value={formState.classtype}
           onChange={(value, id) => {
-            setFormState({
+            setDetailFormState({
               [id as keyof typeof formState]: value,
-              grade: Number(mathTextbookGradeOptions[value][0].value) as typeof formState.grade,
+              grade: Number(textbookGradeOptions[value][0].value) as typeof formState.grade,
             });
           }} />
       ),
@@ -94,10 +97,10 @@ function MathTextbookDetailMain() {
         <FormSelect
           id="grade"
           className="formItem"
-          options={mathTextbookGradeOptions[formState.classType]}
+          options={textbookGradeOptions[formState.classtype]}
           value={String(formState.grade)}
           onChange={(value, id) => {
-            setFormState({
+            setDetailFormState({
               [id as keyof typeof formState]: Number(value),
             });
           }} />
@@ -110,10 +113,10 @@ function MathTextbookDetailMain() {
         <FormSelect
           id="term"
           className="formItem"
-          options={mathTextbookTermOptions}
+          options={textbookTermOptions}
           value={String(formState.term)}
           onChange={(value, id) => {
-            setFormState({
+            setDetailFormState({
               [id as keyof typeof formState]: Number(value),
             });
           }} />
@@ -143,7 +146,7 @@ function MathTextbookDetailMain() {
     },
   ], [
     formState, 
-    setFormState, onChangeSelect, onChangeInput,
+    setDetailFormState, onChangeSelect, onChangeInput,
   ]);
 
   return (

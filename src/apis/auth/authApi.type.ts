@@ -4,6 +4,9 @@ import {
   TApiRequestBodyParams,
 } from '../api.type';
 import { 
+  TPaginationModel,
+} from '../models/cmsCommonModel.type';
+import { 
   TLoginModel, 
   TUserModel,
   TGroupModel,
@@ -67,19 +70,7 @@ export type TRetrieveUsersApiRequestParams = TApiRequestNonBodyParams<
   }
 >;
 
-export type TRetrieveUsersApiResponse = {
-  current_page: number,
-  last_page: number,
-  /** 페이지당 row 개수 */
-  page_size: number,
-  /** (페이지네이션 미적용) 전체 row 개수 */
-  count: number,
-  /** 이전 페이지네이션 api path */
-  previous: string | null,
-  /** 이전 페이지네이션 api path */
-  next: string | null,
-  results: TUserModel[];
-};
+export type TRetrieveUsersApiResponse = TPaginationModel<TUserModel>;
 
 //
 // (PATCH) 사용자 수정

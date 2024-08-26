@@ -12,13 +12,14 @@
     /*  */
   }
 
-  &-emptyData {
-    height: 100%;
-  }
-
   &-tableWrapper {
-    height: 100%;
-    overflow: auto;
+    overflow: hidden;
+
+    border: 1px solid hsl(var(--border));
+
+    & > * {
+      height: 100%;
+    }
   }
 
   &-tableFooterWrapper {

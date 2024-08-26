@@ -1,8 +1,12 @@
 .UsersTable {
-  @apply border;
+  /*  */
 
   .headerRow {
-    /*  */
+    position: sticky;
+    top: 0;
+
+    background-color: #fff;
+    box-shadow: -1px 1px 1px hsl(var(--border));
 
     & > * {
       border-right: 1px solid hsl(var(--border));

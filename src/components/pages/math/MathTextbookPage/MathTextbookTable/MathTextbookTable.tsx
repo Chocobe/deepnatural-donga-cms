@@ -10,7 +10,7 @@ import {
 } from 'react-router-dom';
 import routePathFactory from '@/routes/routePathFactory';
 // store
-import useMathTextbookDetailStore from '@/store/mathTextbookDetailStore/mathTextbookDetailStore';
+import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
 // ui
 import {
   flexRender,
@@ -42,25 +42,20 @@ import './MathTextbookTable.css';
 
 const columnHelper = createColumnHelper<TMathTextbookModel>();
 
-type TMathTextbookTableProps = {
-  data: TMathTextbookModel[];
-};
-
-function MathTextbookTable(props: TMathTextbookTableProps) {
-  const {
-    data,
-  } = props;
-
+function MathTextbookTable() {
   //
-  // mathTextbookDetail store
+  // mathTextbookPage store
   //
-  const setSelectedMathTextbook = useMathTextbookDetailStore(state => state.setSelectedMathTextbook);
+  const mathTextbooksData = useMathTextbookPageStore(state => state.mathTextbooksData);
+  const tableData = mathTextbooksData?.results ?? [];
+
+  const setDetailTargetMathTextbook = useMathTextbookPageStore(state => state.setDetailTargetMathTextbook);
+  const setSelectedMathTextbooks = useMathTextbookPageStore(state => state.setSelectedMathTextbooks);
 
   //
   // state
   //
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-  const [_selectedRows, setSelectedRows] = useState<TMathTextbookModel[]>([]);
 
   //
   // cache
@@ -71,9 +66,6 @@ function MathTextbookTable(props: TMathTextbookTableProps) {
       header: TableRowSelectorHeader,
       cell: TableRowSelectorCell,
     }),
-    columnHelper.accessor('subject', {
-      header: '과목',
-    }),
     columnHelper.accessor('curriculum', {
       header: '교육과정',
     }),
@@ -83,7 +75,7 @@ function MathTextbookTable(props: TMathTextbookTableProps) {
     columnHelper.accessor('author', {
       header: '저자',
     }),
-    columnHelper.accessor('classType', {
+    columnHelper.accessor('classtype', {
       header: '학교급',
     }),
     columnHelper.accessor('grade', {
@@ -99,7 +91,7 @@ function MathTextbookTable(props: TMathTextbookTableProps) {
   //
   const table = useReactTable({
     columns,
-    data,
+    data: tableData,
     getCoreRowModel: getCoreRowModel(),
     enableRowSelection: true,
     state: {
@@ -109,8 +101,8 @@ function MathTextbookTable(props: TMathTextbookTableProps) {
       setRowSelection(e);
 
       setTimeout(() => {
-        const selectedRows = table.getSelectedRowModel().rows.map(row => row.original);
-        setSelectedRows(selectedRows);
+        const selectedMathTextbooks = table.getSelectedRowModel().rows.map(row => row.original);
+        setSelectedMathTextbooks(selectedMathTextbooks);
       });
     },
   });
@@ -123,13 +115,13 @@ function MathTextbookTable(props: TMathTextbookTableProps) {
   const goToDetailPage = useCallback((mathTextbook: TMathTextbookModel) => {
     const textbookId = mathTextbook.id;
 
-    setSelectedMathTextbook(mathTextbook);
+    setDetailTargetMathTextbook(mathTextbook);
 
     navigate(routePathFactory
       .math
       .getTextbookDetailPath(textbookId)
     );
-  }, [setSelectedMathTextbook, navigate]);
+  }, [setDetailTargetMathTextbook, navigate]);
 
   return (
     <Table className="MathTextbookTable">

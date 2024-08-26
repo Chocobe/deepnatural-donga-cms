@@ -1,10 +1,15 @@
 // react
 import {
-  useState,
+  useRef,
   useCallback,
+  useEffect,
   memo,
   ChangeEvent,
 } from 'react';
+// store
+import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
+// hook
+import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
 // ui
 import { 
   Select, 
@@ -13,6 +18,7 @@ import {
   SelectContent,
   SelectItem,
 } from '@/components/shadcn-ui/ui/select';
+import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 import { 
   InputWithIcon,
 } from '@/components/shadcn-ui-custom/InputWithIcon/InputWithIcon';
@@ -28,81 +34,141 @@ import {
 import { 
   mathTextbookSearchTypeOptions,
 } from './MathTextbookTableActions.type';
+import { 
+  TRetrieveMathTextbooksApiRequestParams,
+} from '@/apis/math/mathApi.type';
 // style
 import './MathTextbookTableActions.css';
 
-function _MathTextbookTableActions() {
+type TMathTextbookTableActionsProps = {
+  retrieveMathTextbooks: (params: TRetrieveMathTextbooksApiRequestParams) => Promise<void>;
+};
+
+function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
+  const {
+    retrieveMathTextbooks,
+  } = props;
+
   //
-  // state
+  // mathTextbookPage store
   //
-  const [searchState, setSearchState] = useState({
-    searchType: ' ',
-    searchValue: '',
-  });
+  const mathTextbooksData = useMathTextbookPageStore(state => state.mathTextbooksData);
+
+  const searchParamsForRetrieveMathTextbooksApi = useMathTextbookPageStore(state => state.searchParamsForRetrieveMathTextbooksApi);
+  const {
+    search = '',
+  } = searchParamsForRetrieveMathTextbooksApi;
+
+  const updateSearchParamsForRetrieveMathTextbooksApi = useMathTextbookPageStore(state => state.updateSearchParamsForRetrieveMathTextbooksApi);
+
+  //
+  // ref
+  //
+  const $searchInputRef = useRef<HTMLInputElement | null>(null);
 
   //
   // callback
   //
   const onChangeSearchType = useCallback((searchType: string) => {
-    setSearchState(searchState => ({
-      ...searchState,
-      searchType,
-    }));
+    console.log('onChangeSearchType() - searchType: ', searchType);
   }, []);
 
-  const onChangeSearchValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const searchValue = e.target.value;
+  const onChangeSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const search = e.target.value;
 
-    setSearchState(searchState => ({
-      ...searchState,
-      searchValue,
+    updateSearchParamsForRetrieveMathTextbooksApi(searchParamsForRetrieveMathTextbooksApi => ({
+      ...searchParamsForRetrieveMathTextbooksApi,
+      search,
     }));
-  }, []);
+  }, [updateSearchParamsForRetrieveMathTextbooksApi]);
+
+  const onEnter = useCallback(() => {
+    $searchInputRef.current?.blur();
+
+    const params: TRetrieveMathTextbooksApiRequestParams = {
+      searchParams: {
+        ...searchParamsForRetrieveMathTextbooksApi,
+      },
+    };
+
+    retrieveMathTextbooks(params);
+  }, [
+    searchParamsForRetrieveMathTextbooksApi,
+    retrieveMathTextbooks,
+  ]);
+
+  const onESC = useCallback(() => {
+    updateSearchParamsForRetrieveMathTextbooksApi(searchParamsForRetrieveMathTextbooksApi => ({
+      ...searchParamsForRetrieveMathTextbooksApi,
+      search: undefined,
+    }));
+  }, [updateSearchParamsForRetrieveMathTextbooksApi]);
+
+  //
+  // hook
+  //
+  const {
+    onKeyDown,
+  } = useOnKeyDownEnterOrESC(onEnter, onESC);
+
+  //
+  // effect
+  //
+  useEffect(function focusSearchInput() {
+    $searchInputRef.current?.focus();
+  }, [mathTextbooksData]);
 
   return (
     <div className="MathTextbookTableActions">
       <div className="MathTextbookTableActions-leftSide">
-        <Select
-          value={searchState.searchType}
-          onValueChange={onChangeSearchType}>
-          <SelectTrigger className="searchTypeSelect">
-            <SelectValue placeholder="검색 항목 선택" />
-          </SelectTrigger>
+        <TBUTooltip>
+          <Select
+            value={''}
+            onValueChange={onChangeSearchType}>
+            <SelectTrigger className="searchTypeSelect">
+              <SelectValue placeholder="검색 항목 선택" />
+            </SelectTrigger>
 
-          <SelectContent>
-            {mathTextbookSearchTypeOptions.map(item => {
-              const {
-                text,
-                value,
-              } = item;
+            <SelectContent>
+              {mathTextbookSearchTypeOptions.map(item => {
+                const {
+                  text,
+                  value,
+                } = item;
 
-              return (
-                <SelectItem
-                  key={value}
-                  value={value}>
-                  {text}
-                </SelectItem>
-              );
-            })}
-          </SelectContent>
-        </Select>
+                return (
+                  <SelectItem
+                    key={value}
+                    value={value}>
+                    {text}
+                  </SelectItem>
+                );
+              })}
+            </SelectContent>
+          </Select>
+        </TBUTooltip>
 
         <InputWithIcon
+          ref={$searchInputRef}
           containerClassName="searchValue"
           placeholder="검색어를 입력해주세요"
-          value={searchState.searchValue}
-          onChange={onChangeSearchValue}
+          autoFocus
+          value={search}
+          onChange={onChangeSearch}
+          onKeyDown={onKeyDown}
           EndIcon={LuSearch} />
       </div>
 
       <div className="MathTextbookTableActions-rightSide">
         <Button
-          className="actionButton">
+          className="actionButton"
+          disabled>
           삭제
         </Button>
 
         <Button
-          className="actionButton">
+          className="actionButton"
+          disabled>
           <LuFileInput className="icon" />
           Export
         </Button>

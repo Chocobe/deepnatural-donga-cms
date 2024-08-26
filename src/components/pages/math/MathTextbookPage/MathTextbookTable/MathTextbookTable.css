@@ -30,11 +30,6 @@
       min-width: 66px !important;
     }
 
-    .subject {
-      width: 200px !important;
-      min-width: 200px !important;
-    }
-
     .curriculum {
       width: 200px !important;
       min-width: 200px !important;
@@ -49,7 +44,7 @@
       min-width: 200px !important;
     }
 
-    .classType {
+    .classtype {
       width: 170px !important;
       min-width: 170px !important;
     }
@@ -87,10 +82,6 @@
       /*  */
     }
 
-    .subject {
-      /*  */
-    }
-
     .curriculum {
       /*  */
     }
@@ -103,7 +94,7 @@
       /*  */
     }
 
-    .classType {
+    .classtype {
       /*  */
     }
 

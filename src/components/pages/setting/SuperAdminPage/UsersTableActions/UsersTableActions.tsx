@@ -6,7 +6,6 @@ import {
   useEffect,
   memo,
   ChangeEvent,
-  KeyboardEvent,
 } from 'react';
 // ui
 import AddUserModal from '../AddUserModal/AddUserModal';
@@ -18,6 +17,8 @@ import {
 } from '@/components/shadcn-ui-custom/InputWithIcon/InputWithIcon';
 // store
 import useSuperAdminPageStore from '@/store/superAdminPageStore/superAdminPageStore';
+// hook
+import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
 // icon
 import { 
   LuSearch,
@@ -61,42 +62,24 @@ function _UsersTableActions(props: TUsersTableActionsProps) {
     console.log('onClickRemove()');
   }, []);
 
-  const onKeyDown = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
-    const {
-      key,
-    } = e;
+  const onEnter = useCallback(() => {
+    $searchInputRef.current?.blur();
 
-    switch (key.toLowerCase()) {
-      case 'escape': {
-        e.preventDefault();
+    const params: TRetrieveUsersApiRequestParams = {
+      searchParams: {
+        ...searchParamsForRetrieveUsersApi,
+      },
+    };
 
-        updateSearchParamsForRetrieveUsersApi(searchParamsForRetrieveUsersApi => ({
-          ...searchParamsForRetrieveUsersApi,
-          search: '',
-        }));
+    retrieveUsers(params);
+  }, [searchParamsForRetrieveUsersApi, retrieveUsers]);
 
-        return;
-      }
-
-      case 'enter': {
-        e.preventDefault();
-        $searchInputRef.current?.blur();
-
-        const params: TRetrieveUsersApiRequestParams = {
-          searchParams: {
-            ...searchParamsForRetrieveUsersApi,
-          },
-        };
-
-        retrieveUsers(params);
-
-        return;
-      }
-    }
-  }, [
-    searchParamsForRetrieveUsersApi,
-    updateSearchParamsForRetrieveUsersApi, retrieveUsers,
-  ]);
+  const onESC = useCallback(() => {
+    updateSearchParamsForRetrieveUsersApi(searchParamsForRetrieveUsersApi => ({
+      ...searchParamsForRetrieveUsersApi,
+      search: undefined,
+    }));
+  }, [updateSearchParamsForRetrieveUsersApi]);
 
   const onChangeSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -106,6 +89,13 @@ function _UsersTableActions(props: TUsersTableActionsProps) {
       search: value,
     }));
   }, [updateSearchParamsForRetrieveUsersApi]);
+
+  //
+  // hook
+  //
+  const {
+    onKeyDown,
+  } = useOnKeyDownEnterOrESC(onEnter, onESC);
 
   //
   // cache

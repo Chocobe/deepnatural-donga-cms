@@ -11,6 +11,9 @@ import useAuthApiStore from './store/authApiStore/authApiStore';
 // dayjs
 import initDayjs from './lib/dayjs/initDayjs';
 // ui
+import { 
+  TooltipProvider,
+} from './components/shadcn-ui/ui/tooltip';
 import HistoryModal from './components/shadcn-ui-custom/modals/HistoryModal/HistoryModal';
 import ResultNoticeModal from './components/shadcn-ui-custom/modals/ResultNoticeModal/ResultNoticeModal';
 import LoadingModal from './components/shadcn-ui-custom/modals/LoadingModal/LoadingModal';
@@ -46,7 +49,9 @@ function App() {
 
   return (
     <div className="App">
-      <RootRouter />
+      <TooltipProvider>
+        <RootRouter />
+      </TooltipProvider>
 
       {/* Global modals */}
       <HistoryModal />
