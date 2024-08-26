@@ -59,7 +59,7 @@ function MathTextbookPage() {
   return (
     <div className="MathTextbookPage">
       <div className="MathTextbookPage-header">
-        <MathTextbookHeader />
+        <MathTextbookHeader retrieveMathTextbooks={retrieveMathTextbooks} />
       </div>
 
       <div className="MathTextbookPage-actions">

@@ -10,6 +10,8 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import routePathFactory from '@/routes/routePathFactory';
+// store
+import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
 // ui
 import {
   Accordion,
@@ -42,32 +44,40 @@ import {
   textbookGradeFilterOptions,
   textbookTermFilterOptions,
 } from './MathTextbookHeader.type';
+import { 
+  TCMSCommonModelClassType,
+  TCMSCommonModelElementaryGrade,
+  TCMSCommonModelTerm,
+} from '@/apis/models/cmsCommonModel.type';
+import { 
+  TRetrieveMathTextbooksApiRequestParams,
+} from '@/apis/math/mathApi.type';
 // style
 import { 
   cn,
 } from '@/lib/shadcn-ui-utils';
 import './MathTextbookHeader.css';
 
-function _MathTextbookHeader() {
+type TMathTextbookHeaderProps = {
+  retrieveMathTextbooks: (params: TRetrieveMathTextbooksApiRequestParams) => Promise<void>;
+};
+
+function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
+  const {
+    retrieveMathTextbooks,
+  } = props;
+
+  //
+  // mathTextbookPage store
+  //
+  const searchParamsForRetrieveMathTextbooksApi = useMathTextbookPageStore(state => state.searchParamsForRetrieveMathTextbooksApi);
+
+  const updateSearchParamsForRetrieveMathTextbooksApi = useMathTextbookPageStore(state => state.updateSearchParamsForRetrieveMathTextbooksApi);
+
   //
   // state
   //
   const [accordionValue, setAccordionValue] = useState('filters');
-
-  const [filterState, setFilterState] = useState<{
-    classType: string;
-    grade: string;
-    term: string;
-  }>({
-    // 학교급
-    classType: textbookClassTypeFilterOptions[0].value,
-    // 학년
-    grade: textbookGradeFilterOptions[
-      textbookClassTypeFilterOptions[0].value
-    ][0].value,
-    // 학기
-    term: textbookTermFilterOptions[0].value,
-  });
 
   //
   // hook
@@ -78,26 +88,75 @@ function _MathTextbookHeader() {
   // callback
   //
   const onChangeClassType = useCallback((classType: string) => {
-    setFilterState({
-      classType,
-      grade: textbookGradeFilterOptions[classType][0].value,
-      term: textbookTermFilterOptions[0].value,
-    });
-  }, []);
+    const classtype = classType.trim().length
+      ? classType as TCMSCommonModelClassType
+      : undefined;
+
+    const params: TRetrieveMathTextbooksApiRequestParams = {
+      searchParams: {
+        ...searchParamsForRetrieveMathTextbooksApi,
+        classtype,
+        grade: undefined,
+      },
+    };
+
+    retrieveMathTextbooks(params);
+    updateSearchParamsForRetrieveMathTextbooksApi(old => ({
+      ...old,
+      classtype,
+      grade: undefined,
+    }));
+  }, [
+    searchParamsForRetrieveMathTextbooksApi,
+    updateSearchParamsForRetrieveMathTextbooksApi,
+    retrieveMathTextbooks,
+  ]);
 
   const onChangeGrade = useCallback((grade: string) => {
-    setFilterState(filterState => ({
-      ...filterState,
-      grade,
+    const _grade = grade.trim().length
+      ? Number(grade) as TCMSCommonModelElementaryGrade
+      : undefined;
+
+    const params: TRetrieveMathTextbooksApiRequestParams = {
+      searchParams: {
+        ...searchParamsForRetrieveMathTextbooksApi,
+        grade: _grade,
+      },
+    };
+
+    retrieveMathTextbooks(params);
+    updateSearchParamsForRetrieveMathTextbooksApi(old => ({
+      ...old,
+      grade: _grade,
     }));
-  }, []);
+  }, [
+    searchParamsForRetrieveMathTextbooksApi,
+    retrieveMathTextbooks,
+    updateSearchParamsForRetrieveMathTextbooksApi,
+  ]);
 
   const onChangeTerm = useCallback((term: string) => {
-    setFilterState(filterState => ({
-      ...filterState,
-      term,
+    const _term = term.trim().length
+      ? Number(term) as TCMSCommonModelTerm
+      : undefined;
+
+    const params: TRetrieveMathTextbooksApiRequestParams = {
+      searchParams: {
+        ...searchParamsForRetrieveMathTextbooksApi,
+        term: _term,
+      },
+    };
+
+    retrieveMathTextbooks(params);
+    updateSearchParamsForRetrieveMathTextbooksApi(old => ({
+      ...old,
+      term: _term,
     }));
-  }, []);
+  }, [
+    searchParamsForRetrieveMathTextbooksApi,
+    retrieveMathTextbooks,
+    updateSearchParamsForRetrieveMathTextbooksApi,
+  ]);
 
   const addMathTextbook = useCallback(() => {
     navigate(routePathFactory
@@ -114,25 +173,27 @@ function _MathTextbookHeader() {
       id: 'classType',
       label: '학교급',
       options: textbookClassTypeFilterOptions,
-      value: filterState.classType,
+      value: searchParamsForRetrieveMathTextbooksApi.classtype ?? textbookClassTypeFilterOptions[0].value,
       onChange: onChangeClassType,
     },
     {
       id: 'grade',
       label: '학년',
-      options: textbookGradeFilterOptions[filterState.classType],
-      value: filterState.grade,
+      options: searchParamsForRetrieveMathTextbooksApi.classtype
+        ? textbookGradeFilterOptions[searchParamsForRetrieveMathTextbooksApi.classtype]
+        : textbookGradeFilterOptions[' '],
+      value: searchParamsForRetrieveMathTextbooksApi.grade ?? textbookGradeFilterOptions[' '][0].value,
       onChange: onChangeGrade,
     },
     {
-      iid: 'term',
+      id: 'term',
       label: '학기',
       options: textbookTermFilterOptions,
-      value: filterState.term,
+      value: searchParamsForRetrieveMathTextbooksApi.term ?? textbookTermFilterOptions[0].value,
       onChange: onChangeTerm,
     },
   ], [
-    filterState,
+    searchParamsForRetrieveMathTextbooksApi,
     onChangeClassType, onChangeGrade, onChangeTerm,
   ]);
 
@@ -177,7 +238,10 @@ function _MathTextbookHeader() {
                   </Label>
 
                   <Select
-                    value={value}
+                    value={typeof value === 'undefined'
+                      ? value
+                      : String(value)
+                    }
                     onValueChange={onChange}>
                     <SelectTrigger
                       id={id}
@@ -186,7 +250,7 @@ function _MathTextbookHeader() {
                     </SelectTrigger>
 
                     <SelectContent>
-                      {options.map(option => {
+                      {options?.map(option => {
                         const {
                           text,
                           value,
@@ -194,7 +258,7 @@ function _MathTextbookHeader() {
 
                         return (
                           <SelectItem
-                            key={value}
+                            key={text}
                             value={value}>
                             {text}
                           </SelectItem>

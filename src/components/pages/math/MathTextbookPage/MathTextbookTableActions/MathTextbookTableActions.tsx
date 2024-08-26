@@ -69,7 +69,6 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
   //
   // callback
   //
-  // FIXME: 제외 가능성 높은 기능
   const onChangeSearchType = useCallback((searchType: string) => {
     console.log('onChangeSearchType() - searchType: ', searchType);
   }, []);
@@ -122,7 +121,6 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
   return (
     <div className="MathTextbookTableActions">
       <div className="MathTextbookTableActions-leftSide">
-        {/* FIXME: 제외 가능성 높은 기능 */}
         <TBUTooltip>
           <Select
             value={''}

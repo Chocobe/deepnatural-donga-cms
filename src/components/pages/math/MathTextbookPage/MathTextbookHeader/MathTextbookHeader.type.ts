@@ -1,8 +1,19 @@
+// type
+import { 
+  cmsCommonModelClassTypeMapper,
+  cmsCommonModelElementaryGradeMapper,
+  cmsCommonModelMiddleHighGradeMapper,
+  cmsCommonModelTermMapper,
+} from '@/apis/models/cmsCommonModel.type';
+import { 
+  TFormSelectOptionItem,
+} from '@/components/shadcn-ui-custom/FormSelect/FormSelect.type';
+
 // 교과서
 export const textbookClassTypeTemplateMapper = {
-  '초등학교': '초등학교',
-  '중학교': '중학교',
-  '고등학교': '고등학교',
+  [cmsCommonModelClassTypeMapper.ELEMENTARY]: '초등학교',
+  [cmsCommonModelClassTypeMapper.MIDDLE]: '중학교',
+  [cmsCommonModelClassTypeMapper.HIGH]: '고등학교',
 } as const;
 
 export const textbookClassTypeFilterOptions = [
@@ -11,16 +22,16 @@ export const textbookClassTypeFilterOptions = [
     value: ' ',
   },
   {
-    text: textbookClassTypeTemplateMapper['초등학교'],
-    value: textbookClassTypeTemplateMapper['초등학교'],
+    text: textbookClassTypeTemplateMapper[cmsCommonModelClassTypeMapper.ELEMENTARY],
+    value: cmsCommonModelClassTypeMapper.ELEMENTARY,
   },
   {
-    text: textbookClassTypeTemplateMapper['중학교'],
-    value: textbookClassTypeTemplateMapper['중학교'],
+    text: textbookClassTypeTemplateMapper[cmsCommonModelClassTypeMapper.MIDDLE],
+    value: cmsCommonModelClassTypeMapper.MIDDLE,
   },
   {
-    text: textbookClassTypeTemplateMapper['고등학교'],
-    value: textbookClassTypeTemplateMapper['고등학교'],
+    text: textbookClassTypeTemplateMapper[cmsCommonModelClassTypeMapper.HIGH],
+    value: cmsCommonModelClassTypeMapper.HIGH,
   },
 ] as const;
 
@@ -33,88 +44,64 @@ export const textbookGradeFilterOptions = {
     },
   ],
 
-  [textbookClassTypeTemplateMapper['초등학교']]: [
-    {
+  [cmsCommonModelClassTypeMapper.ELEMENTARY]: Object
+    .values(cmsCommonModelElementaryGradeMapper)
+    .sort((a, b) => a - b > 0 ? 1 : -1)
+    .reduce((options, grade) => {
+      return [
+        ...options,
+        {
+          text: grade === 0 ? '공통' : `${grade}학년`,
+          value: String(grade),
+        },
+      ];
+    }, [{
       text: 'All',
       value: ' ',
-    },
-    {
-      text: '1학년',
-      value: '1학년',
-    },
-    {
-      text: '2학년',
-      value: '2학년',
-    },
-    {
-      text: '3학년',
-      value: '3학년',
-    },
-    {
-      text: '4학년',
-      value: '4학년',
-    },
-    {
-      text: '5학년',
-      value: '5학년',
-    },
-    {
-      text: '6학년',
-      value: '6학년',
-    },
-  ],
+    }] as TFormSelectOptionItem[]),
 
-  [textbookClassTypeTemplateMapper['중학교']]: [
-    {
+  [cmsCommonModelClassTypeMapper.MIDDLE]: Object
+    .values(cmsCommonModelMiddleHighGradeMapper)
+    .sort((a, b) => a - b > 0 ? 1 : -1)
+    .reduce((options, grade) => {
+      return [
+        ...options,
+        {
+          text: grade === 0 ? '공통' : `${grade}학년`,
+          value: String(grade),
+        },
+      ];
+    }, [{
       text: 'All',
       value: ' ',
-    },
-    {
-      text: '1학년',
-      value: '1학년',
-    },
-    {
-      text: '2학년',
-      value: '2학년',
-    },
-    {
-      text: '3학년',
-      value: '3학년',
-    },
-  ],
+    }] as TFormSelectOptionItem[]),
 
-  [textbookClassTypeTemplateMapper['고등학교']]: [
-    {
+  [cmsCommonModelClassTypeMapper.HIGH]: Object
+    .values(cmsCommonModelMiddleHighGradeMapper)
+    .sort((a, b) => a - b > 0 ? 1 : -1)
+    .reduce((options, grade) => [
+      ...options,
+      {
+        text: grade === 0 ? '공통' : `${grade}학년`,
+        value: String(grade),
+      },
+    ], [{
       text: 'All',
       value: ' ',
-    },
-    {
-      text: '1학년',
-      value: '1학년',
-    },
-    {
-      text: '2학년',
-      value: '2학년',
-    },
-    {
-      text: '3학년',
-      value: '3학년',
-    },
-  ],
+    }] as TFormSelectOptionItem[]),
 } as const;
 
 // 학기
-export const textbookTermFilterOptions = [
-  {
+export const textbookTermFilterOptions = Object
+  .values(cmsCommonModelTermMapper)
+  .sort((a, b) => a - b > 0 ? 1 : -1)
+  .reduce((options, term) => [
+    ...options,
+    {
+      text: term === 0 ? '공통' : `${term}학기`,
+      value: String(term),
+    },
+  ], [{
     text: 'All',
     value: ' ',
-  },
-  {
-    text: '1학기',
-    value: '1학기',
-  },
-  {
-    text: '2학기',
-    value: '2학기',
-  },
-] as const;
+  }] as TFormSelectOptionItem[]);
