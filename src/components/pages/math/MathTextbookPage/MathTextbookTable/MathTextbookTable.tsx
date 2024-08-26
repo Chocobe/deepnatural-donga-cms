@@ -33,6 +33,14 @@ import {
 import { 
   TMathTextbookModel,
 } from '@/apis/models/mathModel.type';
+import { 
+  cmsCommonModelClassTypeMapper,
+} from '@/apis/models/cmsCommonModel.type';
+import { 
+  textbookClassTypeOptions,
+  textbookGradeOptions,
+  textbookTermOptions,
+} from '@/components/pages/cmsPages.type';
 // util
 import { 
   TABLE_ROW_SELECTION_CHECKBOX_ID,
@@ -76,12 +84,41 @@ function MathTextbookTable() {
     }),
     columnHelper.accessor('classtype', {
       header: '학교급',
+      cell: props => {
+        const {
+          cell,
+        } = props;
+
+        const valueItem = textbookClassTypeOptions.find(({ value }) => value === cell.getValue());
+        return valueItem?.text ?? ' ';
+      },
     }),
     columnHelper.accessor('grade', {
       header: '학년',
+      cell: props => {
+        const {
+          cell,
+        } = props;
+
+        const valueItem = textbookGradeOptions[
+          cmsCommonModelClassTypeMapper.ELEMENTARY
+        ].find(({ value }) => value === String(cell.getValue()));
+
+        return valueItem?.text ?? ' ';
+      },
     }),
     columnHelper.accessor('term', {
       header: '학기',
+      cell: props => {
+        const {
+          cell,
+        } = props;
+
+        const valueItem = textbookTermOptions
+          .find(({ value }) => value === String(cell.getValue()));
+
+        return valueItem?.text ?? ' ';
+      },
     }),
   ], []);
 

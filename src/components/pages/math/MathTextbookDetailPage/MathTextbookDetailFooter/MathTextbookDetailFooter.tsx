@@ -3,6 +3,11 @@ import {
   useCallback,
   memo,
 } from 'react';
+// router
+import { 
+  useNavigate,
+} from 'react-router-dom';
+import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
 // hook
@@ -20,6 +25,7 @@ import {
 // type
 import { 
   TPatchMathTextbookApiRequestParams,
+  TProduceMathTextbookApiRequestParams,
 } from '@/apis/math/mathApi.type';
 // style
 import './MathTextbookDetailFooter.css';
@@ -48,6 +54,8 @@ function _MathTextbookDetailFooter(props: TMathTextbookDetailFooterProps) {
     defaultAfterSubmit,
   } = useDetailPageNextActionAfterSubmit();
 
+  const navigate = useNavigate();
+
   //
   // callback
   //
@@ -70,48 +78,62 @@ function _MathTextbookDetailFooter(props: TMathTextbookDetailFooterProps) {
 
     const response = await ApiManager
       .math
-      .patchMathTextbookApi(params);
+      .patchMathTextbookApi
+      .callWithNoticeMessageGroup(params);
 
-    console.log('response.data: ', response.data);
+    return response?.data;
+  }, [detailFormState]);
+
+  const produceMathTextbook = useCallback(async () => {
+    const params: TProduceMathTextbookApiRequestParams = {
+      payload: detailFormState,
+    };
+
+    const response = await ApiManager
+      .math
+      .produceMathTextbook
+      .callWithNoticeMessageGroup(params);
+
+    return response?.data;
   }, [detailFormState]);
 
   const onClickSaveAndAdd = useCallback(() => {
-    console.group('저장후 추가하기');
-    console.log('formState: ', detailFormState);
-    console.groupEnd();
-
     addAfterSubmit();
     patchMathTextbook();
-  }, [detailFormState, addAfterSubmit, patchMathTextbook]);
+  }, [addAfterSubmit, patchMathTextbook]);
 
   const onClickSaveAndRemain = useCallback(() => {
-    console.group('저장후 계속해서 수정하기');
-    console.log('formState: ', detailFormState);
-    console.groupEnd();
-
     remainAfterSubmit();
     patchMathTextbook();
-  }, [detailFormState, remainAfterSubmit, patchMathTextbook]);
+  }, [remainAfterSubmit, patchMathTextbook]);
 
-  const onClickSave = useCallback(() => {
-    console.group('저장하기');
-    console.log('formState: ', detailFormState);
-    console.groupEnd();
-
+  const onClickSave = useCallback(async () => {
     defaultAfterSubmit();
-    patchMathTextbook();
-  }, [detailFormState, defaultAfterSubmit, patchMathTextbook]);
+    await patchMathTextbook();
+  }, [defaultAfterSubmit, patchMathTextbook]);
 
-  const onClickAdd = useCallback(() => {
-    console.group('추가하기');
-    console.log('formState: ', detailFormState);
-    console.groupEnd();
-
+  const onClickAdd = useCallback(async () => {
     defaultAfterSubmit();
-    // submit();
+
+    const mathTextbook = await produceMathTextbook();
+    const textbookId = mathTextbook?.id;
+
+    if (!textbookId) {
+      return;
+    }
+
+    navigate(
+      routePathFactory
+        .math
+        .getTextbookDetailPath(textbookId), 
+      {
+        replace: true,
+      }
+    );
   }, [
-    detailFormState, defaultAfterSubmit, 
-    // submit
+    defaultAfterSubmit, 
+    produceMathTextbook, 
+    navigate,
   ]);
 
   return (<>
