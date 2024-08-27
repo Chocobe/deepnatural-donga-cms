@@ -6,7 +6,7 @@ import {
   TNoticeMessageGroup,
 } from '@/utils/noticeMessageGroupFactory';
 
-const createApiWithNoticeMessageGroup = <TResponse, TParams = void>(focParams: {
+const createApiWithNoticeMessageGroup = <TResponse, TParams = void>(hofParams: {
   apiFunction: (
     params: TParams,
   ) => Promise<TResponse>;
@@ -15,7 +15,7 @@ const createApiWithNoticeMessageGroup = <TResponse, TParams = void>(focParams: {
   const {
     apiFunction,
     noticeMessageGroup,
-  } = focParams;
+  } = hofParams;
 
   const self = (
     params: TParams

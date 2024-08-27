@@ -10,6 +10,7 @@ import {
 import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
 // hook
 import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
+import useResultNoticeModalStore from '@/store/resultNoticeModalStore/resultNoticeModalStore';
 // ui
 import { 
   Select, 
@@ -35,10 +36,13 @@ import {
   mathTextbookSearchTypeOptions,
 } from './MathTextbookTableActions.type';
 import { 
+  TDeleteMathTextbookApiRequestParams,
   TRetrieveMathTextbooksApiRequestParams,
 } from '@/apis/math/mathApi.type';
+import noticeMessageGroupFactory from '@/utils/noticeMessageGroupFactory';
 // style
 import './MathTextbookTableActions.css';
+import ApiManager from '@/apis/ApiManager';
 
 type TMathTextbookTableActionsProps = {
   retrieveMathTextbooks: (params: TRetrieveMathTextbooksApiRequestParams) => Promise<void>;
@@ -60,6 +64,14 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
   } = searchParamsForRetrieveMathTextbooksApi;
 
   const updateSearchParamsForRetrieveMathTextbooksApi = useMathTextbookPageStore(state => state.updateSearchParamsForRetrieveMathTextbooksApi);
+
+  const selectedMathTextbooks = useMathTextbookPageStore(state => state.selectedMathTextbooks);
+
+  //
+  // resultNoticeModal store
+  //
+  const openSuccessNoticeModal = useResultNoticeModalStore(state => state.openSuccessNoticeModal);
+  const openErrorNoticeModal = useResultNoticeModalStore(state => state.openErrorNoticeModal);
 
   //
   // ref
@@ -103,6 +115,85 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
       search: undefined,
     }));
   }, [updateSearchParamsForRetrieveMathTextbooksApi]);
+
+  const onConfirmDelete = useCallback(async () => {
+    if (!selectedMathTextbooks?.length) {
+      return;
+    }
+
+    try {
+      const promises = selectedMathTextbooks.map(({ id }) => {
+        const params: TDeleteMathTextbookApiRequestParams = {
+          pathParams: {
+            textbookId: id,
+          },
+        };
+
+        return ApiManager
+          .math
+          .deleteMathTextbookApi(params);
+      });
+
+      await Promise.all(promises);
+
+      openSuccessNoticeModal({
+        ...noticeMessageGroupFactory
+          .apis
+          .math
+          .deleteMathTextbook
+          .successMessage!(),
+        firstButton: {
+          text: '확인',
+          variant: 'outline',
+        }
+      });
+
+    } catch(_error: any) {
+      openErrorNoticeModal({
+        ...noticeMessageGroupFactory
+          .apis
+          .math
+          .deleteMathTextbook
+          .errorMessage(),
+        firstButton: {
+          text: '확인',
+          variant: 'outline',
+        },
+      });
+    } finally {
+      retrieveMathTextbooks({
+        searchParams: searchParamsForRetrieveMathTextbooksApi,
+      });
+    }
+  }, [
+    selectedMathTextbooks,
+    searchParamsForRetrieveMathTextbooksApi,
+    openSuccessNoticeModal,
+    openErrorNoticeModal,
+    retrieveMathTextbooks,
+  ]);
+
+  const onClickDelete = useCallback(async () => {
+    if (!selectedMathTextbooks?.length) {
+      return;
+    }
+
+    openSuccessNoticeModal({
+      ...noticeMessageGroupFactory.uis.math.confirmDeleteMathTextbooks(),
+      firstButton: {
+        text: '취소',
+        variant: 'outline',
+      },
+      secondButton: {
+        text: '삭제',
+        variant: 'destructive',
+        onClick: onConfirmDelete,
+      },
+    });
+  }, [
+    selectedMathTextbooks, 
+    openSuccessNoticeModal, onConfirmDelete,
+  ]);
 
   //
   // hook
@@ -162,16 +253,19 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
       <div className="MathTextbookTableActions-rightSide">
         <Button
           className="actionButton"
-          disabled>
+          disabled={!selectedMathTextbooks?.length}
+          onClick={onClickDelete}>
           삭제
         </Button>
 
-        <Button
-          className="actionButton"
-          disabled>
-          <LuFileInput className="icon" />
-          Export
-        </Button>
+        <TBUTooltip>
+          <Button
+            className="actionButton"
+            disabled>
+            <LuFileInput className="icon" />
+            Export
+          </Button>
+        </TBUTooltip>
       </div>
     </div>
   );

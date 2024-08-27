@@ -3,10 +3,12 @@ type TNoticeMessage = {
   message: string;
 };
 
+type TNoticeMessageFunction = (...params: Array<any>) => TNoticeMessage;
+
 export type TNoticeMessageGroup = {
-  loadingMessage: (...params: Array<any>) => TNoticeMessage;
-  errorMessage: (...params: Array<any>) => TNoticeMessage;
-  successMessage?: (...params: Array<any>) => TNoticeMessage;
+  loadingMessage: TNoticeMessageFunction;
+  errorMessage: TNoticeMessageFunction;
+  successMessage?: TNoticeMessageFunction;
 };
 
 const createNetworkErrorMessage = (
@@ -35,7 +37,14 @@ const noticeMessageGroupFactory: {
       retrieveMathTextbook: TNoticeMessageGroup;
       patchMathTextbook: TNoticeMessageGroup;
       produceMathTextbook: TNoticeMessageGroup;
+      deleteMathTextbook: TNoticeMessageGroup;
       retrieveMathTextbookHistories: TNoticeMessageGroup;
+    };
+  };
+
+  uis: {
+    math: {
+      confirmDeleteMathTextbooks: TNoticeMessageFunction;
     };
   };
 } = {
@@ -233,6 +242,22 @@ const noticeMessageGroupFactory: {
         }),
       },
 
+      // (DELETE) 수학 교과서 삭제
+      deleteMathTextbook: {
+        loadingMessage: () => ({
+          title: '',
+          message: '선택한 교과서를 삭제 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('교과서 삭제 중'),
+          title: '삭제 오류',
+        }),
+        successMessage: () => ({
+          title: '',
+          message: '교과서 삭제를 성공적으로 완료 하였습니다.',
+        }),
+      },
+
       // (GET) 수학 교과서 히스토리 목록
       retrieveMathTextbookHistories: {
         loadingMessage: () => ({
@@ -244,6 +269,15 @@ const noticeMessageGroupFactory: {
         }),
         successMessage: undefined,
       },
+    },
+  },
+
+  uis: {
+    math: {
+      confirmDeleteMathTextbooks: () => ({
+        title: '교과서 삭제',
+        message: '선택한 교과서를 삭제합니다.\n정말로 삭제 하시겠습니까?',
+      }),
     },
   },
 } as const;

@@ -3,6 +3,7 @@ import {
   useState,
   useMemo,
   useCallback,
+  useEffect,
 } from 'react';
 // router
 import { 
@@ -55,9 +56,9 @@ function MathTextbookTable() {
   // mathTextbookPage store
   //
   const mathTextbooksData = useMathTextbookPageStore(state => state.mathTextbooksData);
-  const tableData = mathTextbooksData?.results ?? [];
 
   const setSelectedMathTextbooks = useMathTextbookPageStore(state => state.setSelectedMathTextbooks);
+  const clearSelectedMathTextbooks = useMathTextbookPageStore(state => state.clearSelectedMathTextbooks);
 
   //
   // state
@@ -67,6 +68,10 @@ function MathTextbookTable() {
   //
   // cache
   //
+  const tableData = useMemo(() => {
+    return mathTextbooksData?.results ?? [];
+  }, [mathTextbooksData]);
+
   const columns = useMemo(() => [
     columnHelper.display({
       id: TABLE_ROW_SELECTION_CHECKBOX_ID,
@@ -156,6 +161,16 @@ function MathTextbookTable() {
       .getTextbookDetailPath(textbookId)
     );
   }, [navigate]);
+
+  //
+  // effect
+  //
+  useEffect(function _clearSelectedMathTextbooks() {
+    setRowSelection({});
+    clearSelectedMathTextbooks();
+
+    // eslint-disable-next-line
+  }, [tableData]);
 
   return (
     <Table className="MathTextbookTable">

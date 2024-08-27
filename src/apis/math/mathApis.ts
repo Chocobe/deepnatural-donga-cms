@@ -15,8 +15,12 @@ import {
 
   TPatchMathTextbookApiRequestParams,
   TPatchMathTextbookApiResponse,
+
   TProduceMathTextbookApiRequestParams,
   TProduceMathTextbookApiResponse,
+
+  TDeleteMathTextbookApiRequestParams,
+  TDeleteMathTextbookApiResponse,
 } from './mathApi.type';
 
 // FIXME: mockup
@@ -100,6 +104,21 @@ export const produceMathTextbook = createApiWithNoticeMessageGroup({
     .apis
     .math
     .produceMathTextbook,
+});
+
+//
+// (DELETE) 수학 교과서 삭제
+//
+export const deleteMathTextbookApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TDeleteMathTextbookApiRequestParams) => {
+    return api.delete<TDeleteMathTextbookApiResponse>(
+      mathApiUrlFactory.deleteMathTextbook(params)
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .deleteMathTextbook,
 });
 
 //
