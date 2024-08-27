@@ -4,17 +4,17 @@
 //
 // --- --- --- --- --- --- --- --- --- ---
 
-//
-// 로그인
-//
+/**
+ * 로그인
+ */
 export type TLoginModel = {
   expire: string;
   token: string;
 };
 
-//
-// 회원가입
-//
+/**
+ * 회원가입
+ */
 export type TSignupModel = {
   username: string;
   password: string;
@@ -23,22 +23,25 @@ export type TSignupModel = {
   groups: number[];
 };
 
-//
-// Group (사용자 권한)
-//
+/**
+ * Group (사용자 권한)
+ */
 export type TGroupModel = {
   id: number;
   name: string;
 };
 
-//
-// User (사용자)
-//
+/**
+ * 사용자 활성 여부
+ */
 export const userModelIsActiveTemplateMapper = {
   true: '사용중',
   false: '사용중지',
 } as const;
 
+/**
+ * User (사용자)
+ */
 export type TUserModel = {
   id: number;
   username: string;
