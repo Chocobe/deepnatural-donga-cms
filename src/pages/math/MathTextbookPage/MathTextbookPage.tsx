@@ -26,6 +26,7 @@ function MathTextbookPage() {
   const searchParamsForRetrieveMathTextbooksApi = useMathTextbookPageStore(state => state.searchParamsForRetrieveMathTextbooksApi);
 
   const setMathTextbooksData = useMathTextbookPageStore(state => state.setMathTextbooksData);
+  const clearSelectedMathTextbooks = useMathTextbookPageStore(state => state.clearSelectedMathTextbooks);
 
   //
   // callback
@@ -55,6 +56,16 @@ function MathTextbookPage() {
 
     // eslint-disable-next-line
   }, [retrieveMathTextbooks]);
+
+  useEffect(function cleanup() {
+    return () => {
+      clearSelectedMathTextbooks();
+    };
+
+    // eslint-disable-next-line
+  }, [
+    searchParamsForRetrieveMathTextbooksApi.page,
+  ]);
 
   return (
     <div className="MathTextbookPage">
