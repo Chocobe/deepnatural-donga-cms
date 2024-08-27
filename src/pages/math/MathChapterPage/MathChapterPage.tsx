@@ -1,18 +1,26 @@
-// FIXME: mockup page
-import MockupPage from '@/components/pages/MockupPage/MockupPage';
+// style
+import './MathChapterPage.css';
 
-// react
-import {
-  memo,
-} from 'react';
-
-function _MathChapterPage() {
+function MathChapterPage() {
   return (
-    <MockupPage 
-      // isTestOverflow
-      mockupName="MathChapter Page mockup" />
+    <div className="MathChapterPage">
+      <div className="MathChapterPage-header">
+        Header
+      </div>
+
+      <div className="MathChapterPage-actions">
+        Actions
+      </div>
+
+      <div className="MathChapterPage-table">
+        Table
+      </div>
+
+      <div className="MathChapterPage-footer">
+        Footer
+      </div>
+    </div>
   );
 }
 
-const MathChapterPage = memo(_MathChapterPage);
 export default MathChapterPage;
