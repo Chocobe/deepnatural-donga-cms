@@ -2,6 +2,7 @@
 import MathChapterHeader from '@/components/pages/math/MathChapterPage/MathChapterHeader/MathChapterHeader';
 import MathChapterTableActions from '@/components/pages/math/MathChapterPage/MathChapterTableActions/MathChapterTableActions';
 import MathChapterTable from '@/components/pages/math/MathChapterPage/MathChapterTable/MathChapterTable';
+import MathChapterFooter from '@/components/pages/math/MathChapterPage/MathChapterFooter/MathChapterFooter';
 // style
 import './MathChapterPage.css';
 
@@ -21,7 +22,7 @@ function MathChapterPage() {
       </div>
 
       <div className="MathChapterPage-footer">
-        Footer
+        <MathChapterFooter />
       </div>
     </div>
   );
