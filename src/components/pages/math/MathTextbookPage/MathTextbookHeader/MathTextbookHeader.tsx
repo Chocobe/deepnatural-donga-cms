@@ -32,6 +32,7 @@ import {
   SelectContent,
   SelectItem,
 } from '@/components/shadcn-ui/ui/select';
+import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
 import {
   LuChevronDown,
@@ -274,11 +275,14 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
       </Accordion>
 
       <div className="MathTextbookHeader-actions">
-        <Button
-          className="actionButton">
-          <LuFileOutput className="icon" />
-          Import
-        </Button>
+        <TBUTooltip>
+          <Button
+            className="actionButton"
+            disabled>
+            <LuFileOutput className="icon" />
+            Import
+          </Button>
+        </TBUTooltip>
 
         <Button
           className="actionButton"

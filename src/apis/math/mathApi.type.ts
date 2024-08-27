@@ -50,3 +50,12 @@ export type TPatchMathTextbookApiResponse = TMathTextbookModel;
 export type TProduceMathTextbookApiRequestParams = TApiRequestBodyParams<void, void, Omit<TMathTextbookModel, 'id'>>;
 
 export type TProduceMathTextbookApiResponse = TMathTextbookModel;
+
+//
+// (DELETE) 수학 교과서 삭제
+//
+export type TDeleteMathTextbookApiRequestParams = TApiRequestNonBodyParams<{
+  textbookId: string;
+}, void>;
+
+export type TDeleteMathTextbookApiResponse = void;

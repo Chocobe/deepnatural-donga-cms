@@ -13,7 +13,7 @@ type TResultNoticeModalButton = {
   onClick?: () => void;
 };
 
-type TOpenResultNoticeModalParams = {
+export type TOpenResultNoticeModalParams = {
   title: string;
   message: string;
   firstButton?: TResultNoticeModalButton;

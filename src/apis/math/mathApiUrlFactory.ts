@@ -1,7 +1,8 @@
 // type
 import { 
-  TPatchMathTextbookApiRequestParams,
   TRetrieveMathTextbookApiRequestParams,
+  TPatchMathTextbookApiRequestParams,
+  TDeleteMathTextbookApiRequestParams,
 } from './mathApi.type';
 
 const mathApiUrlFactory = (() => {
@@ -32,6 +33,17 @@ const mathApiUrlFactory = (() => {
     // (POST) 수학 교과서 생성
     produceMathTextbook() {
       return this.retrieveMathTextbooks();
+    },
+
+    // (DELETE) 수학 교과서 삭제
+    deleteMathTextbook(params: TDeleteMathTextbookApiRequestParams) {
+      const {
+        pathParams: {
+          textbookId,
+        },
+      } = params;
+
+      return `${this.retrieveMathTextbooks()}${textbookId}/`;
     },
   };
 })();
