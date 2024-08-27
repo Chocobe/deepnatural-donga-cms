@@ -206,8 +206,12 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
         value={accordionValue}
         onValueChange={setAccordionValue}
         collapsible>
-        <AccordionItem className="border-0" value="filters">
-          <AccordionTrigger className="trigger">
+        <AccordionItem 
+          className="border-0" 
+          value="filters">
+          <AccordionTrigger 
+            className="trigger"
+            isHideChevronIcon>
             <div className="title">
               교과서 / Filter
               <LuChevronDown 

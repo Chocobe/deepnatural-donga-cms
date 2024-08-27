@@ -1,3 +1,5 @@
+// ui
+import MathChapterHeader from '@/components/pages/math/MathChapterPage/MathChapterHeader/MathChapterHeader';
 // style
 import './MathChapterPage.css';
 
@@ -5,7 +7,7 @@ function MathChapterPage() {
   return (
     <div className="MathChapterPage">
       <div className="MathChapterPage-header">
-        Header
+        <MathChapterHeader />
       </div>
 
       <div className="MathChapterPage-actions">
