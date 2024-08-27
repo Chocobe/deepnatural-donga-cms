@@ -10,8 +10,6 @@ import {
 import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
-// hook
-import useDetailPageNextActionAfterSubmit from '@/components/pages/hooks/useDetailPageNextActionAfterSubmit';
 // api
 import ApiManager from '@/apis/ApiManager';
 // ui
@@ -44,16 +42,11 @@ function _MathTextbookDetailFooter(props: TMathTextbookDetailFooterProps) {
   //
   const detailFormState = useMathTextbookPageStore(state => state.detailFormState);
 
+  const clearDetailTargetMathTextbook = useMathTextbookPageStore(state => state.clearDetailTargetMathTextbook);
+
   //
   // hook
   //
-  const {
-    // nextActionAfterSubmitRef,
-    addAfterSubmit,
-    remainAfterSubmit,
-    defaultAfterSubmit,
-  } = useDetailPageNextActionAfterSubmit();
-
   const navigate = useNavigate();
 
   //
@@ -81,7 +74,7 @@ function _MathTextbookDetailFooter(props: TMathTextbookDetailFooterProps) {
       .patchMathTextbookApi
       .callWithNoticeMessageGroup(params);
 
-    return response?.data;
+    return response;
   }, [detailFormState]);
 
   const produceMathTextbook = useCallback(async () => {
@@ -97,24 +90,34 @@ function _MathTextbookDetailFooter(props: TMathTextbookDetailFooterProps) {
     return response?.data;
   }, [detailFormState]);
 
-  const onClickSaveAndAdd = useCallback(() => {
-    addAfterSubmit();
-    patchMathTextbook();
-  }, [addAfterSubmit, patchMathTextbook]);
+  const onClickSaveAndAdd = useCallback(async () => {
+    await patchMathTextbook();
 
-  const onClickSaveAndRemain = useCallback(() => {
-    remainAfterSubmit();
-    patchMathTextbook();
-  }, [remainAfterSubmit, patchMathTextbook]);
+    clearDetailTargetMathTextbook();
+
+    navigate(routePathFactory
+      .math
+      .getTextbookAddPath()
+    );
+  }, [
+    patchMathTextbook, 
+    clearDetailTargetMathTextbook, navigate,
+  ]);
+
+  const onClickSaveAndRemain = useCallback(async () => {
+    await patchMathTextbook();
+  }, [patchMathTextbook]);
 
   const onClickSave = useCallback(async () => {
-    defaultAfterSubmit();
     await patchMathTextbook();
-  }, [defaultAfterSubmit, patchMathTextbook]);
+
+    navigate(routePathFactory
+      .math
+      .getTextbookPath()
+    );
+  }, [patchMathTextbook, navigate]);
 
   const onClickAdd = useCallback(async () => {
-    defaultAfterSubmit();
-
     const mathTextbook = await produceMathTextbook();
     const textbookId = mathTextbook?.id;
 
@@ -130,11 +133,7 @@ function _MathTextbookDetailFooter(props: TMathTextbookDetailFooterProps) {
         replace: true,
       }
     );
-  }, [
-    defaultAfterSubmit, 
-    produceMathTextbook, 
-    navigate,
-  ]);
+  }, [produceMathTextbook, navigate]);
 
   return (<>
     <div className="MathTextbookDetailFooter">
