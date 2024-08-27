@@ -5,17 +5,19 @@ import {
 } from 'react';
 // store
 import useHistoryModalStore from '@/store/historyModalStore/historyModalStore';
+// api
+import ApiManager from '@/apis/ApiManager';
 // ui
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
+import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
 import { 
   LuHistory,
 } from 'react-icons/lu';
 // style
 import './MathTextbookDetailHeader.css';
-import ApiManager from '@/apis/ApiManager';
 
 type TMathTextbookDetailHeaderProps = {
   isDetailMode: boolean;
@@ -62,12 +64,14 @@ function _MathTextbookDetailHeader(props: TMathTextbookDetailHeaderProps) {
 
       <div className="actionsWrapper">
         {isDetailMode && (
-          <Button
-            className="historyButton"
-            onClick={_openHistoryModal}>
-            <LuHistory className="icon" />
-            History
-          </Button>
+          <TBUTooltip>
+            <Button
+              className="historyButton"
+              onClick={_openHistoryModal}>
+              <LuHistory className="icon" />
+              History
+            </Button>
+          </TBUTooltip>
         )}
       </div>
     </div>
