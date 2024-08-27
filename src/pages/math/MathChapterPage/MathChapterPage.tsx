@@ -1,6 +1,7 @@
 // ui
 import MathChapterHeader from '@/components/pages/math/MathChapterPage/MathChapterHeader/MathChapterHeader';
 import MathChapterTableActions from '@/components/pages/math/MathChapterPage/MathChapterTableActions/MathChapterTableActions';
+import MathChapterTable from '@/components/pages/math/MathChapterPage/MathChapterTable/MathChapterTable';
 // style
 import './MathChapterPage.css';
 
@@ -16,7 +17,7 @@ function MathChapterPage() {
       </div>
 
       <div className="MathChapterPage-table">
-        Table
+        <MathChapterTable />
       </div>
 
       <div className="MathChapterPage-footer">
