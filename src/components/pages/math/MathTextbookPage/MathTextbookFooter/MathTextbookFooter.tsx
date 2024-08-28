@@ -5,6 +5,8 @@ import {
 } from 'react';
 // store
 import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
+// hook
+import useTablePagination from '@/components/shadcn-ui-custom/TablePagination/hooks/useTablePagination';
 // ui
 import TablePagination from '@/components/shadcn-ui-custom/TablePagination/TablePagination';
 // type
@@ -27,12 +29,6 @@ function _MathTextbookFooter(props: TMathTextbookFooterProps) {
   // mathTextbookPage store
   //
   const mathTextbooksData = useMathTextbookPageStore(state => state.mathTextbooksData);
-  const {
-    current_page = 1,
-    last_page = 1,
-    count,
-  } = mathTextbooksData ?? {};
-
   const searchParamsForRetrieveMathTextbooksApi = useMathTextbookPageStore(state => state.searchParamsForRetrieveMathTextbooksApi);
 
   //
@@ -49,29 +45,22 @@ function _MathTextbookFooter(props: TMathTextbookFooterProps) {
     return params;
   }, [searchParamsForRetrieveMathTextbooksApi]);
 
-  const goToFirstPage = useCallback(() => {
-    const params = createParams(1);
-
-    retrieveMathTextbooks(params);
-  }, [createParams, retrieveMathTextbooks]);
-
-  const goToPreviousPage = useCallback(() => {
-    const params = createParams(current_page - 1);
-
-    retrieveMathTextbooks(params);
-  }, [current_page, createParams, retrieveMathTextbooks]);
-
-  const goToNextPage = useCallback(() => {
-    const params = createParams(current_page + 1);
-
-    retrieveMathTextbooks(params);
-  }, [current_page, createParams, retrieveMathTextbooks]);
-
-  const goToLastPage = useCallback(() => {
-    const params = createParams(last_page);
-
-    retrieveMathTextbooks(params);
-  }, [last_page, createParams, retrieveMathTextbooks]);
+  //
+  // hook
+  //
+  const {
+    count,
+    current_page,
+    last_page,
+    goToFirstPage,
+    goToPreviousPage,
+    goToNextPage,
+    goToLastPage,
+  } = useTablePagination({
+    paginationData: mathTextbooksData,
+    createParams,
+    retrieveApiFunction: retrieveMathTextbooks,
+  });
 
   return (
     <div className="MathTextbookFooter">
