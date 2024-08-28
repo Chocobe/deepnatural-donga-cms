@@ -21,6 +21,9 @@ import {
 
   TDeleteMathTextbookApiRequestParams,
   TDeleteMathTextbookApiResponse,
+
+  TRetrieveMathChaptersApiRequestParams,
+  TRetrieveMathChaptersApiResponse,
 } from './mathApi.type';
 
 // FIXME: mockup
@@ -139,4 +142,28 @@ export const retrieveMathTextbookHistoriesApi = createApiWithNoticeMessageGroup(
     .apis
     .math
     .retrieveMathTextbookHistories,
+});
+
+// --- --- --- --- --- --- --- --- --- ---
+
+//
+// (GET) 수학 단원 목록
+//
+export const retrieveMathChaptersApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathChaptersApiRequestParams) => {
+    const {
+      searchParams,
+    } = excludeNullOrUndefinedProperties(params);
+
+    return api.get<TRetrieveMathChaptersApiResponse>(
+      mathApiUrlFactory.retrieveMathChaptersPath(),
+      {
+        params: searchParams,
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .retrieveMathChapters,
 });

@@ -8,13 +8,16 @@ import {
 const mathApiUrlFactory = (() => {
   const BASE_PATH = import.meta.env.VITE_CMS_API_PATH;
 
-  return {
-    // (GET) 수학 교과서 목록
+  //
+  // 수학 교과서
+  //
+  const mathTextbookPaths = {
+    /** (GET) 수학 교과서 목록 */
     retrieveMathTextbooks() {
       return `${BASE_PATH}textbooks/`;
     },
 
-    // (GET) 수학 교과서 조회
+    /** (GET) 수학 교과서 조회 */
     retrieveMathTextbook(params: TRetrieveMathTextbookApiRequestParams) {
       const {
         pathParams: {
@@ -25,17 +28,17 @@ const mathApiUrlFactory = (() => {
       return `${this.retrieveMathTextbooks()}${textbookId}/`;
     },
 
-    // (PATCH) 수학 교과서 수정
+    /** (PATCH) 수학 교과서 수정 */
     patchMathTextbook(params: TPatchMathTextbookApiRequestParams) {
       return this.retrieveMathTextbook(params);
     },
 
-    // (POST) 수학 교과서 생성
+    /** (POST) 수학 교과서 생성 */
     produceMathTextbook() {
       return this.retrieveMathTextbooks();
     },
 
-    // (DELETE) 수학 교과서 삭제
+    /** (DELETE) 수학 교과서 삭제 */
     deleteMathTextbook(params: TDeleteMathTextbookApiRequestParams) {
       const {
         pathParams: {
@@ -46,6 +49,21 @@ const mathApiUrlFactory = (() => {
       return `${this.retrieveMathTextbooks()}${textbookId}/`;
     },
   };
+
+  //
+  // 수학 단원
+  //
+  const mathChapterPaths = {
+    /** (GET) 수학 단원 목록 */
+    retrieveMathChaptersPath() {
+      return `${BASE_PATH}chapters/`;
+    },
+  };
+
+  return {
+    ...mathTextbookPaths,
+    ...mathChapterPaths,
+  } as const;
 })();
 
 export default mathApiUrlFactory;

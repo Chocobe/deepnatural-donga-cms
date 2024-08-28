@@ -1,0 +1,43 @@
+.SearchModalTrigger {
+  @apply flex items-center gap-2 flex-shrink;
+
+  overflow: hidden;
+
+  .label {
+    flex-shrink: 0;
+    width: 80px;
+  }
+
+  .button {
+    @apply flex items-center gap-2;
+
+    padding: 10px 12px;
+
+    min-width: 223px;
+
+    color: #71717A;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    text-align: start;
+
+    border: 1px solid hsl(var(--border));
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    .value {
+      flex: 1 1 0;
+      width: 100%;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}

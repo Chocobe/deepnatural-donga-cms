@@ -30,7 +30,7 @@ function _TBUTooltip(props: TTBUTooltipProps) {
       <TooltipContent 
         className="TBUTooltip"
         align="start">
-        차후 추가될 기능입니다.
+        추후 추가될 기능입니다.
       </TooltipContent>
     </Tooltip>
   );
