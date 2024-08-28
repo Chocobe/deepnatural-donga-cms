@@ -25,13 +25,7 @@ import {
 import { 
   Label,
 } from '@/components/shadcn-ui/ui/label';
-import { 
-  Select, 
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from '@/components/shadcn-ui/ui/select';
+import CommonSelect from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect';
 import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
 import {
@@ -171,27 +165,40 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
   //
   const filterItems = useMemo(() => [
     {
-      id: 'classType',
+      id: 'classtype',
       label: '학교급',
-      options: textbookClassTypeFilterOptions,
-      value: searchParamsForRetrieveMathTextbooksApi.classtype ?? textbookClassTypeFilterOptions[0].value,
-      onChange: onChangeClassType,
+      Component: (
+        <CommonSelect
+          id="classtype"
+          options={textbookClassTypeFilterOptions}
+          value={searchParamsForRetrieveMathTextbooksApi.classtype ?? textbookClassTypeFilterOptions[0].value}
+          onChange={onChangeClassType} />
+      ),
     },
     {
       id: 'grade',
       label: '학년',
-      options: searchParamsForRetrieveMathTextbooksApi.classtype
-        ? textbookGradeFilterOptions[searchParamsForRetrieveMathTextbooksApi.classtype]
-        : textbookGradeFilterOptions[' '],
-      value: searchParamsForRetrieveMathTextbooksApi.grade ?? textbookGradeFilterOptions[' '][0].value,
-      onChange: onChangeGrade,
+      Component: (
+        <CommonSelect
+          id="grade"
+          options={searchParamsForRetrieveMathTextbooksApi.classtype
+            ? textbookGradeFilterOptions[searchParamsForRetrieveMathTextbooksApi.classtype]
+            : textbookGradeFilterOptions[' ']
+          }
+          value={searchParamsForRetrieveMathTextbooksApi.grade ?? textbookGradeFilterOptions[' '][0].value}
+          onChange={onChangeGrade} />
+      ),
     },
     {
       id: 'term',
       label: '학기',
-      options: textbookTermFilterOptions,
-      value: searchParamsForRetrieveMathTextbooksApi.term ?? textbookTermFilterOptions[0].value,
-      onChange: onChangeTerm,
+      Component: (
+        <CommonSelect
+          id="term"
+          options={textbookTermFilterOptions}
+          value={searchParamsForRetrieveMathTextbooksApi.term ?? textbookTermFilterOptions[0].value}
+          onChange={onChangeTerm} />
+      ),
     },
   ], [
     searchParamsForRetrieveMathTextbooksApi,
@@ -227,14 +234,12 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
               const {
                 id,
                 label,
-                options,
-                value,
-                onChange,
+                Component,
               } = item;
 
               return (
                 <div
-                  key={label}
+                  key={id}
                   className="filterItem">
                   <Label
                     htmlFor={id}
@@ -242,35 +247,7 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
                     {label}
                   </Label>
 
-                  <Select
-                    value={typeof value === 'undefined'
-                      ? value
-                      : String(value)
-                    }
-                    onValueChange={onChange}>
-                    <SelectTrigger
-                      id={id}
-                      className="select">
-                      <SelectValue />
-                    </SelectTrigger>
-
-                    <SelectContent>
-                      {options?.map(option => {
-                        const {
-                          text,
-                          value,
-                        } = option;
-
-                        return (
-                          <SelectItem
-                            key={text}
-                            value={value}>
-                            {text}
-                          </SelectItem>
-                        );
-                      })}
-                    </SelectContent>
-                  </Select>
+                  {Component}
                 </div>
               );
             })}
