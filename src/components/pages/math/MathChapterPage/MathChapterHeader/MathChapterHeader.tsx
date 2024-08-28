@@ -15,6 +15,9 @@ import {
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
+import { 
+  Label,
+} from '@/components/shadcn-ui/ui/label';
 import SearchModalTrigger from '@/components/shadcn-ui-custom/searchModals/SearchModalTrigger/SearchModalTrigger';
 import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
@@ -46,7 +49,7 @@ function _MathChapterHeader() {
     setSearchParams(old => ({
       ...old,
       textbook: old.textbook === 'All'
-        ? `(Mock) 교과서 ${Math.ceil(Math.random() * 3)}`
+        ? `(Mock) 교과서 ${Math.ceil(Math.random() * 3)}` + `(Mock) 교과서 ${Math.ceil(Math.random() * 3)}` + `(Mock) 교과서 ${Math.ceil(Math.random() * 3)}`
         : 'All',
     }));
   }, []);
@@ -56,12 +59,16 @@ function _MathChapterHeader() {
   //
   const filterItems = useMemo(() => [
     {
+      id: 'textbook',
+      label: '교과서',
       Component: (
-        <TBUTooltip key="textbook">
+        <TBUTooltip 
+          key="textbook"
+          className="overflow-hidden">
           <SearchModalTrigger
-            // key="textbook"
+            key="textbook"
             id="textbook"
-            label="교과서"
+            className="editor"
             value={searchParams.textbook}
             onOpen={openTextbookSearchModal} />
         </TBUTooltip>
@@ -95,10 +102,24 @@ function _MathChapterHeader() {
           <AccordionContent className="filters">
             {filterItems.map(item => {
               const {
+                id,
+                label,
                 Component,
               } = item;
 
-              return Component;
+              return (
+                <div 
+                  key={id}
+                  className="filterItem">
+                  <Label 
+                    htmlFor={id}
+                    className="label">
+                    {label}
+                  </Label>
+
+                  {Component}
+                </div>
+              );
             })}
           </AccordionContent>
         </AccordionItem>

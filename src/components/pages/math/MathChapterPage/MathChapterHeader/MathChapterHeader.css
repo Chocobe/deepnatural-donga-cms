@@ -46,6 +46,21 @@
 
       border: 1px solid #0000000D;
       border-radius: 4px;
+
+      .filterItem {
+        @apply flex items-center gap-2 flex-shrink;
+
+        overflow: hidden;
+
+        .label {
+          flex-shrink: 0;
+          width: 80px;
+        }
+
+        .editor {
+          min-width: 200px !important;
+        }
+      }
     }
   }
 

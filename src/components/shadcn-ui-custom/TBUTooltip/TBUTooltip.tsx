@@ -12,17 +12,20 @@ import {
 // style
 import './TBUTooltip.css';
 
-type TTBUTooltipProps = PropsWithChildren;
+type TTBUTooltipProps = PropsWithChildren<{
+  className?: string;
+}>;
 
 function _TBUTooltip(props: TTBUTooltipProps) {
   const {
+    className,
     children,
   } = props;
 
   return (
     <Tooltip delayDuration={0}>
       <TooltipTrigger asChild>
-        <div>
+        <div className={className}>
           {children}
         </div>
       </TooltipTrigger>

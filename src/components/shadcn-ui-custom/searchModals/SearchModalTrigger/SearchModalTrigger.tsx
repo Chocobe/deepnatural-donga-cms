@@ -4,9 +4,6 @@ import {
 } from 'react';
 // ui
 import { 
-  Label,
-} from '@/components/shadcn-ui/ui/label';
-import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
 // icon
@@ -14,45 +11,43 @@ import {
   LuChevronDown,
 } from 'react-icons/lu';
 // style
+import { 
+  cn,
+} from '@/lib/shadcn-ui-utils';
 import './SearchModalTrigger.css';
 
 type TSearchModalTriggerProps = {
+  className?: string;
   id: string;
-  label: string;
   value: string;
   onOpen: () => void;
 };
 
 function _SearchModalTrigger(props: TSearchModalTriggerProps) {
   const {
+    className,
     id,
-    label,
     value,
     onOpen,
   } = props;
 
   return (
-    <div
-      className="SearchModalTrigger">
-      <Label
-        htmlFor={id}
-        className="label">
-        {label}
-      </Label>
+    <Button
+      id={id}
+      className={cn(
+        'SearchModalTrigger',
+        className
+      )}
+      variant="link"
+      onClick={onOpen}>
+      <div className="value">
+        {value}
+      </div>
 
-      <Button
-        id={id}
-        className="button"
-        variant="link"
-        onClick={onOpen}>
-        <div className="value">
-          {value}
-        </div>
-        <LuChevronDown className="icon" />
-      </Button>
-    </div>
+      <LuChevronDown className="icon" />
+    </Button>
   );
 }
 
-const SearchModalTrigger = memo(_SearchModalTrigger) as typeof SearchModalTrigger;
+const SearchModalTrigger = memo(_SearchModalTrigger) as typeof _SearchModalTrigger;
 export default SearchModalTrigger;
