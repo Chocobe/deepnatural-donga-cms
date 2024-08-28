@@ -1,10 +1,10 @@
 // react
 import {
   useRef,
-  useState,
   useCallback,
   memo,
   ChangeEvent,
+  useEffect,
 } from 'react';
 // hook
 import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
@@ -32,19 +32,38 @@ import {
 import { 
   mathChapterSearchTypeOptions,
 } from './MathChapterTableActions.type';
+import { 
+  TRetrieveMathChaptersApiRequestParams,
+} from '@/apis/math/mathApi.type';
 // style
 import './MathChapterTableActions.css';
+import useMathChapterPageStore from '@/store/mathChapterPageStore/mathChapterPageStore';
 
-function _MathChapterTableActions() {
+type TMathChapterTableActionsProps = {
+  retrieveMathChapters: (params: TRetrieveMathChaptersApiRequestParams) => Promise<void>;
+};
+
+function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
+  const {
+    retrieveMathChapters,
+  } = props;
+
+  //
+  // mathChapterPage store
+  //
+  const mathChaptersData = useMathChapterPageStore(state => state.mathChaptersData);
+
+  const searchParamsForRetrieveMathChaptersApi = useMathChapterPageStore(state => state.searchParamsForRetrieveMathChaptersApi);
+  const {
+    search = '',
+  } = searchParamsForRetrieveMathChaptersApi;
+
+  const updateSearchParamsForRetrieveMathChaptersApi = useMathChapterPageStore(state => state.updateSearchParamsForRetrieveMathChaptersApi);
+
   //
   // ref
   //
   const $searchInputRef = useRef<HTMLInputElement | null>(null);
-
-  //
-  // state
-  //
-  const [search, setSearch] = useState('');
 
   //
   // callback
@@ -54,18 +73,35 @@ function _MathChapterTableActions() {
   }, []);
 
   const onChangeSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const search = e.target.value;
 
-    setSearch(value);
-  }, []);
+    updateSearchParamsForRetrieveMathChaptersApi(old => ({
+      ...old,
+      search,
+    }));
+  }, [updateSearchParamsForRetrieveMathChaptersApi]);
 
   const onEnter = useCallback(() => {
-    console.log('onEnter()');
-  }, []);
+    $searchInputRef.current?.blur();
+
+    const params: TRetrieveMathChaptersApiRequestParams = {
+      searchParams: {
+        ...searchParamsForRetrieveMathChaptersApi,
+      },
+    };
+
+    retrieveMathChapters(params);
+  }, [
+    searchParamsForRetrieveMathChaptersApi,
+    retrieveMathChapters,
+  ]);
 
   const onESC = useCallback(() => {
-    console.log('onESC()');
-  }, []);
+    updateSearchParamsForRetrieveMathChaptersApi(old => ({
+      ...old,
+      search: undefined,
+    }));
+  }, [updateSearchParamsForRetrieveMathChaptersApi]);
 
   //
   // hook
@@ -73,6 +109,13 @@ function _MathChapterTableActions() {
   const {
     onKeyDown,
   } = useOnKeyDownEnterOrESC(onEnter, onESC);
+
+  //
+  // effect
+  //
+  useEffect(function focusSearchInput() {
+    $searchInputRef.current?.focus();
+  }, [mathChaptersData]);
 
   return (
     <div className="MathChapterTableActions">
@@ -104,23 +147,22 @@ function _MathChapterTableActions() {
           </Select>
         </TBUTooltip>
 
-        <TBUTooltip>
-          <InputWithIcon
-            ref={$searchInputRef}
-            containerClassName="searchValue"
-            placeholder="검색어를 입력해주세요"
-            autoFocus
-            value={search}
-            onChange={onChangeSearch}
-            onKeyDown={onKeyDown}
-            EndIcon={LuSearch} />
-        </TBUTooltip>
+        <InputWithIcon
+          ref={$searchInputRef}
+          containerClassName="searchValue"
+          placeholder="검색어를 입력해주세요"
+          autoFocus
+          value={search}
+          onChange={onChangeSearch}
+          onKeyDown={onKeyDown}
+          EndIcon={LuSearch} />
       </div>
 
       <div className="MathChapterTableActions-rightSide">
         <TBUTooltip>
           <Button
-            className="actionButton">
+            className="actionButton"
+            disabled>
             <LuFileInput className="icon" />
             Export
           </Button>

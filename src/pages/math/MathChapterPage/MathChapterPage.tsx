@@ -68,7 +68,7 @@ function MathChapterPage() {
       </div>
 
       <div className="MathChapterPage-actions">
-        <MathChapterTableActions />
+        <MathChapterTableActions retrieveMathChapters={retrieveMathChapters} />
       </div>
 
       <div className="MathChapterPage-table">

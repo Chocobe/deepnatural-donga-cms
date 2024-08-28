@@ -16,6 +16,7 @@ import {
   Button,
 } from '@/components/shadcn-ui/ui/button';
 import SearchModalTrigger from '@/components/shadcn-ui-custom/searchModals/SearchModalTrigger/SearchModalTrigger';
+import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
 import {
   LuChevronDown,
@@ -27,7 +28,6 @@ import {
   cn,
 } from '@/lib/shadcn-ui-utils';
 import './MathChapterHeader.css';
-import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 
 function _MathChapterHeader() {
   //
@@ -107,7 +107,8 @@ function _MathChapterHeader() {
       <div className="MathChapterHeader-actions">
         <TBUTooltip>
           <Button
-            className="actionButton">
+            className="actionButton"
+            disabled>
             <LuFileOutput className="icon" />
             Import
           </Button>
@@ -115,7 +116,8 @@ function _MathChapterHeader() {
 
         <TBUTooltip>
           <Button
-            className="actionButton">
+            className="actionButton"
+            disabled>
             <LuPlus className="icon" />
             Add 교과서 단원(대)
           </Button>
