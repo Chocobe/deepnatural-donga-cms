@@ -10,6 +10,7 @@ import {
   TPaginationModel,
 } from '../models/cmsCommonModel.type';
 import { 
+  TMathChapter1Model,
   TMathTextbookModel,
 } from '../models/mathModel.type';
 
@@ -59,3 +60,16 @@ export type TDeleteMathTextbookApiRequestParams = TApiRequestNonBodyParams<{
 }, void>;
 
 export type TDeleteMathTextbookApiResponse = void;
+
+// --- --- --- --- --- --- --- --- --- ---
+
+//
+// (GET) 수학 단원
+//
+export type TRetrieveMathChaptersApiRequestParams = TApiRequestNonBodyParams<void, {
+  page?: number;
+  textbook?: string;
+  search?: string;
+}>;
+
+export type TRetrieveMathChaptersApiResponse = TPaginationModel<TMathChapter1Model>;

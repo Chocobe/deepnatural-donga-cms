@@ -18,6 +18,7 @@ const createNetworkErrorMessage = (
   message: `${target}, 네트워크 에러가 발생하였습니다.\n잠시 후 다시 시도해 주세요.`,
 });
 
+// FIXME: apis, math 분리하기
 const noticeMessageGroupFactory: {
   apis: {
     auth: {
@@ -32,6 +33,7 @@ const noticeMessageGroupFactory: {
       retrieveUsers: TNoticeMessageGroup;
       patchUser: TNoticeMessageGroup;
     };
+    // FIXME: textbook, chapter, etc. 분리하기
     math: {
       retrieveMathTextbooks: TNoticeMessageGroup;
       retrieveMathTextbook: TNoticeMessageGroup;
@@ -39,6 +41,8 @@ const noticeMessageGroupFactory: {
       produceMathTextbook: TNoticeMessageGroup;
       deleteMathTextbook: TNoticeMessageGroup;
       retrieveMathTextbookHistories: TNoticeMessageGroup;
+
+      retrieveMathChapters: TNoticeMessageGroup;
     };
   };
 
@@ -266,6 +270,20 @@ const noticeMessageGroupFactory: {
         }),
         errorMessage: () => ({
           ...createNetworkErrorMessage('수학 교과서 히스토리를 불러오는 중'),
+        }),
+        successMessage: undefined,
+      },
+
+      // --- --- --- --- --- --- --- --- --- ---
+
+      // (GET) 수학 단원 목록
+      retrieveMathChapters: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 단원 정보를 조회 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 단원 정보를 조회 중'),
         }),
         successMessage: undefined,
       },
