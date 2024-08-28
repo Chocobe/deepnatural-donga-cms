@@ -1,12 +1,15 @@
 // react
 import {
+  useRef,
   useState,
   useMemo,
-  memo,
   useEffect,
+  memo,
 } from 'react';
 // store
 import useMathChapterPageStore from '@/store/mathChapterPageStore/mathChapterPageStore';
+// hook
+import useTableWrapperInitScrollEffect from '@/components/hooks/useTableWrapperInitScrollEffect';
 // ui
 import {
   flexRender,
@@ -72,6 +75,11 @@ function _MathChapterTable() {
 
   const setSelectedMathChapters = useMathChapterPageStore(state => state.setSelectedMathChapters);
   const clearSelectedMathChapters = useMathChapterPageStore(state => state.clearSelectedMathChapters);
+
+  //
+  // ref
+  //
+  const $tableRef = useRef<HTMLTableElement | null>(null);
 
   //
   // state
@@ -150,6 +158,11 @@ function _MathChapterTable() {
     },
   });
 
+  useTableWrapperInitScrollEffect({
+    $tableRef,
+    effectDef: tableData,
+  });
+
   //
   // effect
   //
@@ -161,7 +174,9 @@ function _MathChapterTable() {
   }, [tableData]);
 
   return (
-    <Table className="MathChapterTable">
+    <Table 
+      ref={$tableRef}
+      className="MathChapterTable">
       <TableHeader>
         {table.getHeaderGroups().map(headerGroup => (
           <TableRow

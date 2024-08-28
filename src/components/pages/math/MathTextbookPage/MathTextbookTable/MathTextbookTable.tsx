@@ -1,5 +1,6 @@
 // react
 import { 
+  useRef,
   useState,
   useMemo,
   useCallback,
@@ -12,6 +13,8 @@ import {
 import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
+// hook
+import useTableWrapperInitScrollEffect from '@/components/hooks/useTableWrapperInitScrollEffect';
 // ui
 import {
   flexRender,
@@ -59,6 +62,11 @@ function MathTextbookTable() {
 
   const setSelectedMathTextbooks = useMathTextbookPageStore(state => state.setSelectedMathTextbooks);
   const clearSelectedMathTextbooks = useMathTextbookPageStore(state => state.clearSelectedMathTextbooks);
+
+  //
+  // ref
+  //
+  const $tableRef = useRef<HTMLTableElement | null>(null);
 
   //
   // state
@@ -148,6 +156,11 @@ function MathTextbookTable() {
     },
   });
 
+  useTableWrapperInitScrollEffect({
+    $tableRef,
+    effectDef: tableData,
+  });
+
   const navigate = useNavigate();
 
   //
@@ -173,7 +186,9 @@ function MathTextbookTable() {
   }, [tableData]);
 
   return (
-    <Table className="MathTextbookTable">
+    <Table 
+      ref={$tableRef}
+      className="MathTextbookTable">
       <TableHeader>
         {table.getHeaderGroups().map(headerGroup => (
           <TableRow 
