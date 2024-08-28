@@ -5,6 +5,8 @@ import {
   memo,
   useEffect,
 } from 'react';
+// store
+import useMathChapterPageStore from '@/store/mathChapterPageStore/mathChapterPageStore';
 // ui
 import {
   flexRender,
@@ -36,9 +38,6 @@ import {
 // style
 import './MathChapterTable.css';
 
-// FIXME: mockup
-import mockMathChapterData from './MathChapterTable.mock';
-
 const columnHelper = createColumnHelper<TMathChapterFlattenModel>();
 
 function flatMathChapterModel(chapter1: TMathChapter1Model) {
@@ -67,6 +66,14 @@ function flatMathChapterModel(chapter1: TMathChapter1Model) {
 
 function _MathChapterTable() {
   //
+  // mathChapterPage store
+  //
+  const mathChaptersData = useMathChapterPageStore(state => state.mathChaptersData);
+
+  const setSelectedMathChapters = useMathChapterPageStore(state => state.setSelectedMathChapters);
+  const clearSelectedMathChapters = useMathChapterPageStore(state => state.clearSelectedMathChapters);
+
+  //
   // state
   //
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
@@ -75,11 +82,11 @@ function _MathChapterTable() {
   // cache
   //
   const tableData = useMemo(() => {
-    return mockMathChapterData.results.reduce((result, chapter1) => [
-      ...result,
-      ...flatMathChapterModel(chapter1)
-    ], [] as TMathChapterFlattenModel[]);
-  }, []);
+    return mathChaptersData?.results.reduce((tableData, chapter1) => [
+      ...tableData,
+      ...flatMathChapterModel(chapter1),
+    ], [] as TMathChapterFlattenModel[]) ?? [];
+  }, [mathChaptersData]);
 
   const columns = useMemo(() => [
     columnHelper.display({
@@ -133,14 +140,24 @@ function _MathChapterTable() {
       rowSelection,
     },
     getCoreRowModel: getCoreRowModel(),
-    onRowSelectionChange: setRowSelection,
+    onRowSelectionChange: rowSelection => {
+      setRowSelection(rowSelection);
+
+      setTimeout(() => {
+        const selectedMathChapters = table.getSelectedRowModel().rows.map(row => row.original);
+        setSelectedMathChapters(selectedMathChapters);
+      });
+    },
   });
 
   //
   // effect
   //
-  useEffect(() => {
-    console.log('tableData: ', tableData);
+  useEffect(function _clearSelectedMathChapters() {
+    setRowSelection({});
+    clearSelectedMathChapters();
+
+    // eslint-disable-next-line
   }, [tableData]);
 
   return (
