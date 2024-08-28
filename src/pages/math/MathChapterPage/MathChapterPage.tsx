@@ -3,6 +3,8 @@ import {
   useCallback,
   useEffect,
 } from 'react';
+// store
+import useMathChapterPageStore from '@/store/mathChapterPageStore/mathChapterPageStore';
 // api
 import ApiManager from '@/apis/ApiManager';
 // ui
@@ -18,6 +20,15 @@ import './MathChapterPage.css';
 
 function MathChapterPage() {
   //
+  // useMathChapterPage store
+  //
+  const searchParamsForRetrieveMathChaptersApi = useMathChapterPageStore(state => state.searchParamsForRetrieveMathChaptersApi);
+
+  const setMathChaptersData = useMathChapterPageStore(state => state.setMathChaptersData);
+  const clearSelectedMathChapters = useMathChapterPageStore(state => state.clearSelectedMathChapters);
+  const clearMathChaptersData = useMathChapterPageStore(state => state.clearMathChaptersData);
+
+  //
   // callback
   //
   const retrieveMathChapters = useCallback(async (
@@ -25,18 +36,30 @@ function MathChapterPage() {
   ) => {
     const response = await ApiManager
       .math
-      .retrieveMathChaptersApi(params);
+      .retrieveMathChaptersApi
+      .callWithNoticeMessageGroup(params);
 
-    console.log('response.data: ', response.data);
-  }, []);
+    if (response?.data) {
+      setMathChaptersData(response.data);
+    }
+  }, [setMathChaptersData]);
 
   useEffect(function init() {
     retrieveMathChapters({
-      searchParams: {
-        // FIXME: store 연동하기
-      },
+      searchParams: searchParamsForRetrieveMathChaptersApi,
     });
+
+    // eslint-disable-next-line
   }, [retrieveMathChapters]);
+
+  useEffect(function cleanup() {
+    return () => {
+      clearSelectedMathChapters();
+      clearMathChaptersData();
+    };
+
+    // eslint-disable-next-line
+  }, [clearSelectedMathChapters]);
 
   return (
     <div className="MathChapterPage">
