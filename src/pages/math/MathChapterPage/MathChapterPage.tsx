@@ -76,7 +76,7 @@ function MathChapterPage() {
       </div>
 
       <div className="MathChapterPage-footer">
-        <MathChapterFooter />
+        <MathChapterFooter retrieveMathChapters={retrieveMathChapters} />
       </div>
     </div>
   );
