@@ -1,5 +1,6 @@
 // ui
 import MathKnowledgeConceptHeader from '@/components/pages/math/MathKnowledgeConceptPage/MathKnowledgeConceptHeader/MathKnowledgeConceptHeader';
+import MathKnowledgeConceptTableActions from '@/components/pages/math/MathKnowledgeConceptPage/MathKnowledgeConceptTableActions/MathKnowledgeConceptTableActions';
 // style
 import './MathKnowledgeConceptPage.css';
 
@@ -11,7 +12,7 @@ function MathKnowledgeConceptPage() {
       </div>
 
       <div className="MathKnowledgeConceptPage-actions">
-        Actions
+        <MathKnowledgeConceptTableActions />
       </div>
 
       <div className="MathKnowledgeConceptPage-table">
