@@ -1,18 +1,28 @@
-// FIXME: mockup page
-import MockupPage from '@/components/pages/MockupPage/MockupPage';
+// ui
+import MathKnowledgeConceptHeader from '@/components/pages/math/MathKnowledgeConceptPage/MathKnowledgeConceptHeader/MathKnowledgeConceptHeader';
+// style
+import './MathKnowledgeConceptPage.css';
 
-// react
-import {
-  memo,
-} from 'react';
-
-function _MathKnowledgeConceptPage() {
+function MathKnowledgeConceptPage() {
   return (
-    <MockupPage 
-      // isTestOverflow
-      mockupName="MathKnowledgeConcept Page mockup" />
+    <div className="MathKnowledgeConceptPage">
+      <div className="MathKnowledgeConceptPage-header">
+        <MathKnowledgeConceptHeader />
+      </div>
+
+      <div className="MathKnowledgeConceptPage-actions">
+        Actions
+      </div>
+
+      <div className="MathKnowledgeConceptPage-table">
+        Table
+      </div>
+
+      <div className="MathKnowledgeConceptPage-footer">
+        Footer
+      </div>
+    </div>
   );
 }
 
-const MathKnowledgeConceptPage = memo(_MathKnowledgeConceptPage);
 export default MathKnowledgeConceptPage;
