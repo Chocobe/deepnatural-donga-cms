@@ -8,6 +8,9 @@ import {
 import { 
   SELECT_OPTION_ITEM_ALL,
 } from '../cmsPages.type';
+import { 
+  cmsCommonModelClassTypeMapper,
+} from '@/apis/models/cmsCommonModel.type';
 
 //
 // 수학 커리큘럼 선택지
@@ -33,24 +36,67 @@ export const mathCurriculumFilterOptions: TCommonSelectOptionItem[] = [
 //
 // 수학 성취기준 학년군 선택지
 //
-export const mathGradeClusterOptions: TCommonSelectOptionItem[] = [
-  {
-    text: '초3~4',
-    value: '초3-4',
-  },
-  {
-    text: '초5~6',
-    value: '초5-6',
-  },
-  {
-    text: '중1~3',
-    value: '중1-3',
-  },
-] as const;
+export const mathGradeClusterOptions: {
+  [cmsCommonModelClassTypeMapper.ELEMENTARY]: TCommonSelectOptionItem[];
+  [cmsCommonModelClassTypeMapper.MIDDLE]: TCommonSelectOptionItem[];
+  [cmsCommonModelClassTypeMapper.HIGH]: TCommonSelectOptionItem[];
+} = (() => {
+  const commonOptions: TCommonSelectOptionItem[] = [
+    {
+      text: '공통과목',
+      value: '공통과목',
+    },
+    {
+      text: '선택과목',
+      value: '선택과목',
+    },
+  ] as const;
 
-export const mathGradeClusterFilterOptions: TCommonSelectOptionItem[] = [
-  {
-    ...SELECT_OPTION_ITEM_ALL,
-  },
-  ...mathGradeClusterOptions,
-] as const;
+  return {
+    [cmsCommonModelClassTypeMapper.ELEMENTARY]: [
+      ...commonOptions,
+      {
+        text: '초3~4',
+        value: '초3~4',
+      },
+    ],
+    [cmsCommonModelClassTypeMapper.MIDDLE]: [
+      ...commonOptions,
+      {
+        text: '중1~3',
+        value: '중1~3',
+      },
+    ],
+    [cmsCommonModelClassTypeMapper.HIGH]: [
+      ...commonOptions,
+    ],
+  } as const;
+})();
+
+export const mathGradeClusterFilterOptions: typeof mathGradeClusterOptions & {
+  [' ']: TCommonSelectOptionItem[];
+} = {
+  [' ']: [
+    {
+      ...SELECT_OPTION_ITEM_ALL,
+    },
+  ],
+  [cmsCommonModelClassTypeMapper.ELEMENTARY]: [
+    {
+      ...SELECT_OPTION_ITEM_ALL,
+    },
+    ...mathGradeClusterOptions[cmsCommonModelClassTypeMapper.ELEMENTARY],
+  ],
+  [cmsCommonModelClassTypeMapper.MIDDLE]: [
+    {
+      ...SELECT_OPTION_ITEM_ALL,
+    },
+    ...mathGradeClusterOptions[cmsCommonModelClassTypeMapper.MIDDLE],
+  ],
+  [cmsCommonModelClassTypeMapper.HIGH]: [
+    {
+      ...SELECT_OPTION_ITEM_ALL,
+    },
+    ...mathGradeClusterOptions[cmsCommonModelClassTypeMapper.HIGH],
+  ],
+} as const;
