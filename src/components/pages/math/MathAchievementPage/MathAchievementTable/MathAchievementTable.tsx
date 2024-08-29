@@ -3,7 +3,10 @@ import {
   useRef,
   useState,
   useMemo,
+  useEffect,
 } from 'react';
+// store
+import useMathAchievementPageStore from '@/store/mathAchievementPageStore/mathAchievementPageStore';
 // hook
 import useTableWrapperInitScrollEffect from '@/components/hooks/useTableWrapperInitScrollEffect';
 // ui
@@ -37,9 +40,6 @@ import {
 // style
 import './MathAchievementTable.css';
 
-// FIXME: mock
-import mockMathAchievementsData from './MathAchievementTable.mock';
-
 const columnHelper = createColumnHelper<TMathAchievementFlattenModel>();
 
 function flatMathAchievementModel(achievement1: TMathAchievement1Model) {
@@ -68,6 +68,14 @@ function flatMathAchievementModel(achievement1: TMathAchievement1Model) {
 
 function MathAchievementTable() {
   //
+  // mathAchievementPage store
+  //
+  const mathAchievementsData = useMathAchievementPageStore(state => state.mathAchievementsData);
+
+  const clearSelectedMathAchievements = useMathAchievementPageStore(state => state.clearSelectedMathAchievements);
+  const setSelectedMathAchievements = useMathAchievementPageStore(state => state.setSelectedMathAchievements);
+
+  //
   // ref
   //
   const $tableRef = useRef<HTMLTableElement | null>(null);
@@ -76,18 +84,16 @@ function MathAchievementTable() {
   // state
   //
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-  // FIXME: mockup
-  const [_selectedMathAchievements, setSelectedMathAchievements] = useState<TMathAchievementFlattenModel[]>([]);
 
   //
   // cache
   //
   const tableData = useMemo(() => {
-    return mockMathAchievementsData.results.reduce((result, achievement1) => [
+    return mathAchievementsData?.results.reduce((result, achievement1) => [
       ...result,
       ...flatMathAchievementModel(achievement1),
-    ], [] as TMathAchievementFlattenModel[]);
-  }, []);
+    ], [] as TMathAchievementFlattenModel[]) ?? [];
+  }, [mathAchievementsData]);
 
   const columns = useMemo(() => [
     columnHelper.display({
@@ -157,6 +163,16 @@ function MathAchievementTable() {
     $tableRef,
     effectDef: tableData,
   });
+
+  //
+  // effect
+  //
+  useEffect(function _clearSelectedMathAchievements() {
+    setRowSelection({});
+    clearSelectedMathAchievements();
+
+    // eslint-disable-next-line
+  }, [tableData]);
 
   return (
     <Table
