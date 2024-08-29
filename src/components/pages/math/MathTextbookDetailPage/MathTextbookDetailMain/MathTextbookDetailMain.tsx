@@ -7,7 +7,7 @@ import {
 // store
 import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
 // ui
-import FormSelect from '@/components/shadcn-ui-custom/FormSelect/FormSelect';
+import CommonSelect from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect';
 import { 
   Label,
 } from '@/components/shadcn-ui/ui/label';
@@ -16,12 +16,12 @@ import {
 } from '@/components/shadcn-ui/ui/input';
 // type
 import { 
-  textbookClassTypeOptions,
-  textbookGradeOptions,
-  textbookTermOptions,
+  cmsClassTypeOptions,
+  cmsGradeOptions,
+  cmsTermOptions,
 } from '@/components/pages/cmsPages.type';
 import { 
-  mathTextbookCurriculumOptions,
+  mathCurriculumOptions,
 } from '../../mathPages.type';
 import { 
   TMathTextbookModel, 
@@ -74,10 +74,10 @@ function MathTextbookDetailMain() {
       id: 'curriculum',
       label: '교육과정',
       $element: (
-        <FormSelect
+        <CommonSelect
           id="curriculum"
           className="formItem"
-          options={mathTextbookCurriculumOptions}
+          options={mathCurriculumOptions}
           value={detailFormState.curriculum}
           onChange={curriculum => onChangeSelect({
             curriculum: curriculum as TMathTextbookModelCurriculum,
@@ -88,10 +88,10 @@ function MathTextbookDetailMain() {
       id: 'classtype',
       label: '학교급',
       $element: (
-        <FormSelect
+        <CommonSelect
           id="classtype"
           className="formItem"
-          options={textbookClassTypeOptions}
+          options={cmsClassTypeOptions}
           value={detailFormState.classtype}
           onChange={classtype => onChangeSelect({
             classtype: classtype as TCMSCommonModelClassType,
@@ -103,10 +103,10 @@ function MathTextbookDetailMain() {
       id: 'grade',
       label: '학년',
       $element: (
-        <FormSelect
+        <CommonSelect
           id="grade"
           className="formItem"
-          options={textbookGradeOptions[detailFormState.classtype]}
+          options={cmsGradeOptions[detailFormState.classtype]}
           value={String(detailFormState.grade)}
           onChange={grade => onChangeSelect({
             grade: Number(grade) as TCMSCommonModelMiddleHighGrade,
@@ -117,10 +117,10 @@ function MathTextbookDetailMain() {
       id: 'term',
       label: '학기',
       $element: (
-        <FormSelect
+        <CommonSelect
           id="term"
           className="formItem"
-          options={textbookTermOptions}
+          options={cmsTermOptions}
           value={String(detailFormState.term)}
           onChange={term => onChangeSelect({
             term: Number(term) as TCMSCommonModelTerm,

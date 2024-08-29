@@ -41,9 +41,9 @@ import {
   cmsCommonModelClassTypeMapper,
 } from '@/apis/models/cmsCommonModel.type';
 import { 
-  textbookClassTypeOptions,
-  textbookGradeOptions,
-  textbookTermOptions,
+  cmsClassTypeOptions,
+  cmsGradeOptions,
+  cmsTermOptions,
 } from '@/components/pages/cmsPages.type';
 // util
 import { 
@@ -102,7 +102,7 @@ function MathTextbookTable() {
           cell,
         } = props;
 
-        const valueItem = textbookClassTypeOptions.find(({ value }) => value === cell.getValue());
+        const valueItem = cmsClassTypeOptions.find(({ value }) => value === cell.getValue());
         return valueItem?.text ?? ' ';
       },
     }),
@@ -113,7 +113,7 @@ function MathTextbookTable() {
           cell,
         } = props;
 
-        const valueItem = textbookGradeOptions[
+        const valueItem = cmsGradeOptions[
           cmsCommonModelClassTypeMapper.ELEMENTARY
         ].find(({ value }) => value === String(cell.getValue()));
 
@@ -127,7 +127,7 @@ function MathTextbookTable() {
           cell,
         } = props;
 
-        const valueItem = textbookTermOptions
+        const valueItem = cmsTermOptions
           .find(({ value }) => value === String(cell.getValue()));
 
         return valueItem?.text ?? ' ';

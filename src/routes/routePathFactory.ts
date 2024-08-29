@@ -21,6 +21,7 @@ const routePathFactory = {
     getMathRootPath() {
       return '/math' as const;
     },
+
     // 교과서
     getTextbookPath() {
       return `${this.getMathRootPath()}/textbook` as const;
@@ -31,26 +32,32 @@ const routePathFactory = {
     getTextbookDetailPath(textbookId: string) {
       return `${this.getTextbookPath()}/${textbookId}` as const;
     },
+
     // 교과서 단원
     getChapterPath() {
       return `${this.getMathRootPath()}/chapter` as const;
     },
+
     // 성취기준
     getAchievementPath() {
       return `${this.getMathRootPath()}/achievement` as const;
     },
+
     // 지식개념
     getKnowledgeConceptPath() {
       return `${this.getMathRootPath()}/knowledge-concept` as const;
     },
+
     // 시리즈-출처
     getSeriesSourcePath() {
       return `${this.getMathRootPath()}/series-source` as const;
     },
+
     // 지문
     getInstructionPath() {
       return `${this.getMathRootPath()}/instruction` as const;
     },
+
     // 문항
     getQuestionPath() {
       return `${this.getMathRootPath()}/question` as const;
@@ -61,30 +68,37 @@ const routePathFactory = {
     getEnglishRootPath() {
       return '/english' as const;
     },
+
     // 교과서
     getTextbookPath() {
       return `${this.getEnglishRootPath()}/textbook` as const;
     },
+
     // 교과서 단원
     getChapterPath() {
       return `${this.getEnglishRootPath()}/chapter` as const;
     },
+
     // 성취기준
     getAchievementPath() {
       return `${this.getEnglishRootPath()}/achievement` as const;
     },
+
     // 지식개념
     getKnowledgeConceptPath() {
       return `${this.getEnglishRootPath()}/knowledge-concept` as const;
     },
+
     // 시리즈-출처
     getSeriesSourcePath() {
       return `${this.getEnglishRootPath()}/series-source` as const;
     },
+
     // 지문
     getInstructionPath() {
       return `${this.getEnglishRootPath()}/instruction` as const;
     },
+
     // 문항
     getQuestionPath() {
       return `${this.getEnglishRootPath()}/question` as const;

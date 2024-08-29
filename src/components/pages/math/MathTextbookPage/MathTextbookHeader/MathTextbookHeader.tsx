@@ -35,10 +35,10 @@ import {
 } from 'react-icons/lu';
 // types
 import { 
-  textbookClassTypeFilterOptions,
-  textbookGradeFilterOptions,
-  textbookTermFilterOptions,
-} from './MathTextbookHeader.type';
+  cmsTermFilterOptions,
+  cmsGradeFilterOptions,
+  cmsClassTypeFilterOptions,
+} from '@/components/pages/cmsPages.type';
 import { 
   TCMSCommonModelClassType,
   TCMSCommonModelElementaryGrade,
@@ -170,8 +170,8 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
       Component: (
         <CommonSelect
           id="classtype"
-          options={textbookClassTypeFilterOptions}
-          value={searchParamsForRetrieveMathTextbooksApi.classtype ?? textbookClassTypeFilterOptions[0].value}
+          options={cmsClassTypeFilterOptions}
+          value={searchParamsForRetrieveMathTextbooksApi.classtype ?? cmsClassTypeFilterOptions[0].value}
           onChange={onChangeClassType} />
       ),
     },
@@ -182,11 +182,17 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
         <CommonSelect
           id="grade"
           options={searchParamsForRetrieveMathTextbooksApi.classtype
-            ? textbookGradeFilterOptions[searchParamsForRetrieveMathTextbooksApi.classtype]
-            : textbookGradeFilterOptions[' ']
+            ? cmsGradeFilterOptions[searchParamsForRetrieveMathTextbooksApi.classtype]
+            : cmsGradeFilterOptions[' ']
           }
-          value={searchParamsForRetrieveMathTextbooksApi.grade ?? textbookGradeFilterOptions[' '][0].value}
-          onChange={onChangeGrade} />
+          value={String(
+            searchParamsForRetrieveMathTextbooksApi.grade ?? 
+            cmsGradeFilterOptions[' '][0].value
+          )}
+          onChange={e => {
+            console.log('e: ', `(${e})`);
+            onChangeGrade(e);
+          }} />
       ),
     },
     {
@@ -195,8 +201,11 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
       Component: (
         <CommonSelect
           id="term"
-          options={textbookTermFilterOptions}
-          value={searchParamsForRetrieveMathTextbooksApi.term ?? textbookTermFilterOptions[0].value}
+          options={cmsTermFilterOptions}
+          value={String(
+            searchParamsForRetrieveMathTextbooksApi.term ?? 
+            cmsTermFilterOptions[0].value
+          )}
           onChange={onChangeTerm} />
       ),
     },

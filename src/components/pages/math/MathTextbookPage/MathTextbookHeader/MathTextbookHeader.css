@@ -39,7 +39,7 @@
     }
 
     .filters {
-      @apply flex items-center gap-14;
+      @apply flex flex-wrap items-center gap-x-14 gap-y-4;
 
       margin-top: 20px;
       padding: 24px;
