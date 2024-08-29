@@ -1,5 +1,6 @@
 // type
 import { 
+  mathAchievementGradeClusterMapper,
   mathTextbookModelCurriculumMapper,
 } from '@/apis/models/mathModel.type';
 import { 
@@ -43,12 +44,12 @@ export const mathGradeClusterOptions: {
 } = (() => {
   const commonOptions: TCommonSelectOptionItem[] = [
     {
-      text: '공통과목',
-      value: '공통과목',
+      text: mathAchievementGradeClusterMapper.ELECTIVE_SUBJECT,
+      value: mathAchievementGradeClusterMapper.ELECTIVE_SUBJECT,
     },
     {
-      text: '선택과목',
-      value: '선택과목',
+      text: mathAchievementGradeClusterMapper.COMMON_SUBJECT,
+      value: mathAchievementGradeClusterMapper.COMMON_SUBJECT,
     },
   ] as const;
 
@@ -56,15 +57,19 @@ export const mathGradeClusterOptions: {
     [cmsCommonModelClassTypeMapper.ELEMENTARY]: [
       ...commonOptions,
       {
-        text: '초3~4',
-        value: '초3~4',
+        text: mathAchievementGradeClusterMapper.ELEMENTARY_3_4,
+        value: mathAchievementGradeClusterMapper.ELEMENTARY_3_4,
+      },
+      {
+        text: mathAchievementGradeClusterMapper.ELEMENTARY_5_6,
+        value: mathAchievementGradeClusterMapper.ELEMENTARY_5_6,
       },
     ],
     [cmsCommonModelClassTypeMapper.MIDDLE]: [
       ...commonOptions,
       {
-        text: '중1~3',
-        value: '중1~3',
+        text: mathAchievementGradeClusterMapper.MIDDLE,
+        value: mathAchievementGradeClusterMapper.MIDDLE,
       },
     ],
     [cmsCommonModelClassTypeMapper.HIGH]: [

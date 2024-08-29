@@ -24,7 +24,7 @@ export const mathTextbookModelCurriculumMapper = {
 } as const;
 export type TMathTextbookModelCurriculum = typeof mathTextbookModelCurriculumMapper[keyof typeof mathTextbookModelCurriculumMapper];
 
-type TMathTextbookGenericModel<T extends TCMSCommonModelClassType> = {
+type TMathTextbookGenericModel<TClassType extends TCMSCommonModelClassType> = {
   id: string;
   // TODO: 아직 API 미지원 속성
   /** 과목 */
@@ -37,7 +37,7 @@ type TMathTextbookGenericModel<T extends TCMSCommonModelClassType> = {
   /** 저자 */
   author: string;
   /** 학교급 */
-  classtype: T;
+  classtype: TClassType;
   /** 학년 */
   grade: number;
   /** 학기 */
@@ -110,4 +110,48 @@ export type TMathChapterFlattenModel = {
   chapter2: TMathChapter2Model;
   /** 소단원 정보 */
   chapter3?: TMathChapter3Model;
+};
+
+/**
+ * Math Achievement (수학 성취기준)
+ */
+export const mathAchievementGradeClusterMapper = {
+  ELECTIVE_SUBJECT: '선택과목',
+  COMMON_SUBJECT: '공통과목',
+  ELEMENTARY_3_4: '초3~4',
+  ELEMENTARY_5_6: '초5~6',
+  MIDDLE: '중1~3',
+} as const;
+export type TMathAchievementGradeCluster = typeof mathAchievementGradeClusterMapper[keyof typeof mathAchievementGradeClusterMapper];
+
+/** 수학 성취기준 공통 속성 */
+export type TMathAchievementCommonModel = {
+  id: number;
+  title: string;
+  no: string;
+};
+
+/** 수학 성취기준 소 */
+export type TMathAchievement3Model = TMathAchievementCommonModel & {
+  code: string;
+};
+
+/** 수학 성취기준 중 */
+export type TMathAchievement2Model = TMathAchievementCommonModel & {
+  achievement3_set: TMathAchievement3Model[];
+};
+
+/** 수학 성취기준 대 */
+export type TMathAchievement1Model = TMathAchievementCommonModel & {
+  curriculum: TMathTextbookModelCurriculum;
+  classtype: TCMSCommonModelClassType;
+  grade_cluster: TMathAchievementGradeCluster;
+  achievement2_set: TMathAchievement2Model[];
+};
+
+/** 수학 성취기준 */
+export type TMathAchievementFlattenModel = {
+  achievement1: TMathAchievement1Model;
+  achievement2: TMathAchievement2Model;
+  achievement3?: TMathAchievement3Model;
 };
