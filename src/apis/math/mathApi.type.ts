@@ -10,8 +10,11 @@ import {
   TPaginationModel,
 } from '../models/cmsCommonModel.type';
 import { 
+  TMathAchievement1Model,
+  TMathAchievementGradeCluster,
   TMathChapter1Model,
   TMathTextbookModel,
+  TMathTextbookModelCurriculum,
 } from '../models/mathModel.type';
 
 //
@@ -73,3 +76,21 @@ export type TRetrieveMathChaptersApiRequestParams = TApiRequestNonBodyParams<voi
 }>;
 
 export type TRetrieveMathChaptersApiResponse = TPaginationModel<TMathChapter1Model>;
+
+// --- --- --- --- --- --- --- --- --- ---
+
+//
+// (GET) 수학 성취기준 목록
+//
+export type TRetrieveMathAchievementsApiRequestParams = TApiRequestNonBodyParams<void, {
+  achievement2?: string;
+  achievement3?: string;
+  classtype?: TCMSCommonModelClassType;
+  curriculum?: TMathTextbookModelCurriculum;
+  grade_cluster?: TMathAchievementGradeCluster;
+  page?: number;
+  search?: string;
+  title?: string;
+}>;
+
+export type TRetrieveMathAchievementsApiResponse = TPaginationModel<TMathAchievement1Model>;
