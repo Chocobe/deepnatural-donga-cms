@@ -29,7 +29,10 @@ const useMathChapterPageStore = create(devtools<TMathChapterPageStore>((set, _ge
   updateSearchParamsForRetrieveMathChaptersApi: callback => {
     set(old => ({
       ...old,
-      searchParamsForRetrieveMathChaptersApi: callback(old.searchParamsForRetrieveMathChaptersApi),
+      searchParamsForRetrieveMathChaptersApi: {
+        ...old.searchParamsForRetrieveMathChaptersApi,
+        ...callback(old.searchParamsForRetrieveMathChaptersApi),
+      },
     }), false, 'updateSearchParamsForRetrieveMathChaptersApi');
   },
 
