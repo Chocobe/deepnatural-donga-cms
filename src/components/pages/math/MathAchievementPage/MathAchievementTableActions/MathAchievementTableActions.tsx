@@ -1,11 +1,13 @@
 // react
 import {
-  useState,
-  useCallback,
-  memo,
   useRef,
+  useCallback,
+  useEffect,
+  memo,
   ChangeEvent,
 } from 'react';
+// store
+import useMathAchievementPageStore from '@/store/mathAchievementPageStore/mathAchievementPageStore';
 // hook
 import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
 // ui
@@ -32,19 +34,35 @@ import {
 import { 
   mathAchievementSearchTypeOptions,
 } from './MathAchievementTableActions.type';
+import { 
+  TRetrieveMathAchievementsApiRequestParams,
+} from '@/apis/math/mathApi.type';
 // style
 import './MathAchievementTableActions.css';
 
-function _MathAchievementTableActions() {
+type TMathAchievementTableActionsProps = {
+  retrieveMathAchievements: (params: TRetrieveMathAchievementsApiRequestParams) => Promise<void>;
+};
+
+function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) {
+  const {
+    retrieveMathAchievements,
+  } = props;
+
+  //
+  // mathAchievementPage store
+  //
+  const mathAchievementsData = useMathAchievementPageStore(state => state.mathAchievementsData);
+
+  const searchParamsForRetrieveMathAchievementsApi = useMathAchievementPageStore(state => state.searchParamsForRetrieveMathAchievementsApi);
+  const search = searchParamsForRetrieveMathAchievementsApi.search ?? '';
+
+  const updateSearchParamsForRetrieveMathAchievementsApi = useMathAchievementPageStore(state => state.updateSearchParamsForRetrieveMathAchievementsApi);
+
   //
   // ref
   //
   const $searchInputRef = useRef<HTMLInputElement | null>(null);
-
-  //
-  // state
-  //
-  const [search, setSearch] = useState('');
 
   //
   // callback
@@ -56,16 +74,31 @@ function _MathAchievementTableActions() {
   const onChangeSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const search = e.target.value;
 
-    setSearch(search);
-  }, []);
+    updateSearchParamsForRetrieveMathAchievementsApi(old => ({
+      ...old,
+      search,
+    }));
+  }, [updateSearchParamsForRetrieveMathAchievementsApi]);
 
   const onEnter = useCallback(() => {
-    console.log('onEnter()');
-  }, []);
+    $searchInputRef.current?.blur();
+
+    const params: TRetrieveMathAchievementsApiRequestParams = {
+      searchParams: searchParamsForRetrieveMathAchievementsApi,
+    };
+
+    retrieveMathAchievements(params);
+  }, [
+    searchParamsForRetrieveMathAchievementsApi,
+    retrieveMathAchievements,
+  ]);
 
   const onESC = useCallback(() => {
-    console.log('onESC()');
-  }, []);
+    updateSearchParamsForRetrieveMathAchievementsApi(old => ({
+      ...old,
+      search: undefined,
+    }));
+  }, [updateSearchParamsForRetrieveMathAchievementsApi]);
 
   //
   // hook
@@ -73,6 +106,13 @@ function _MathAchievementTableActions() {
   const {
     onKeyDown,
   } = useOnKeyDownEnterOrESC(onEnter, onESC);
+
+  //
+  // effect
+  //
+  useEffect(function focusSearchInput() {
+    $searchInputRef.current?.focus();
+  }, [mathAchievementsData]);
 
   return (
     <div className="MathAchievementTableActions">
@@ -104,17 +144,15 @@ function _MathAchievementTableActions() {
           </Select>
         </TBUTooltip>
 
-        <TBUTooltip>
-          <InputWithIcon
-            ref={$searchInputRef}
-            containerClassName="searchInput"
-            placeholder="검색어를 입력해주세요"
-            autoFocus
-            value={search}
-            onChange={onChangeSearch}
-            onKeyDown={onKeyDown}
-            EndIcon={LuSearch} />
-        </TBUTooltip>
+        <InputWithIcon
+          ref={$searchInputRef}
+          containerClassName="searchInput"
+          placeholder="검색어를 입력해주세요"
+          autoFocus
+          value={search}
+          onChange={onChangeSearch}
+          onKeyDown={onKeyDown}
+          EndIcon={LuSearch} />
       </div>
 
       <div className="MathAchievementTableActions-rightSide">

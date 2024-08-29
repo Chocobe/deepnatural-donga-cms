@@ -4,6 +4,7 @@ import {
   useState,
   useMemo,
   useEffect,
+  memo,
 } from 'react';
 // store
 import useMathAchievementPageStore from '@/store/mathAchievementPageStore/mathAchievementPageStore';
@@ -66,7 +67,7 @@ function flatMathAchievementModel(achievement1: TMathAchievement1Model) {
   }, [] as TMathAchievementFlattenModel[]);
 }
 
-function MathAchievementTable() {
+function _MathAchievementTable() {
   //
   // mathAchievementPage store
   //
@@ -226,4 +227,5 @@ function MathAchievementTable() {
   );
 }
 
+const MathAchievementTable = memo(_MathAchievementTable);
 export default MathAchievementTable;

@@ -72,7 +72,7 @@ function MathAchievementPage() {
       </div>
 
       <div className="MathAchievementPage-actions">
-        <MathAchievementTableActions />
+        <MathAchievementTableActions retrieveMathAchievements={retrieveMathAchievements} />
       </div>
 
       <div className="MathAchievementPage-table">
