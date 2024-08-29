@@ -6,10 +6,6 @@ import {
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
-// icon
-import { 
-  LuChevronDown,
-} from 'react-icons/lu';
 // style
 import { 
   cn,
@@ -43,8 +39,6 @@ function _SearchModalTrigger(props: TSearchModalTriggerProps) {
       <div className="value">
         {value}
       </div>
-
-      <LuChevronDown className="icon" />
     </Button>
   );
 }
