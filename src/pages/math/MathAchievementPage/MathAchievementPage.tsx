@@ -80,7 +80,7 @@ function MathAchievementPage() {
       </div>
 
       <div className="MathAchievementPage-footer">
-        <MathAchievementFooter />
+        <MathAchievementFooter retrieveMathAchievements={retrieveMathAchievements} />
       </div>
     </div>
   );
