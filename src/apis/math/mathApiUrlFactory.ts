@@ -60,9 +60,20 @@ const mathApiUrlFactory = (() => {
     },
   };
 
+  //
+  // 수학 성취기준
+  //
+  const mathAchievementPaths = {
+    /** (GET) 수학 성취기준 목록 */
+    retrieveMathAchievementsPath() {
+      return `${BASE_PATH}achievements/`;
+    },
+  };
+
   return {
     ...mathTextbookPaths,
     ...mathChapterPaths,
+    ...mathAchievementPaths,
   } as const;
 })();
 

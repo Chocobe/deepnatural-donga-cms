@@ -2,12 +2,12 @@
 import {
   useRef,
   useCallback,
+  useEffect,
   memo,
   ChangeEvent,
-  useEffect,
 } from 'react';
 // store
-import useMathChapterPageStore from '@/store/mathChapterPageStore/mathChapterPageStore';
+import useMathAchievementPageStore from '@/store/mathAchievementPageStore/mathAchievementPageStore';
 // hook
 import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
 // ui
@@ -27,39 +27,37 @@ import {
 import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
 import { 
-  LuFileInput,
   LuSearch,
+  LuFileInput,
 } from 'react-icons/lu';
 // type
 import { 
-  mathChapterSearchTypeOptions,
-} from './MathChapterTableActions.type';
+  mathAchievementSearchTypeOptions,
+} from './MathAchievementTableActions.type';
 import { 
-  TRetrieveMathChaptersApiRequestParams,
+  TRetrieveMathAchievementsApiRequestParams,
 } from '@/apis/math/mathApi.type';
 // style
-import './MathChapterTableActions.css';
+import './MathAchievementTableActions.css';
 
-type TMathChapterTableActionsProps = {
-  retrieveMathChapters: (params: TRetrieveMathChaptersApiRequestParams) => Promise<void>;
+type TMathAchievementTableActionsProps = {
+  retrieveMathAchievements: (params: TRetrieveMathAchievementsApiRequestParams) => Promise<void>;
 };
 
-function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
+function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) {
   const {
-    retrieveMathChapters,
+    retrieveMathAchievements,
   } = props;
 
   //
-  // mathChapterPage store
+  // mathAchievementPage store
   //
-  const mathChaptersData = useMathChapterPageStore(state => state.mathChaptersData);
+  const mathAchievementsData = useMathAchievementPageStore(state => state.mathAchievementsData);
 
-  const searchParamsForRetrieveMathChaptersApi = useMathChapterPageStore(state => state.searchParamsForRetrieveMathChaptersApi);
-  const {
-    search = '',
-  } = searchParamsForRetrieveMathChaptersApi;
+  const searchParamsForRetrieveMathAchievementsApi = useMathAchievementPageStore(state => state.searchParamsForRetrieveMathAchievementsApi);
+  const search = searchParamsForRetrieveMathAchievementsApi.search ?? '';
 
-  const updateSearchParamsForRetrieveMathChaptersApi = useMathChapterPageStore(state => state.updateSearchParamsForRetrieveMathChaptersApi);
+  const updateSearchParamsForRetrieveMathAchievementsApi = useMathAchievementPageStore(state => state.updateSearchParamsForRetrieveMathAchievementsApi);
 
   //
   // ref
@@ -76,33 +74,31 @@ function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
   const onChangeSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const search = e.target.value;
 
-    updateSearchParamsForRetrieveMathChaptersApi(old => ({
+    updateSearchParamsForRetrieveMathAchievementsApi(old => ({
       ...old,
       search,
     }));
-  }, [updateSearchParamsForRetrieveMathChaptersApi]);
+  }, [updateSearchParamsForRetrieveMathAchievementsApi]);
 
   const onEnter = useCallback(() => {
     $searchInputRef.current?.blur();
 
-    const params: TRetrieveMathChaptersApiRequestParams = {
-      searchParams: {
-        ...searchParamsForRetrieveMathChaptersApi,
-      },
+    const params: TRetrieveMathAchievementsApiRequestParams = {
+      searchParams: searchParamsForRetrieveMathAchievementsApi,
     };
 
-    retrieveMathChapters(params);
+    retrieveMathAchievements(params);
   }, [
-    searchParamsForRetrieveMathChaptersApi,
-    retrieveMathChapters,
+    searchParamsForRetrieveMathAchievementsApi,
+    retrieveMathAchievements,
   ]);
 
   const onESC = useCallback(() => {
-    updateSearchParamsForRetrieveMathChaptersApi(old => ({
+    updateSearchParamsForRetrieveMathAchievementsApi(old => ({
       ...old,
       search: undefined,
     }));
-  }, [updateSearchParamsForRetrieveMathChaptersApi]);
+  }, [updateSearchParamsForRetrieveMathAchievementsApi]);
 
   //
   // hook
@@ -116,11 +112,11 @@ function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
   //
   useEffect(function focusSearchInput() {
     $searchInputRef.current?.focus();
-  }, [mathChaptersData]);
+  }, [mathAchievementsData]);
 
   return (
-    <div className="MathChapterTableActions">
-      <div className="MathChapterTableActions-leftSide">
+    <div className="MathAchievementTableActions">
+      <div className="MathAchievementTableActions-leftSide">
         <TBUTooltip>
           <Select
             value={''}
@@ -130,7 +126,7 @@ function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
             </SelectTrigger>
 
             <SelectContent>
-              {mathChapterSearchTypeOptions.map(item => {
+              {mathAchievementSearchTypeOptions.map(item => {
                 const {
                   text,
                   value,
@@ -150,7 +146,7 @@ function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
 
         <InputWithIcon
           ref={$searchInputRef}
-          containerClassName="searchValue"
+          containerClassName="searchInput"
           placeholder="검색어를 입력해주세요"
           autoFocus
           value={search}
@@ -159,7 +155,15 @@ function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
           EndIcon={LuSearch} />
       </div>
 
-      <div className="MathChapterTableActions-rightSide">
+      <div className="MathAchievementTableActions-rightSide">
+        <TBUTooltip>
+          <Button
+            className="actionButton"
+            disabled>
+            삭제
+          </Button>
+        </TBUTooltip>
+
         <TBUTooltip>
           <Button
             className="actionButton"
@@ -173,5 +177,5 @@ function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
   );
 }
 
-const MathChapterTableActions = memo(_MathChapterTableActions);
-export default MathChapterTableActions;
+const MathAchievementTableActions = memo(_MathAchievementTableActions);
+export default MathAchievementTableActions;

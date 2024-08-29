@@ -1,4 +1,4 @@
-.MathChapterHeader {
+.MathAchievementHeader {
   position: relative;
 
   &-accordion {
@@ -39,7 +39,7 @@
     }
 
     .filters {
-      @apply flex items-center gap-14;
+      @apply flex flex-wrap items-center gap-x-14 gap-y-4;
 
       margin-top: 20px;
       padding: 24px;
@@ -48,17 +48,22 @@
       border-radius: 4px;
 
       .filterItem {
-        @apply flex items-center gap-2 flex-shrink;
+        @apply flex items-center gap-2;
 
-        overflow: hidden;
+        width: 300px;
 
         .label {
           flex-shrink: 0;
           width: 80px;
+
+          color: #5B5B5B;
+          font-size: 14px;
+          line-height: 20px;
+          font-weight: 500;
         }
 
         .editor {
-          min-width: 200px !important;
+          width: 100%;
         }
       }
     }

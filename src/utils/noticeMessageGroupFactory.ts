@@ -35,6 +35,7 @@ const noticeMessageGroupFactory: {
     };
     // FIXME: textbook, chapter, etc. 분리하기
     math: {
+      // 교과서
       retrieveMathTextbooks: TNoticeMessageGroup;
       retrieveMathTextbook: TNoticeMessageGroup;
       patchMathTextbook: TNoticeMessageGroup;
@@ -42,7 +43,11 @@ const noticeMessageGroupFactory: {
       deleteMathTextbook: TNoticeMessageGroup;
       retrieveMathTextbookHistories: TNoticeMessageGroup;
 
+      // 단원정보
       retrieveMathChapters: TNoticeMessageGroup;
+
+      // 성취기준
+      retrieveMathAchievements: TNoticeMessageGroup;
     };
   };
 
@@ -284,6 +289,20 @@ const noticeMessageGroupFactory: {
         }),
         errorMessage: () => ({
           ...createNetworkErrorMessage('수학 단원 정보를 조회 중'),
+        }),
+        successMessage: undefined,
+      },
+
+      // --- --- --- --- --- --- --- --- --- ---
+
+      // (GET) 수학 성취기준 목록
+      retrieveMathAchievements: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 성취기준 정보를 조회 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 성취기준 정보를 조회 중'),
         }),
         successMessage: undefined,
       },

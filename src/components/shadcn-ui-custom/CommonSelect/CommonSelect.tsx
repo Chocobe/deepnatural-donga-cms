@@ -15,18 +15,18 @@ import {
 } from '@/components/shadcn-ui/ui/select';
 // type
 import { 
-  TFormSelectOptionItem,
-} from './FormSelect.type';
+  TCommonSelectOptionItem,
+} from './CommonSelect.type';
 // style
 import { 
   cn,
 } from '@/lib/shadcn-ui-utils';
-import './FormSelect.css';
+import './CommonSelect.css';
 
-type TFormSelectProps = {
+type TCommonSelectProps = {
   id?: string;
   className?: string;
-  options: TFormSelectOptionItem[];
+  options: TCommonSelectOptionItem[];
   placeholder?: string;
   disabled?: boolean;
   value: string;
@@ -34,10 +34,10 @@ type TFormSelectProps = {
     value: string,
     id?: string
   ) => void;
-  displayValue?: (targetOption: TFormSelectOptionItem) => ReactNode;
+  displayValue?: (targetOption: TCommonSelectOptionItem) => ReactNode;
 };
 
-function _FormSelect(props: TFormSelectProps) {
+function _CommonSelect(props: TCommonSelectProps) {
   const {
     id,
     className,
@@ -71,11 +71,11 @@ function _FormSelect(props: TFormSelectProps) {
         id={id}
         disabled={disabled}
         className={cn(
-          'FormSelect',
+          'CommonSelect',
           className
         )}>
         <SelectValue 
-          className="FormSelect-value"
+          className="CommonSelect-value"
           placeholder={placeholder}>
           {displayValue && targetOption
             ? displayValue(targetOption)
@@ -105,5 +105,5 @@ function _FormSelect(props: TFormSelectProps) {
   );
 }
 
-const FormSelect = memo(_FormSelect)  as typeof _FormSelect;
-export default FormSelect;
+const CommonSelect = memo(_CommonSelect)  as typeof _CommonSelect;
+export default CommonSelect;

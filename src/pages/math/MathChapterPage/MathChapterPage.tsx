@@ -44,6 +44,9 @@ function MathChapterPage() {
     }
   }, [setMathChaptersData]);
 
+  //
+  // effect
+  //
   useEffect(function init() {
     retrieveMathChapters({
       searchParams: searchParamsForRetrieveMathChaptersApi,

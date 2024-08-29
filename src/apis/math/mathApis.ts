@@ -24,6 +24,9 @@ import {
 
   TRetrieveMathChaptersApiRequestParams,
   TRetrieveMathChaptersApiResponse,
+
+  TRetrieveMathAchievementsApiRequestParams,
+  TRetrieveMathAchievementsApiResponse,
 } from './mathApi.type';
 
 // FIXME: mockup
@@ -166,4 +169,28 @@ export const retrieveMathChaptersApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .retrieveMathChapters,
+});
+
+// --- --- --- --- --- --- --- --- --- ---
+
+//
+// (GET) 수학 성취기준 목록
+//
+export const retrieveMathAchievementsApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathAchievementsApiRequestParams) => {
+    const {
+      searchParams,
+    } = excludeNullOrUndefinedProperties(params);
+
+    return api.get<TRetrieveMathAchievementsApiResponse>(
+      mathApiUrlFactory.retrieveMathAchievementsPath(),
+      {
+        params: searchParams,
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .retrieveMathAchievements,
 });

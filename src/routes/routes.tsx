@@ -121,6 +121,7 @@ const routes = createBrowserRouter([
               .getTextbookDetailPath(':textbookId'),
             element: <MathTextbookDetailPage />,
           },
+
           // 수학: 단원정보
           {
             path: routePathFactory
@@ -128,6 +129,7 @@ const routes = createBrowserRouter([
               .getChapterPath(),
             element: <MathChapterPage />,
           },
+
           // 수학: 성취기준
           {
             path: routePathFactory
@@ -135,6 +137,7 @@ const routes = createBrowserRouter([
               .getAchievementPath(),
             element: <MathAchievementPage />,
           },
+
           // 수학: 지식개념
           {
             path: routePathFactory
@@ -142,6 +145,7 @@ const routes = createBrowserRouter([
               .getKnowledgeConceptPath(),
             element: <MathKnowledgeConceptPage />,
           },
+
           // 수학: 시리즈-출처
           {
             path: routePathFactory
@@ -149,6 +153,7 @@ const routes = createBrowserRouter([
               .getSeriesSourcePath(),
             element: <MathSeriesSourcePage />,
           },
+
           // 수학: 지문
           {
             path: routePathFactory
@@ -156,6 +161,7 @@ const routes = createBrowserRouter([
               .getInstructionPath(),
             element: <MathInstructionPage />,
           },
+
           // 수학: 문항
           {
             path: routePathFactory
@@ -184,6 +190,7 @@ const routes = createBrowserRouter([
               .getTextbookPath(),
             element: <EnglishTextbookPage />,
           },
+
           // 영어: 단원정보
           {
             path: routePathFactory
@@ -191,6 +198,7 @@ const routes = createBrowserRouter([
               .getChapterPath(),
             element: <EnglishChapterPage />,
           },
+
           // 영어: 성취기준
           {
             path: routePathFactory
@@ -198,6 +206,7 @@ const routes = createBrowserRouter([
               .getAchievementPath(),
             element: <EnglishAchievementPage />,
           },
+
           // 영어: 지식개념
           {
             path: routePathFactory
@@ -205,6 +214,7 @@ const routes = createBrowserRouter([
               .getKnowledgeConceptPath(),
             element: <EnglishKnowledgeConceptPage />,
           },
+
           // 영어: 시리즈-출처
           {
             path: routePathFactory
@@ -212,6 +222,7 @@ const routes = createBrowserRouter([
               .getSeriesSourcePath(),
             element: <EnglishSeriesSourcePage />,
           },
+
           // 영어: 지문
           {
             path: routePathFactory
@@ -219,6 +230,7 @@ const routes = createBrowserRouter([
               .getInstructionPath(),
             element: <EnglishInstructionPage />,
           },
+
           // 영어: 문항
           {
             path: routePathFactory
@@ -247,6 +259,7 @@ const routes = createBrowserRouter([
               .getMyPagePath(),
             element: <MyPage />,
           },
+
           // 설정: 유저 목록(슈퍼어드민 전용)
           {
             path: routePathFactory
@@ -258,6 +271,7 @@ const routes = createBrowserRouter([
               </MyPageRedirectMiddleware>
             ),
           },
+
           // 설정: 유저 정보 수정(슈퍼어드민 전용)
           {
             path: routePathFactory
