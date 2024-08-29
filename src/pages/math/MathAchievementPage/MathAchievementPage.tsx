@@ -6,6 +6,7 @@ import {
 import MathAchievementHeader from '@/components/pages/math/MathAchievementPage/MathAchievementHeader/MathAchievementHeader';
 import MathAchievementTableActions from '@/components/pages/math/MathAchievementPage/MathAchievementTableActions/MathAchievementTableActions';
 import MathAchievementTable from '@/components/pages/math/MathAchievementPage/MathAchievementTable/MathAchievementTable';
+import MathAchievementFooter from '@/components/pages/math/MathAchievementPage/MathAchievementFooter/MathAchievementFooter';
 // style
 import './MathAchievementPage.css';
 
@@ -25,7 +26,7 @@ function _MathAchievementPage() {
       </div>
 
       <div className="MathAchievementPage-footer">
-        Footer
+        <MathAchievementFooter />
       </div>
     </div>
   );
