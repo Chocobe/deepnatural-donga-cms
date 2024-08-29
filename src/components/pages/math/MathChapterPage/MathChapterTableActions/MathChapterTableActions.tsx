@@ -6,6 +6,8 @@ import {
   ChangeEvent,
   useEffect,
 } from 'react';
+// store
+import useMathChapterPageStore from '@/store/mathChapterPageStore/mathChapterPageStore';
 // hook
 import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
 // ui
@@ -37,7 +39,6 @@ import {
 } from '@/apis/math/mathApi.type';
 // style
 import './MathChapterTableActions.css';
-import useMathChapterPageStore from '@/store/mathChapterPageStore/mathChapterPageStore';
 
 type TMathChapterTableActionsProps = {
   retrieveMathChapters: (params: TRetrieveMathChaptersApiRequestParams) => Promise<void>;

@@ -4,6 +4,7 @@ import {
 } from 'react';
 // ui
 import MathAchievementHeader from '@/components/pages/math/MathAchievementPage/MathAchievementHeader/MathAchievementHeader';
+import MathAchievementTableActions from '@/components/pages/math/MathAchievementPage/MathAchievementTableActions/MathAchievementTableActions';
 // style
 import './MathAchievementPage.css';
 
@@ -15,7 +16,7 @@ function _MathAchievementPage() {
       </div>
 
       <div className="MathAchievementPage-actions">
-        Actions
+        <MathAchievementTableActions />
       </div>
 
       <div className="MathAchievementPage-table">
