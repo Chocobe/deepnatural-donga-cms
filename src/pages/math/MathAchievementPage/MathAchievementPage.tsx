@@ -68,7 +68,7 @@ function MathAchievementPage() {
   return (
     <div className="MathAchievementPage">
       <div className="MathAchievementPage-header">
-        <MathAchievementHeader />
+        <MathAchievementHeader retrieveMathAchievements={retrieveMathAchievements} />
       </div>
 
       <div className="MathAchievementPage-actions">
