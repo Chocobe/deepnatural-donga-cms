@@ -2,6 +2,7 @@
 import MathKnowledgeConceptHeader from '@/components/pages/math/MathKnowledgeConceptPage/MathKnowledgeConceptHeader/MathKnowledgeConceptHeader';
 import MathKnowledgeConceptTableActions from '@/components/pages/math/MathKnowledgeConceptPage/MathKnowledgeConceptTableActions/MathKnowledgeConceptTableActions';
 import MathKnowledgeConceptTable from '@/components/pages/math/MathKnowledgeConceptPage/MathKnowledgeConceptTable/MathKnowledgeConceptTable';
+import MathKnowledgeConceptFooter from '@/components/pages/math/MathKnowledgeConceptPage/MathKnowledgeConceptFooter/MathKnowledgeConceptFooter';
 // style
 import './MathKnowledgeConceptPage.css';
 
@@ -21,7 +22,7 @@ function MathKnowledgeConceptPage() {
       </div>
 
       <div className="MathKnowledgeConceptPage-footer">
-        Footer
+        <MathKnowledgeConceptFooter />
       </div>
     </div>
   );
