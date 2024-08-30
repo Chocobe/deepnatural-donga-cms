@@ -11,7 +11,7 @@ import {
 } from 'react-router-dom';
 import routePathFactory from '@/routes/routePathFactory';
 // store
-import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
+import useMathTextbookPageStore from '@/store/mathStores/mathTextbookPageStore/mathTextbookPageStore';
 // ui
 import {
   Accordion,

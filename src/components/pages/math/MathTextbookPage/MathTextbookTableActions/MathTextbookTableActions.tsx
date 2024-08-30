@@ -7,10 +7,10 @@ import {
   ChangeEvent,
 } from 'react';
 // store
-import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
+import useMathTextbookPageStore from '@/store/mathStores/mathTextbookPageStore/mathTextbookPageStore';
 // hook
 import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
-import useResultNoticeModalStore from '@/store/resultNoticeModalStore/resultNoticeModalStore';
+import useResultNoticeModalStore from '@/store/modalStores/resultNoticeModalStore/resultNoticeModalStore';
 // ui
 import { 
   Select, 

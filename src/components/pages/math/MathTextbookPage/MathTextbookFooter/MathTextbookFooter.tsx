@@ -4,7 +4,7 @@ import {
   memo
 } from 'react';
 // store
-import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
+import useMathTextbookPageStore from '@/store/mathStores/mathTextbookPageStore/mathTextbookPageStore';
 // hook
 import useTablePagination from '@/components/shadcn-ui-custom/TablePagination/hooks/useTablePagination';
 // ui

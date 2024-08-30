@@ -9,7 +9,7 @@ import {
   useNavigate,
 } from 'react-router-dom';
 // store
-import useSuperAdminPageStore from '@/store/superAdminPageStore/superAdminPageStore';
+import useSuperAdminPageStore from '@/store/settingStores/superAdminPageStore/superAdminPageStore';
 // api
 import ApiManager from '@/apis/ApiManager';
 // ui

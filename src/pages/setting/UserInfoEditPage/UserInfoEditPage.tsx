@@ -3,7 +3,7 @@ import {
   useEffect,
 } from 'react';
 // store
-import useSuperAdminPageStore from '@/store/superAdminPageStore/superAdminPageStore';
+import useSuperAdminPageStore from '@/store/settingStores/superAdminPageStore/superAdminPageStore';
 // ui
 import UserInfoEditHeader from '@/components/pages/setting/UserInfoEditPage/UserInfoEditHeader/UserInfoEditHeader';
 import UserInfoEditForm from '@/components/pages/setting/UserInfoEditPage/UserInfoEditForm/UserInfoEditForm';

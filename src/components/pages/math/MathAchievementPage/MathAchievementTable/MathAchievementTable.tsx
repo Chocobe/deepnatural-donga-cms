@@ -7,7 +7,7 @@ import {
   memo,
 } from 'react';
 // store
-import useMathAchievementPageStore from '@/store/mathAchievementPageStore/mathAchievementPageStore';
+import useMathAchievementPageStore from '@/store/mathStores/mathAchievementPageStore/mathAchievementPageStore';
 // hook
 import useTableWrapperInitScrollEffect from '@/components/hooks/useTableWrapperInitScrollEffect';
 // ui

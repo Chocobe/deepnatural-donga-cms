@@ -16,7 +16,7 @@ import {
   InputWithIcon,
 } from '@/components/shadcn-ui-custom/InputWithIcon/InputWithIcon';
 // store
-import useSuperAdminPageStore from '@/store/superAdminPageStore/superAdminPageStore';
+import useSuperAdminPageStore from '@/store/settingStores/superAdminPageStore/superAdminPageStore';
 // hook
 import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
 // icon

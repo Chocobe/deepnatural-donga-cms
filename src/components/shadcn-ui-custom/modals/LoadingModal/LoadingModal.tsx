@@ -1,5 +1,5 @@
 // store
-import useLoadingModalStore from '@/store/loadingModalStore/loadingModalStore';
+import useLoadingModalStore from '@/store/modalStores/loadingModalStore/loadingModalStore';
 // ui
 import { 
   Dialog,

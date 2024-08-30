@@ -7,7 +7,7 @@ import {
   ChangeEvent,
 } from 'react';
 // store
-import useMathAchievementPageStore from '@/store/mathAchievementPageStore/mathAchievementPageStore';
+import useMathAchievementPageStore from '@/store/mathStores/mathAchievementPageStore/mathAchievementPageStore';
 // hook
 import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
 // ui

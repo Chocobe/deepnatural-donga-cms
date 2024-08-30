@@ -7,7 +7,7 @@ import {
   useEffect,
 } from 'react';
 // store
-import useHistoryModalStore from '@/store/historyModalStore/historyModalStore';
+import useHistoryModalStore from '@/store/modalStores/historyModalStore/historyModalStore';
 // ui
 import { 
   Dialog,
