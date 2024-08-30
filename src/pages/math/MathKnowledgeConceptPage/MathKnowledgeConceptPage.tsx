@@ -72,7 +72,7 @@ function MathKnowledgeConceptPage() {
       </div>
 
       <div className="MathKnowledgeConceptPage-actions">
-        <MathKnowledgeConceptTableActions />
+        <MathKnowledgeConceptTableActions retrieveMathKnowledgeConcepts={retrieveMathKnowledgeConcepts} />
       </div>
 
       <div className="MathKnowledgeConceptPage-table">

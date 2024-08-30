@@ -2,9 +2,12 @@
 import {
   useRef,
   useCallback,
+  useEffect,
   memo,
   ChangeEvent,
 } from 'react';
+// store
+import useMathKnowledgeConceptPageStore from '@/store/mathStores/mathKnowledgeConceptPageStore/mathKnowledgeConceptPageStore';
 // hook
 import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
 // ui
@@ -31,10 +34,32 @@ import {
 import { 
   mathKnowledgeConceptSearchTypeOptions,
 } from './MathKnowledgeConceptTableActions.type';
+import { 
+  TRetrieveMathKnowledgeConceptsApiRequestParams,
+} from '@/apis/math/mathApi.type';
 // style
 import './MathKnowledgeConceptTableActions.css';
 
-function _MathKnowledgeConceptTableActions() {
+type TMathKnowledgeConceptTableActionsProps = {
+  retrieveMathKnowledgeConcepts: (params: TRetrieveMathKnowledgeConceptsApiRequestParams) => Promise<void>;
+};
+
+function _MathKnowledgeConceptTableActions(props: TMathKnowledgeConceptTableActionsProps) {
+  const {
+    retrieveMathKnowledgeConcepts,
+  } = props;
+
+  //
+  // mathKnowledgeConceptPage store
+  //
+  const mathKnowledgeConceptsData = useMathKnowledgeConceptPageStore(state => state.mathKnowledgeConceptsData);
+  const searchParamsForRetrieveMathKnowledgeConceptsApi = useMathKnowledgeConceptPageStore(state => state.searchParamsForRetrieveMathKnowledgeConceptsApi);
+  const {
+    search = '',
+  } = searchParamsForRetrieveMathKnowledgeConceptsApi;
+
+  const updateSearchParamsForRetrieveMathKnowledgeConceptsApi = useMathKnowledgeConceptPageStore(state => state.updateSearchParamsForRetrieveMathKnowledgeConceptsApi);
+
   //
   // ref
   //
@@ -50,18 +75,33 @@ function _MathKnowledgeConceptTableActions() {
   const onChangeSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const search = e.target.value;
 
-    console.log('search: ', search);
-  }, []);
+    updateSearchParamsForRetrieveMathKnowledgeConceptsApi(old => ({
+      ...old,
+      search: search?.length
+        ? search
+        : undefined,
+    }));
+  }, [updateSearchParamsForRetrieveMathKnowledgeConceptsApi]);
 
   const onEnter = useCallback(() => {
     $searchInputRef.current?.blur();
 
-    console.log('onEnter()');
-  }, []);
+    const params: TRetrieveMathKnowledgeConceptsApiRequestParams = {
+      searchParams: searchParamsForRetrieveMathKnowledgeConceptsApi,
+    };
+
+    retrieveMathKnowledgeConcepts(params);
+  }, [
+    searchParamsForRetrieveMathKnowledgeConceptsApi,
+    retrieveMathKnowledgeConcepts,
+  ]);
 
   const onESC = useCallback(() => {
-    console.log('onESC()');
-  }, []);
+    updateSearchParamsForRetrieveMathKnowledgeConceptsApi(old => ({
+      ...old,
+      search: undefined,
+    }));
+  }, [updateSearchParamsForRetrieveMathKnowledgeConceptsApi]);
 
   //
   // hook
@@ -69,6 +109,15 @@ function _MathKnowledgeConceptTableActions() {
   const {
     onKeyDown,
   } = useOnKeyDownEnterOrESC(onEnter, onESC);
+
+  //
+  // effect
+  //
+  useEffect(function focusSearchInput() {
+    $searchInputRef.current?.focus();
+
+    // eslint-disable-next-line
+  }, [mathKnowledgeConceptsData]);
 
   return (
     <div className="MathKnowledgeConceptTableActions">
@@ -100,17 +149,15 @@ function _MathKnowledgeConceptTableActions() {
           </Select>
         </TBUTooltip>
 
-        <TBUTooltip>
-          <InputWithIcon
-            ref={$searchInputRef}
-            containerClassName="searchInput"
-            placeholder="검색어를 입력해주세요"
-            autoFocus
-            value={''}
-            onChange={onChangeSearch}
-            onKeyDown={onKeyDown}
-            EndIcon={LuSearch} />
-        </TBUTooltip>
+        <InputWithIcon
+          ref={$searchInputRef}
+          containerClassName="searchInput"
+          placeholder="검색어를 입력해주세요"
+          autoFocus
+          value={search}
+          onChange={onChangeSearch}
+          onKeyDown={onKeyDown}
+          EndIcon={LuSearch} />
       </div>
 
       <div className="MathKnowledgeConceptTableActions-rightSide">
