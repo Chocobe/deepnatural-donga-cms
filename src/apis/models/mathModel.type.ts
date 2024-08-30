@@ -115,6 +115,7 @@ export type TMathChapterFlattenModel = {
 /**
  * Math Achievement (수학 성취기준)
  */
+/** 수학 성취기준 학년(군) 값 */
 export const mathAchievementGradeClusterMapper = {
   ELECTIVE_SUBJECT: '선택과목',
   COMMON_SUBJECT: '공통과목',
@@ -154,4 +155,43 @@ export type TMathAchievementFlattenModel = {
   achievement1: TMathAchievement1Model;
   achievement2: TMathAchievement2Model;
   achievement3?: TMathAchievement3Model;
+};
+
+/**
+ * Math KnowledgeConcept (수학 지식개념)
+ */
+/** 수학 지식개념 공통 속성 */
+export type TMathKnowledgeConceptCommonModel = {
+  id: number;
+  title: string;
+  comment: string | null;
+}
+/** 수학 지식개념 2 */
+export type TMathKnowledgeConcept2Model = TMathKnowledgeConceptCommonModel & {
+  achievement3: {
+    id: number;
+    title: string;
+    achievement2: {
+      id: number;
+      title: string;
+      achievement1: {
+        id: number;
+        title: string;
+        curriculum: TMathTextbookModelCurriculum;
+        classtype: TCMSCommonModelClassType;
+        grade_cluster: TMathAchievementGradeCluster;
+      };
+    };
+  };
+};
+
+/** 수학 지식개념 1 */
+export type TMathKnowledgeConcept1Model = TMathKnowledgeConceptCommonModel & {
+  kc2_set: TMathKnowledgeConcept2Model[];
+};
+
+/** 수학 지식개념 평탄화 모델 */
+export type TMathKnowledgeConceptFlattenModel = {
+  kc1: TMathKnowledgeConcept1Model;
+  kc2: TMathKnowledgeConcept2Model;
 };
