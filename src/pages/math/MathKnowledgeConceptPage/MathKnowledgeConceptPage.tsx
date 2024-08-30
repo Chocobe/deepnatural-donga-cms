@@ -80,7 +80,7 @@ function MathKnowledgeConceptPage() {
       </div>
 
       <div className="MathKnowledgeConceptPage-footer">
-        <MathKnowledgeConceptFooter />
+        <MathKnowledgeConceptFooter retrieveMathKnowledgeConcepts={retrieveMathKnowledgeConcepts} />
       </div>
     </div>
   );

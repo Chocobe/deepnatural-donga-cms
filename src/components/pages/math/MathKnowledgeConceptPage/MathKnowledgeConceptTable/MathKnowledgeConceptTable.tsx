@@ -124,7 +124,7 @@ function _MathKnowledgeConceptTable() {
       },
     }),
     columnHelper.display({
-      id: 'achievement3_title',
+      id: 'achievement3Title',
       header: '성취기준(소) 제목',
       cell: props => {
         const achievement3Title = props.row.original
