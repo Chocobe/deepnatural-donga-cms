@@ -1,0 +1,95 @@
+.MathSeriesSourceHeader {
+  position: relative;
+
+  &-accordion {
+    /*  */
+
+    .trigger {
+      padding: 0;
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      .title {
+        @apply flex items-center gap-2;
+
+        color: #171717;
+        font-size: 20px;
+        line-height: 28px;
+        font-weight: 700;
+
+        .icon {
+          width: 24px;
+          height: 24px;
+
+          transition: all 0.28s ease;
+
+          color: #8E8E8E;
+
+          &.open {
+            transform: rotate(-180deg);
+          }
+
+          &.close {
+            /*  */
+          }
+        }
+      }
+    }
+
+    .filters {
+      @apply flex flex-wrap items-center gap-x-14 gap-y-4;
+
+      margin-top: 20px;
+      padding: 24px;
+
+      border: 1px solid #0000000D;
+      border-radius: 4px;
+
+      .filterItem {
+        @apply flex items-center gap-2;
+
+        width: 300px;
+
+        .label {
+          flex-shrink: 0;
+          width: 80px;
+
+          color: #5B5B5B;
+          font-size: 14px;
+          line-height: 20px;
+          font-weight: 500;
+        }
+
+        .editor {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  &-actions {
+    @apply flex items-center gap-2.5;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    transform: translateY(-25%);
+
+    color: #fff;
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 500;
+
+    .actionButton {
+      @apply flex items-center gap-2.5;
+
+      .icon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}

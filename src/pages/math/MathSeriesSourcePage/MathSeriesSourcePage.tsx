@@ -1,18 +1,28 @@
-// FIXME: mockup page
-import MockupPage from '@/components/pages/MockupPage/MockupPage';
+// ui
+import MathSeriesSourceHeader from '@/components/pages/math/MathSeriesSourcePage/MathSeriesSourceHeader/MathSeriesSourceHeader';
+// style
+import './MathSeriesSourcePage.css';
 
-// react
-import {
-  memo,
-} from 'react';
-
-function _MathSeriesSourcePage() {
+function MathSeriesSourcePage() {
   return (
-    <MockupPage 
-      // isTestOverflow
-      mockupName="MathSeriesSource Page mockup" />
+    <div className="MathSeriesSourcePage">
+      <div className="MathSeriesSourcePage-header">
+        <MathSeriesSourceHeader />
+      </div>
+
+      <div className="MathSeriesSourcePage-actions">
+        Actions
+      </div>
+
+      <div className="MathSeriesSourcePage-table">
+        Table
+      </div>
+
+      <div className="MathSeriesSourcePage-footer">
+        Footer
+      </div>
+    </div>
   );
 }
 
-const MathSeriesSourcePage = memo(_MathSeriesSourcePage);
 export default MathSeriesSourcePage;
