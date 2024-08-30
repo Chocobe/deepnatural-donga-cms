@@ -1,7 +1,7 @@
 // type
 import { 
   mathAchievementGradeClusterMapper,
-  mathTextbookModelCurriculumMapper,
+  mathCurriculumMapper,
 } from '@/apis/models/mathModel.type';
 import { 
   TCommonSelectOptionItem,
@@ -10,7 +10,7 @@ import {
   SELECT_OPTION_ITEM_ALL,
 } from '../cmsPages.type';
 import { 
-  cmsCommonModelClassTypeMapper,
+  cmsClassTypeMapper,
 } from '@/apis/models/cmsCommonModel.type';
 
 //
@@ -18,12 +18,12 @@ import {
 //
 export const mathCurriculumOptions: TCommonSelectOptionItem[] = [
   {
-    text: mathTextbookModelCurriculumMapper[2015],
-    value: mathTextbookModelCurriculumMapper[2015],
+    text: mathCurriculumMapper[2015],
+    value: mathCurriculumMapper[2015],
   },
   {
-    text: mathTextbookModelCurriculumMapper[2022],
-    value: mathTextbookModelCurriculumMapper[2022],
+    text: mathCurriculumMapper[2022],
+    value: mathCurriculumMapper[2022],
   },
 ] as const;
 
@@ -38,9 +38,9 @@ export const mathCurriculumFilterOptions: TCommonSelectOptionItem[] = [
 // 수학 성취기준 학년군 선택지
 //
 export const mathGradeClusterOptions: {
-  [cmsCommonModelClassTypeMapper.ELEMENTARY]: TCommonSelectOptionItem[];
-  [cmsCommonModelClassTypeMapper.MIDDLE]: TCommonSelectOptionItem[];
-  [cmsCommonModelClassTypeMapper.HIGH]: TCommonSelectOptionItem[];
+  [cmsClassTypeMapper.ELEMENTARY]: TCommonSelectOptionItem[];
+  [cmsClassTypeMapper.MIDDLE]: TCommonSelectOptionItem[];
+  [cmsClassTypeMapper.HIGH]: TCommonSelectOptionItem[];
 } = (() => {
   const commonOptions: TCommonSelectOptionItem[] = [
     {
@@ -54,7 +54,7 @@ export const mathGradeClusterOptions: {
   ] as const;
 
   return {
-    [cmsCommonModelClassTypeMapper.ELEMENTARY]: [
+    [cmsClassTypeMapper.ELEMENTARY]: [
       ...commonOptions,
       {
         text: mathAchievementGradeClusterMapper.ELEMENTARY_3_4,
@@ -65,14 +65,14 @@ export const mathGradeClusterOptions: {
         value: mathAchievementGradeClusterMapper.ELEMENTARY_5_6,
       },
     ],
-    [cmsCommonModelClassTypeMapper.MIDDLE]: [
+    [cmsClassTypeMapper.MIDDLE]: [
       ...commonOptions,
       {
         text: mathAchievementGradeClusterMapper.MIDDLE,
         value: mathAchievementGradeClusterMapper.MIDDLE,
       },
     ],
-    [cmsCommonModelClassTypeMapper.HIGH]: [
+    [cmsClassTypeMapper.HIGH]: [
       ...commonOptions,
     ],
   } as const;
@@ -86,22 +86,22 @@ export const mathGradeClusterFilterOptions: typeof mathGradeClusterOptions & {
       ...SELECT_OPTION_ITEM_ALL,
     },
   ],
-  [cmsCommonModelClassTypeMapper.ELEMENTARY]: [
+  [cmsClassTypeMapper.ELEMENTARY]: [
     {
       ...SELECT_OPTION_ITEM_ALL,
     },
-    ...mathGradeClusterOptions[cmsCommonModelClassTypeMapper.ELEMENTARY],
+    ...mathGradeClusterOptions[cmsClassTypeMapper.ELEMENTARY],
   ],
-  [cmsCommonModelClassTypeMapper.MIDDLE]: [
+  [cmsClassTypeMapper.MIDDLE]: [
     {
       ...SELECT_OPTION_ITEM_ALL,
     },
-    ...mathGradeClusterOptions[cmsCommonModelClassTypeMapper.MIDDLE],
+    ...mathGradeClusterOptions[cmsClassTypeMapper.MIDDLE],
   ],
-  [cmsCommonModelClassTypeMapper.HIGH]: [
+  [cmsClassTypeMapper.HIGH]: [
     {
       ...SELECT_OPTION_ITEM_ALL,
     },
-    ...mathGradeClusterOptions[cmsCommonModelClassTypeMapper.HIGH],
+    ...mathGradeClusterOptions[cmsClassTypeMapper.HIGH],
   ],
 } as const;

@@ -42,10 +42,10 @@ import {
 } from '@/apis/math/mathApi.type';
 import { 
   TMathAchievementGradeCluster, 
-  TMathTextbookModelCurriculum,
+  TMathCurriculum,
 } from '@/apis/models/mathModel.type';
 import { 
-  TCMSCommonModelClassType,
+  TCMSClassType,
 } from '@/apis/models/cmsCommonModel.type';
 // style
 import { 
@@ -97,7 +97,7 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
   const onChangeCurriculum = useCallback((curriculum: string) => {
     updateSearchParamsForRetrieveMathAchievementsApi(old => {
       const _curriculum = curriculum.trim().length
-        ? curriculum as TMathTextbookModelCurriculum
+        ? curriculum as TMathCurriculum
         : undefined;
 
       const params: TRetrieveMathAchievementsApiRequestParams = {
@@ -119,7 +119,7 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
   const onChangeClassType = useCallback((classtype: string) => {
     updateSearchParamsForRetrieveMathAchievementsApi(old => {
       const _classtype = classtype.trim().length
-        ? classtype as TCMSCommonModelClassType
+        ? classtype as TCMSClassType
         : undefined;
 
       const params: TRetrieveMathAchievementsApiRequestParams = {

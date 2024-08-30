@@ -1,9 +1,9 @@
 // type
 import { 
-  cmsCommonModelClassTypeMapper,
-  cmsCommonModelElementaryGradeMapper,
-  cmsCommonModelMiddleHighGradeMapper, 
-  cmsCommonModelTermMapper,
+  cmsClassTypeMapper,
+  cmsElementaryGradeMapper,
+  cmsMiddleHighGradeMapper, 
+  cmsTermMapper,
 } from '@/apis/models/cmsCommonModel.type';
 import { 
   TCommonSelectOptionItem,
@@ -20,15 +20,15 @@ export const SELECT_OPTION_ITEM_ALL: TCommonSelectOptionItem = {
 export const cmsClassTypeOptions: TCommonSelectOptionItem[] = [
   {
     text: '초등학교',
-    value: cmsCommonModelClassTypeMapper.ELEMENTARY,
+    value: cmsClassTypeMapper.ELEMENTARY,
   },
   {
     text: '중학교',
-    value: cmsCommonModelClassTypeMapper.MIDDLE,
+    value: cmsClassTypeMapper.MIDDLE,
   },
   {
     text: '고등학교',
-    value: cmsCommonModelClassTypeMapper.HIGH,
+    value: cmsClassTypeMapper.HIGH,
   },
 ] as const;
 
@@ -43,33 +43,33 @@ export const cmsClassTypeFilterOptions: TCommonSelectOptionItem[] = [
 // 학년 선택지
 //
 export const cmsGradeOptions: {
-  [cmsCommonModelClassTypeMapper.ELEMENTARY]: TCommonSelectOptionItem[];
-  [cmsCommonModelClassTypeMapper.MIDDLE]: TCommonSelectOptionItem[];
-  [cmsCommonModelClassTypeMapper.HIGH]: TCommonSelectOptionItem[];
+  [cmsClassTypeMapper.ELEMENTARY]: TCommonSelectOptionItem[];
+  [cmsClassTypeMapper.MIDDLE]: TCommonSelectOptionItem[];
+  [cmsClassTypeMapper.HIGH]: TCommonSelectOptionItem[];
 } = {
-  [cmsCommonModelClassTypeMapper.ELEMENTARY]: Object
-    .values(cmsCommonModelElementaryGradeMapper)
+  [cmsClassTypeMapper.ELEMENTARY]: Object
+    .values(cmsElementaryGradeMapper)
     .sort((a, b) => a - b > 0 ? 1 : -1)
     .map(grade => ({
-      text: grade === cmsCommonModelElementaryGradeMapper.COMMON
+      text: grade === cmsElementaryGradeMapper.COMMON
         ? '공통'
         : `${grade}학년`,
       value: String(grade),
     })),
-  [cmsCommonModelClassTypeMapper.MIDDLE]: Object
-    .values(cmsCommonModelMiddleHighGradeMapper)
+  [cmsClassTypeMapper.MIDDLE]: Object
+    .values(cmsMiddleHighGradeMapper)
     .sort((a, b) => a - b > 0 ? 1 : -1)
     .map(grade => ({
-      text: grade === cmsCommonModelMiddleHighGradeMapper.COMMON
+      text: grade === cmsMiddleHighGradeMapper.COMMON
         ? '공통'
         : `${grade}학년`,
       value: String(grade),
     })),
-  [cmsCommonModelClassTypeMapper.HIGH]: Object
-    .values(cmsCommonModelMiddleHighGradeMapper)
+  [cmsClassTypeMapper.HIGH]: Object
+    .values(cmsMiddleHighGradeMapper)
     .sort((a, b) => a - b > 0 ? 1 : -1)
     .map(grade => ({
-      text: grade === cmsCommonModelMiddleHighGradeMapper.COMMON
+      text: grade === cmsMiddleHighGradeMapper.COMMON
         ? '공통'
         : `${grade}학년`,
       value: String(grade),
@@ -84,23 +84,23 @@ export const cmsGradeFilterOptions: typeof cmsGradeOptions & {
       ...SELECT_OPTION_ITEM_ALL,
     },
   ],
-  [cmsCommonModelClassTypeMapper.ELEMENTARY]: [
+  [cmsClassTypeMapper.ELEMENTARY]: [
     {
       ...SELECT_OPTION_ITEM_ALL,
     },
-    ...cmsGradeOptions[cmsCommonModelClassTypeMapper.ELEMENTARY]
+    ...cmsGradeOptions[cmsClassTypeMapper.ELEMENTARY]
   ],
-  [cmsCommonModelClassTypeMapper.MIDDLE]: [
+  [cmsClassTypeMapper.MIDDLE]: [
     {
       ...SELECT_OPTION_ITEM_ALL,
     },
-    ...cmsGradeOptions[cmsCommonModelClassTypeMapper.MIDDLE],
+    ...cmsGradeOptions[cmsClassTypeMapper.MIDDLE],
   ],
-  [cmsCommonModelClassTypeMapper.HIGH]: [
+  [cmsClassTypeMapper.HIGH]: [
     {
       ...SELECT_OPTION_ITEM_ALL,
     },
-    ...cmsGradeOptions[cmsCommonModelClassTypeMapper.HIGH],
+    ...cmsGradeOptions[cmsClassTypeMapper.HIGH],
   ],
 } as const;
 
@@ -108,10 +108,10 @@ export const cmsGradeFilterOptions: typeof cmsGradeOptions & {
 // 학기 선택지
 //
 export const cmsTermOptions: TCommonSelectOptionItem[] = Object
-  .values(cmsCommonModelTermMapper)
+  .values(cmsTermMapper)
   .sort((a, b) => a - b > 0 ? 1 : -1)
   .map(term => ({
-    text: term === cmsCommonModelTermMapper.COMMON
+    text: term === cmsTermMapper.COMMON
       ? '공통'
       : `${term}학기`,
     value: String(term),

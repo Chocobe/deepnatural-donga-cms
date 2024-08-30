@@ -5,12 +5,12 @@ import {
 } from '@/apis/math/mathApi.type';
 import { 
   // cmsCommonModelSubjectMapper,
-  cmsCommonModelClassTypeMapper,
-  cmsCommonModelElementaryGradeMapper,
-  cmsCommonModelTermMapper,
+  cmsClassTypeMapper,
+  cmsElementaryGradeMapper,
+  cmsTermMapper,
 } from '@/apis/models/cmsCommonModel.type';
 import { 
-  mathTextbookModelCurriculumMapper,
+  mathCurriculumMapper,
   TMathTextbookModel,
 } from '@/apis/models/mathModel.type';
 
@@ -43,12 +43,12 @@ export const initialMathTextbookPageStoreState: TMathTextbookPageStoreState = {
     id: undefined,
     // TODO: 아직 API 미지원 속성
     // subject: cmsCommonModelSubjectMapper.MATH,
-    curriculum: mathTextbookModelCurriculumMapper[2015],
+    curriculum: mathCurriculumMapper[2015],
     title: '',
     author: '',
-    classtype: cmsCommonModelClassTypeMapper.ELEMENTARY,
-    grade: cmsCommonModelElementaryGradeMapper.COMMON,
-    term: cmsCommonModelTermMapper.COMMON,
+    classtype: cmsClassTypeMapper.ELEMENTARY,
+    grade: cmsElementaryGradeMapper.COMMON,
+    term: cmsTermMapper.COMMON,
   },
 
   selectedMathTextbooks: undefined,

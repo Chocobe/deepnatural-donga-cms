@@ -7,26 +7,26 @@
 /**
  * 과목
  */
-export const cmsCommonModelSubjectMapper = {
+export const cmsSubjectMapper = {
   MATH: '수학',
   ENGLISH: '영어',
 } as const;
-export type TCMSCommonModelSubject = typeof cmsCommonModelSubjectMapper[keyof typeof cmsCommonModelSubjectMapper];
+export type TCMSSubject = typeof cmsSubjectMapper[keyof typeof cmsSubjectMapper];
 
 /**
  * 학교급
  */
-export const cmsCommonModelClassTypeMapper = {
+export const cmsClassTypeMapper = {
   ELEMENTARY: '초등',
   MIDDLE: '중등',
   HIGH: '고등',
 } as const;
-export type TCMSCommonModelClassType = typeof cmsCommonModelClassTypeMapper[keyof typeof cmsCommonModelClassTypeMapper];
+export type TCMSClassType = typeof cmsClassTypeMapper[keyof typeof cmsClassTypeMapper];
 
 /** 
  * 학년 - 초등 
  */
-export const cmsCommonModelElementaryGradeMapper = {
+export const cmsElementaryGradeMapper = {
   COMMON: 0,
   '1': 1,
   '2': 2,
@@ -35,28 +35,28 @@ export const cmsCommonModelElementaryGradeMapper = {
   '5': 5,
   '6': 6,
 } as const;
-export type TCMSCommonModelElementaryGrade = typeof cmsCommonModelElementaryGradeMapper[keyof typeof cmsCommonModelElementaryGradeMapper];
+export type TCMSElementaryGrade = typeof cmsElementaryGradeMapper[keyof typeof cmsElementaryGradeMapper];
 
 /** 
  * 학년 - 중고등 
  */
-export const cmsCommonModelMiddleHighGradeMapper = {
+export const cmsMiddleHighGradeMapper = {
   COMMON: 0,
   '1': 1,
   '2': 2,
   '3': 3,
 } as const;
-export type TCMSCommonModelMiddleHighGrade = typeof cmsCommonModelMiddleHighGradeMapper[keyof typeof cmsCommonModelMiddleHighGradeMapper];
+export type TCMSMiddleHighGrade = typeof cmsMiddleHighGradeMapper[keyof typeof cmsMiddleHighGradeMapper];
 
 /**
  * 학기
  */
-export const cmsCommonModelTermMapper = {
+export const cmsTermMapper = {
   COMMON: 0,
   FIRST_TERM: 1,
   SECOND_TERM: 2,
 } as const;
-export type TCMSCommonModelTerm = typeof cmsCommonModelTermMapper[keyof typeof cmsCommonModelTermMapper];
+export type TCMSTerm = typeof cmsTermMapper[keyof typeof cmsTermMapper];
 
 /**
  * 페이지네이션
