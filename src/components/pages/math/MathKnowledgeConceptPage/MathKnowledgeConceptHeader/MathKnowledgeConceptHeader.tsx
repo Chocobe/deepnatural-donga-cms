@@ -1,9 +1,12 @@
 // react
 import {
   useState,
+  useCallback,
   useMemo,
   memo,
 } from 'react';
+// store
+import useMathKnowledgeConceptPageStore from '@/store/mathStores/mathKnowledgeConceptPageStore/mathKnowledgeConceptPageStore';
 // ui
 import {
   Accordion,
@@ -41,6 +44,38 @@ import {
 import './MathKnowledgeConceptHeader.css';
 
 function _MathKnowledgeConceptHeader() {
+  //
+  // mathKnowledgeConceptPage store
+  //
+  const updateSearchParamsForRetrieveMathKnowledgeConceptsApi = useMathKnowledgeConceptPageStore(state => state.updateSearchParamsForRetrieveMathKnowledgeConceptsApi);
+
+  // FIXME: 아직 API 미지원
+  const onChangeCurriculum = useCallback((curriculum: string) => {
+    console.log('curriculum: ', curriculum);
+
+    updateSearchParamsForRetrieveMathKnowledgeConceptsApi(old => ({
+      ...old,
+    }));
+  }, [updateSearchParamsForRetrieveMathKnowledgeConceptsApi]);
+
+  // FIXME: 아직 API 미지원
+  const onChangeClassType = useCallback((classtype: string) => {
+    console.log('classtype: ', classtype);
+
+    updateSearchParamsForRetrieveMathKnowledgeConceptsApi(old => ({
+      ...old,
+    }));
+  }, [updateSearchParamsForRetrieveMathKnowledgeConceptsApi]);
+
+  // FIXME: 아직 API 미지원
+  const onChangeGradeCluster = useCallback((gradeCluster: string) => {
+    console.log('gradeCluster: ', gradeCluster);
+
+    updateSearchParamsForRetrieveMathKnowledgeConceptsApi(old => ({
+      ...old,
+    }));
+  }, [updateSearchParamsForRetrieveMathKnowledgeConceptsApi]);
+
   //
   // state
   //
@@ -86,7 +121,7 @@ function _MathKnowledgeConceptHeader() {
             className="editor"
             options={mathCurriculumFilterOptions}
             value={''}
-            onChange={() => console.log('교육과정')} />
+            onChange={onChangeCurriculum} />
         </TBUTooltip>
       ),
     },
@@ -100,7 +135,7 @@ function _MathKnowledgeConceptHeader() {
             className="editor"
             options={cmsClassTypeFilterOptions}
             value={''}
-            onChange={() => console.log('학교급')} />
+            onChange={onChangeClassType} />
         </TBUTooltip>
       ),
     },
@@ -114,11 +149,15 @@ function _MathKnowledgeConceptHeader() {
             className="editor"
             options={mathGradeClusterFilterOptions['초등']}
             value={''}
-            onChange={() => console.log('학년(군)')} />
+            onChange={onChangeGradeCluster} />
         </TBUTooltip>
       ),
     },
-  ], []);
+  ], [
+    onChangeCurriculum,
+    onChangeClassType,
+    onChangeGradeCluster,
+  ]);
 
   return (
     <div className="MathKnowledgeConceptHeader">
