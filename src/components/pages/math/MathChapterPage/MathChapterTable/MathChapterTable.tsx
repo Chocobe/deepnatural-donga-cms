@@ -7,7 +7,7 @@ import {
   memo,
 } from 'react';
 // store
-import useMathChapterPageStore from '@/store/mathChapterPageStore/mathChapterPageStore';
+import useMathChapterPageStore from '@/store/mathStores/mathChapterPageStore/mathChapterPageStore';
 // hook
 import useTableWrapperInitScrollEffect from '@/components/hooks/useTableWrapperInitScrollEffect';
 // ui

@@ -12,7 +12,7 @@ import {
 } from 'react-router-dom';
 import routePathFactory from '@/routes/routePathFactory';
 // store
-import useSuperAdminPageStore from '@/store/superAdminPageStore/superAdminPageStore';
+import useSuperAdminPageStore from '@/store/settingStores/superAdminPageStore/superAdminPageStore';
 // api
 import ApiManager from '@/apis/ApiManager';
 // ui

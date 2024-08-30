@@ -13,6 +13,7 @@ import {
   TMathAchievement1Model,
   TMathAchievementGradeCluster,
   TMathChapter1Model,
+  TMathKnowledgeConcept1Model,
   TMathTextbookModel,
   TMathTextbookModelCurriculum,
 } from '../models/mathModel.type';
@@ -94,3 +95,15 @@ export type TRetrieveMathAchievementsApiRequestParams = TApiRequestNonBodyParams
 }>;
 
 export type TRetrieveMathAchievementsApiResponse = TPaginationModel<TMathAchievement1Model>;
+
+// --- --- --- --- --- --- --- --- --- ---
+
+//
+// (GET) 수학 지식개념 목록
+//
+export type TRetrieveMathKnowledgeConceptsApiRequestParams = TApiRequestNonBodyParams<void, {
+  page?: number;
+  search?: string;
+}>;
+
+export type TRetrieveMathKnowledgeConceptsApiResponse = TPaginationModel<TMathKnowledgeConcept1Model>;

@@ -70,10 +70,21 @@ const mathApiUrlFactory = (() => {
     },
   };
 
+  //
+  // 수학 지식개념
+  //
+  const mathKnowledgeConceptPaths = {
+    /** (GET) 수학 지식개념 목록 */
+    retrieveMathKnowledgeConceptsPath() {
+      return `${BASE_PATH}kcs/`;
+    },
+  };
+
   return {
     ...mathTextbookPaths,
     ...mathChapterPaths,
     ...mathAchievementPaths,
+    ...mathKnowledgeConceptPaths,
   } as const;
 })();
 

@@ -48,6 +48,9 @@ const noticeMessageGroupFactory: {
 
       // 성취기준
       retrieveMathAchievements: TNoticeMessageGroup;
+
+      // 지식개념
+      retrieveMathKnowledgeConcepts: TNoticeMessageGroup;
     };
   };
 
@@ -303,6 +306,20 @@ const noticeMessageGroupFactory: {
         }),
         errorMessage: () => ({
           ...createNetworkErrorMessage('수학 성취기준 정보를 조회 중'),
+        }),
+        successMessage: undefined,
+      },
+
+      // --- --- --- --- --- --- --- --- --- ---
+
+      // (GET) 수학 지식개념 목록
+      retrieveMathKnowledgeConcepts: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 지식개념 정보를 조회 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 지식개념 정보 조회 중'),
         }),
         successMessage: undefined,
       },

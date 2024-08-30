@@ -4,7 +4,7 @@ import {
   memo,
 } from 'react';
 // store
-import useMathAchievementPageStore from '@/store/mathAchievementPageStore/mathAchievementPageStore';
+import useMathAchievementPageStore from '@/store/mathStores/mathAchievementPageStore/mathAchievementPageStore';
 // hook
 import useTablePagination from '@/components/shadcn-ui-custom/TablePagination/hooks/useTablePagination';
 // ui

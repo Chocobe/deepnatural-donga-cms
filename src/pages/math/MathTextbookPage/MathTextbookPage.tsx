@@ -4,7 +4,7 @@ import {
   useEffect,
 } from 'react';
 // store
-import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
+import useMathTextbookPageStore from '@/store/mathStores/mathTextbookPageStore/mathTextbookPageStore';
 // api
 import ApiManager from '@/apis/ApiManager';
 // ui

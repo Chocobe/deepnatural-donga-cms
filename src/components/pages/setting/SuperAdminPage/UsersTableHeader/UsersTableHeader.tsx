@@ -6,7 +6,7 @@ import {
   memo,
 } from 'react';
 // store
-import useSuperAdminPageStore from '@/store/superAdminPageStore/superAdminPageStore';
+import useSuperAdminPageStore from '@/store/settingStores/superAdminPageStore/superAdminPageStore';
 // ui
 import { 
   Tabs,

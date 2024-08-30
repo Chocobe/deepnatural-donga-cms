@@ -4,7 +4,7 @@ import {
   useEffect,
 } from 'react';
 // store
-import useMathChapterPageStore from '@/store/mathChapterPageStore/mathChapterPageStore';
+import useMathChapterPageStore from '@/store/mathStores/mathChapterPageStore/mathChapterPageStore';
 // api
 import ApiManager from '@/apis/ApiManager';
 // ui

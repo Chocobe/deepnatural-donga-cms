@@ -1,6 +1,6 @@
 // store
-import useLoadingModalStore from '@/store/loadingModalStore/loadingModalStore';
-import useResultNoticeModalStore from '@/store/resultNoticeModalStore/resultNoticeModalStore';
+import useLoadingModalStore from '@/store/modalStores/loadingModalStore/loadingModalStore';
+import useResultNoticeModalStore from '@/store/modalStores/resultNoticeModalStore/resultNoticeModalStore';
 // type
 import { 
   TNoticeMessageGroup,

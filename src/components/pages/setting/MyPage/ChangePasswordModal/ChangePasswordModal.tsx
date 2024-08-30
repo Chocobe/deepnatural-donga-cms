@@ -8,7 +8,7 @@ import {
   FormEvent,
 } from 'react';
 // store
-import useResultNoticeModalStore from '@/store/resultNoticeModalStore/resultNoticeModalStore';
+import useResultNoticeModalStore from '@/store/modalStores/resultNoticeModalStore/resultNoticeModalStore';
 // ui
 import { 
   Dialog,

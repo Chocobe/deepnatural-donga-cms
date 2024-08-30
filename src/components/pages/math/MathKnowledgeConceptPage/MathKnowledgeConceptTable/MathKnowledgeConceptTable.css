@@ -1,0 +1,120 @@
+.MathKnowledgeConceptTable {
+  /*  */
+
+  .headerRow {
+    position: sticky;
+    top: 0;
+
+    background-color: #fff;
+    box-shadow: -1px 1px 1px hsl(var(--border));
+
+    &:hover {
+      background-color: #fff;
+    }
+
+    & > * {
+      color: #0F172A;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 700;
+
+      border-right: 1px solid hsl(var(--border));
+
+      &:last-of-type {
+        border-right: none !important;
+      }
+    }
+
+    .table-row-selector {
+      width: 66px !important;
+      min-width: 66px !important;
+    }
+
+    .no {
+      padding: 0;
+
+      width: 66px;
+      min-width: 66px;
+
+      text-align: center;
+      white-space: pre-wrap;
+
+      font-size: 14px;
+      line-height: 20px;
+      text-align: center;
+    }
+
+    .kcTitle {
+      width: 30%;
+      min-width: 300px;
+    }
+
+    .title {
+      width: 20%;
+      min-width: 200px;
+    }
+
+    .achievement3Title {
+      width: 40%;
+      min-width: 400px;
+    }
+
+    .curriculum {
+      width: 90px;
+      min-width: 90px;
+
+      text-align: center;
+    }
+
+    .classtype {
+      width: 80px;
+      min-width: 80px;
+
+      text-align: center;
+    }
+
+    .cluster {
+      width: 90px;
+      min-width: 90px;
+    }
+  }
+
+  .row {
+    cursor: pointer;
+
+    & > * {
+      padding: 13px 16px !important;
+
+      color: #0F172A !important;
+      font-size: 16px !important;
+      line-height: 24px !important;
+      font-weight: 400 !important;
+
+      border-right: 1px solid hsl(var(--border)) !important;
+
+      &:last-of-type {
+        border-right: none !important;
+      }
+    }
+
+    .kcTitle {
+      /*  */
+    }
+
+    .title {
+      /*  */
+    }
+
+    .curriculum {
+      text-align: center;
+    }
+
+    .classtype {
+      text-align: center;
+    }
+
+    .cluster {
+      /*  */
+    }
+  }
+}

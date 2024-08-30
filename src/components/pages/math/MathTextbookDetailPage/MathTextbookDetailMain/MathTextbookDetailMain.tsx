@@ -5,7 +5,7 @@ import {
   ChangeEvent,
 } from 'react';
 // store
-import useMathTextbookPageStore from '@/store/mathTextbookPageStore/mathTextbookPageStore';
+import useMathTextbookPageStore from '@/store/mathStores/mathTextbookPageStore/mathTextbookPageStore';
 // ui
 import CommonSelect from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect';
 import { 

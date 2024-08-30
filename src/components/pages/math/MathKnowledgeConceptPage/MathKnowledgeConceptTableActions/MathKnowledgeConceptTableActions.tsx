@@ -7,7 +7,7 @@ import {
   ChangeEvent,
 } from 'react';
 // store
-import useMathAchievementPageStore from '@/store/mathStores/mathAchievementPageStore/mathAchievementPageStore';
+import useMathKnowledgeConceptPageStore from '@/store/mathStores/mathKnowledgeConceptPageStore/mathKnowledgeConceptPageStore';
 // hook
 import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
 // ui
@@ -32,32 +32,33 @@ import {
 } from 'react-icons/lu';
 // type
 import { 
-  mathAchievementSearchTypeOptions,
-} from './MathAchievementTableActions.type';
+  mathKnowledgeConceptSearchTypeOptions,
+} from './MathKnowledgeConceptTableActions.type';
 import { 
-  TRetrieveMathAchievementsApiRequestParams,
+  TRetrieveMathKnowledgeConceptsApiRequestParams,
 } from '@/apis/math/mathApi.type';
 // style
-import './MathAchievementTableActions.css';
+import './MathKnowledgeConceptTableActions.css';
 
-type TMathAchievementTableActionsProps = {
-  retrieveMathAchievements: (params: TRetrieveMathAchievementsApiRequestParams) => Promise<void>;
+type TMathKnowledgeConceptTableActionsProps = {
+  retrieveMathKnowledgeConcepts: (params: TRetrieveMathKnowledgeConceptsApiRequestParams) => Promise<void>;
 };
 
-function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) {
+function _MathKnowledgeConceptTableActions(props: TMathKnowledgeConceptTableActionsProps) {
   const {
-    retrieveMathAchievements,
+    retrieveMathKnowledgeConcepts,
   } = props;
 
   //
-  // mathAchievementPage store
+  // mathKnowledgeConceptPage store
   //
-  const mathAchievementsData = useMathAchievementPageStore(state => state.mathAchievementsData);
+  const mathKnowledgeConceptsData = useMathKnowledgeConceptPageStore(state => state.mathKnowledgeConceptsData);
+  const searchParamsForRetrieveMathKnowledgeConceptsApi = useMathKnowledgeConceptPageStore(state => state.searchParamsForRetrieveMathKnowledgeConceptsApi);
+  const {
+    search = '',
+  } = searchParamsForRetrieveMathKnowledgeConceptsApi;
 
-  const searchParamsForRetrieveMathAchievementsApi = useMathAchievementPageStore(state => state.searchParamsForRetrieveMathAchievementsApi);
-  const search = searchParamsForRetrieveMathAchievementsApi.search ?? '';
-
-  const updateSearchParamsForRetrieveMathAchievementsApi = useMathAchievementPageStore(state => state.updateSearchParamsForRetrieveMathAchievementsApi);
+  const updateSearchParamsForRetrieveMathKnowledgeConceptsApi = useMathKnowledgeConceptPageStore(state => state.updateSearchParamsForRetrieveMathKnowledgeConceptsApi);
 
   //
   // ref
@@ -74,31 +75,33 @@ function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) 
   const onChangeSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const search = e.target.value;
 
-    updateSearchParamsForRetrieveMathAchievementsApi(old => ({
+    updateSearchParamsForRetrieveMathKnowledgeConceptsApi(old => ({
       ...old,
-      search,
+      search: search?.length
+        ? search
+        : undefined,
     }));
-  }, [updateSearchParamsForRetrieveMathAchievementsApi]);
+  }, [updateSearchParamsForRetrieveMathKnowledgeConceptsApi]);
 
   const onEnter = useCallback(() => {
     $searchInputRef.current?.blur();
 
-    const params: TRetrieveMathAchievementsApiRequestParams = {
-      searchParams: searchParamsForRetrieveMathAchievementsApi,
+    const params: TRetrieveMathKnowledgeConceptsApiRequestParams = {
+      searchParams: searchParamsForRetrieveMathKnowledgeConceptsApi,
     };
 
-    retrieveMathAchievements(params);
+    retrieveMathKnowledgeConcepts(params);
   }, [
-    searchParamsForRetrieveMathAchievementsApi,
-    retrieveMathAchievements,
+    searchParamsForRetrieveMathKnowledgeConceptsApi,
+    retrieveMathKnowledgeConcepts,
   ]);
 
   const onESC = useCallback(() => {
-    updateSearchParamsForRetrieveMathAchievementsApi(old => ({
+    updateSearchParamsForRetrieveMathKnowledgeConceptsApi(old => ({
       ...old,
       search: undefined,
     }));
-  }, [updateSearchParamsForRetrieveMathAchievementsApi]);
+  }, [updateSearchParamsForRetrieveMathKnowledgeConceptsApi]);
 
   //
   // hook
@@ -112,11 +115,13 @@ function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) 
   //
   useEffect(function focusSearchInput() {
     $searchInputRef.current?.focus();
-  }, [mathAchievementsData]);
+
+    // eslint-disable-next-line
+  }, [mathKnowledgeConceptsData]);
 
   return (
-    <div className="MathAchievementTableActions">
-      <div className="MathAchievementTableActions-leftSide">
+    <div className="MathKnowledgeConceptTableActions">
+      <div className="MathKnowledgeConceptTableActions-leftSide">
         <TBUTooltip>
           <Select
             value={''}
@@ -126,7 +131,7 @@ function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) 
             </SelectTrigger>
 
             <SelectContent>
-              {mathAchievementSearchTypeOptions.map(item => {
+              {mathKnowledgeConceptSearchTypeOptions.map(item => {
                 const {
                   text,
                   value,
@@ -155,7 +160,7 @@ function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) 
           EndIcon={LuSearch} />
       </div>
 
-      <div className="MathAchievementTableActions-rightSide">
+      <div className="MathKnowledgeConceptTableActions-rightSide">
         <TBUTooltip>
           <Button
             className="actionButton"
@@ -177,5 +182,5 @@ function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) 
   );
 }
 
-const MathAchievementTableActions = memo(_MathAchievementTableActions);
-export default MathAchievementTableActions;
+const MathKnowledgeConceptTableActions = memo(_MathKnowledgeConceptTableActions);
+export default MathKnowledgeConceptTableActions;

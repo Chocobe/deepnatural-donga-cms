@@ -3,13 +3,10 @@ import {
   useRef,
   useState,
   useMemo,
-  useEffect,
   memo,
 } from 'react';
 // store
-import useMathAchievementPageStore from '@/store/mathStores/mathAchievementPageStore/mathAchievementPageStore';
-// hook
-import useTableWrapperInitScrollEffect from '@/components/hooks/useTableWrapperInitScrollEffect';
+import useMathKnowledgeConceptPageStore from '@/store/mathStores/mathKnowledgeConceptPageStore/mathKnowledgeConceptPageStore';
 // ui
 import {
   flexRender,
@@ -35,46 +32,35 @@ import {
 } from '@/lib/tanstack-reactTable-utils/tanstack-reactTable-utils';
 // type
 import { 
-  TMathAchievement1Model, 
-  TMathAchievementFlattenModel,
+  TMathKnowledgeConcept1Model, 
+  TMathKnowledgeConceptFlattenModel,
 } from '@/apis/models/mathModel.type';
 // style
-import './MathAchievementTable.css';
+import './MathKnowledgeConceptTable.css';
 
-const columnHelper = createColumnHelper<TMathAchievementFlattenModel>();
+const columnHelper = createColumnHelper<TMathKnowledgeConceptFlattenModel>();
 
-function flatMathAchievementModel(achievement1: TMathAchievement1Model) {
-  return achievement1.achievement2_set.reduce((result, achievement2) => {
-    const flattenAchievement = {
-      achievement1,
-      achievement2,
-    } as TMathAchievementFlattenModel;
-
-    if (!achievement2.achievement3_set?.length) {
-      return [
-        ...result,
-        flattenAchievement,
-      ];
-    }
+function flatMathKnowledgeConceptModel(kc1: TMathKnowledgeConcept1Model) {
+  return kc1.kc2_set.reduce((result, kc2) => {
+    const flattenKnowledgeConcept = {
+      kc1,
+      kc2,
+    } as TMathKnowledgeConceptFlattenModel;
 
     return [
       ...result,
-      ...achievement2.achievement3_set.map(achievement3 => ({
-        ...flattenAchievement,
-        achievement3,
-      } as TMathAchievementFlattenModel)),
+      flattenKnowledgeConcept,
     ];
-  }, [] as TMathAchievementFlattenModel[]);
+  }, [] as TMathKnowledgeConceptFlattenModel[]);
 }
 
-function _MathAchievementTable() {
+function _MathKnowledgeConceptTable() {
   //
-  // mathAchievementPage store
+  // mathKnowledgeConceptPage store
   //
-  const mathAchievementsData = useMathAchievementPageStore(state => state.mathAchievementsData);
+  const mathKnowledgeConceptsData = useMathKnowledgeConceptPageStore(state => state.mathKnowledgeConceptsData);
 
-  const clearSelectedMathAchievements = useMathAchievementPageStore(state => state.clearSelectedMathAchievements);
-  const setSelectedMathAchievements = useMathAchievementPageStore(state => state.setSelectedMathAchievements);
+  const setSelectedMathKnowledgeConcepts = useMathKnowledgeConceptPageStore(state => state.setSelectedMathKnowledgeConcepts);
 
   //
   // ref
@@ -90,11 +76,11 @@ function _MathAchievementTable() {
   // cache
   //
   const tableData = useMemo(() => {
-    return mathAchievementsData?.results.reduce((result, achievement1) => [
+    return mathKnowledgeConceptsData?.results.reduce((result, achievement1) => [
       ...result,
-      ...flatMathAchievementModel(achievement1),
-    ], [] as TMathAchievementFlattenModel[]) ?? [];
-  }, [mathAchievementsData]);
+      ...flatMathKnowledgeConceptModel(achievement1),
+    ], [] as any[]) ?? [];
+  }, [mathKnowledgeConceptsData]);
 
   const columns = useMemo(() => [
     columnHelper.display({
@@ -102,41 +88,94 @@ function _MathAchievementTable() {
       header: TableRowSelectorHeader,
       cell: TableRowSelectorCell,
     }),
-    columnHelper.accessor('achievement1.no', {
-      header: '성취기준\n(대)순번',
+    columnHelper.accessor('kc1.title', {
+      id: '1_kcTitle',
+      header: 'KC1 제목',
     }),
-    columnHelper.accessor('achievement1.title', {
-      header: '성취기준(대) 제목',
-    }),
-    columnHelper.accessor('achievement2.no', {
-      header: '성취기준\n(중)순번',
-    }),
-    columnHelper.accessor('achievement2.title', {
-      header: '성취기준(중) 제목',
-    }),
-    columnHelper.accessor('achievement3.no', {
-      header: '성취기준\n(소)순번',
-    }),
-    columnHelper.accessor('achievement3.title', {
-      header: '성취기준(소) 제목',
+    columnHelper.accessor('kc2.title', {
+      id: '2_kcTitle',
+      header: 'KC2 제목',
     }),
     columnHelper.display({
-      id: 'code',
-      header: '표준코드',
+      id: 'achievement1_title',
+      header: '성취기준(대) 제목',
       cell: props => {
-        const achievement3 = props.row.original.achievement3;
+        const achievement1Title = props.row.original.
+          kc2.
+          achievement3.
+          achievement2.
+          achievement1.
+          title;
 
-        return achievement3?.code ?? '';
+        return achievement1Title;
       },
     }),
-    columnHelper.accessor('achievement1.curriculum', {
+    columnHelper.display({
+      id: 'achievement2_title',
+      header: '성취기준(중) 제목',
+      cell: props => {
+        const achievement2Title = props.row.original
+          .kc2
+          .achievement3
+          .achievement2
+          .title;
+
+        return achievement2Title;
+      },
+    }),
+    columnHelper.display({
+      id: 'achievement3Title',
+      header: '성취기준(소) 제목',
+      cell: props => {
+        const achievement3Title = props.row.original
+          .kc2
+          .achievement3
+          .title;
+
+        return achievement3Title;
+      },
+    }),
+    columnHelper.display({
+      id: 'curriculum',
       header: '교육과정',
+      cell: props => {
+        const curriculum = props.row.original
+          .kc2
+          .achievement3
+          .achievement2
+          .achievement1
+          .curriculum;
+
+        return curriculum;
+      },
     }),
-    columnHelper.accessor('achievement1.classtype', {
+    columnHelper.display({
+      id: 'classtype',
       header: '학교급',
+      cell: props => {
+        const classtype = props.row.original
+          .kc2
+          .achievement3
+          .achievement2
+          .achievement1
+          .classtype;
+
+        return classtype;
+      },
     }),
-    columnHelper.accessor('achievement1.grade_cluster', {
+    columnHelper.display({
+      id: 'grade_cluster',
       header: '학년(군)',
+      cell: props => {
+        const gradeCluster = props.row.original
+          .kc2
+          .achievement3
+          .achievement2
+          .achievement1
+          .grade_cluster;
+
+        return gradeCluster;
+      },
     }),
   ], []);
 
@@ -154,31 +193,17 @@ function _MathAchievementTable() {
       setRowSelection(rowSelection);
 
       setTimeout(() => {
-        const selectedMathAchievements = table.getSelectedRowModel().rows.map(row => row.original);
-        setSelectedMathAchievements(selectedMathAchievements);
+        const selectedMathKnowledgConcepts = table.getSelectedRowModel().rows.map(row => row.original);
+
+        setSelectedMathKnowledgeConcepts(selectedMathKnowledgConcepts);
       });
     },
   });
 
-  useTableWrapperInitScrollEffect({
-    $tableRef,
-    effectDef: tableData,
-  });
-
-  //
-  // effect
-  //
-  useEffect(function _clearSelectedMathAchievements() {
-    setRowSelection({});
-    clearSelectedMathAchievements();
-
-    // eslint-disable-next-line
-  }, [tableData]);
-
   return (
     <Table
       ref={$tableRef}
-      className="MathAchievementTable">
+      className="MathKnowledgeConceptTable">
       <TableHeader>
         {table.getHeaderGroups().map(headerGroup => (
           <TableRow
@@ -227,5 +252,5 @@ function _MathAchievementTable() {
   );
 }
 
-const MathAchievementTable = memo(_MathAchievementTable);
-export default MathAchievementTable;
+const MathKnowledgeConceptTable = memo(_MathKnowledgeConceptTable);
+export default MathKnowledgeConceptTable;
