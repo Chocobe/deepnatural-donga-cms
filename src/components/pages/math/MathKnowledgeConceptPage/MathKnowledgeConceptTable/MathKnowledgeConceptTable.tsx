@@ -5,6 +5,8 @@ import {
   useMemo,
   memo,
 } from 'react';
+// store
+import useMathKnowledgeConceptPageStore from '@/store/mathStores/mathKnowledgeConceptPageStore/mathKnowledgeConceptPageStore';
 // ui
 import {
   flexRender,
@@ -36,9 +38,6 @@ import {
 // style
 import './MathKnowledgeConceptTable.css';
 
-// FIXME: mockup
-import mockMathKnowledgeConcepts from './mock.MathKnowledgeConceptTable';
-
 const columnHelper = createColumnHelper<TMathKnowledgeConceptFlattenModel>();
 
 function flatMathKnowledgeConceptModel(kc1: TMathKnowledgeConcept1Model) {
@@ -57,6 +56,13 @@ function flatMathKnowledgeConceptModel(kc1: TMathKnowledgeConcept1Model) {
 
 function _MathKnowledgeConceptTable() {
   //
+  // mathKnowledgeConceptPage store
+  //
+  const mathKnowledgeConceptsData = useMathKnowledgeConceptPageStore(state => state.mathKnowledgeConceptsData);
+
+  const setSelectedMathKnowledgeConcepts = useMathKnowledgeConceptPageStore(state => state.setSelectedMathKnowledgeConcepts);
+
+  //
   // ref
   //
   const $tableRef = useRef<HTMLTableElement | null>(null);
@@ -70,11 +76,11 @@ function _MathKnowledgeConceptTable() {
   // cache
   //
   const tableData = useMemo(() => {
-    return mockMathKnowledgeConcepts.results.reduce((result, achievement1) => [
+    return mathKnowledgeConceptsData?.results.reduce((result, achievement1) => [
       ...result,
       ...flatMathKnowledgeConceptModel(achievement1),
     ], [] as any[]) ?? [];
-  }, []);
+  }, [mathKnowledgeConceptsData]);
 
   const columns = useMemo(() => [
     columnHelper.display({
@@ -188,7 +194,8 @@ function _MathKnowledgeConceptTable() {
 
       setTimeout(() => {
         const selectedMathKnowledgConcepts = table.getSelectedRowModel().rows.map(row => row.original);
-        console.log('selectedMathKnowledgConcepts: ', selectedMathKnowledgConcepts);
+
+        setSelectedMathKnowledgeConcepts(selectedMathKnowledgConcepts);
       });
     },
   });

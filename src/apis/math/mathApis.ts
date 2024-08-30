@@ -27,6 +27,9 @@ import {
 
   TRetrieveMathAchievementsApiRequestParams,
   TRetrieveMathAchievementsApiResponse,
+
+  TRetrieveMathKnowledgeConceptsApiRequestParams,
+  TRetrieveMathKnowledgeConceptsApiResponse,
 } from './mathApi.type';
 
 // FIXME: mockup
@@ -193,4 +196,28 @@ export const retrieveMathAchievementsApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .retrieveMathAchievements,
+});
+
+// --- --- --- --- --- --- --- --- --- ---
+
+//
+// (GET) 수학 지식개념 목록
+//
+export const retrieveMathKnowledgeConceptsApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathKnowledgeConceptsApiRequestParams) => {
+    const {
+      searchParams,
+    } = excludeNullOrUndefinedProperties(params);
+
+    return api.get<TRetrieveMathKnowledgeConceptsApiResponse>(
+      mathApiUrlFactory.retrieveMathKnowledgeConceptsPath(),
+      {
+        params: searchParams,
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .retrieveMathKnowledgeConcepts,
 });
