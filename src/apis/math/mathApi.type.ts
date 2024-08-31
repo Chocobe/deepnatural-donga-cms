@@ -4,9 +4,9 @@ import {
   TApiRequestNonBodyParams,
 } from '../api.type';
 import { 
-  TCMSCommonModelClassType,
-  TCMSCommonModelElementaryGrade,
-  TCMSCommonModelTerm,
+  TCMSClassType,
+  TCMSElementaryGrade,
+  TCMSTerm,
   TPaginationModel,
 } from '../models/cmsCommonModel.type';
 import { 
@@ -15,18 +15,19 @@ import {
   TMathChapter1Model,
   TMathKnowledgeConcept1Model,
   TMathTextbookModel,
-  TMathTextbookModelCurriculum,
+  TMathCurriculum,
+  TMathSeriesModel,
 } from '../models/mathModel.type';
 
 //
 // (GET) 수학 교과서 목록
 //
 export type TRetrieveMathTextbooksApiRequestParams = TApiRequestNonBodyParams<void, {
-  classtype?: TCMSCommonModelClassType;
-  grade?: TCMSCommonModelElementaryGrade | TCMSCommonModelElementaryGrade;
+  classtype?: TCMSClassType;
+  grade?: TCMSElementaryGrade | TCMSElementaryGrade;
   page?: number;
   search?: string;
-  term?: TCMSCommonModelTerm;
+  term?: TCMSTerm;
 }>;
 
 export type TRetrieveMathTextbooksApiResponse = TPaginationModel<TMathTextbookModel>;
@@ -86,8 +87,8 @@ export type TRetrieveMathChaptersApiResponse = TPaginationModel<TMathChapter1Mod
 export type TRetrieveMathAchievementsApiRequestParams = TApiRequestNonBodyParams<void, {
   achievement2?: string;
   achievement3?: string;
-  classtype?: TCMSCommonModelClassType;
-  curriculum?: TMathTextbookModelCurriculum;
+  classtype?: TCMSClassType;
+  curriculum?: TMathCurriculum;
   grade_cluster?: TMathAchievementGradeCluster;
   page?: number;
   search?: string;
@@ -107,3 +108,14 @@ export type TRetrieveMathKnowledgeConceptsApiRequestParams = TApiRequestNonBodyP
 }>;
 
 export type TRetrieveMathKnowledgeConceptsApiResponse = TPaginationModel<TMathKnowledgeConcept1Model>;
+
+// --- --- --- --- --- --- --- --- --- ---
+
+//
+// (GET) 수학 출처-시리즈 목록
+//
+export type TRetrieveSeriesApiRequestParams = TApiRequestNonBodyParams<void, {
+  page?: number;
+}>;
+
+export type TRetrieveMathSeriesApiResponse = TPaginationModel<TMathSeriesModel>;

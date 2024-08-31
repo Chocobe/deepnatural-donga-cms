@@ -1,6 +1,7 @@
 // ui
 import MathSeriesSourceHeader from '@/components/pages/math/MathSeriesSourcePage/MathSeriesSourceHeader/MathSeriesSourceHeader';
 import MathSeriesSourceTableActions from '@/components/pages/math/MathSeriesSourcePage/MathSeriesSourceTableActions/MathSeriesSourceTableActions';
+import MathSeriesSourceTable from '@/components/pages/math/MathSeriesSourcePage/MathSeriesSourceTable/MathSeriesSourceTable';
 // style
 import './MathSeriesSourcePage.css';
 
@@ -16,7 +17,7 @@ function MathSeriesSourcePage() {
       </div>
 
       <div className="MathSeriesSourcePage-table">
-        Table
+        <MathSeriesSourceTable />
       </div>
 
       <div className="MathSeriesSourcePage-footer">
