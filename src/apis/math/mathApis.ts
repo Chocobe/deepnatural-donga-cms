@@ -30,6 +30,9 @@ import {
 
   TRetrieveMathKnowledgeConceptsApiRequestParams,
   TRetrieveMathKnowledgeConceptsApiResponse,
+
+  TRetrieveMathSeriesSourcesApiRequestParams,
+  TRetrieveMathSeriesSourcesApiResponse,
 } from './mathApi.type';
 
 // FIXME: mockup
@@ -220,4 +223,28 @@ export const retrieveMathKnowledgeConceptsApi = createApiWithNoticeMessageGroup(
     .apis
     .math
     .retrieveMathKnowledgeConcepts,
+});
+
+// --- --- --- --- --- --- --- --- --- ---
+
+//
+// (GET) 수학 시리즈-출처 목록
+//
+export const retrieveMathSeriesSourcesApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathSeriesSourcesApiRequestParams) => {
+    const {
+      searchParams,
+    } = excludeNullOrUndefinedProperties(params);
+
+    return api.get<TRetrieveMathSeriesSourcesApiResponse>(
+      mathApiUrlFactory.retrieveMathSeriesSourcesPath(),
+      {
+        params: searchParams,
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .retrieveMathSeriesSources,
 });

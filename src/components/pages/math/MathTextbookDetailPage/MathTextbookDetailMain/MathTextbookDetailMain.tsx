@@ -25,13 +25,13 @@ import {
 } from '../../mathPages.type';
 import { 
   TMathTextbookModel, 
-  TMathTextbookModelCurriculum,
+  TMathCurriculum,
 } from '@/apis/models/mathModel.type';
 import { 
-  cmsCommonModelElementaryGradeMapper,
-  TCMSCommonModelClassType,
-  TCMSCommonModelMiddleHighGrade,
-  TCMSCommonModelTerm,
+  cmsElementaryGradeMapper,
+  TCMSClassType,
+  TCMSMiddleHighGrade,
+  TCMSTerm,
 } from '@/apis/models/cmsCommonModel.type';
 // style
 import './MathTextbookDetailMain.css';
@@ -80,7 +80,7 @@ function MathTextbookDetailMain() {
           options={mathCurriculumOptions}
           value={detailFormState.curriculum}
           onChange={curriculum => onChangeSelect({
-            curriculum: curriculum as TMathTextbookModelCurriculum,
+            curriculum: curriculum as TMathCurriculum,
           })} />
       ),
     },
@@ -94,8 +94,8 @@ function MathTextbookDetailMain() {
           options={cmsClassTypeOptions}
           value={detailFormState.classtype}
           onChange={classtype => onChangeSelect({
-            classtype: classtype as TCMSCommonModelClassType,
-            grade: cmsCommonModelElementaryGradeMapper.COMMON,
+            classtype: classtype as TCMSClassType,
+            grade: cmsElementaryGradeMapper.COMMON,
           })} />
       ),
     },
@@ -109,7 +109,7 @@ function MathTextbookDetailMain() {
           options={cmsGradeOptions[detailFormState.classtype]}
           value={String(detailFormState.grade)}
           onChange={grade => onChangeSelect({
-            grade: Number(grade) as TCMSCommonModelMiddleHighGrade,
+            grade: Number(grade) as TCMSMiddleHighGrade,
           })} />
       ),
     },
@@ -123,7 +123,7 @@ function MathTextbookDetailMain() {
           options={cmsTermOptions}
           value={String(detailFormState.term)}
           onChange={term => onChangeSelect({
-            term: Number(term) as TCMSCommonModelTerm,
+            term: Number(term) as TCMSTerm,
           })} />
       ),
     },

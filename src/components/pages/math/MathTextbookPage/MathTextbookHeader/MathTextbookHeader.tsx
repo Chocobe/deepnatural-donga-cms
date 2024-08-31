@@ -40,9 +40,9 @@ import {
   cmsClassTypeFilterOptions,
 } from '@/components/pages/cmsPages.type';
 import { 
-  TCMSCommonModelClassType,
-  TCMSCommonModelElementaryGrade,
-  TCMSCommonModelTerm,
+  TCMSClassType,
+  TCMSElementaryGrade,
+  TCMSTerm,
 } from '@/apis/models/cmsCommonModel.type';
 import { 
   TRetrieveMathTextbooksApiRequestParams,
@@ -84,7 +84,7 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
   //
   const onChangeClassType = useCallback((classType: string) => {
     const classtype = classType.trim().length
-      ? classType as TCMSCommonModelClassType
+      ? classType as TCMSClassType
       : undefined;
 
     const params: TRetrieveMathTextbooksApiRequestParams = {
@@ -109,7 +109,7 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
 
   const onChangeGrade = useCallback((grade: string) => {
     const _grade = grade.trim().length
-      ? Number(grade) as TCMSCommonModelElementaryGrade
+      ? Number(grade) as TCMSElementaryGrade
       : undefined;
 
     const params: TRetrieveMathTextbooksApiRequestParams = {
@@ -132,7 +132,7 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
 
   const onChangeTerm = useCallback((term: string) => {
     const _term = term.trim().length
-      ? Number(term) as TCMSCommonModelTerm
+      ? Number(term) as TCMSTerm
       : undefined;
 
     const params: TRetrieveMathTextbooksApiRequestParams = {

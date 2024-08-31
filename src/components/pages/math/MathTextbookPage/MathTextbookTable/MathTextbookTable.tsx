@@ -38,7 +38,7 @@ import {
   TMathTextbookModel,
 } from '@/apis/models/mathModel.type';
 import { 
-  cmsCommonModelClassTypeMapper,
+  cmsClassTypeMapper,
 } from '@/apis/models/cmsCommonModel.type';
 import { 
   cmsClassTypeOptions,
@@ -114,7 +114,7 @@ function MathTextbookTable() {
         } = props;
 
         const valueItem = cmsGradeOptions[
-          cmsCommonModelClassTypeMapper.ELEMENTARY
+          cmsClassTypeMapper.ELEMENTARY
         ].find(({ value }) => value === String(cell.getValue()));
 
         return valueItem?.text ?? ' ';
