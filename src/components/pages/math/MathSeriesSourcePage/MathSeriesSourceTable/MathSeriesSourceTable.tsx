@@ -5,6 +5,8 @@ import {
   useMemo,
   memo,
 } from 'react';
+// store
+import useMathSeriesSourcePageStore from '@/store/mathStores/mathSeriesSourcePageStore/mathSeriesSourcePageStore';
 // ui
 import {
   flexRender,
@@ -43,9 +45,6 @@ import {
 // style
 import './MathSeriesSourceTable.css';
 
-// FIXME: mockup
-import mockMathSeriesSources from './mock.MathSeriesSourceTable';
-
 const columnHelper = createColumnHelper<TMathSeriesSourceFlattenModel>();
 
 function flatMathSeriesModel(series: TMathSeriesModel) {
@@ -61,6 +60,13 @@ function flatMathSeriesModel(series: TMathSeriesModel) {
 
 function _MathSeriesSourceTable() {
   //
+  // mathSeiresSourcePage store
+  //
+  const mathSeriesSourcesData = useMathSeriesSourcePageStore(state => state.mathSeriesSourcesData);
+
+  const setSelectedMathSeriesSources = useMathSeriesSourcePageStore(state => state.setSelectedMathSeriesSources);
+
+  //
   // ref
   //
   const $tableRef = useRef<HTMLTableElement | null>(null);
@@ -74,11 +80,11 @@ function _MathSeriesSourceTable() {
   // cache
   //
   const tableData = useMemo(() => {
-    return mockMathSeriesSources.results.reduce((result, series) => [
+    return mathSeriesSourcesData?.results.reduce((result, series) => [
       ...result,
       ...flatMathSeriesModel(series),
-    ], [] as TMathSeriesSourceFlattenModel[]);
-  }, []);
+    ], [] as TMathSeriesSourceFlattenModel[]) ?? [];
+  }, [mathSeriesSourcesData]);
 
   const columns = useMemo(() => [
     columnHelper.display({
@@ -163,9 +169,9 @@ function _MathSeriesSourceTable() {
       setRowSelection(rowSelection);
 
       setTimeout(() => {
-        const selectedMathSeries = table.getSelectedRowModel().rows.map(row => row.original);
+        const selectedMathSeriesSources = table.getSelectedRowModel().rows.map(row => row.original);
 
-        console.log('selectedMathSeries: ', selectedMathSeries);
+        setSelectedMathSeriesSources(selectedMathSeriesSources);
       });
     },
   });
