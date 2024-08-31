@@ -51,6 +51,9 @@ const noticeMessageGroupFactory: {
 
       // 지식개념
       retrieveMathKnowledgeConcepts: TNoticeMessageGroup;
+
+      // 시리즈-출처
+      retrieveMathSeriesSources: TNoticeMessageGroup;
     };
   };
 
@@ -320,6 +323,20 @@ const noticeMessageGroupFactory: {
         }),
         errorMessage: () => ({
           ...createNetworkErrorMessage('수학 지식개념 정보 조회 중'),
+        }),
+        successMessage: undefined,
+      },
+
+      // --- --- --- --- --- --- --- --- --- ---
+
+      // (GET) 수학 시리즈-출처 목록
+      retrieveMathSeriesSources: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 시리즈-출처 정보를 조회 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 시리즈-출처 정보 조회 중'),
         }),
         successMessage: undefined,
       },

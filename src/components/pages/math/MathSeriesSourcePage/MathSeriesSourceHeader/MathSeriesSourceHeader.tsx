@@ -54,48 +54,56 @@ function _MathSeriesSourceHeader() {
       id: 'curriculum',
       label: '교육과정',
       Component: (
-        <CommonSelect
-          id="curriculum"
-          className="editor"
-          options={mathCurriculumFilterOptions}
-          value={' '}
-          onChange={() => console.log('curriculum')} />
+        <TBUTooltip className="w-full">
+          <CommonSelect
+            id="curriculum"
+            className="editor"
+            options={mathCurriculumFilterOptions}
+            value={' '}
+            onChange={() => console.log('curriculum')} />
+        </TBUTooltip>
       ),
     },
     {
       id: 'classtype',
       label: '학교급',
       Component: (
-        <CommonSelect
-          id="classtype"
-          className="editor"
-          options={cmsClassTypeFilterOptions}
-          value={' '}
-          onChange={() => console.log('classtype')} />
+        <TBUTooltip className="w-full">
+          <CommonSelect
+            id="classtype"
+            className="editor"
+            options={cmsClassTypeFilterOptions}
+            value={' '}
+            onChange={() => console.log('classtype')} />
+        </TBUTooltip>
       ),
     },
     {
       id: 'grade',
       label: '학년',
       Component: (
-        <CommonSelect
-          id="grade"
-          className="editor"
-          options={cmsGradeFilterOptions['초등']}
-          value={' '}
-          onChange={() => console.log('grade')} />
+        <TBUTooltip className="w-full">
+          <CommonSelect
+            id="grade"
+            className="editor"
+            options={cmsGradeFilterOptions['초등']}
+            value={' '}
+            onChange={() => console.log('grade')} />
+        </TBUTooltip>
       ),
     },
     {
       id: 'term',
       label: '학기',
       Component: (
-        <CommonSelect
-          id="term"
-          className="editor"
-          options={cmsTermFilterOptions}
-          value={' '}
-          onChange={() => console.log('term')} />
+        <TBUTooltip className="w-full">
+          <CommonSelect
+            id="term"
+            className="editor"
+            options={cmsTermFilterOptions}
+            value={' '}
+            onChange={() => console.log('term')} />
+        </TBUTooltip>
       ),
     },
   ], []);

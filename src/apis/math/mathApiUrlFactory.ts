@@ -80,11 +80,23 @@ const mathApiUrlFactory = (() => {
     },
   };
 
+  //
+  // 수학 시리즈-출처
+  //
+  const mathSeriesSourcePaths = {
+    /** (GET) 수학 시리즈-출처 목록 */
+    retrieveMathSeriesSourcesPath() {
+      return `${BASE_PATH}series/`;
+    },
+  };
+
+
   return {
     ...mathTextbookPaths,
     ...mathChapterPaths,
     ...mathAchievementPaths,
     ...mathKnowledgeConceptPaths,
+    ...mathSeriesSourcePaths,
   } as const;
 })();
 
