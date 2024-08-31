@@ -32,7 +32,7 @@ import {
 import dayjs from 'dayjs';
 // type
 import { 
-  TMathSeriesFlattenModel,
+  TMathSeriesSourceFlattenModel,
   TMathSeriesModel,
 } from '@/apis/models/mathModel.type';
 import { 
@@ -46,14 +46,14 @@ import './MathSeriesSourceTable.css';
 // FIXME: mockup
 import mockMathSeriesSources from './mock.MathSeriesSourceTable';
 
-const columnHelper = createColumnHelper<TMathSeriesFlattenModel>();
+const columnHelper = createColumnHelper<TMathSeriesSourceFlattenModel>();
 
 function flatMathSeriesModel(series: TMathSeriesModel) {
   return series.source_set.map(source => {
     const flattenSeries = {
       series,
       source,
-    } as TMathSeriesFlattenModel;
+    } as TMathSeriesSourceFlattenModel;
 
     return flattenSeries;
   });
@@ -77,7 +77,7 @@ function _MathSeriesSourceTable() {
     return mockMathSeriesSources.results.reduce((result, series) => [
       ...result,
       ...flatMathSeriesModel(series),
-    ], [] as TMathSeriesFlattenModel[]);
+    ], [] as TMathSeriesSourceFlattenModel[]);
   }, []);
 
   const columns = useMemo(() => [

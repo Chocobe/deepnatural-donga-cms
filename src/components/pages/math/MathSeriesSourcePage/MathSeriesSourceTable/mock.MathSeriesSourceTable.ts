@@ -1,9 +1,9 @@
 // type
 import { 
-  TRetrieveMathSeriesApiResponse,
+  TRetrieveMathSeriesSourcesApiResponse,
 } from '@/apis/math/mathApi.type';
 
-const mockMathSeriesSources: TRetrieveMathSeriesApiResponse = {
+const mockMathSeriesSources: TRetrieveMathSeriesSourcesApiResponse = {
   "current_page": 1,
   "last_page": 1,
   "page_size": 100,

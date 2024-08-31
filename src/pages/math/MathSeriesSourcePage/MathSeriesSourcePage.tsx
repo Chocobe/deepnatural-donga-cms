@@ -2,6 +2,7 @@
 import MathSeriesSourceHeader from '@/components/pages/math/MathSeriesSourcePage/MathSeriesSourceHeader/MathSeriesSourceHeader';
 import MathSeriesSourceTableActions from '@/components/pages/math/MathSeriesSourcePage/MathSeriesSourceTableActions/MathSeriesSourceTableActions';
 import MathSeriesSourceTable from '@/components/pages/math/MathSeriesSourcePage/MathSeriesSourceTable/MathSeriesSourceTable';
+import MathSeriesSourceFooter from '@/components/pages/math/MathSeriesSourcePage/MathSeriesSourceFooter/MathSeriesSourceFooter';
 // style
 import './MathSeriesSourcePage.css';
 
@@ -21,7 +22,7 @@ function MathSeriesSourcePage() {
       </div>
 
       <div className="MathSeriesSourcePage-footer">
-        Footer
+        <MathSeriesSourceFooter />
       </div>
     </div>
   );

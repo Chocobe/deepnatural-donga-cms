@@ -241,7 +241,7 @@ export type TMathSeriesModel = {
 };
 
 /** 수학 시리즈 평탄화 모델 */
-export type TMathSeriesFlattenModel = {
+export type TMathSeriesSourceFlattenModel = {
   series: TMathSeriesModel;
   source: TMathSourceModel;
 };
