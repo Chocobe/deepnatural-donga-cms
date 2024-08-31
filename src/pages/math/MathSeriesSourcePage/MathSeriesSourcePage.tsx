@@ -74,7 +74,7 @@ function MathSeriesSourcePage() {
       </div>
 
       <div className="MathSeriesSourcePage-footer">
-        <MathSeriesSourceFooter />
+        <MathSeriesSourceFooter retrieveMathSeriesSources={retrieveMathSeriesSources} />
       </div>
     </div>
   );
