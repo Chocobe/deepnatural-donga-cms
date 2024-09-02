@@ -245,3 +245,17 @@ export type TMathSeriesSourceFlattenModel = {
   series: TMathSeriesModel;
   source: TMathSourceModel;
 };
+
+/**
+ * Math Instruction (수학 지문)
+ */
+/** 수학 지문 */
+export type TMathInstructionModel = {
+  id: number;
+  /** 지문 내용 */
+  content: string;
+  /** 대표 문항 ID */
+  representation_question_id: string;
+  /** 출처 */
+  source: TMathSourceModel;
+};

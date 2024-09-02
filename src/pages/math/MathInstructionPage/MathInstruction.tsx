@@ -1,6 +1,7 @@
 // ui
 import MathInstructionHeader from '@/components/pages/math/MathInstrurctionPage/MathInstructionHeader/MathInstructionHeader';
 import MathInstructionTableActions from '@/components/pages/math/MathInstrurctionPage/MathInstructionTableActions/MathInstructionTableActions';
+import MathInstructionTable from '@/components/pages/math/MathInstrurctionPage/MathInstructionTable/MathInstructionTable';
 // style
 import './MathInstructionPage.css';
 
@@ -16,7 +17,7 @@ function MathInstructionPage() {
       </div>
 
       <div className="MathInstructionPage-table">
-        table
+        <MathInstructionTable />
       </div>
 
       <div className="MathInstructionPage-footer">

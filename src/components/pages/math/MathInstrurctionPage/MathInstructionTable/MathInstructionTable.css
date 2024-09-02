@@ -1,0 +1,89 @@
+.MathInstructionTable {
+  /*  */
+
+  .headerRow {
+    position: sticky;
+    top: 0;
+
+    background-color: #fff;
+    box-shadow: -1px 1px 1px hsl(var(--border));
+
+    &:hover {
+      background-color: #fff;
+    }
+
+    & > * {
+      color: #0F172A;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 700;
+
+      border-right: 1px solid hsl(var(--border));
+
+      &:last-of-type {
+        border-right: none !important;
+      }
+    }
+
+    .table-row-selector {
+      width: 66px !important;
+      min-width: 66px !important;
+    }
+
+    .representation_question_id {
+      width: 120px;
+      min-width: 120px;
+    }
+
+    .content {
+      min-width: 500px;
+    }
+
+    .source_series {
+      width: 180px;
+      min-width: 180px;
+    }
+
+    .source_name,
+    .source_type {
+      width: 200px;
+      min-width: 200px;
+    }
+  }
+
+  .row {
+    cursor: pointer;
+
+    & > * {
+      padding: 13px 16px !important;
+
+      color: #0F172A !important;
+      font-size: 16px !important;
+      line-height: 24px !important;
+      font-weight: 400 !important;
+
+      border-right: 1px solid hsl(var(--border)) !important;
+
+      &:last-of-type {
+        border-right: none !important;
+      }
+    }
+
+    .representation_question_id {
+      /*  */
+    }
+
+    .content {
+      /*  */
+    }
+
+    .source_series {
+      /*  */
+    }
+
+    .source_name,
+    .source_type {
+      /*  */
+    }
+  }
+}

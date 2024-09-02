@@ -33,6 +33,9 @@ import {
 
   TRetrieveMathSeriesSourcesApiRequestParams,
   TRetrieveMathSeriesSourcesApiResponse,
+
+  TRetrieveMathInstructionsApiRequestParams,
+  TRetrieveMathInstructionsApiResponse,
 } from './mathApi.type';
 
 // FIXME: mockup
@@ -247,4 +250,28 @@ export const retrieveMathSeriesSourcesApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .retrieveMathSeriesSources,
+});
+
+// --- --- --- --- --- --- --- --- --- ---
+
+//
+// (GET) 수학 지문 목록
+//
+export const retrieveMathInstructions = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathInstructionsApiRequestParams) => {
+    const {
+      searchParams,
+    } = excludeNullOrUndefinedProperties(params);
+
+    return api.get<TRetrieveMathInstructionsApiResponse>(
+      mathApiUrlFactory.retrieveMathInstructions(),
+      {
+        params: searchParams,
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .retrieveMathInstructions,
 });
