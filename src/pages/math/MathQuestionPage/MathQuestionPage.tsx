@@ -2,6 +2,7 @@
 import MathQuestionHeader from '@/components/pages/math/MathQuestionPage/MathQuestionHeader/MathQuestionHeader';
 import MathQuestionTableActions from '@/components/pages/math/MathQuestionPage/MathQuestionTableActions/MathQuestionTableActions';
 import MathQuestionTable from '@/components/pages/math/MathQuestionPage/MathQuestionTable/MathQuestionTable';
+import MathQuestionFooter from '@/components/pages/math/MathQuestionPage/MathQuestionFooter/MathQuestionFooter';
 // style
 import './MathQuestionPage.css';
 
@@ -21,7 +22,7 @@ function MathQuestionPage() {
       </div>
 
       <div className="MathQuestionPage-footer">
-        Footer
+        <MathQuestionFooter />
       </div>
     </div>
   );
