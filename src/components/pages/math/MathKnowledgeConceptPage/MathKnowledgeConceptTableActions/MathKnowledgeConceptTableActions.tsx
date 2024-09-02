@@ -115,8 +115,6 @@ function _MathKnowledgeConceptTableActions(props: TMathKnowledgeConceptTableActi
   //
   useEffect(function focusSearchInput() {
     $searchInputRef.current?.focus();
-
-    // eslint-disable-next-line
   }, [mathKnowledgeConceptsData]);
 
   return (
