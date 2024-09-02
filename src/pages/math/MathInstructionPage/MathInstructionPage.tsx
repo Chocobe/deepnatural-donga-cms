@@ -37,7 +37,7 @@ function MathInstructionPage() {
   ) => {
     const response = await ApiManager
       .math
-      .retrieveMathInstructions
+      .retrieveMathInstructionsApi
       .callWithNoticeMessageGroup(params);
 
     if (response?.data) {

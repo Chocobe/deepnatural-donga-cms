@@ -80,7 +80,7 @@ function MathQuestionPage() {
       </div>
 
       <div className="MathQuestionPage-footer">
-        <MathQuestionFooter />
+        <MathQuestionFooter retrieveMathQuestions={retrieveMathQuestions} />
       </div>
     </div>
   );

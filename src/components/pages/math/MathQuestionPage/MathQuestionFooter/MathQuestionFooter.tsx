@@ -1,27 +1,81 @@
 // react
 import {
   memo,
+  useCallback,
 } from 'react';
+// store
+import useMathQuestionPageStore from '@/store/mathStores/mathQuestionPageStore/mathQuestionPageStore';
+// hook
+import useTablePagination from '@/components/shadcn-ui-custom/TablePagination/hooks/useTablePagination';
 // ui
 import TablePagination from '@/components/shadcn-ui-custom/TablePagination/TablePagination';
+// type
+import { 
+  TRetrieveMathQuestionsApiRequestParams,
+} from '@/apis/math/mathApi.type';
 // style
 import './MathQuestionFooter.css';
 
-function _MathQuestionFooter() {
+type TMathQuestionFooterProps = {
+  retrieveMathQuestions: (params: TRetrieveMathQuestionsApiRequestParams) => Promise<void>;
+};
+
+function _MathQuestionFooter(props: TMathQuestionFooterProps) {
+  const {
+    retrieveMathQuestions,
+  } = props;
+
+  //
+  // mathQuestionPage store
+  //
+  const mathQuestionsData = useMathQuestionPageStore(state => state.mathQuestionsData);
+  const searchParamsForRetrieveMathQuestionsApi = useMathQuestionPageStore(state => state.searchParamsForRetrieveMathQuestionsApi);
+
+  //
+  // callback
+  //
+  const createParams = useCallback((page: number) => {
+    const params: TRetrieveMathQuestionsApiRequestParams = {
+      searchParams: {
+        ...searchParamsForRetrieveMathQuestionsApi,
+        page,
+      },
+    };
+
+    return params;
+  }, [searchParamsForRetrieveMathQuestionsApi]);
+
+  //
+  // hook
+  //
+  const {
+    count,
+    current_page,
+    last_page,
+    goToFirstPage,
+    goToPreviousPage,
+    goToNextPage,
+    goToLastPage,
+  } = useTablePagination({
+    createParams,
+    retrieveApiFunction: retrieveMathQuestions,
+    paginationData: mathQuestionsData,
+  });
+
   return (
     <div className="MathQuestionFooter">
       <div className="MathQuestionFooter-leftSide">
-        Total 1 문항
+        Total {count} 문항
       </div>
 
       <div className="MathQuestionFooter-rightSide">
         <TablePagination
-          currentPage={1}
-          lastPage={1}
-          goToFirstPage={() => console.log('goToFirstPage()')}
-          goToPreviousPage={() => console.log('goToPreviousPage()')}
-          goToNextPage={() => console.log('goToNextPage()')}
-          goToLastPage={() => console.log('goToLastPage()')} />
+          currentPage={current_page}
+          lastPage={last_page}
+          goToFirstPage={goToFirstPage}
+          goToPreviousPage={goToPreviousPage}
+          goToNextPage={goToNextPage}
+          goToLastPage={goToLastPage} />
       </div>
     </div>
   );

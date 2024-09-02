@@ -26,7 +26,7 @@ function _MathSeriesSourceFooter(props: TMathSeriesSourceFooterProps) {
   } = props;
 
   //
-  // store
+  // mathSeriesSourcePage store
   //
   const mathSeriesSourcesData = useMathSeriesSourcePageStore(state => state.mathSeriesSourcesData);
   const searchParamsForRetrieveMathSeriesSourcesApi = useMathSeriesSourcePageStore(state => state.searchParamsForRetrieveMathSeriesSourcesApi);
