@@ -5,6 +5,8 @@ import {
   useMemo,
   memo,
 } from 'react';
+// store
+import useMathInstructionPageStore from '@/store/mathStores/mathInstructionPageStore/mathInstructionPageStore';
 // ui
 import { 
   flexRender,
@@ -34,12 +36,16 @@ import {
 // style
 import './MathInstructionTable.css';
 
-// FIXME: mockup
-import mockMathInstructions from './mock.MathInstructionTable';
-
 const columnHelper = createColumnHelper<TMathInstructionModel>();
 
 function _MathInstructionTable() {
+  //
+  // mathInstructionPage store
+  //
+  const mathInstructionsData = useMathInstructionPageStore(state => state.mathInstructionsData);
+
+  const setSelectedMathInstructions = useMathInstructionPageStore(state => state.setSelectedMathInstructions);
+
   //
   // ref
   //
@@ -54,8 +60,8 @@ function _MathInstructionTable() {
   // cache
   //
   const tableData = useMemo(() => {
-    return mockMathInstructions.results;
-  }, []);
+    return mathInstructionsData?.results ?? [];
+  }, [mathInstructionsData]);
 
   const columns = useMemo(() => [
     columnHelper.display({
@@ -100,7 +106,7 @@ function _MathInstructionTable() {
       setTimeout(() => {
         const selectedMathInstructions = table.getSelectedRowModel().rows.map(row => row.original);
 
-        console.log('selectedMathInstructions: ', selectedMathInstructions);
+        setSelectedMathInstructions(selectedMathInstructions);
       });
     },
   });
