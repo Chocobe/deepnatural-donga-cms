@@ -291,7 +291,7 @@ export const retrieveMathQuestionsApi = createApiWithNoticeMessageGroup({
     } = excludeNullOrUndefinedProperties(params);
 
     return api.get<TRetrieveMathQuestionsApiResponse>(
-      mathApiUrlFactory.retrieveMathInstructions(),
+      mathApiUrlFactory.retrieveMathQuestions(),
       {
         params: searchParams,
       }

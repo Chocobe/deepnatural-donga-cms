@@ -5,6 +5,8 @@ import {
   useMemo,
   memo,
 } from 'react';
+// store
+import useMathQuestionPageStore from '@/store/mathStores/mathQuestionPageStore/mathQuestionPageStore';
 // ui
 import {
   flexRender,
@@ -51,12 +53,16 @@ import {
 // style
 import './MathQuestionTable.css';
 
-// FIXME: mockup
-import mockMathQuestions from './mock.MathQuestionTable';
-
 const columnHelper = createColumnHelper<TMathQuestionModel>();
 
 function _MathQuestionTable() {
+  //
+  // mathQuestionPage store
+  //
+  const mathQuestionsData = useMathQuestionPageStore(state => state.mathQuestionsData);
+
+  const setSelectedMathQuestions = useMathQuestionPageStore(state => state.setSelectedMathQuestions);
+
   //
   // ref
   //
@@ -71,8 +77,8 @@ function _MathQuestionTable() {
   // cache
   //
   const tableData = useMemo(() => {
-    return mockMathQuestions.results;
-  }, []);
+    return mathQuestionsData?.results ?? [];
+  }, [mathQuestionsData]);
 
   const columns = useMemo(() => [
     columnHelper.display({
@@ -201,7 +207,7 @@ function _MathQuestionTable() {
       setTimeout(() => {
         const selectedMathQuestions = table.getSelectedRowModel().rows.map(row => row.original);
 
-        console.log('selectedMathQuestions: ', selectedMathQuestions);
+        setSelectedMathQuestions(selectedMathQuestions);
       });
     },
   });
