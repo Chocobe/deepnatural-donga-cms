@@ -3,8 +3,11 @@ import {
   useRef,
   useState,
   useCallback,
+  useEffect,
   memo,
 } from 'react';
+// store
+import useMathSeriesSourcePageStore from '@/store/mathStores/mathSeriesSourcePageStore/mathSeriesSourcePageStore';
 // hook
 import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
 // ui
@@ -35,6 +38,11 @@ import {
 import './MathSeriesSourceTableActions.css';
 
 function _MathSeriesSourceTableActions() {
+  //
+  // mathSeriesSourcePage store
+  //
+  const mathSeriesSourcesData = useMathSeriesSourcePageStore(state => state.mathSeriesSourcesData);
+
   //
   // ref
   //
@@ -75,6 +83,13 @@ function _MathSeriesSourceTableActions() {
     onESC
   );
 
+  //
+  // effe
+  //
+  useEffect(function focusSearchInput() {
+    $searchInputRef.current?.focus();
+  }, [mathSeriesSourcesData]);
+
   return (
     <div className="MathSeriesSourceTableActions">
       <div className="MathSeriesSourceTableActions-leftSide">
@@ -114,7 +129,8 @@ function _MathSeriesSourceTableActions() {
             value={search}
             onChange={onChangeSearch}
             onKeyDown={onKeyDown}
-            EndIcon={LuSearch} />
+            EndIcon={LuSearch}
+            disabled />
         </TBUTooltip>
       </div>
 
