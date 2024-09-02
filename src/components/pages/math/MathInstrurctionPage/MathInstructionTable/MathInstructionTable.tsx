@@ -7,6 +7,8 @@ import {
 } from 'react';
 // store
 import useMathInstructionPageStore from '@/store/mathStores/mathInstructionPageStore/mathInstructionPageStore';
+// hook
+import useTableWrapperInitScrollEffect from '@/components/hooks/useTableWrapperInitScrollEffect';
 // ui
 import { 
   flexRender,
@@ -25,6 +27,7 @@ import {
 } from '@/components/shadcn-ui/ui/table';
 import TableRowSelectorHeader from '@/components/shadcn-ui-custom/TableRowSelectorHeader/TableRowSelectorHeader';
 import TableRowSelectorCell from '@/components/shadcn-ui-custom/TableRowSelectorCell/TableRowSelectorCell';
+import TableEllipsisCell from '@/components/shadcn-ui-custom/TableEllipsisCell/TableEllipsisCell';
 // util
 import { 
   TABLE_ROW_SELECTION_CHECKBOX_ID,
@@ -74,6 +77,15 @@ function _MathInstructionTable() {
     }),
     columnHelper.accessor('content', {
       header: '지문 내용',
+      cell: props => {
+        const content = props.getValue();
+
+        return (
+          <TableEllipsisCell>
+            {content}
+          </TableEllipsisCell>
+        );
+      },
     }),
     columnHelper.display({
       id: 'source_series',
@@ -109,6 +121,11 @@ function _MathInstructionTable() {
         setSelectedMathInstructions(selectedMathInstructions);
       });
     },
+  });
+
+  useTableWrapperInitScrollEffect({
+    $tableRef,
+    effectDef: tableData,
   });
 
   return (

@@ -6,7 +6,7 @@ import {
 
 const useTableWrapperInitScrollEffect = (params: {
   $tableRef: MutableRefObject<HTMLTableElement | null>;
-  effectDef: Array<any>;
+  effectDef: any;
 }) => {
   const {
     $tableRef,
