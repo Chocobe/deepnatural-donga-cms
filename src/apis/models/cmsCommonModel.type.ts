@@ -69,6 +69,22 @@ export const cmsMiddleHighGradeMapper = {
 export type TCMSMiddleHighGrade = typeof cmsMiddleHighGradeMapper[keyof typeof cmsMiddleHighGradeMapper];
 
 /**
+ * 학년 - 템플릿
+ */
+export const cmsGradeTemplate = Object
+  .values(cmsElementaryGradeMapper)
+  .reduce((template, grade) => {
+    return {
+      ...template,
+      [grade]: grade === 0
+        ? '공통'
+        : `${grade}학년`,
+    };
+  }, {} as {
+    [grade: string]: string;
+  });
+
+/**
  * 학기
  */
 export const cmsTermMapper = {
@@ -77,6 +93,22 @@ export const cmsTermMapper = {
   SECOND_TERM: 2,
 } as const;
 export type TCMSTerm = typeof cmsTermMapper[keyof typeof cmsTermMapper];
+
+/**
+ * 학기 - 템플릿
+ */
+export const cmsTermTemplate = Object
+  .values(cmsTermMapper)
+  .reduce((template, term) => {
+    return {
+      ...template,
+      [term]: term === 0
+        ? '공통'
+        : `${term}학기`,
+    };
+  }, {} as {
+    [term: string]: string;
+  });
 
 /**
  * 출처 분류
@@ -108,3 +140,20 @@ export const cmsSourceTypeMapper = {
   '서술형평가': '서술형평가',
 } as const;
 export type TCmsSourceType = typeof cmsSourceTypeMapper[keyof typeof cmsSourceTypeMapper];
+
+/**
+ * 난이도
+ */
+export const cmsDifficultyMapper = {
+  /** 최하 */
+  '1': 1,
+  /** 하 */
+  '2': 2,
+  /** 중 */
+  '3': 3,
+  /** 상 */
+  '4': 4,
+  /** 최상 */
+  '5': 5,
+} as const;
+export type TCMSDifficulty = typeof cmsDifficultyMapper[keyof typeof cmsDifficultyMapper];
