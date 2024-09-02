@@ -24,7 +24,7 @@ import MathChapterPage from '@/pages/math/MathChapterPage/MathChapterPage';
 import MathAchievementPage from '@/pages/math/MathAchievementPage/MathAchievementPage';
 import MathKnowledgeConceptPage from '@/pages/math/MathKnowledgeConceptPage/MathKnowledgeConceptPage';
 import MathSeriesSourcePage from '@/pages/math/MathSeriesSourcePage/MathSeriesSourcePage';
-import MathInstructionPage from '@/pages/math/MathInstructionPage/MathInstruction';
+import MathInstructionPage from '@/pages/math/MathInstructionPage/MathInstructionPage';
 import MathQuestionPage from '@/pages/math/MathQuestionPage/MathQuestionPage';
 // pages - english
 import EnglishTextbookPage from '@/pages/english/EnglishTextbookPage/EnglishTextbookPage';
