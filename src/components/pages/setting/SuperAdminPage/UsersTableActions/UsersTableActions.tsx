@@ -1,7 +1,6 @@
 // react
 import {
   useRef,
-  useMemo,
   useCallback,
   useEffect,
   memo,
@@ -15,6 +14,7 @@ import {
 import {
   InputWithIcon,
 } from '@/components/shadcn-ui-custom/InputWithIcon/InputWithIcon';
+import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // store
 import useSuperAdminPageStore from '@/store/settingStores/superAdminPageStore/superAdminPageStore';
 // hook
@@ -98,16 +98,6 @@ function _UsersTableActions(props: TUsersTableActionsProps) {
   } = useOnKeyDownEnterOrESC(onEnter, onESC);
 
   //
-  // cache
-  //
-  const leftSideButtonTemplates = useMemo(() => [
-    {
-      text: '삭제',
-      onClick: onClickRemove,
-    },
-  ], [onClickRemove]);
-
-  //
   // effect
   //
   useEffect(function focusSearchInput() {
@@ -117,21 +107,14 @@ function _UsersTableActions(props: TUsersTableActionsProps) {
   return (
     <div className="UsersTableActions">
       <div className="UsersTableActions-leftSide">
-        {leftSideButtonTemplates.map(template => {
-          const {
-            text,
-            onClick,
-          } = template;
-
-          return (
-            <Button
-              key={text}
-              className="UsersTableActions-leftSide-button"
-              onClick={onClick}>
-              {text}
-            </Button>
-          );
-        })}
+        <TBUTooltip>
+          <Button
+            className="actionButton"
+            disabled
+            onClick={onClickRemove}>
+            삭제
+          </Button>
+        </TBUTooltip>
       </div>
 
       <div className="UsersTableActions-rightSide">
