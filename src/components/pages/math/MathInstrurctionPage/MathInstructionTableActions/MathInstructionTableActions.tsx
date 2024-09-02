@@ -114,7 +114,8 @@ function _MathInstructionTableActions() {
             value={search}
             onChange={onChangeSearch}
             onKeyDown={onKeyDown}
-            EndIcon={LuSearch} />
+            EndIcon={LuSearch}
+            disabled />
         </TBUTooltip>
       </div>
 

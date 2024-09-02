@@ -80,7 +80,7 @@ function MathInstructionPage() {
       </div>
 
       <div className="MathInstructionPage-footer">
-        <MathInstructionFooter />
+        <MathInstructionFooter retrieveMathInstructions={retrieveMathInstructions} />
       </div>
     </div>
   );
