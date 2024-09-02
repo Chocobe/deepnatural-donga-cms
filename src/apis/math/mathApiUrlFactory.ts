@@ -90,6 +90,15 @@ const mathApiUrlFactory = (() => {
     },
   };
 
+  //
+  // 수학 지문
+  //
+  const mathInstructionPaths = {
+    /** (GET) 수학 지문 목록 */
+    retrieveMathInstructions() {
+      return `${BASE_PATH}instructions/`;
+    },
+  };
 
   return {
     ...mathTextbookPaths,
@@ -97,6 +106,7 @@ const mathApiUrlFactory = (() => {
     ...mathAchievementPaths,
     ...mathKnowledgeConceptPaths,
     ...mathSeriesSourcePaths,
+    ...mathInstructionPaths,
   } as const;
 })();
 

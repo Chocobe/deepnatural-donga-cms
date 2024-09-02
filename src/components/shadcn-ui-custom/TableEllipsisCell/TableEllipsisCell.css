@@ -1,0 +1,9 @@
+.TableEllipsisCell {
+  width: 100%;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--max-rows);
+
+  overflow: hidden;
+}

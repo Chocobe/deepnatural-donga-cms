@@ -3,11 +3,8 @@ import {
   useRef,
   useState,
   useCallback,
-  useEffect,
   memo,
 } from 'react';
-// store
-import useMathSeriesSourcePageStore from '@/store/mathStores/mathSeriesSourcePageStore/mathSeriesSourcePageStore';
 // hook
 import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
 // ui
@@ -32,17 +29,12 @@ import {
 } from 'react-icons/lu';
 // type
 import { 
-  mathSeriesSourceSearchTypeOptions,
-} from './MathSeriesSourceTableActions.type';
+  mathInstructionSearchTypeOptions,
+} from './MathInstructionTableActions.type';
 // style
-import './MathSeriesSourceTableActions.css';
+import './MathInstructionTableActions.css';
 
-function _MathSeriesSourceTableActions() {
-  //
-  // mathSeriesSourcePage store
-  //
-  const mathSeriesSourcesData = useMathSeriesSourcePageStore(state => state.mathSeriesSourcesData);
-
+function _MathInstructionTableActions() {
   //
   // ref
   //
@@ -83,16 +75,9 @@ function _MathSeriesSourceTableActions() {
     onESC
   );
 
-  //
-  // effe
-  //
-  useEffect(function focusSearchInput() {
-    $searchInputRef.current?.focus();
-  }, [mathSeriesSourcesData]);
-
   return (
-    <div className="MathSeriesSourceTableActions">
-      <div className="MathSeriesSourceTableActions-leftSide">
+    <div className="MathInstructionTableActions">
+      <div className="MathInstructionTableActions-leftSide">
         <TBUTooltip>
           <Select
             value={''}
@@ -102,7 +87,7 @@ function _MathSeriesSourceTableActions() {
             </SelectTrigger>
 
             <SelectContent>
-              {mathSeriesSourceSearchTypeOptions.map(item => {
+              {mathInstructionSearchTypeOptions.map(item => {
                 const {
                   text,
                   value,
@@ -134,7 +119,7 @@ function _MathSeriesSourceTableActions() {
         </TBUTooltip>
       </div>
 
-      <div className="MathSeriesSourceTableActions-rightSide">
+      <div className="MathInstructionTableActions-rightSide">
         <TBUTooltip>
           <Button
             className="actionButton"
@@ -156,5 +141,5 @@ function _MathSeriesSourceTableActions() {
   );
 }
 
-const MathSeriesSourceTableActions = memo(_MathSeriesSourceTableActions);
-export default MathSeriesSourceTableActions;
+const MathInstructionTableActions = memo(_MathInstructionTableActions);
+export default MathInstructionTableActions;

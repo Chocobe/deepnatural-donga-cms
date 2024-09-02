@@ -27,6 +27,7 @@ function MathSeriesSourcePage() {
 
   const setMathSeriesSourcesData = useMathSeriesSourcePageStore(state => state.setMathSeriesSourcesData);
   const clearMathSeriesSourcesData = useMathSeriesSourcePageStore(state => state.clearMathSeriesSourcesData);
+  const clearSelectedMathSeriesSources = useMathSeriesSourcePageStore(state => state.clearSelectedMathSeriesSources);
 
   //
   // callback
@@ -56,8 +57,13 @@ function MathSeriesSourcePage() {
   }, [retrieveMathSeriesSources]);
 
   useEffect(function cleanup() {
-    clearMathSeriesSourcesData();
-  }, [clearMathSeriesSourcesData]);
+    return () => {
+      clearSelectedMathSeriesSources();
+      clearMathSeriesSourcesData();
+    };
+
+    // eslint-disable-next-line
+  }, [clearSelectedMathSeriesSources]);
 
   return (
     <div className="MathSeriesSourcePage">
