@@ -1,5 +1,6 @@
 // ui
 import MathQuestionHeader from '@/components/pages/math/MathQuestionPage/MathQuestionHeader/MathQuestionHeader';
+import MathQuestionTableActions from '@/components/pages/math/MathQuestionPage/MathQuestionTableActions/MathQuestionTableActions';
 // style
 import './MathQuestionPage.css';
 
@@ -11,7 +12,7 @@ function MathQuestionPage() {
       </div>
 
       <div className="MathQuestionPage-actions">
-        Actions
+        <MathQuestionTableActions />
       </div>
 
       <div className="MathQuestionPage-table">
