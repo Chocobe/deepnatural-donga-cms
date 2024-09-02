@@ -1,18 +1,28 @@
-// FIXME: mockup page
-import MockupPage from '@/components/pages/MockupPage/MockupPage';
+// ui
+import MathInstructionHeader from '@/components/pages/math/MathInstrurctionPage/MathInstructionHeader/MathInstructionHeader';
+// style
+import './MathInstructionPage.css';
 
-// react
-import {
-  memo,
-} from 'react';
-
-function _MathInstructionPage() {
+function MathInstructionPage() {
   return (
-    <MockupPage 
-      // isTestOverflow
-      mockupName="MathInstruction Page mockup" />
+    <div className="MathInstructionPage">
+      <div className="MathInstructionPage-header">
+        <MathInstructionHeader />
+      </div>
+
+      <div className="MathInstructionPage-actions">
+        actions
+      </div>
+
+      <div className="MathInstructionPage-table">
+        table
+      </div>
+
+      <div className="MathInstructionPage-footer">
+        footer
+      </div>
+    </div>
   );
 }
 
-const MathInstructionPage = memo(_MathInstructionPage);
 export default MathInstructionPage;
