@@ -2,9 +2,12 @@
 import {
   useState,
   useMemo,
-  useCallback,
   memo,
 } from 'react';
+// hook
+import useSearchModal from '@/components/shadcn-ui-custom/modals/SearchModal/hook/useSearchModal';
+// api
+import ApiManager from '@/apis/ApiManager';
 // ui
 import {
   Accordion,
@@ -19,6 +22,10 @@ import {
   Label,
 } from '@/components/shadcn-ui/ui/label';
 import SearchModalTrigger from '@/components/shadcn-ui-custom/searchModals/SearchModalTrigger/SearchModalTrigger';
+import SearchModal from '@/components/shadcn-ui-custom/modals/SearchModal/SearchModal';
+import { 
+  createColumnHelper,
+} from '@tanstack/react-table';
 import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
 import {
@@ -26,11 +33,28 @@ import {
   LuFileOutput,
   LuPlus,
 } from 'react-icons/lu';
+// type
+import { 
+  TMathTextbookModel,
+} from '@/apis/models/mathModel.type';
+import { 
+  cmsClassTypeOptions,
+  cmsGradeOptions,
+  cmsTermOptions,
+} from '@/components/pages/cmsPages.type';
+import { 
+  cmsClassTypeMapper,
+} from '@/apis/models/cmsCommonModel.type';
+import { 
+  mathQuestionHeaderTextbookSearchTypeOptions,
+} from '../../MathQuestionPage/MathQuestionHeader/MathQuestionHeader.type';
 // style
 import { 
   cn,
 } from '@/lib/shadcn-ui-utils';
 import './MathChapterHeader.css';
+
+const textbookColumnHelper = createColumnHelper<TMathTextbookModel>();
 
 function _MathChapterHeader() {
   //
@@ -38,21 +62,19 @@ function _MathChapterHeader() {
   //
   const [accordionValue, setAccordionValue] = useState('filters');
   // TODO: store 구현 후, 적용하기
-  const [searchParams, setSearchParams] = useState({
+  const [searchParams, _setSearchParams] = useState({
     textbook: 'All',
   });
 
   //
-  // callback
+  // hook
   //
-  const openTextbookSearchModal = useCallback(() => {
-    setSearchParams(old => ({
-      ...old,
-      textbook: old.textbook === 'All'
-        ? `(Mock) 교과서 ${Math.ceil(Math.random() * 3)}` + `(Mock) 교과서 ${Math.ceil(Math.random() * 3)}` + `(Mock) 교과서 ${Math.ceil(Math.random() * 3)}`
-        : 'All',
-    }));
-  }, []);
+  const {
+    isOpenSearchModal,
+    openSearchModal,
+    closeSearchModal,
+    onChangeIsOpenSearchModal,
+  } = useSearchModal();
 
   //
   // cache
@@ -70,13 +92,63 @@ function _MathChapterHeader() {
             id="textbook"
             className="editor"
             value={searchParams.textbook}
-            onOpen={openTextbookSearchModal} />
+            onOpen={openSearchModal} />
         </TBUTooltip>
       ),
     },
-  ], [searchParams, openTextbookSearchModal]);
+  ], [searchParams, openSearchModal]);
 
-  return (
+  const textbookColumns = useMemo(() => [
+    textbookColumnHelper.accessor('curriculum', {
+      header: '교육과정',
+    }),
+    textbookColumnHelper.accessor('title', {
+      header: '교과서명',
+    }),
+    textbookColumnHelper.accessor('author', {
+      header: '저자',
+    }),
+    textbookColumnHelper.accessor('classtype', {
+      header: '학교급',
+      cell: props => {
+        const {
+          cell,
+        } = props;
+
+        const valueItem = cmsClassTypeOptions.find(({ value }) => value === cell.getValue());
+        return valueItem?.text ?? ' ';
+      },
+    }),
+    textbookColumnHelper.accessor('grade', {
+      header: '학년',
+      cell: props => {
+        const {
+          cell,
+        } = props;
+
+        const valueItem = cmsGradeOptions[
+          cmsClassTypeMapper.ELEMENTARY
+        ].find(({ value }) => value === String(cell.getValue()));
+
+        return valueItem?.text ?? ' ';
+      },
+    }),
+    textbookColumnHelper.accessor('term', {
+      header: '학기',
+      cell: props => {
+        const {
+          cell,
+        } = props;
+
+        const valueItem = cmsTermOptions
+          .find(({ value }) => value === String(cell.getValue()));
+
+        return valueItem?.text ?? ' ';
+      },
+    }),
+  ], []);
+
+  return (<>
     <div className="MathChapterHeader">
       <Accordion
         className="MathChapterHeader-accordion"
@@ -145,7 +217,25 @@ function _MathChapterHeader() {
         </TBUTooltip>
       </div>
     </div>
-  );
+
+    <SearchModal
+      className="MathChapterHeader-textbookSearchModal"
+      isOpen={isOpenSearchModal}
+      onChangeIsOpen={onChangeIsOpenSearchModal}
+      title="교과서 검색"
+      description="적용할 교과서를 선택해 주세요."
+      searchTypeOptions={mathQuestionHeaderTextbookSearchTypeOptions}
+      retrieveData={ApiManager
+        .math
+        .retrieveMathTextbooksApi
+        .callWithNoticeMessageGroup
+      }
+      tableColumns={textbookColumns}
+      onClickRow={textbook => {
+        console.log('onClickRow() - textbook: ', textbook);
+        closeSearchModal();
+      }} />
+  </>);
 }
 
 const MathChapterHeader = memo(_MathChapterHeader);
