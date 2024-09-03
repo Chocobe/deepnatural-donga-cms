@@ -1,0 +1,16 @@
+.SearchModalFooter {
+  @apply flex justify-between items-center gap-5;
+
+  width: 100%;
+
+  &-leftSide {
+    color: #000;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+  }
+
+  &-rightSide {
+    /*  */
+  }
+}
