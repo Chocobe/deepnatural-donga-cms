@@ -35,28 +35,20 @@ import dayjs from 'dayjs';
 // type
 import { 
   TMathSeriesSourceFlattenModel,
-  TMathSeriesModel,
 } from '@/apis/models/mathModel.type';
 import { 
   cmsClassTypeOptions,
   cmsGradeOptions,
   cmsTermOptions,
 } from '@/components/pages/cmsPages.type';
+// util
+import { 
+  flatMathSeriesModel,
+} from '@/utils/flatModels/flatMathModels';
 // style
 import './MathSeriesSourceTable.css';
 
 const columnHelper = createColumnHelper<TMathSeriesSourceFlattenModel>();
-
-function flatMathSeriesModel(series: TMathSeriesModel) {
-  return series.source_set.map(source => {
-    const flattenSeries = {
-      series,
-      source,
-    } as TMathSeriesSourceFlattenModel;
-
-    return flattenSeries;
-  });
-}
 
 function _MathSeriesSourceTable() {
   //

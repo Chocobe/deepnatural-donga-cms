@@ -27,32 +27,20 @@ import {
 } from '@/components/shadcn-ui/ui/table';
 // util
 import { 
+  flatMathKnowledgeConceptModel,
+} from '@/utils/flatModels/flatMathModels';
+import { 
   extractID,
   TABLE_ROW_SELECTION_CHECKBOX_ID,
 } from '@/lib/tanstack-reactTable-utils/tanstack-reactTable-utils';
 // type
 import { 
-  TMathKnowledgeConcept1Model, 
   TMathKnowledgeConceptFlattenModel,
 } from '@/apis/models/mathModel.type';
 // style
 import './MathKnowledgeConceptTable.css';
 
 const columnHelper = createColumnHelper<TMathKnowledgeConceptFlattenModel>();
-
-function flatMathKnowledgeConceptModel(kc1: TMathKnowledgeConcept1Model) {
-  return kc1.kc2_set.reduce((result, kc2) => {
-    const flattenKnowledgeConcept = {
-      kc1,
-      kc2,
-    } as TMathKnowledgeConceptFlattenModel;
-
-    return [
-      ...result,
-      flattenKnowledgeConcept,
-    ];
-  }, [] as TMathKnowledgeConceptFlattenModel[]);
-}
 
 function _MathKnowledgeConceptTable() {
   //
