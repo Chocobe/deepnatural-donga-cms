@@ -114,7 +114,7 @@ export type TRetrieveMathKnowledgeConceptsApiResponse = TPaginationModel<TMathKn
 // --- --- --- --- --- --- --- --- --- ---
 
 //
-// (GET) 수학 출처-시리즈 목록
+// (GET) 수학 시리즈-출처 목록
 //
 export type TRetrieveMathSeriesSourcesApiRequestParams = TApiRequestNonBodyParams<void, {
   page?: number;

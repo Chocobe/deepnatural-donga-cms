@@ -206,7 +206,7 @@ export type TMathKnowledgeConceptFlattenModel = {
 // --- --- --- --- --- --- --- --- --- ---
 
 /**
- * Math SeriesSource (수학 출처-시리즈)
+ * Math SeriesSource (수학 시리즈-출처)
  */
 /** 수학 출처 */
 export type TMathSourceModel = {
