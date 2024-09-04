@@ -93,3 +93,85 @@
     }
   }
 }
+
+.MathKnowledgeConceptHeader-achievementSearchModal {
+  /*  */
+
+  .headerRow {
+    /*  */
+
+    .achievement1No,
+    .achievement2No,
+    .achievement3No {
+      padding: 0;
+
+      width: 66px;
+      min-width: 66px;
+
+      text-align: center;
+      white-space: pre-wrap;
+
+      font-size: 14px;
+      line-height: 20px;
+      text-align: center;
+    }
+
+    .achievement1Title, 
+    .achievement2Title, 
+    .achievement3Title {
+      min-width: 220px;
+    }
+
+    .code {
+      width: 180px;
+      min-width: 180px;
+    }
+
+    .curriculum {
+      width: 90px;
+      min-width: 90px;
+    }
+
+    .classtype {
+      width: 120px;
+      min-width: 120px;
+    }
+
+    .cluster {
+      width: 120px;
+      min-width: 120px;
+    }
+  }
+
+  .row {
+    /*  */
+
+    .achievement1No,
+    .achievement2No,
+    .achievement3No {
+      text-align: center;
+    }
+
+    .achievement1Title, 
+    .achievement2Title, 
+    .achievement3Title {
+      /*  */
+    }
+
+    .code {
+      /*  */
+    }
+
+    .curriculum {
+      /*  */
+    }
+
+    .classtype {
+      /*  */
+    }
+
+    .cluster {
+      /*  */
+    }
+  }
+}
