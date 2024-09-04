@@ -1,4 +1,9 @@
-export const mathTextbookSearchTypeOptions = [
+// type
+import { 
+  TCommonSelectOptionItem,
+} from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect.type';
+
+export const mathTextbookSearchTypeOptions: TCommonSelectOptionItem[] = [
   // {
   //   text: 'All',
   //   value: ' ',

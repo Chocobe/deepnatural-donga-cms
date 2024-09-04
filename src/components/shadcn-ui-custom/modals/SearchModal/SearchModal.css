@@ -1,0 +1,51 @@
+.SearchModal {
+  @apply !flex flex-col gap-5;
+
+  padding: 40px !important;
+
+  width: 95%;
+  height: 95%;
+
+  min-width: 95%;
+
+  &-header {
+    flex-shrink: 0;
+
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #001A33;
+
+    .title {
+      color: #09090B;
+      font-size: 20px;
+      line-height: 24px;
+      font-weight: 600;
+    }
+
+    .description {
+      color: #71717A;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+    }
+  }
+
+  &-actions {
+    flex-shrink: 0;
+  }
+
+  &-table {
+    overflow: hidden;
+
+    border: 1px solid hsl(var(--border));
+
+    & > * {
+      height: 100%;
+    }
+  }
+
+  &-footer {
+    flex-shrink: 0;
+  }
+}

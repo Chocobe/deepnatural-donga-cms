@@ -93,3 +93,139 @@
     }
   }
 }
+
+.MathQuestionHeader-seriesSearchModal {
+  /*  */
+
+  .headerRow {
+    /*  */
+
+    .title {
+      min-width: 180px;
+    }
+
+    .name {
+      min-width: 360px;
+    }
+
+    .curriculum {
+      padding: 0;
+
+      width: 70px;
+      min-width: 70px;
+
+      font-size: 14px;
+      line-height: 20px;
+      text-align: center;
+      white-space: pre-line;
+    }
+
+    .classtype {
+      width: 90px;
+      min-width: 90px;
+    }
+
+    .grade,
+    .term {
+      width: 80px;
+      min-width: 80px;
+    }
+  }
+
+  .row {
+    /*  */
+
+    .title {
+      /*  */
+    }
+
+    .name {
+      /*  */
+    }
+
+    .curriculum {
+      text-align: center;
+    }
+
+    .classtype {
+      /*  */
+    }
+
+    .grade,
+    .term {
+      /*  */
+    }
+  }
+}
+
+.MathQuestionHeader-textbookSearchModal {
+  /*  */
+
+  .headerRow {
+    /*  */
+
+    .curriculum {
+      padding: 0;
+
+      width: 70px;
+      min-width: 70px;
+
+      font-size: 14px;
+      line-height: 20px;
+      text-align: center;
+      white-space: pre-line;
+    }
+
+    .title {
+      min-width: 200px;
+    }
+
+    .author {
+      width: 200px !important;
+      min-width: 200px !important;
+    }
+
+    .classtype {
+      width: 170px !important;
+      min-width: 170px !important;
+    }
+
+    .grade {
+      width: 150px !important;
+      min-width: 150px !important;
+    }
+
+    .term {
+      width: 150px !important;
+      min-width: 150px !important;
+    }
+  }
+
+  .row {
+    /*  */
+
+    .curriculum {
+      /*  */
+    }
+
+    .title {
+      /*  */
+    }
+
+    .author {
+      /*  */
+    }
+
+    .classtype {
+      /*  */
+    }
+
+    .grade {
+      /*  */
+    }
+
+    .term {
+      /*  */
+    }
+  }
+}

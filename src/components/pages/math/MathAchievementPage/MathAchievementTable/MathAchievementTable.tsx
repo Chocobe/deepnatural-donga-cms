@@ -33,39 +33,18 @@ import {
   extractID,
   TABLE_ROW_SELECTION_CHECKBOX_ID,
 } from '@/lib/tanstack-reactTable-utils/tanstack-reactTable-utils';
+// util
+import { 
+  flatMathAchievementModel,
+} from '@/utils/flatModels/flatMathModels';
 // type
 import { 
-  TMathAchievement1Model, 
   TMathAchievementFlattenModel,
 } from '@/apis/models/mathModel.type';
 // style
 import './MathAchievementTable.css';
 
 const columnHelper = createColumnHelper<TMathAchievementFlattenModel>();
-
-function flatMathAchievementModel(achievement1: TMathAchievement1Model) {
-  return achievement1.achievement2_set.reduce((result, achievement2) => {
-    const flattenAchievement = {
-      achievement1,
-      achievement2,
-    } as TMathAchievementFlattenModel;
-
-    if (!achievement2.achievement3_set?.length) {
-      return [
-        ...result,
-        flattenAchievement,
-      ];
-    }
-
-    return [
-      ...result,
-      ...achievement2.achievement3_set.map(achievement3 => ({
-        ...flattenAchievement,
-        achievement3,
-      } as TMathAchievementFlattenModel)),
-    ];
-  }, [] as TMathAchievementFlattenModel[]);
-}
 
 function _MathAchievementTable() {
   //

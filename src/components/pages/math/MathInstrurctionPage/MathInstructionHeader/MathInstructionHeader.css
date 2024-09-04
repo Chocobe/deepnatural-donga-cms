@@ -93,3 +93,109 @@
     }
   }
 }
+
+.MathInstructionHeader-seriesSearchModal {
+  /*  */
+
+  .headerRow {
+    /*  */
+
+    .title {
+      width: 10%;
+      min-width: 180px;
+    }
+
+    .name {
+      width: 20%;
+      min-width: 360px;
+    }
+
+    .curriculum {
+      padding: 0;
+
+      width: 70px;
+      min-width: 70px;
+
+      font-size: 14px;
+      line-height: 20px;
+      text-align: center;
+      white-space: pre-line;
+    }
+
+    .classtype {
+      width: 90px;
+      min-width: 90px;
+    }
+
+    .grade,
+    .term,
+    .serviceyear {
+      width: 80px;
+      min-width: 80px;
+    }
+
+    .publisher {
+      width: 130px;
+      min-width: 130px;
+    }
+
+    .date {
+      width: 140px;
+      min-width: 140px;
+    }
+
+    .type {
+      width: 140px;
+      min-width: 140px;
+    }
+
+    .isview {
+      width: 90px;
+      min-width: 90px;
+
+      text-align: center;
+    }
+  }
+
+  .row {
+    /*  */
+
+    .title {
+      /*  */
+    }
+
+    .name {
+      /*  */
+    }
+
+    .curriculum {
+      text-align: center;
+    }
+
+    .classtype {
+      /*  */
+    }
+
+    .grade,
+    .term,
+    .serviceyear {
+      /*  */
+    }
+
+    .publisher {
+      /*  */
+    }
+
+    .date {
+      /*  */
+    }
+
+    .type {
+      /*  */
+    }
+
+    .isview {
+      text-align: center;
+    }
+  }
+}

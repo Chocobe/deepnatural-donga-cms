@@ -4,6 +4,10 @@ import {
   useMemo,
   memo,
 } from 'react';
+// hook
+import useSearchModal from '@/components/shadcn-ui-custom/modals/SearchModal/hook/useSearchModal';
+// api
+import ApiManager from '@/apis/ApiManager';
 // ui
 import {
   Accordion,
@@ -18,6 +22,10 @@ import {
   Label,
 } from '@/components/shadcn-ui/ui/label';
 import SearchModalTrigger from '@/components/shadcn-ui-custom/searchModals/SearchModalTrigger/SearchModalTrigger';
+import { 
+  createColumnHelper,
+} from '@tanstack/react-table';
+import SearchModal from '@/components/shadcn-ui-custom/modals/SearchModal/SearchModal';
 import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
 import {
@@ -25,17 +33,47 @@ import {
   LuFileOutput,
   LuPlus,
 } from 'react-icons/lu';
+// dayjs
+import dayjs from 'dayjs';
+// util
+import { 
+  flatMathSeriesModel,
+} from '@/utils/flatModels/flatMathModels';
+// type
+import { 
+  TMathSeriesSourceFlattenModel,
+} from '@/apis/models/mathModel.type';
+import { 
+  cmsClassTypeOptions,
+  cmsGradeOptions,
+  cmsTermOptions,
+} from '@/components/pages/cmsPages.type';
+import { 
+  mathInstructionHeaderSeriesSearchTypeOptions,
+} from './MathInstructionHeader.type';
 // style
 import { 
   cn,
 } from '@/lib/shadcn-ui-utils';
 import './MathInstructionHeader.css';
 
+const seriesColumnHelper = createColumnHelper<TMathSeriesSourceFlattenModel>();
+
 function _MathInstructionHeader() {
   //
   // state
   //
   const [accordionValue, setAccordionValue] = useState('filters');
+
+  //
+  // hook
+  //
+  const {
+    isOpenSearchModal,
+    openSearchModal,
+    closeSearchModal,
+    onChangeIsOpenSearchModal,
+  } = useSearchModal();
 
   //
   // cache
@@ -50,13 +88,88 @@ function _MathInstructionHeader() {
             id="series"
             className="editor"
             value=""
-            onOpen={() => console.log('시리즈 검색 모달 열기')} />
+            onOpen={openSearchModal} />
         </TBUTooltip>
       ),
     },
+  ], [openSearchModal]);
+
+  const seriesTableColumns = useMemo(() => [
+    seriesColumnHelper.accessor('series.title', {
+      id: 'title',
+      header: '시리즈 제목',
+    }),
+    seriesColumnHelper.accessor('source.name', {
+      id: 'name',
+      header: '제품명',
+    }),
+    seriesColumnHelper.accessor('source.curriculum', {
+      id: 'curriculum',
+      header: '교육\n과정',
+    }),
+    seriesColumnHelper.accessor('source.classtype', {
+      id: 'classtype',
+      header: '학교급',
+      cell: props => {
+        const classtype = props.cell.getValue();
+
+        return cmsClassTypeOptions.find(({ value }) => classtype === value)?.text 
+          ?? '';
+      },
+    }),
+    seriesColumnHelper.accessor('source.grade', {
+      id: 'grade',
+      header: '학년',
+      cell: props => {
+        const classtype = props.row.original.source.classtype;
+        const grade = props.cell.getValue();
+
+        if (!classtype || !grade) {
+          return '';
+        }
+
+        return cmsGradeOptions[classtype].find(({ value }) => Number(value) === grade)?.text
+          ?? '';
+      },
+    }),
+    seriesColumnHelper.accessor('source.term', {
+      id: 'term',
+      header: '학기',
+      cell: props => {
+        const term = props.cell.getValue();
+
+        return cmsTermOptions.find(({ value }) => Number(value) === term)?.text
+          ?? '';
+      }
+    }),
+    seriesColumnHelper.accessor('source.serviceyear', {
+      id: 'serviceyear',
+      header: '판형',
+    }),
+    seriesColumnHelper.accessor('source.publisher', {
+      id: 'publisher',
+      header: '발행처',
+    }),
+    seriesColumnHelper.accessor('source.expiration_date', {
+      id: 'date',
+      header: '사용기간',
+      cell: props => {
+        const expiration_date = props.cell.getValue();
+
+        return dayjs(expiration_date).format('YY년 MM일 DD일');
+      },
+    }),
+    seriesColumnHelper.accessor('source.source_type', {
+      id: 'type',
+      header: '사용범위',
+    }),
+    seriesColumnHelper.accessor('source.isview', {
+      id: 'isview',
+      header: '사용여부',
+    }),
   ], []);
 
-  return (
+  return (<>
     <div className="MathInstructionHeader">
       <Accordion
         className="MathInstructionHeader-accordion"
@@ -126,7 +239,26 @@ function _MathInstructionHeader() {
         </TBUTooltip>
       </div>
     </div>
-  );
+
+    <SearchModal
+      className="MathInstructionHeader-seriesSearchModal"
+      isOpen={isOpenSearchModal}
+      onChangeIsOpen={onChangeIsOpenSearchModal}
+      title="출처-시리즈"
+      description="적용할 출처-시리즈를 선택해 주세요"
+      searchTypeOptions={mathInstructionHeaderSeriesSearchTypeOptions}
+      retrieveData={ApiManager
+        .math
+        .retrieveMathSeriesSourcesApi
+        .callWithNoticeMessageGroup
+      }
+      flatData={flatMathSeriesModel}
+      tableColumns={seriesTableColumns}
+      onClickRow={series => {
+        console.log('onClickRow() - series: ', series);
+        closeSearchModal();
+      }} />
+  </>);
 }
 
 const MathInstructionHeader = memo(_MathInstructionHeader);

@@ -7,6 +7,10 @@ import {
 } from 'react';
 // store
 import useMathKnowledgeConceptPageStore from '@/store/mathStores/mathKnowledgeConceptPageStore/mathKnowledgeConceptPageStore';
+// hook
+import useSearchModal from '@/components/shadcn-ui-custom/modals/SearchModal/hook/useSearchModal';
+// api
+import ApiManager from '@/apis/ApiManager';
 // ui
 import {
   Accordion,
@@ -23,6 +27,11 @@ import {
 import SearchModalTrigger from '@/components/shadcn-ui-custom/searchModals/SearchModalTrigger/SearchModalTrigger';
 import CommonSelect from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect';
 import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
+import SearchModal from '@/components/shadcn-ui-custom/modals/SearchModal/SearchModal';
+import TableEllipsisCell from '@/components/shadcn-ui-custom/TableEllipsisCell/TableEllipsisCell';
+import { 
+  createColumnHelper,
+} from '@tanstack/react-table';
 // icon
 import {
   LuChevronDown,
@@ -37,11 +46,25 @@ import {
   mathCurriculumFilterOptions, 
   mathGradeClusterFilterOptions,
 } from '../../mathPages.type';
+// util
+import { 
+  flatMathAchievementModel,
+} from '@/utils/flatModels/flatMathModels';
+// type
+import { 
+  mathKnowledgeConceptHeaderAchievementSearchTypeOptions,
+} from './MathKnowledgeConceptHeader.type';
+import { 
+  TMathAchievementFlattenModel,
+} from '@/apis/models/mathModel.type';
 // style
 import { 
   cn,
 } from '@/lib/shadcn-ui-utils';
 import './MathKnowledgeConceptHeader.css';
+
+
+const achievementColumnHelper = createColumnHelper<TMathAchievementFlattenModel>();
 
 function _MathKnowledgeConceptHeader() {
   //
@@ -82,35 +105,45 @@ function _MathKnowledgeConceptHeader() {
   const [accordionValue, setAccordionValue] = useState('filters');
 
   //
+  // hook
+  //
+  const {
+    isOpenSearchModal,
+    onChangeIsOpenSearchModal,
+    openSearchModal,
+    closeSearchModal,
+  } = useSearchModal();
+
+  //
   // cache
   //
   const filterItems = useMemo(() => [
     {
-      id: 'achievement1',
-      label: '성취기준(대)',
+      id: 'achievement',
+      label: '성취기준',
       Component: (
         <TBUTooltip className="w-full">
           <SearchModalTrigger
-            id="achievement1"
+            id="achievement"
             className="editor"
             value={''}
-            onOpen={() => console.log('achievement1')} />
+            onOpen={openSearchModal} />
         </TBUTooltip>
       ),
     },
-    {
-      id: 'achievement2',
-      label: '성취기준(중)',
-      Component: (
-        <TBUTooltip className="w-full">
-          <SearchModalTrigger
-            id="achievement2"
-            className="editor"
-            value={''}
-            onOpen={() => console.log('achievement2')} />
-        </TBUTooltip>
-      ),
-    },
+    // {
+    //   id: 'achievement2',
+    //   label: '성취기준(중)',
+    //   Component: (
+    //     <TBUTooltip className="w-full">
+    //       <SearchModalTrigger
+    //         id="achievement2"
+    //         className="editor"
+    //         value={''}
+    //         onOpen={() => console.log('achievement2')} />
+    //     </TBUTooltip>
+    //   ),
+    // },
     {
       id: 'curriculum',
       label: '교육과정',
@@ -154,12 +187,88 @@ function _MathKnowledgeConceptHeader() {
       ),
     },
   ], [
+    openSearchModal,
     onChangeCurriculum,
     onChangeClassType,
     onChangeGradeCluster,
   ]);
 
-  return (
+  const achievementTableColumns = useMemo(() => [
+    achievementColumnHelper.accessor('achievement1.no', {
+      id: 'achievement1No',
+      header: '성취기준\n(대)순번',
+    }),
+    achievementColumnHelper.accessor('achievement1.title', {
+      id: 'achievement1Title',
+      header: '성취기준(대) 제목',
+      cell: props => {
+        const title = props.getValue();
+
+        return (
+          <TableEllipsisCell maxRows={1}>
+            {title}
+          </TableEllipsisCell>
+        );
+      },
+    }),
+    achievementColumnHelper.accessor('achievement2.no', {
+      id: 'achievement2No',
+      header: '성취기준\n(중)순번',
+    }),
+    achievementColumnHelper.accessor('achievement2.title', {
+      id: 'achievement2Title',
+      header: '성취기준(중) 제목',
+      cell: props => {
+        const title = props.getValue();
+
+        return (
+          <TableEllipsisCell maxRows={1}>
+            {title}
+          </TableEllipsisCell>
+        );
+      },
+    }),
+    achievementColumnHelper.accessor('achievement3.no', {
+      id: 'achievement3No',
+      header: '성취기준\n(소)순번',
+    }),
+    achievementColumnHelper.accessor('achievement3.title', {
+      id: 'achievement3Title',
+      header: '성취기준(소) 제목',
+      cell: props => {
+        const title = props.getValue();
+
+        return (
+          <TableEllipsisCell maxRows={1}>
+            {title}
+          </TableEllipsisCell>
+        );
+      },
+    }),
+    achievementColumnHelper.display({
+      id: 'code',
+      header: '표준코드',
+      cell: props => {
+        const achievement3 = props.row.original.achievement3;
+
+        return achievement3?.code ?? '';
+      },
+    }),
+    achievementColumnHelper.accessor('achievement1.curriculum', {
+      id: 'curriculum',
+      header: '교육과정',
+    }),
+    achievementColumnHelper.accessor('achievement1.classtype', {
+      id: 'classtype',
+      header: '학교급',
+    }),
+    achievementColumnHelper.accessor('achievement1.grade_cluster', {
+      id: 'cluster',
+      header: '학년(군)',
+    }),
+  ], []);
+
+  return (<>
     <div className="MathKnowledgeConceptHeader">
       <Accordion
         className="MathKnowledgeConceptHeader-accordion"
@@ -229,7 +338,26 @@ function _MathKnowledgeConceptHeader() {
         </TBUTooltip>
       </div>
     </div>
-  );
+
+    <SearchModal 
+      className="MathKnowledgeConceptHeader-achievementSearchModal"
+      isOpen={isOpenSearchModal}
+      onChangeIsOpen={onChangeIsOpenSearchModal}
+      title="성취기준"
+      description="적용할 성취기준을 선택해 주세요."
+      searchTypeOptions={mathKnowledgeConceptHeaderAchievementSearchTypeOptions}
+      retrieveData={ApiManager
+        .math
+        .retrieveMathAchievementsApi
+        .callWithNoticeMessageGroup
+      }
+      flatData={flatMathAchievementModel}
+      tableColumns={achievementTableColumns}
+      onClickRow={achievement => {
+        console.log('onClickRow() - achievement: ', achievement);
+        closeSearchModal();
+      }} />
+  </>);
 }
 
 const MathKnowledgeConceptHeader = memo(_MathKnowledgeConceptHeader);

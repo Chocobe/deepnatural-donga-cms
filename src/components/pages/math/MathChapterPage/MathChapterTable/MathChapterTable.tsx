@@ -30,42 +30,20 @@ import TableRowSelectorHeader from '@/components/shadcn-ui-custom/TableRowSelect
 import TableRowSelectorCell from '@/components/shadcn-ui-custom/TableRowSelectorCell/TableRowSelectorCell';
 // util
 import { 
+  flatMathChapterModel,
+} from '@/utils/flatModels/flatMathModels';
+import { 
   extractID, 
   TABLE_ROW_SELECTION_CHECKBOX_ID,
 } from '@/lib/tanstack-reactTable-utils/tanstack-reactTable-utils';
 // type
 import { 
-  TMathChapter1Model,
   TMathChapterFlattenModel,
 } from '@/apis/models/mathModel.type';
 // style
 import './MathChapterTable.css';
 
 const columnHelper = createColumnHelper<TMathChapterFlattenModel>();
-
-function flatMathChapterModel(chapter1: TMathChapter1Model) {
-  return chapter1.chapter2_set.reduce((result, chapter2) => {
-    const flattenChapter = {
-      chapter1,
-      chapter2,
-    } as TMathChapterFlattenModel;
-
-    if (!chapter2.chapter3_set?.length) {
-      return [
-        ...result,
-        flattenChapter,
-      ];
-    }
-
-    return [
-      ...result,
-      ...chapter2.chapter3_set.map(chapter3 => ({
-        ...flattenChapter,
-        chapter3,
-      } as TMathChapterFlattenModel)),
-    ];
-  }, [] as TMathChapterFlattenModel[]);
-}
 
 function _MathChapterTable() {
   //

@@ -20,7 +20,7 @@ import {
 import { 
   Label,
 } from '@/components/shadcn-ui/ui/label';
-import SearchModalTrigger from '@/components/shadcn-ui-custom/searchModals/SearchModalTrigger/SearchModalTrigger';
+// import SearchModalTrigger from '@/components/shadcn-ui-custom/searchModals/SearchModalTrigger/SearchModalTrigger';
 import CommonSelect from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect';
 import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
@@ -86,13 +86,13 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
   //
   // callback
   //
-  const openAchievement2SearchModal = useCallback(() => {
-    console.log('openAchievement2SearchModal()');
-  }, []);
+  // const openAchievement2SearchModal = useCallback(() => {
+  //   console.log('openAchievement2SearchModal()');
+  // }, []);
 
-  const openAchievement3SearchModal = useCallback(() => {
-    console.log('openAchievement3SearchModal()');
-  }, []);
+  // const openAchievement3SearchModal = useCallback(() => {
+  //   console.log('openAchievement3SearchModal()');
+  // }, []);
 
   const onChangeCurriculum = useCallback((curriculum: string) => {
     updateSearchParamsForRetrieveMathAchievementsApi(old => {
@@ -169,38 +169,39 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
   // cache
   //
   const filterItems = useMemo(() => [
-    {
-      id: 'achievement2',
-      label: '성취기준(중)',
-      Component: (
-        <TBUTooltip 
-          key="achievement2"
-          className="w-full">
-          <SearchModalTrigger
-            key="achievement2"
-            id="achievement2"
-            className="editor"
-            value={searchParamsForRetrieveMathAchievementsApi.achievement2 ?? ''}
-            onOpen={openAchievement2SearchModal} />
-        </TBUTooltip>
-      ),
-    },
-    {
-      id: 'achievement3',
-      label: '성취기준(소)',
-      Component: (
-        <TBUTooltip 
-          key="achievement3" 
-          className="w-full">
-          <SearchModalTrigger
-            key="achievement3"
-            id="achievement3"
-            className="editor"
-            value={searchParamsForRetrieveMathAchievementsApi.achievement3 ?? ''}
-            onOpen={openAchievement3SearchModal} />
-        </TBUTooltip>
-      ),
-    },
+    // FIXME: 사용여부 논의 필요
+    // {
+    //   id: 'achievement2',
+    //   label: '성취기준(중)',
+    //   Component: (
+    //     <TBUTooltip 
+    //       key="achievement2"
+    //       className="w-full">
+    //       <SearchModalTrigger
+    //         key="achievement2"
+    //         id="achievement2"
+    //         className="editor"
+    //         value={searchParamsForRetrieveMathAchievementsApi.achievement2 ?? ''}
+    //         onOpen={openAchievement2SearchModal} />
+    //     </TBUTooltip>
+    //   ),
+    // },
+    // {
+    //   id: 'achievement3',
+    //   label: '성취기준(소)',
+    //   Component: (
+    //     <TBUTooltip 
+    //       key="achievement3" 
+    //       className="w-full">
+    //       <SearchModalTrigger
+    //         key="achievement3"
+    //         id="achievement3"
+    //         className="editor"
+    //         value={searchParamsForRetrieveMathAchievementsApi.achievement3 ?? ''}
+    //         onOpen={openAchievement3SearchModal} />
+    //     </TBUTooltip>
+    //   ),
+    // },
     {
       id: 'curriculum',
       label: '교육과정',
@@ -242,8 +243,8 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
     },
   ], [
     searchParamsForRetrieveMathAchievementsApi, 
-    openAchievement2SearchModal,
-    openAchievement3SearchModal,
+    // openAchievement2SearchModal,
+    // openAchievement3SearchModal,
     onChangeCurriculum,
     onChangeClassType,
     onChangeGradeCluster,

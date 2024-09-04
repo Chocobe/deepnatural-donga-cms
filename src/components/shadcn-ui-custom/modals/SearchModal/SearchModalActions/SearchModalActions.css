@@ -1,0 +1,12 @@
+.SearchModalActions {
+  @apply flex items-center gap-5;
+
+  &-typeSelect {
+    flex-shrink: 0;
+    width: 200px;
+  }
+
+  &-valueInput {
+    width: 100%;
+  }
+}
