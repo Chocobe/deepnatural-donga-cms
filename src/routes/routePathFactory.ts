@@ -37,6 +37,9 @@ const routePathFactory = {
     getChapterPath() {
       return `${this.getMathRootPath()}/chapter` as const;
     },
+    getChapterAddPath() {
+      return `${this.getChapterPath()}/add` as string;
+    },
 
     // 성취기준
     getAchievementPath() {
