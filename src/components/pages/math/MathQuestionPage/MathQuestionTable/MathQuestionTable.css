@@ -1,0 +1,181 @@
+.MathQuestionTable {
+  /*  */
+
+  .headerRow {
+    position: sticky;
+    top: 0;
+
+    background-color: #fff;
+    box-shadow: -1px 1px 1px hsl(var(--border));
+
+    &:hover {
+      background-color: #fff;
+    }
+
+    & > * {
+      color: #0F172A;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 700;
+
+      border-right: 1px solid hsl(var(--border));
+
+      &:last-of-type {
+        border-right: none !important;
+      }
+    }
+
+    .table-row-selector {
+      padding: 0;
+
+      width: 40px !important;
+      min-width: 40px !important;
+    }
+
+    .internal_id {
+      width: 120px;
+      min-width: 120px;
+    }
+
+    .classtype {
+      padding: 0 14px;
+
+      width: 75px;
+      min-width: 75px;
+    }
+
+    .grade {
+      width: 70px;
+      min-width: 70px;
+    }
+
+    .term {
+      width: 70px;
+      min-width: 70px;
+    }
+
+    .curriculum,
+    .kc1,
+    .kc2 {
+      width: 90px;
+      min-width: 90px;
+    }
+
+    .instruction_inquiry {
+      width: 20%;
+      min-width: 400px;
+    }
+
+    .preview {
+      padding: 0;
+
+      width: 55px;
+      min-width: 55px;
+
+      font-size: 14px;
+      line-height: 20px;
+      text-align: center;
+      white-space: pre-line;
+    }
+
+    .difficulty {
+      padding: 0;
+
+      width: 70px;
+      min-width: 70px;
+
+      text-align: center;
+    }
+
+    .question_type {
+      width: 160px;
+      min-width: 160px;
+    }
+
+    .is_reviewed {
+      padding: 0;
+
+      width: 50px;
+      min-width: 50px;
+
+      text-align: center;
+      white-space: pre-line;
+    }
+  }
+
+  .row {
+    cursor: pointer;
+
+    & > * {
+      padding: 13px 16px !important;
+
+      color: #0F172A !important;
+      font-size: 16px !important;
+      line-height: 24px !important;
+      font-weight: 400 !important;
+
+      border-right: 1px solid hsl(var(--border)) !important;
+
+      &:last-of-type {
+        border-right: none !important;
+      }
+    }
+
+    .internal_id {
+      /*  */
+    }
+
+    .classtype {
+      /*  */
+    }
+
+    .grade {
+      /*  */
+    }
+
+    .term {
+      /*  */
+    }
+
+    .curriculum,
+    .kc1,
+    .kc2 {
+      /*  */
+    }
+
+    .instruction_inquiry {
+      /*  */
+    }
+
+    .preview {
+      padding: 0 !important;
+
+      text-align: center;
+
+      .button {
+        padding: 16px !important;
+      }
+    }
+
+    .difficulty {
+      /*  */
+    }
+
+    .question_type {
+      /*  */
+    }
+
+    .is_reviewed {
+      /*  */
+
+      & > * {
+        color: #DC2626 !important;
+
+        &.isReviewed {
+          color: #0095FF !important;
+        }
+      }
+
+    }
+  }
+}

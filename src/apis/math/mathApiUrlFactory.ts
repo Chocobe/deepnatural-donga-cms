@@ -100,6 +100,16 @@ const mathApiUrlFactory = (() => {
     },
   };
 
+  //
+  // 수학 문항
+  //
+  const mathQuestionPaths = {
+    /** (GET) 수학 문항 목록 */
+    retrieveMathQuestions() {
+      return `${BASE_PATH}questions/`;
+    },
+  };
+
   return {
     ...mathTextbookPaths,
     ...mathChapterPaths,
@@ -107,6 +117,7 @@ const mathApiUrlFactory = (() => {
     ...mathKnowledgeConceptPaths,
     ...mathSeriesSourcePaths,
     ...mathInstructionPaths,
+    ...mathQuestionPaths,
   } as const;
 })();
 

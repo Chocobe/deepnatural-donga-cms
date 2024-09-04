@@ -9,9 +9,11 @@ import {
   cmsClassTypeMapper,
   // cmsSubjectMapper,
   TCMSClassType,
+  TCMSDifficulty,
   TCMSElementaryGrade,
   TCMSMiddleHighGrade,
   TCmsSourceType,
+  TCMSSubject,
   TCMSTerm,
 } from './cmsCommonModel.type';
 
@@ -258,4 +260,173 @@ export type TMathInstructionModel = {
   representation_question_id: string;
   /** 출처 */
   source: TMathSourceModel;
+};
+
+// --- --- --- --- --- --- --- --- --- ---
+
+/**
+ * Math Question (수학 문항)
+ */
+/** 수학 행동 영역 */
+export const mathBehaviorDomainMapper = {
+  '계산': '계산',
+  '이해': '이해',
+  '추론': '추론',
+  '내적문제해결': '내적문제해결',
+  '외적문제해결': '외적문제해결',
+} as const;
+export type TMathBehaviorDomain = typeof mathBehaviorDomainMapper[keyof typeof mathBehaviorDomainMapper];
+
+/** 문제 유형 */
+export const mathQuestionTypeMapper = {
+  '객관식-단답형': '객관식-단답형',
+  '객관식-다답형': '객관식-다답형',
+  '주관식-단답형': '주관식-단답형',
+  '주관식-선택형-기본': '주관식-선택형-기본',
+  '주관식-선택형-무순': '주관식-선택형-무순',
+  '주관식-선택형-유순': '주관식-선택형-유순',
+  '주관식-서술형': '주관식-서술형',
+  '주관식-그리기형': '주관식-그리기형',
+  '주관식-선긋기형': '주관식-선긋기형',
+} as const;
+export type TMathQuestionType = typeof mathQuestionTypeMapper[keyof typeof mathQuestionTypeMapper];
+
+/** 선택지 유형 */
+export const mathChoiceType = {
+  'NONE': null,
+  'ㄱㄴㄷ': 'ㄱㄴㄷ',
+  '가나다': '가나다',
+  '123': '123',
+  'abc': 'abc',
+  '기타': '기타',
+} as const;
+export type TMathChoiceType = typeof mathChoiceType[keyof typeof mathChoiceType];
+
+/** 수학 문항 */
+export type TMathQuestionModel = {
+  id: number;
+  internal_id: string;
+
+  /** 출처 */
+  source: TMathSourceModel;
+  /** 지문 */
+  instruction: TMathInstructionModel | null;
+
+  /** 성취기준 */
+  achievement: TMathAchievement3Model[];
+  /** 교육과정 */
+  curriculum: TMathCurriculum;
+  /** 과목 */
+  subject: TCMSSubject;
+
+  /** 키워드 */
+  keyword: string;
+  /** 행동 영역 */
+  behavior_domain: TMathBehaviorDomain;
+  /** 발문 */
+  inquiry: string;
+
+  /** 객관식 선지1 */
+  choice1: string;
+  /** 객관식 선지2 */
+  choice2: string;
+  /** 객관식 선지3 */
+  choice3: string;
+  /** 객관식 선지4 */
+  choice4: string;
+  /** 객관식 선지5 */
+  choice5: string;
+  /** 객관식 정답 */
+  choice_answer: string;
+
+  /** 주관식 정답 입력 개수 */
+  short_answer_count: number | null;
+  /** 주관식 정답1 */
+  short_answer1: string;
+  /** 주관식 정답2 */
+  short_answer2: string;
+  /** 주관식 정답3 */
+  short_answer3: string;
+  /** 주관식 정답4 */
+  short_answer4: string;
+  /** 주관식 정답5 */
+  short_answer5: string;
+  /** 주관식 정답6 */
+  short_answer6: string;
+  /** 주관식 정답7 */
+  short_answer7: string;
+  /** 주관식 정답8 */
+  short_answer8: string;
+  /** 주관식 정답9 */
+  short_answer9: string;
+  /** 주관식 정답10 */
+  short_answer10: string;
+  /** 주관식 정답11 */
+  short_answer11: string;
+  /** 주관식 정답12 */
+  short_answer12: string;
+  /** 주관식 정답13 */
+  short_answer13: string;
+  /** 주관식 정답14 */
+  short_answer14: string;
+  /** 주관식 정답15 */
+  short_answer15: string;
+  /** 주관식 정답16 */
+  short_answer16: string;
+  /** 주관식 정답17 */
+  short_answer17: string;
+  /** 주관식 정답18 */
+  short_answer18: string;
+  /** 주관식 정답19 */
+  short_answer19: string;
+  /** 주관식 정답20 */
+  short_answer20: string;
+
+  /** 풀이 */
+  solution: string;
+  /** 평가기준1 */
+  evaluation_criteria1: string;
+  /** 평가기준1(%) */
+  evaluation_criteria1_percent: string;
+  /** 평가기준2 */
+  evaluation_criteria2: string;
+  /** 평가기준2(%) */
+  evaluation_criteria2_percent: string;
+  /** 평가기준3 */
+  evaluation_criteria3: string;
+  /** 평가기준3(%) */
+  evaluation_criteria3_percent: string;
+  /** 평가기준4 */
+  evaluation_criteria4: string;
+  /** 평가기준4(%) */
+  evaluation_criteria4_percent: string;
+  /** 평가기준5 */
+  evaluation_criteria5: string;
+  /** 평가기준5(%) */
+  evaluation_criteria5_percent: string;
+
+  /** 난이도 */
+  difficulty: TCMSDifficulty;
+  /** 문제 유형 */
+  question_type: TMathQuestionType;
+
+  /** 선택지 유형 */
+  choice_type: TMathChoiceType | null;
+  /** 선택지 개수 */
+  choice_count: number | null;
+
+  /** 세트 문제 여부 */
+  is_set: boolean;
+
+  /** 대표 문항 ID */
+  representation_question_id: string | null;
+  /** 개별 출제 */
+  individual_questioning: boolean;
+  /** 출처 페이지 */
+  source_page_no: number;
+  /** 출처 문항 번호 */
+  source_question_no: string;
+
+  /** 검수 여부 */
+  is_reviewed: boolean;
 };

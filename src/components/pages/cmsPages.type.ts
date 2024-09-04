@@ -1,6 +1,7 @@
 // type
 import { 
   cmsClassTypeMapper,
+  cmsDifficultyMapper,
   cmsElementaryGradeMapper,
   cmsMiddleHighGradeMapper, 
   cmsTermMapper,
@@ -123,3 +124,14 @@ export const cmsTermFilterOptions: TCommonSelectOptionItem[] = [
   },
   ...cmsTermOptions,
 ] as const;
+
+//
+// 난이도 템플릿
+//
+export const cmsDifficultyTemplate = {
+  [cmsDifficultyMapper[1]]: '최하',
+  [cmsDifficultyMapper[2]]: '하',
+  [cmsDifficultyMapper[3]]: '중',
+  [cmsDifficultyMapper[4]]: '상',
+  [cmsDifficultyMapper[5]]: '최상',
+} as const;

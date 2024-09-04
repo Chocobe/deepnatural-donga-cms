@@ -57,6 +57,9 @@ const noticeMessageGroupFactory: {
 
       // 지문
       retrieveMathInstructions: TNoticeMessageGroup;
+
+      // 문항
+      retrieveMathQuestions: TNoticeMessageGroup;
     };
   };
 
@@ -354,6 +357,20 @@ const noticeMessageGroupFactory: {
         }),
         errorMessage: () => ({
           ...createNetworkErrorMessage('수학 지문 정보 조회 중'),
+        }),
+        successMessage: undefined,
+      },
+
+      // --- --- --- --- --- --- --- --- --- ---
+
+      // (GET) 수학 문항 목록
+      retrieveMathQuestions: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 문항 정보를 조회 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 문항 정보 조회 중'),
         }),
         successMessage: undefined,
       },

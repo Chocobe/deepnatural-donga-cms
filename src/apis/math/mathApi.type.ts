@@ -18,6 +18,7 @@ import {
   TMathCurriculum,
   TMathSeriesModel,
   TMathInstructionModel,
+  TMathQuestionModel,
 } from '../models/mathModel.type';
 
 //
@@ -131,3 +132,14 @@ export type TRetrieveMathInstructionsApiRequestParams = TApiRequestNonBodyParams
 }>;
 
 export type TRetrieveMathInstructionsApiResponse = TPaginationModel<TMathInstructionModel>;
+
+// --- --- --- --- --- --- --- --- --- ---
+
+//
+// (GET) 수학 문항 목록
+//
+export type TRetrieveMathQuestionsApiRequestParams = TApiRequestNonBodyParams<void, {
+  page?: number;
+}>;
+
+export type TRetrieveMathQuestionsApiResponse = TPaginationModel<TMathQuestionModel>;
