@@ -353,8 +353,8 @@ function _MathKnowledgeConceptHeader() {
       }
       flatData={flatMathAchievementModel}
       tableColumns={achievementTableColumns}
-      onClickRow={series => {
-        console.log('onClickRow() - series: ', series);
+      onClickRow={achievement => {
+        console.log('onClickRow() - achievement: ', achievement);
         closeSearchModal();
       }} />
   </>);
