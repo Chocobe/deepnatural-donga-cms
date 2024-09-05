@@ -1,0 +1,47 @@
+.MathChapter3 {
+  /*  */
+
+  &-header {
+    @apply flex items-center gap-4;
+
+    padding: 16px 0;
+
+    .checkbox {
+      /*  */
+    }
+
+    .title {
+      /*  */
+    }
+  }
+
+  &-formBody {
+    @apply flex flex-wrap items-center gap-y-5 gap-x-[calc(120px-36px)];
+
+    width: 100%;
+
+    .formItem {
+      @apply flex items-center gap-1;
+
+      padding-left: 32px;
+      max-width: 100%;
+
+      .label {
+        @apply inline-flex items-center gap-4;
+
+        flex-shrink: 0;
+        width: 123px;
+
+        color: #09090B;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 500;
+      }
+
+      .editor {
+        flex-shrink: 1;
+        width: 424px;
+      }
+    }
+  }
+}

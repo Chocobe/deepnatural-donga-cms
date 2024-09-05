@@ -11,27 +11,31 @@ import {
   TMathTextbookModel,
 } from '@/apis/models/mathModel.type';
 
+export type TMathChapterPageStoreDetailChapter3 =
+  & Omit<TMathChapter3Model, 'id'>
+  & Partial<Pick<TMathChapter3Model, 'id'>>;
+
+export type TMathChapterPageStoreDetailChapter2 =
+  & Omit<TMathChapter2Model, 'id' | 'chapter3_set'>
+  & Partial<Pick<TMathChapter2Model, 'id'>> 
+  & {
+    chapter3_set: TMathChapterPageStoreDetailChapter3[];
+  };
+
+export type TMathChapterPageStoreDetailChapter1 =
+  & Omit<TMathChapter1Model, 'id' | 'textbook_title' | 'chapter2_set'>
+  & Partial<Pick<TMathChapter1Model, 'id' | 'textbook_title'>> 
+  & {
+    chapter2_set: TMathChapterPageStoreDetailChapter2[];
+  };
+
 export type TMathChapterPageStoreState = {
   searchParamsForRetrieveMathChaptersApi: TRetrieveMathChaptersApiRequestParams['searchParams'];
 
   mathChaptersData?: TRetrieveMathChaptersApiResponse;
 
   detailTargetMathChapter?: TMathChapter1Model;
-  detailFormState:
-    & Omit<TMathChapter1Model, 'id' | 'textbook_title' | 'chapter2_set'>
-    & Partial<Pick<TMathChapter1Model, 'id' | 'textbook_title'>>
-    & {
-      chapter2_set: Array<
-        & Omit<TMathChapter2Model, 'id' | 'chapter3_set'>
-        & Partial<Pick<TMathChapter2Model, 'id'>>
-        & {
-          chapter3_set: Array<
-            & Omit<TMathChapter3Model, 'id'>
-            & Partial<Pick<TMathChapter3Model, 'id'>>
-          >;
-        }
-      >;
-    };
+  detailFormState: TMathChapterPageStoreDetailChapter1;
   detailFormStateReference: {
     textbook?: TMathTextbookModel;
   };
@@ -58,7 +62,37 @@ export const initialMathChapterPageStoreState: TMathChapterPageStoreState = {
         id: undefined,
         no: '',
         title: '',
-        chapter3_set: [],
+        chapter3_set: [
+          // FIXME: API 연동 후, 지우기
+          {
+            id: undefined,
+            no: '1',
+            title: 'title-1',
+          },
+          {
+            id: undefined,
+            no: '2',
+            title: 'title-2',
+          },
+        ],
+      },
+      // FIXME: API 연동 후, 지우기
+      {
+        id: undefined,
+        no: '',
+        title: '',
+        chapter3_set: [
+          {
+            id: undefined,
+            no: '1',
+            title: 'title-1',
+          },
+          {
+            id: undefined,
+            no: '2',
+            title: 'title-2',
+          },
+        ],
       },
     ],
   },
