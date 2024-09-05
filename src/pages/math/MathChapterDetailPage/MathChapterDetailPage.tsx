@@ -1,5 +1,6 @@
 // ui
 import MathChapterDetailHeader from '@/components/pages/math/MathChapterDetailPage/MathChapterDetailHeader/MathChapterDetailHeader';
+import MathChapter1 from '@/components/pages/math/MathChapterDetailPage/MathChapter1/MathChapter1';
 // style
 import './MathChapterDetailPage.css';
 
@@ -13,7 +14,7 @@ function MathChapterDetailPage() {
       <div className="MathChapterDetailPage-divider" />
 
       <div className="MathChapterDetailPage-main">
-        Main
+        <MathChapter1 />
       </div>
 
       <div className="MathChapterDetailPage-footer">

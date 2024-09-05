@@ -15,6 +15,7 @@ import './SearchModalTrigger.css';
 type TSearchModalTriggerProps = {
   className?: string;
   id: string;
+  placeholder?: string;
   value: string;
   onOpen: () => void;
 };
@@ -23,6 +24,7 @@ function _SearchModalTrigger(props: TSearchModalTriggerProps) {
   const {
     className,
     id,
+    placeholder = '',
     value,
     onOpen,
   } = props;
@@ -36,8 +38,11 @@ function _SearchModalTrigger(props: TSearchModalTriggerProps) {
       )}
       variant="link"
       onClick={onOpen}>
-      <div className="value">
-        {value}
+      <div className={cn(
+        'value',
+        !value ? 'placeholder' : ''
+      )}>
+        {value || placeholder}
       </div>
     </Button>
   );
