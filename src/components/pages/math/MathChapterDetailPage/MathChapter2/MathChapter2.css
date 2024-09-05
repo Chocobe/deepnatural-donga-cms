@@ -1,0 +1,97 @@
+.MathChapter2 {
+  position: relative;
+
+  &-accordionItem {
+    border: none;
+
+    .header {
+      /*  */
+
+      .actionsWrapper {
+        @apply flex justify-between items-end gap-5;
+
+        .notice {
+          color: #71717A;
+          font-size: 14px;
+          line-height: 20px;
+          font-weight: 400;
+        }
+
+        .deleteButton {
+          /*  */
+        }
+      }
+
+      .title {
+        margin-top: 8px;
+        padding: 16px;
+
+        color: #09090B;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 700;
+
+        border-top: 1px solid hsl(var(--border));
+      }
+    }
+
+    .content {
+      /*  */
+
+      .formBody {
+        @apply flex flex-wrap items-center gap-y-5 gap-x-[120px];
+
+        padding: 10px 16px 10px 180px;
+        width: 100%;
+
+        border-bottom: 1px solid hsl(var(--border));
+
+        .formItem {
+          @apply flex items-center gap-1;
+
+          max-width: 100%;
+
+          .label {
+            @apply inline-flex items-center gap-4;
+
+            flex-shrink: 0;
+            width: 123px;
+
+            color: #09090B;
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 500;
+
+            .checkbox {
+              /*  */
+            }
+          }
+
+          .editor {
+            flex-shrink: 1;
+            width: 424px;
+          }
+        }
+      }
+
+      .chapter3Wrapper {
+        padding: 10px 16px 100px 180px;
+
+        .list {
+          @apply flex flex-col gap-5;
+        }
+
+        .actionsWrapper {
+          margin-top: 10px;
+          padding-top: 10px;
+
+          border-top: 1px solid hsl(var(--border));
+
+          .addButton {
+            /*  */
+          }
+        }
+      }
+    }
+  }
+}

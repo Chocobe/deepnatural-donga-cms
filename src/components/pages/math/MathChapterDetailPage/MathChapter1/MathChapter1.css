@@ -33,7 +33,7 @@
     }
 
     .formBody {
-      @apply flex flex-wrap gap-y-5 gap-x-[123px];
+      @apply flex flex-wrap gap-y-5 gap-x-[120px];
 
       padding: 4px 16px 100px;
 

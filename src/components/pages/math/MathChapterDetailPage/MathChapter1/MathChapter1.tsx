@@ -5,6 +5,8 @@ import {
   memo,
   useCallback,
 } from 'react';
+// store
+import useMathChapterPageStore from '@/store/mathStores/mathChapterPageStore/mathChapterPageStore';
 // hook
 import useSearchModal from '@/components/shadcn-ui-custom/modals/SearchModal/hook/useSearchModal';
 // api
@@ -49,10 +51,16 @@ import {
   cn,
 } from '@/lib/shadcn-ui-utils';
 import './MathChapter1.css';
+import MathChapter2 from '../MathChapter2/MathChapter2';
 
 const textbookColumnHelper = createColumnHelper<TMathTextbookModel>();
 
 function _MathChapter1() {
+  //
+  // mathChapterPage store
+  //
+  const detailFormState = useMathChapterPageStore(state => state.detailFormState);
+
   //
   // state
   //
@@ -276,6 +284,21 @@ function _MathChapter1() {
         </AccordionContent>
       </AccordionItem>
     </Accordion>
+
+    {detailFormState.chapter2_set.map((chapter2, indexOfChapter2) => {
+      return (
+        <MathChapter2
+          key={indexOfChapter2}
+          indexOfChapter2={indexOfChapter2}
+          chapter2={chapter2}
+          onChange={params => {
+            console.log('onChange() - params: ', params);
+          }}
+          onConfirmDelete={indexOfChapter2 => {
+            console.log('onConfirmDelete() - indexOfChapter2: ', indexOfChapter2);
+          }} />
+      );
+    })}
 
     <SearchModal
       className="MathChapter1-textbookSearchModal"
