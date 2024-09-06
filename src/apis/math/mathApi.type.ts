@@ -39,14 +39,14 @@ export type TRetrieveMathTextbooksApiResponse = TPaginationModel<TMathTextbookMo
 
 /** (GET) 수학 교과서 조회 RequestParams */
 export type TRetrieveMathTextbookApiRequestParams = TApiRequestNonBodyParams<{
-  textbookId: string;
+  textbookId: string | number;
 }, void>;
 /** (GET) 수학 교과서 조회 Response */
 export type TRetrieveMathTextbookApiResponse = TMathTextbookModel;
 
 /** (PATCH) 수학 교과서 수정 RequestParams */
 export type TPatchMathTextbookApiRequestParams = TApiRequestBodyParams<{
-  textbookId: string;
+  textbookId: string | number;
 }, void, Omit<TMathTextbookModel, 'id'>>;
 /** (PATCH) 수학 교과서 수정 Response */
 export type TPatchMathTextbookApiResponse = TMathTextbookModel;
@@ -58,7 +58,7 @@ export type TProduceMathTextbookApiResponse = TMathTextbookModel;
 
 /** (DELETE) 수학 교과서 삭제 RequestParams */
 export type TDeleteMathTextbookApiRequestParams = TApiRequestNonBodyParams<{
-  textbookId: string;
+  textbookId: string | number;
 }, void>;
 /** (DELETE) 수학 교과서 삭제 Response */
 export type TDeleteMathTextbookApiResponse = void;
@@ -89,7 +89,7 @@ export type TProduceMathChapterApiRequestParams = TApiRequestBodyParams<
   }
 >;
 // TODO: 실제 응답 확인하기
-export type TProduceeMathChapterApiResponse = TMathChapter1Model;
+export type TProduceMathChapterApiResponse = TMathChapter1Model;
 
 // --- --- --- --- --- --- --- --- --- ---
 

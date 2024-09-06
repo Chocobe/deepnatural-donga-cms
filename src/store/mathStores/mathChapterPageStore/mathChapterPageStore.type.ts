@@ -26,6 +26,7 @@ export type TMathChapterPageStoreDetailChapter1 =
   & Omit<TMathChapter1Model, 'id' | 'textbook_title' | 'chapter2_set'>
   & Partial<Pick<TMathChapter1Model, 'id' | 'textbook_title'>> 
   & {
+    textbook_id?: number;
     chapter2_set: TMathChapterPageStoreDetailChapter2[];
   };
 
@@ -70,6 +71,8 @@ export const initialMathChapterPageStoreState: TMathChapterPageStoreState = {
     id: undefined,
     no: '',
     title: '',
+    textbook_id: undefined,
+    textbook_title: undefined,
     chapter2_set: [
       {
         ...initialMathChapterPageStoreDetailChapter2,

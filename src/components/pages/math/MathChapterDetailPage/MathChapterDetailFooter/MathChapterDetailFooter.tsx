@@ -4,8 +4,16 @@ import {
   useCallback,
   memo,
 } from 'react';
+// router
+import { 
+  useNavigate,
+} from 'react-router-dom';
+import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathChapterPageStore from '@/store/mathStores/mathChapterPageStore/mathChapterPageStore';
+import useResultNoticeModalStore from '@/store/modalStores/resultNoticeModalStore/resultNoticeModalStore';
+// api
+import ApiManager from '@/apis/ApiManager';
 // ui
 import { 
   Button,
@@ -20,44 +28,29 @@ import {
 import { 
   initialMathChapterPageStoreDetailChapter2,
 } from '@/store/mathStores/mathChapterPageStore/mathChapterPageStore.type';
+import { 
+  TProduceMathChapterApiRequestParams,
+} from '@/apis/math/mathApi.type';
 // style
-import './MathChapterFooter.css';
+import './MathChapterDetailFooter.css';
 
 function _MathChapterDetailFooter() {
   //
   // mathChapterPage store
   //
+  const detailFormState = useMathChapterPageStore(state => state.detailFormState);
+
   const updateDetailFormState = useMathChapterPageStore(state => state.updateDetailFormState);
 
   //
-  // cache
+  // resultNoticeMessage store
   //
-  const rightSideButtons = useMemo(() => [
-    {
-      text: '저장후 추가하기',
-      variant: 'secondary',
-      onClick: () => {
-        console.log('저장후 추가하기');
-      },
-      IconComponent: undefined,
-    },
-    {
-      text: '저장후 계속해서 수정하기',
-      variant: 'secondary',
-      onClick: () => {
-        console.log('저장후 계속해서 수정하기');
-      },
-      IconComponent: undefined,
-    },
-    {
-      text: '저장하기',
-      variant: 'default',
-      onClick: () => {
-        console.log('저장하기');
-      },
-      IconComponent: LuSave,
-    },
-  ], []);
+  const openNoticeModal = useResultNoticeModalStore(state => state.openSuccessNoticeModal);
+
+  //
+  // hook
+  //
+  const navigate = useNavigate();
 
   //
   // callback
@@ -74,9 +67,118 @@ function _MathChapterDetailFooter() {
     }));
   }, [updateDetailFormState]);
 
+  const onClickSaveAndAdd = useCallback(() => {
+    console.log('저장후 추가하기');
+  }, []);
+
+  const onClickSaveAndRemain = useCallback(() => {
+    console.log('저장후 계속해서 수정하기');
+  }, []);
+
+  const onClickSave = useCallback(() => {
+    console.log('저장하기');
+  }, []);
+
+  const produceMathChapter = useCallback(async () => {
+    const {
+      no,
+      title,
+      textbook_id,
+      chapter2_set,
+    } = detailFormState;
+
+    if (!textbook_id) {
+      openNoticeModal({
+        title: '',
+        message: '교과서를 선택해 주세요.',
+        firstButton: {
+          text: '확인',
+          variant: 'outline',
+        },
+      });
+
+      return;
+    }
+
+    const params: TProduceMathChapterApiRequestParams = {
+      payload: {
+        no,
+        title,
+        textbook_id,
+        chapter2_set,
+      },
+    };
+
+    const response = await ApiManager
+      .math
+      .produceMathChapterApi
+      .callWithNoticeMessageGroup(params);
+
+    return response?.data;
+  }, [
+    detailFormState,
+    openNoticeModal,
+  ]);
+
+  const onClickAdd = useCallback(async () => {
+    const mathChapter = await produceMathChapter();
+
+    if (!mathChapter) {
+      return;
+    }
+
+    navigate(routePathFactory
+      .math
+      .getChapterPath()
+    );
+  }, [produceMathChapter, navigate]);
+
+  // FIXME: props 로 받아오기
+  const isAdditionMode = true;
+
+  //
+  // cache
+  //
+  const buttonItems = useMemo(() => {
+    return isAdditionMode
+      ? [
+        {
+          text: '추가하기',
+          variant: 'default',
+          onClick: onClickAdd,
+          IconComponent: LuSave,
+        },
+      ]: [
+        {
+          text: '저장후 추가하기',
+          variant: 'secondary',
+          onClick: onClickSaveAndAdd,
+          IconComponent: undefined,
+        },
+        {
+          text: '저장후 계속해서 수정하기',
+          variant: 'secondary',
+          onClick: onClickSaveAndRemain,
+          IconComponent: undefined,
+        },
+        {
+          text: '저장하기',
+          variant: 'default',
+          onClick: onClickSave,
+          IconComponent: LuSave,
+        },
+      ];
+  }, [
+    isAdditionMode,
+    onClickAdd,
+    onClickSaveAndAdd,
+    onClickSaveAndRemain,
+    onClickSave,
+  ]);
+
   return (
-    <div className="MathChapterFooter">
-      <div className="MathChapterFooter-leftSide">
+    <div className="MathChapterDetailFooter">
+      <div className="MathChapterDetailFooter-leftSide">
         <Button
           className="button"
           variant="default"
@@ -86,8 +188,8 @@ function _MathChapterDetailFooter() {
         </Button>
       </div>
 
-      <div className="MathChapterFooter-rightSide">
-        {rightSideButtons.map((item, index) => {
+      <div className="MathChapterDetailFooter-rightSide">
+        {buttonItems.map((item, index) => {
           const {
             text,
             variant,

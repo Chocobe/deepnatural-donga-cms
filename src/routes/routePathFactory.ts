@@ -29,7 +29,7 @@ const routePathFactory = {
     getTextbookAddPath() {
       return `${this.getTextbookPath()}/add` as const;
     },
-    getTextbookDetailPath(textbookId: string) {
+    getTextbookDetailPath(textbookId: string | number) {
       return `${this.getTextbookPath()}/${textbookId}` as const;
     },
 

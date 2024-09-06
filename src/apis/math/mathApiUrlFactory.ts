@@ -58,6 +58,11 @@ const mathApiUrlFactory = (() => {
     retrieveMathChaptersPath() {
       return `${BASE_PATH}chapters/`;
     },
+
+    /** (POST) 수학 단원 생성 */
+    produceMathChapterPath() {
+      return `${BASE_PATH}chapters/`;
+    },
   };
 
   //

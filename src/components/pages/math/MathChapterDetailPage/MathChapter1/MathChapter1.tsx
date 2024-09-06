@@ -2,8 +2,9 @@
 import {
   useState,
   useMemo,
-  memo,
   useCallback,
+  memo,
+  ChangeEvent,
 } from 'react';
 // store
 import useMathChapterPageStore from '@/store/mathStores/mathChapterPageStore/mathChapterPageStore';
@@ -24,6 +25,7 @@ import {
 import CommonSelect from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect';
 import SearchModalTrigger from '@/components/shadcn-ui-custom/searchModals/SearchModalTrigger/SearchModalTrigger';
 import SearchModal from '@/components/shadcn-ui-custom/modals/SearchModal/SearchModal';
+import MathChapter2 from '../MathChapter2/MathChapter2';
 import { 
   createColumnHelper,
 } from '@tanstack/react-table';
@@ -46,12 +48,13 @@ import {
 import { 
   cmsClassTypeMapper,
 } from '@/apis/models/cmsCommonModel.type';
+// util
+import extractLastString from '@/utils/extractLastString/extractLastString';
 // style
 import { 
   cn,
 } from '@/lib/shadcn-ui-utils';
 import './MathChapter1.css';
-import MathChapter2 from '../MathChapter2/MathChapter2';
 
 const textbookColumnHelper = createColumnHelper<TMathTextbookModel>();
 
@@ -60,6 +63,24 @@ function _MathChapter1() {
   // mathChapterPage store
   //
   const detailFormState = useMathChapterPageStore(state => state.detailFormState);
+  const {
+    no,
+    title,
+  } = detailFormState;
+
+  const detailFormStateReference = useMathChapterPageStore(state => state.detailFormStateReference);
+  const {
+    textbook,
+  } = detailFormStateReference;
+  const {
+    title: textbookTitle = '',
+    classtype: textbookClasstype = '',
+    grade: textbookGrade = '',
+    term: textbookTerm = '',
+  } = textbook ?? {};
+
+  const updateDetailFormState = useMathChapterPageStore(state => state.updateDetailFormState);
+  const updateDetailFormStateReference = useMathChapterPageStore(state => state.updateDetailFormStateReference);
 
   //
   // state
@@ -79,89 +100,134 @@ function _MathChapter1() {
   //
   // callback
   //
-  const onClickTextbook = useCallback((textbook: TMathTextbookModel) => {
-    console.log('onClickTextbook() - textbook: ', textbook);
+  const onChangeInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const {
+      id,
+      value,
+    } = e.target;
+
+    const key = extractLastString(id, '__');
+
+    if (!key) {
+      return;
+    }
+
+    updateDetailFormState(old => ({
+      ...old,
+      [key]: value,
+    }));
+  }, [updateDetailFormState]);
+
+  const onSelectTextbook = useCallback((textbook: TMathTextbookModel) => {
+    updateDetailFormStateReference(old => ({
+      ...old,
+      textbook,
+    }));
+
+    updateDetailFormState(old => ({
+      ...old,
+      textbook_id: textbook.id,
+      textbook_title: textbook.title,
+    }));
+
     closeSearchModal();
-  }, [closeSearchModal]);
+  }, [
+    updateDetailFormStateReference, 
+    updateDetailFormState,
+    closeSearchModal,
+  ]);
 
   //
   // cache
   //
   const leftSideFormItems = useMemo(() => [
     {
-      id: 'no',
+      id: 'chapter1__no',
       label: '순번',
       Component: (
         <Input
-          id="no"
-          className="editor" />
+          id="chapter1__no"
+          className="editor"
+          value={no}
+          onChange={onChangeInput} />
       ),
     },
     {
-      id: 'title',
+      id: 'chapter1__title',
       label: '대단원 제목',
       Component: (
         <Input
-          id="title"
-          className="editor" />
+          id="chapter1__title"
+          className="editor"
+          value={title}
+          onChange={onChangeInput} />
       ),
     },
-  ], []);
+  ], [
+    no, title,
+    onChangeInput,
+  ]);
 
   const rightSideFormItems = useMemo(() => [
     {
-      id: 'classtype',
-      label: '학교급',
-      Component: (
-        <CommonSelect
-          id="classtype"
-          className="editor"
-          placeholder="선택해주세요"
-          options={cmsClassTypeOptions}
-          value=""
-          onChange={() => console.log('학교급')} />
-      ),
-    },
-    {
-      id: 'grade',
-      label: '학년',
-      Component: (
-        <CommonSelect
-          id="grade"
-          className="editor"
-          placeholder="선택해주세요"
-          // FIXME: `classtype` 바인딩 하기
-          options={cmsGradeOptions['고등']}
-          value=""
-          onChange={() => console.log('학년')} />
-      ),
-    },
-    {
-      id: 'term',
-      label: '학기',
-      Component: (
-        <CommonSelect
-          id="term"
-          className="editor"
-          placeholder="선택해주세요"
-          options={cmsTermOptions}
-          value=""
-          onChange={() => console.log('학기')} />
-      ),
-    },
-    {
-      id: 'textbook_id',
+      id: 'chapter1__textbook_id',
       label: '교과서명',
       Component: (
         <SearchModalTrigger
-          id="textbook_id"
+          id="chapter1__textbook_id"
           className="editor"
           placeholder="선택해주세요"
-          value=""
+          value={textbook ? textbookTitle : ''}
           onOpen={openSearchModal} />
       ),
     },
-  ], [openSearchModal]);
+    {
+      id: 'chapter1__classtype',
+      label: '학교급',
+      Component: (
+        <CommonSelect
+          id="chapter1__classtype"
+          className="editor"
+          placeholder="선택해주세요"
+          options={cmsClassTypeOptions}
+          value={textbook ? textbookClasstype : ''}
+          onChange={() => console.log('학교급')}
+          disabled />
+      ),
+    },
+    {
+      id: 'chapter1__grade',
+      label: '학년',
+      Component: (
+        <CommonSelect
+          id="chapter1__grade"
+          className="editor"
+          placeholder="선택해주세요"
+          options={textbook ? cmsGradeOptions[textbookClasstype] : []}
+          value={String(textbookGrade)}
+          onChange={() => console.log('학년')}
+          disabled />
+      ),
+    },
+    {
+      id: 'chapter1__term',
+      label: '학기',
+      Component: (
+        <CommonSelect
+          id="chapter1__term"
+          className="editor"
+          placeholder="선택해주세요"
+          options={cmsTermOptions}
+          value={String(textbookTerm)}
+          onChange={() => console.log('학기')} 
+          disabled />
+      ),
+    },
+  ], [
+    textbook, textbookTitle, textbookClasstype, 
+    textbookGrade, textbookTerm,
+    openSearchModal,
+  ]);
 
   const textbookColumns = useMemo(() => [
     textbookColumnHelper.accessor('curriculum', {
@@ -309,7 +375,7 @@ function _MathChapter1() {
       }
       searchTypeOptions={mathChapter1TextbookSearchTypeOptions}
       tableColumns={textbookColumns}
-      onClickRow={onClickTextbook} />
+      onClickRow={onSelectTextbook} />
   </>);
 }
 

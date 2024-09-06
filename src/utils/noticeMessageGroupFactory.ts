@@ -45,6 +45,7 @@ const noticeMessageGroupFactory: {
 
       // 단원정보
       retrieveMathChapters: TNoticeMessageGroup;
+      produceMathChapter: TNoticeMessageGroup;
 
       // 성취기준
       retrieveMathAchievements: TNoticeMessageGroup;
@@ -303,6 +304,22 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('수학 단원 정보를 조회 중'),
         }),
         successMessage: undefined,
+      },
+
+      // (POST) 수학 단원 생성
+      produceMathChapter: {
+        loadingMessage: () => ({
+          title: '',
+          message: '신규 수학 단원을 추가 중입니다.'
+        }),
+        errorMessage: () => ({
+          title: '추가하기 오류',
+          message: '오류가 발생하여 추가되지 않았습니다. 다시 시도해주세요.',
+        }),
+        successMessage: () => ({
+          title: '추가하기 완료',
+          message: '입력하신 내용이 성공적으로 추가되었습니다.',
+        }),
       },
 
       // --- --- --- --- --- --- --- --- --- ---
