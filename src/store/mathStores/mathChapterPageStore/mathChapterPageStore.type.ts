@@ -121,7 +121,7 @@ export type TMathChapterPageStoreAction = {
   updateDetailFormState: (
     callback: (
       detailFormState: Partial<TMathChapterPageStoreState['detailFormState']>
-    ) => TMathChapterPageStoreState['detailFormState']
+    ) => Partial<TMathChapterPageStoreState['detailFormState']>
   ) => void;
   updateDetailFormStateReference: (
     callback: (

@@ -291,13 +291,7 @@ function _MathChapter1() {
           <MathChapter2
             key={indexOfChapter2}
             indexOfChapter2={indexOfChapter2}
-            chapter2={chapter2}
-            onChange={params => {
-              console.log('onChange() - params: ', params);
-            }}
-            onConfirmDelete={indexOfChapter2 => {
-              console.log('onConfirmDelete() - indexOfChapter2: ', indexOfChapter2);
-            }} />
+            chapter2={chapter2} />
         );
       })}
     </div>

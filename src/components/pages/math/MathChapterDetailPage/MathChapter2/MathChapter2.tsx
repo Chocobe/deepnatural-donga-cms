@@ -7,6 +7,7 @@ import {
   ChangeEvent,
 } from 'react';
 // store
+import useMathChapterPageStore from '@/store/mathStores/mathChapterPageStore/mathChapterPageStore';
 import { 
   TMathChapterPageStoreDetailChapter2,
 } from '@/store/mathStores/mathChapterPageStore/mathChapterPageStore.type';
@@ -31,6 +32,8 @@ import MathChapter3 from '../MathChapter3/MathChapter3';
 import { 
   LuPlus,
 } from 'react-icons/lu';
+// util
+import extractLastString from '@/utils/extractLastString/extractLastString';
 // style
 import { 
   cn,
@@ -40,19 +43,12 @@ import './MathChapter2.css';
 type TMathChapter2Props = {
   indexOfChapter2: number;
   chapter2: TMathChapterPageStoreDetailChapter2;
-  onChange: (params: {
-    indexOfChapter2: number;
-    chapter2: TMathChapterPageStoreDetailChapter2;
-  }) => void;
-  onConfirmDelete: (indexOfChapter2: number) => void;
 };
 
 function _MathChapter2(props: TMathChapter2Props) {
   const {
     indexOfChapter2,
     chapter2,
-    onChange,
-    onConfirmDelete,
   } = props;
 
   const {
@@ -61,22 +57,34 @@ function _MathChapter2(props: TMathChapter2Props) {
   } = chapter2;
 
   //
+  // mathChapterPage store
+  //
+  const updateDetailFormState = useMathChapterPageStore(state => state.updateDetailFormState);
+
+  //
   // state
   //
   const [accordionValue, setAccordionValue] = useState<string>('chapter2');
-
   const [isChecked, setIsChecked] = useState(false);
 
   //
   // callback
   //
   const onChangeIsChecked = useCallback(() => {
-    setIsChecked(isChecked => {
-      console.log('!isChecked: ', !isChecked);
-
-      return !isChecked;
-    });
+    setIsChecked(isChecked => !isChecked);
   }, []);
+
+  const onClickDelete = useCallback(() => {
+    // TODO: confirmModal(ResultNoticeModal) 열기
+
+    // FIXME: onConfirmDelete() 로 옮기기
+    updateDetailFormState(old => ({
+      ...old,
+      chapter2_set: old.chapter2_set?.filter((_oldChapter2, index) => {
+        return index !== indexOfChapter2;
+      }),
+    }));
+  }, [indexOfChapter2, updateDetailFormState]);
 
   const onChangeChapter2 = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -84,25 +92,35 @@ function _MathChapter2(props: TMathChapter2Props) {
       value,
     } = e.target;
 
-    onChange({
-      indexOfChapter2,
-      chapter2: {
-        ...chapter2,
-        [id]: value,
-      },
-    });
-  }, [indexOfChapter2, chapter2, onChange]);
+    const key = extractLastString(id, '__');
+
+    if (!key) {
+      return;
+    }
+
+    updateDetailFormState(old => ({
+      ...old,
+      chapter2_set: old.chapter2_set?.map((oldChapter2, index) => {
+        return index !== indexOfChapter2
+          ? oldChapter2
+          : {
+            ...oldChapter2,
+            [key]: value,
+          };
+      }),
+    }));
+  }, [indexOfChapter2, updateDetailFormState]);
 
   //
   // cache
   //
   const formItems = useMemo(() => [
     {
-      id: 'chapter2_no',
+      id: 'chapter2__no',
       label: '순번',
       Component: (
         <Input
-          id="chapter2_no"
+          id="chapter2__no"
           className="editor"
           value={no}
           onChange={onChangeChapter2}
@@ -110,11 +128,11 @@ function _MathChapter2(props: TMathChapter2Props) {
       ),
     },
     {
-      id: 'chapter2_title',
+      id: 'chapter2__title',
       label: '중단원 제목',
       Component: (
         <Input
-          id="chapter2_title"
+          id="chapter2__title"
           className="editor"
           value={title}
           onChange={onChangeChapter2}
@@ -147,7 +165,7 @@ function _MathChapter2(props: TMathChapter2Props) {
 
             <Button
               className="deleteButton"
-              onClick={() => onConfirmDelete(indexOfChapter2)}>
+              onClick={onClickDelete}>
               삭제
             </Button>
           </div>

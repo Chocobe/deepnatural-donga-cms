@@ -34,6 +34,10 @@
         font-weight: 700;
 
         border-top: 1px solid hsl(var(--border));
+
+        &:hover {
+          text-decoration: none;
+        }
       }
     }
 
