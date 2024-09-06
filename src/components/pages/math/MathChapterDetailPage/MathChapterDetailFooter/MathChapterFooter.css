@@ -1,0 +1,8 @@
+.MathChapterFooter {
+  /*  */
+
+  &-leftSide,
+  &-rightSide {
+    @apply flex items-center gap-2.5;
+  }
+}
