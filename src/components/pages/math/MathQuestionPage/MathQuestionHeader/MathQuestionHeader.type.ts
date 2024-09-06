@@ -4,7 +4,7 @@ import {
 } from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect.type';
 
 /**
- * 수학 출처-시리즈 검색 모달 - 검색 타입 선택지
+ * 수학 시리즈-출처 검색 모달 - 검색 타입 선택지
  */
 export const mathQuestionHeaderSeriesSearchTypeOptions: TCommonSelectOptionItem[] = [
   // 

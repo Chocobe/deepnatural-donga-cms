@@ -49,6 +49,41 @@ const useMathChapterPageStore = create(devtools<TMathChapterPageStore>((set, _ge
     }), false, 'setMathChaptersData');
   },
 
+  clearDetailTargetMathChapter: () => {
+    set(old => ({
+      ...old,
+      detailTargetMathChapter: initialMathChapterPageStoreState.detailTargetMathChapter,
+      detailFormState: initialMathChapterPageStoreState.detailFormState,
+      detailFormStateReference: initialMathChapterPageStoreState.detailFormStateReference,
+    }), false, 'clearDetailTargetMathChapter');
+  },
+  setDetailTargetMathChapter: detailTargetMathChapter => {
+    set(old => ({
+      ...old,
+      detailTargetMathChapter,
+      detailFormState: detailTargetMathChapter,
+      detailFormStateReference: initialMathChapterPageStoreState.detailFormStateReference,
+    }), false, 'setDetailTargetMathChapter');
+  },
+  updateDetailFormState: callback => {
+    set(old => ({
+      ...old,
+      detailFormState: {
+        ...old.detailFormState,
+        ...callback(old.detailFormState),
+      },
+    }), false, 'updateDetailFormState');
+  },
+  updateDetailFormStateReference: callback => {
+    set(old => ({
+      ...old,
+      detailFormStateReference: {
+        ...old.detailFormStateReference,
+        ...callback(old.detailFormStateReference),
+      },
+    }), false, 'updateDetailFormStateReference');
+  },
+
   clearSelectedMathChapters: () => {
     set(old => ({
       ...old,

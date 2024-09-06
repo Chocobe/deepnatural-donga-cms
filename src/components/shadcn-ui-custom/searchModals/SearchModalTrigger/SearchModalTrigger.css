@@ -26,6 +26,11 @@
 
     overflow: hidden;
     text-overflow: ellipsis;
+    font-weight: 400;
+
+    &.placeholder {
+      color: #989898;
+    }
   }
 
   .icon {

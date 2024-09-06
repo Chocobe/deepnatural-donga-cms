@@ -29,13 +29,16 @@ const routePathFactory = {
     getTextbookAddPath() {
       return `${this.getTextbookPath()}/add` as const;
     },
-    getTextbookDetailPath(textbookId: string) {
+    getTextbookDetailPath(textbookId: string | number) {
       return `${this.getTextbookPath()}/${textbookId}` as const;
     },
 
     // 교과서 단원
     getChapterPath() {
       return `${this.getMathRootPath()}/chapter` as const;
+    },
+    getChapterAddPath() {
+      return `${this.getChapterPath()}/add` as string;
     },
 
     // 성취기준

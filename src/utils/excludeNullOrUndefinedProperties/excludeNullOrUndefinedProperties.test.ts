@@ -127,4 +127,45 @@ describe('excludeNullOrUndefinedProperties 테스트', () => {
       },
     });
   });
+
+  it('{ a: [1, 2, 3], b: null, c: undefined, d: "HelloWorld" } => { a: [1, 2, 3], d: "HelloWorld" }', () => {
+    const obj = {
+      a: [1, 2, 3],
+      b: null,
+      c: undefined,
+      d: 'HelloWorld',
+    };
+
+    const result = excludeNullOrUndefinedProperties(obj);
+
+    expect(Array.isArray(result.a)).toBeTruthy();
+    expect(result).toEqual({
+      a: [1, 2, 3],
+      d: 'HelloWorld',
+    });
+  });
+
+  it('{ a: [{ a1: undefined, a2: "hello", a3: null }], b: "world" } => { a: [{ a2: "hello" }], b: "world" }', () => {
+    const obj = {
+      a: [
+        {
+          a1: undefined,
+          a2: 'hello',
+          a3: null,
+        },
+      ],
+      b: 'world',
+    };
+
+    const result = excludeNullOrUndefinedProperties(obj);
+
+    expect(result).toEqual({
+      a: [
+        {
+          a2: 'hello',
+        },
+      ],
+      b: 'world',
+    });
+  });
 });

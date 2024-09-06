@@ -21,6 +21,7 @@ import DashboardPage from '@/pages/dashboard/Dashboard/DashboardPage';
 import MathTextbookPage from '@/pages/math/MathTextbookPage/MathTextbookPage';
 import MathTextbookDetailPage from '@/pages/math/MathTextbookDetailPage/MathTextbookDetailPage';
 import MathChapterPage from '@/pages/math/MathChapterPage/MathChapterPage';
+import MathChapterDetailPage from '@/pages/math/MathChapterDetailPage/MathChapterDetailPage';
 import MathAchievementPage from '@/pages/math/MathAchievementPage/MathAchievementPage';
 import MathKnowledgeConceptPage from '@/pages/math/MathKnowledgeConceptPage/MathKnowledgeConceptPage';
 import MathSeriesSourcePage from '@/pages/math/MathSeriesSourcePage/MathSeriesSourcePage';
@@ -128,6 +129,12 @@ const routes = createBrowserRouter([
               .math
               .getChapterPath(),
             element: <MathChapterPage />,
+          },
+          {
+            path: routePathFactory
+              .math
+              .getChapterAddPath(),
+            element: <MathChapterDetailPage />
           },
 
           // 수학: 성취기준

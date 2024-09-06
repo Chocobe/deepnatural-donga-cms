@@ -137,6 +137,7 @@ function _MathTextbookDetailFooter(props: TMathTextbookDetailFooterProps) {
 
   return (<>
     <div className="MathTextbookDetailFooter">
+      {/* FIXME: useMemo 로 변경하기 */}
       {isDetailMode
         ? (<>
           <Button

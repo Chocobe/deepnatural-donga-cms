@@ -73,6 +73,7 @@ function MathTextbookDetailPage() {
 
   useEffect(function cleanup() {
     return () => {
+      // FIXME: clearDetailTargetMathText() 에서 detailFormState 까지 초기화하도록 store 변경하기
       clearDetailTargetMathTextbook();
       clearDetailFormState();
     };

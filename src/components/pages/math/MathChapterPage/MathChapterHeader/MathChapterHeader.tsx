@@ -2,8 +2,14 @@
 import {
   useState,
   useMemo,
+  useCallback,
   memo,
 } from 'react';
+// router
+import { 
+  useNavigate,
+} from 'react-router-dom';
+import routePathFactory from '@/routes/routePathFactory';
 // hook
 import useSearchModal from '@/components/shadcn-ui-custom/modals/SearchModal/hook/useSearchModal';
 // api
@@ -75,6 +81,8 @@ function _MathChapterHeader() {
     closeSearchModal,
     onChangeIsOpenSearchModal,
   } = useSearchModal();
+
+  const navigate = useNavigate();
 
   //
   // cache
@@ -148,6 +156,16 @@ function _MathChapterHeader() {
     }),
   ], []);
 
+  //
+  // callback
+  //
+  const addMathChapter = useCallback(() => {
+    navigate(routePathFactory
+      .math
+      .getChapterAddPath()
+    );
+  }, [navigate]);
+
   return (<>
     <div className="MathChapterHeader">
       <Accordion
@@ -207,14 +225,12 @@ function _MathChapterHeader() {
           </Button>
         </TBUTooltip>
 
-        <TBUTooltip>
-          <Button
-            className="actionButton"
-            disabled>
-            <LuPlus className="icon" />
-            Add 교과서 단원(대)
-          </Button>
-        </TBUTooltip>
+        <Button
+          className="actionButton"
+          onClick={addMathChapter}>
+          <LuPlus className="icon" />
+          Add 교과서 단원(대)
+        </Button>
       </div>
     </div>
 

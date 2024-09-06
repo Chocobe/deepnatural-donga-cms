@@ -28,7 +28,7 @@ export const mathCurriculumMapper = {
 export type TMathCurriculum = typeof mathCurriculumMapper[keyof typeof mathCurriculumMapper];
 
 type TMathTextbookGenericModel<TClassType extends TCMSClassType> = {
-  id: string;
+  id: number;
   // TODO: 아직 API 미지원 속성
   /** 과목 */
   // subject: typeof cmsCommonModelSubjectMapper.MATH;
@@ -206,7 +206,7 @@ export type TMathKnowledgeConceptFlattenModel = {
 // --- --- --- --- --- --- --- --- --- ---
 
 /**
- * Math SeriesSource (수학 출처-시리즈)
+ * Math SeriesSource (수학 시리즈-출처)
  */
 /** 수학 출처 */
 export type TMathSourceModel = {

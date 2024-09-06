@@ -123,7 +123,7 @@ function _MathSeriesSourceHeader() {
             className="trigger"
             isHideChevronIcon>
             <div className="title">
-              출처-시리즈 / Filter
+              시리즈-출처 / Filter
               <LuChevronDown className={cn(
                 'icon',
                 accordionValue ? 'open' : 'close'

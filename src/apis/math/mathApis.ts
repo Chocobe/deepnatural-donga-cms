@@ -5,6 +5,7 @@ import mathApiUrlFactory from './mathApiUrlFactory';
 import createApiWithNoticeMessageGroup from '../../utils/createApiWithNoticeMessageGroup';
 import noticeMessageGroupFactory from '@/utils/noticeMessageGroupFactory';
 import excludeNullOrUndefinedProperties from '@/utils/excludeNullOrUndefinedProperties/excludeNullOrUndefinedProperties';
+import trimRecursive from '@/utils/trimRecursive/trimRecursive';
 // type
 import { 
   TRetrieveMathTextbooksApiRequestParams, 
@@ -22,9 +23,6 @@ import {
   TDeleteMathTextbookApiRequestParams,
   TDeleteMathTextbookApiResponse,
 
-  TRetrieveMathChaptersApiRequestParams,
-  TRetrieveMathChaptersApiResponse,
-
   TRetrieveMathAchievementsApiRequestParams,
   TRetrieveMathAchievementsApiResponse,
 
@@ -39,6 +37,13 @@ import {
 
   TRetrieveMathQuestionsApiRequestParams,
   TRetrieveMathQuestionsApiResponse,
+} from './mathApi.type';
+import {
+  TRetrieveMathChaptersApiRequestParams,
+  TRetrieveMathChaptersApiResponse,
+
+  TProduceMathChapterApiRequestParams,
+  TProduceMathChapterApiResponse,
 } from './mathApi.type';
 
 // FIXME: mockup
@@ -181,6 +186,26 @@ export const retrieveMathChaptersApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .retrieveMathChapters,
+});
+
+//
+// (POST) 수학 단원 생성
+//
+export const produceMathChapterApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathChapterApiRequestParams) => {
+    const {
+      payload,
+    } = excludeNullOrUndefinedProperties(trimRecursive(params));
+
+    return api.post<TProduceMathChapterApiResponse>(
+      mathApiUrlFactory.produceMathChapterPath(),
+      payload,
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathChapter,
 });
 
 // --- --- --- --- --- --- --- --- --- ---

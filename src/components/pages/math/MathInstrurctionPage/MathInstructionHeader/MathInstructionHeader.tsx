@@ -244,8 +244,8 @@ function _MathInstructionHeader() {
       className="MathInstructionHeader-seriesSearchModal"
       isOpen={isOpenSearchModal}
       onChangeIsOpen={onChangeIsOpenSearchModal}
-      title="출처-시리즈"
-      description="적용할 출처-시리즈를 선택해 주세요"
+      title="시리즈-출처"
+      description="적용할 시리즈-출처를 선택해 주세요"
       searchTypeOptions={mathInstructionHeaderSeriesSearchTypeOptions}
       retrieveData={ApiManager
         .math
