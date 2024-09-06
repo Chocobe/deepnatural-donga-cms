@@ -1,8 +1,11 @@
 // react
 import {
   useMemo,
+  useCallback,
   memo,
 } from 'react';
+// store
+import useMathChapterPageStore from '@/store/mathStores/mathChapterPageStore/mathChapterPageStore';
 // ui
 import { 
   Button,
@@ -13,10 +16,19 @@ import {
   LuPlus, 
   LuSave,
 } from 'react-icons/lu';
+// type
+import { 
+  initialMathChapterPageStoreDetailChapter2,
+} from '@/store/mathStores/mathChapterPageStore/mathChapterPageStore.type';
 // style
 import './MathChapterFooter.css';
 
 function _MathChapterDetailFooter() {
+  //
+  // mathChapterPage store
+  //
+  const updateDetailFormState = useMathChapterPageStore(state => state.updateDetailFormState);
+
   //
   // cache
   //
@@ -47,15 +59,28 @@ function _MathChapterDetailFooter() {
     },
   ], []);
 
+  //
+  // callback
+  //
+  const addMathChapter2 = useCallback(() => {
+    updateDetailFormState(old => ({
+      ...old,
+      chapter2_set: [
+        ...(old.chapter2_set ?? []),
+        {
+          ...initialMathChapterPageStoreDetailChapter2,
+        },
+      ],
+    }));
+  }, [updateDetailFormState]);
+
   return (
     <div className="MathChapterFooter">
       <div className="MathChapterFooter-leftSide">
         <Button
           className="button"
           variant="default"
-          onClick={() => {
-            console.log('교과서 단원(중) 추가');
-          }}>
+          onClick={addMathChapter2}>
           <LuPlus className="icon" />
           교과서 단원(중)
         </Button>

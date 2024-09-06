@@ -43,6 +43,19 @@ export type TMathChapterPageStoreState = {
   selectedMathChapters?: TMathChapterFlattenModel[];
 };
 
+export const initialMathChapterPageStoreDetailChapter3: TMathChapterPageStoreDetailChapter3 = {
+  id: undefined,
+  no: '',
+  title: '',
+} as const;
+
+export const initialMathChapterPageStoreDetailChapter2: TMathChapterPageStoreDetailChapter2 = {
+  id: undefined,
+  no: '',
+  title: '',
+  chapter3_set: [],
+} as const;
+
 export const initialMathChapterPageStoreState: TMathChapterPageStoreState = {
   searchParamsForRetrieveMathChaptersApi: {
     page: undefined,
@@ -59,40 +72,7 @@ export const initialMathChapterPageStoreState: TMathChapterPageStoreState = {
     title: '',
     chapter2_set: [
       {
-        id: undefined,
-        no: '',
-        title: '',
-        chapter3_set: [
-          // FIXME: API 연동 후, 지우기
-          {
-            id: undefined,
-            no: '1',
-            title: 'title-1',
-          },
-          {
-            id: undefined,
-            no: '2',
-            title: 'title-2',
-          },
-        ],
-      },
-      // FIXME: API 연동 후, 지우기
-      {
-        id: undefined,
-        no: '',
-        title: '',
-        chapter3_set: [
-          {
-            id: undefined,
-            no: '1',
-            title: 'title-1',
-          },
-          {
-            id: undefined,
-            no: '2',
-            title: 'title-2',
-          },
-        ],
+        ...initialMathChapterPageStoreDetailChapter2,
       },
     ],
   },

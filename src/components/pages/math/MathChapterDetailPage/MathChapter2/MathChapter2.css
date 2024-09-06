@@ -49,7 +49,7 @@
       .formBody {
         @apply flex flex-wrap items-center gap-y-5 gap-x-[120px];
 
-        padding: 10px 16px 10px var(--padding-indent);
+        padding: 4px 16px 10px var(--padding-indent);
         width: 100%;
 
         border-bottom: 1px solid hsl(var(--border));
@@ -87,13 +87,15 @@
 
         .list {
           @apply flex flex-col gap-5;
+
+          margin-bottom: 10px;
+          padding-bottom: 10px;
+
+          border-bottom: 1px solid hsl(var(--border));
         }
 
         .actionsWrapper {
-          margin-top: 10px;
-          padding-top: 10px;
-
-          border-top: 1px solid hsl(var(--border));
+          /*  */
 
           .addButton {
             /*  */

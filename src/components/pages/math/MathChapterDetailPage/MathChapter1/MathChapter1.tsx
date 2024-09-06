@@ -289,7 +289,7 @@ function _MathChapter1() {
       {detailFormState.chapter2_set.map((chapter2, indexOfChapter2) => {
         return (
           <MathChapter2
-            key={indexOfChapter2}
+            key={`${detailFormState.chapter2_set.length}-${indexOfChapter2}`}
             indexOfChapter2={indexOfChapter2}
             chapter2={chapter2} />
         );

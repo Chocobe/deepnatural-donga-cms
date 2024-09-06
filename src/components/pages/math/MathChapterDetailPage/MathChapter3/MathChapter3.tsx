@@ -6,6 +6,8 @@ import {
   useMemo,
   ChangeEvent,
 } from 'react';
+// store
+import useMathChapterPageStore from '@/store/mathStores/mathChapterPageStore/mathChapterPageStore';
 // ui
 import { 
   Checkbox,
@@ -17,30 +19,38 @@ import {
 import { 
   TMathChapterPageStoreDetailChapter3,
 } from '@/store/mathStores/mathChapterPageStore/mathChapterPageStore.type';
+// util
+import extractLastString from '@/utils/extractLastString/extractLastString';
 // style
 import './MathChapter3.css';
 
 type TMathChapter3Props = {
+  indexOfChapter2: number;
   indexOfChapter3: number;
   chapter3: TMathChapterPageStoreDetailChapter3;
-  onChange: (params: {
+  onChangeChapter3IsChecked: (params: {
     indexOfChapter3: number;
-    chapter3: TMathChapterPageStoreDetailChapter3;
+    isChecked: boolean;
   }) => void;
-  onConfirmDelete: (indexOfChapter3: number) => void;
 };
 
 function _MathChapter3(props: TMathChapter3Props) {
   const {
+    indexOfChapter2,
     indexOfChapter3,
     chapter3,
-    onChange,
+    onChangeChapter3IsChecked,
   } = props;
 
   const {
     no,
     title,
   } = chapter3;
+
+  //
+  // mathChapterPage store
+  //
+  const updateDetailFormState = useMathChapterPageStore(state => state.updateDetailFormState);
 
   //
   // state
@@ -51,8 +61,20 @@ function _MathChapter3(props: TMathChapter3Props) {
   // callback
   //
   const onChangeIsChecked = useCallback(() => {
-    setIsChecked(isChecked => !isChecked);
-  }, []);
+    setIsChecked(isChecked => {
+      const toggledIsChecked = !isChecked;
+
+      onChangeChapter3IsChecked({
+        indexOfChapter3,
+        isChecked: toggledIsChecked,
+      });
+
+      return toggledIsChecked;
+    });
+  }, [
+    indexOfChapter3,
+    onChangeChapter3IsChecked,
+  ]);
 
   const onChangeChapter3 = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -60,16 +82,33 @@ function _MathChapter3(props: TMathChapter3Props) {
       value,
     } = e.target;
 
-    onChange({
-      indexOfChapter3,
-      chapter3: {
-        ...chapter3,
-        [id]: value,
-      },
-    });
+    const key = extractLastString(id, '__') as string;
+
+    if (!key) {
+      return;
+    }
+
+    updateDetailFormState(old => ({
+      ...old,
+      chapter2_set: old.chapter2_set?.map((chapter2, index) => {
+        return index !== indexOfChapter2
+          ? chapter2
+          : {
+            ...chapter2,
+            chapter3_set: chapter2.chapter3_set.map((chapter3, index) => {
+              return index !== indexOfChapter3
+                ? chapter3
+                : {
+                  ...chapter3,
+                  [key]: value
+                };
+            }),
+          };
+      }),
+    }));
   }, [
-    indexOfChapter3, chapter3,
-    onChange,
+    indexOfChapter2, indexOfChapter3,
+    updateDetailFormState,
   ]);
 
   //
@@ -77,29 +116,30 @@ function _MathChapter3(props: TMathChapter3Props) {
   //
   const formItems = useMemo(() => [
     {
-      id: `${indexOfChapter3}_chapter3_no`,
+      id: `${indexOfChapter2}-${indexOfChapter3}-chapter3__no`,
       label: '순번',
       Component: (
         <Input
-          id={`${indexOfChapter3}_chapter3_no`}
+          id={`${indexOfChapter2}-${indexOfChapter3}-chapter3__no`}
           className="editor"
           value={no}
           onChange={onChangeChapter3} />
       ),
     },
     {
-      id: `${indexOfChapter3}_chapter3_title`,
+      id: `${indexOfChapter2}-${indexOfChapter3}-chapter3__title`,
       label: '소단원 제목',
       Component: (
         <Input
-          id={`${indexOfChapter3}_chapter3_title`}
+          id={`${indexOfChapter2}-${indexOfChapter3}-chapter3__title`}
           className="editor"
           value={title}
           onChange={onChangeChapter3} />
       ),
     },
   ], [
-    indexOfChapter3, no, title,
+    indexOfChapter2, indexOfChapter3,
+    no, title,
     onChangeChapter3,
   ]);
 

@@ -1,5 +1,6 @@
 // react
 import {
+  useRef,
   useState,
   useMemo,
   useCallback,
@@ -8,9 +9,7 @@ import {
 } from 'react';
 // store
 import useMathChapterPageStore from '@/store/mathStores/mathChapterPageStore/mathChapterPageStore';
-import { 
-  TMathChapterPageStoreDetailChapter2,
-} from '@/store/mathStores/mathChapterPageStore/mathChapterPageStore.type';
+import useResultNoticeModalStore from '@/store/modalStores/resultNoticeModalStore/resultNoticeModalStore';
 // ui
 import {
   Accordion,
@@ -34,6 +33,11 @@ import {
 } from 'react-icons/lu';
 // util
 import extractLastString from '@/utils/extractLastString/extractLastString';
+// type
+import { 
+  initialMathChapterPageStoreDetailChapter3,
+  TMathChapterPageStoreDetailChapter2,
+} from '@/store/mathStores/mathChapterPageStore/mathChapterPageStore.type';
 // style
 import { 
   cn,
@@ -59,7 +63,19 @@ function _MathChapter2(props: TMathChapter2Props) {
   //
   // mathChapterPage store
   //
+  const numOfChapter2 = useMathChapterPageStore(state => state.detailFormState.chapter2_set.length);
+
   const updateDetailFormState = useMathChapterPageStore(state => state.updateDetailFormState);
+
+  //
+  // resultNoticeModal store
+  //
+  const openNoticeModal = useResultNoticeModalStore(state => state.openSuccessNoticeModal);
+
+  //
+  // ref
+  //
+  const indexOfChapter3SetRef = useRef<Set<number>>(new Set());
 
   //
   // state
@@ -74,17 +90,124 @@ function _MathChapter2(props: TMathChapter2Props) {
     setIsChecked(isChecked => !isChecked);
   }, []);
 
-  const onClickDelete = useCallback(() => {
-    // TODO: confirmModal(ResultNoticeModal) 열기
+  const onChangeChapter3IsChecked = useCallback((params: {
+    indexOfChapter3: number;
+    isChecked: boolean;
+  }) => {
+    const {
+      indexOfChapter3,
+      isChecked,
+    } = params;
 
-    // FIXME: onConfirmDelete() 로 옮기기
+    const indexOfChapter3Set = indexOfChapter3SetRef.current;
+
+    if (isChecked) {
+      indexOfChapter3Set.add(indexOfChapter3);
+    } else {
+      indexOfChapter3Set.delete(indexOfChapter3);
+    }
+  }, []);
+
+  const onConfirmDelete = useCallback(() => {
+    if (isChecked) {
+      updateDetailFormState(old => ({
+        ...old,
+        chapter2_set: old.chapter2_set?.filter((_oldChapter2, index) => {
+          return index !== indexOfChapter2;
+        }),
+      }));
+
+      return;
+    }
+
+    const indexOfChapter3Set = indexOfChapter3SetRef.current;
+
+    if (!indexOfChapter3Set.size) {
+      return;
+    }
+
     updateDetailFormState(old => ({
       ...old,
-      chapter2_set: old.chapter2_set?.filter((_oldChapter2, index) => {
-        return index !== indexOfChapter2;
-      }),
+      chapter2_set: old.chapter2_set?.map((chapter2, index) => {
+        return index !== indexOfChapter2
+          ? chapter2
+          : {
+            ...chapter2,
+            chapter3_set: chapter2.chapter3_set.filter((_chapter3, index) => {
+              return !indexOfChapter3Set.has(index);
+            }),
+          };
+      }) ?? [],
     }));
-  }, [indexOfChapter2, updateDetailFormState]);
+
+    indexOfChapter3Set.clear();
+  }, [
+    isChecked, indexOfChapter2, 
+    updateDetailFormState,
+  ]);
+
+  const onClickDelete = useCallback(() => {
+    if (isChecked) {
+      if (numOfChapter2 < 2) {
+        openNoticeModal({
+          title: '중단원 삭제 불가',
+          message: '마지막 남은 [중단원] 입니다. 더이상 삭제할 수 없습니다.\n최소 [중단원] 수량은 1개 입니다.',
+          firstButton: {
+            text: '확인',
+            variant: 'outline',
+          },
+        });
+
+        return;
+      }
+
+      openNoticeModal({
+        title: '중단원 삭제',
+        message: `[중단원]을 삭제할 경우 [하위 소단원]도 같이 삭제됩니다.\n정말 삭제 하시겠습니까?`,
+        firstButton: {
+          text: '취소',
+          variant: 'outline',
+        },
+        secondButton: {
+          text: '삭제',
+          variant: 'destructive',
+          onClick: onConfirmDelete,
+        },
+      });
+
+      return;
+    }
+
+    if (indexOfChapter3SetRef.current.size) {
+      openNoticeModal({
+        title: '소단원 삭제',
+        message: '소단원을 정말 삭제 하시겠습니까?',
+        firstButton: {
+          text: '취소',
+          variant: 'outline',
+        },
+        secondButton: {
+          text: '삭제',
+          variant: 'destructive',
+          onClick: onConfirmDelete,
+        },
+      });
+
+      return;
+    }
+
+    openNoticeModal({
+      title: '',
+      message: '삭제할 중단원 또는 소단원을 선택해주세요',
+      firstButton: {
+        text: '확인',
+        variant: 'outline',
+      },
+    });
+  }, [
+    isChecked, numOfChapter2,
+    openNoticeModal, onConfirmDelete,
+  ]);
 
   const onChangeChapter2 = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -111,16 +234,37 @@ function _MathChapter2(props: TMathChapter2Props) {
     }));
   }, [indexOfChapter2, updateDetailFormState]);
 
+  const addMathChapter3 = useCallback(() => {
+    updateDetailFormState(old => ({
+      ...old,
+      chapter2_set: old.chapter2_set?.map((chapter2, index) => {
+        return index !== indexOfChapter2
+          ? chapter2
+          : {
+            ...chapter2,
+            chapter3_set: [
+              ...chapter2.chapter3_set,
+              {
+                ...initialMathChapterPageStoreDetailChapter3,
+              },
+            ],
+          };
+      }) ?? [],
+    }));
+
+    indexOfChapter3SetRef.current.clear();
+  }, [indexOfChapter2, updateDetailFormState]);
+
   //
   // cache
   //
   const formItems = useMemo(() => [
     {
-      id: 'chapter2__no',
+      id: `${indexOfChapter2}-chapter2__no`,
       label: '순번',
       Component: (
         <Input
-          id="chapter2__no"
+          id={`${indexOfChapter2}-chapter2__no`}
           className="editor"
           value={no}
           onChange={onChangeChapter2}
@@ -128,11 +272,11 @@ function _MathChapter2(props: TMathChapter2Props) {
       ),
     },
     {
-      id: 'chapter2__title',
+      id: `${indexOfChapter2}-chapter2__title`,
       label: '중단원 제목',
       Component: (
         <Input
-          id="chapter2__title"
+          id={`${indexOfChapter2}-chapter2__title`}
           className="editor"
           value={title}
           onChange={onChangeChapter2}
@@ -140,7 +284,7 @@ function _MathChapter2(props: TMathChapter2Props) {
       ),
     },
   ], [
-    no, title,
+    indexOfChapter2, no, title,
     onChangeChapter2,
   ]);
 
@@ -211,22 +355,24 @@ function _MathChapter2(props: TMathChapter2Props) {
           </div>
 
           <div className="chapter3Wrapper">
-            <div className="list">
-              {chapter2.chapter3_set.map((chapter3, indexOfChapter3) => (
-                <MathChapter3
-                  key={indexOfChapter3}
-                  indexOfChapter3={indexOfChapter3}
-                  chapter3={chapter3}
-                  onChange={() => console.log('onChnge() - chapter3')}
-                  onConfirmDelete={() => console.log('onConfirmDelete() - chapter3')} />
-              ))}
-            </div>
+            {!!chapter2.chapter3_set.length && (
+              <div className="list">
+                {chapter2.chapter3_set.map((chapter3, indexOfChapter3) => (
+                  <MathChapter3
+                    key={`${chapter2.chapter3_set.length}-${indexOfChapter3}`}
+                    indexOfChapter2={indexOfChapter2}
+                    indexOfChapter3={indexOfChapter3}
+                    chapter3={chapter3}
+                    onChangeChapter3IsChecked={onChangeChapter3IsChecked} />
+                ))}
+              </div>
+            )}
 
             <div className="actionsWrapper">
               <Button
                 className="addButton"
                 variant="outline"
-                onClick={() => console.log('교과서 단원(소) 추가')}>
+                onClick={addMathChapter3}>
                 <LuPlus className="icon" />
                 교과서 단원(소)
               </Button>
