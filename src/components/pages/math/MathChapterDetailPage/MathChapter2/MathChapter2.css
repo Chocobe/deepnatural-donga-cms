@@ -2,6 +2,8 @@
   position: relative;
 
   &-accordionItem {
+    padding-bottom: 100px;
+
     border: none;
 
     .header {
@@ -38,10 +40,12 @@
     .content {
       /*  */
 
+      --padding-indent: 180px;
+
       .formBody {
         @apply flex flex-wrap items-center gap-y-5 gap-x-[120px];
 
-        padding: 10px 16px 10px 180px;
+        padding: 10px 16px 10px var(--padding-indent);
         width: 100%;
 
         border-bottom: 1px solid hsl(var(--border));
@@ -75,7 +79,7 @@
       }
 
       .chapter3Wrapper {
-        padding: 10px 16px 100px 180px;
+        padding: 10px 16px 0 var(--padding-indent);
 
         .list {
           @apply flex flex-col gap-5;

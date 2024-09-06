@@ -16,14 +16,16 @@
   }
 
   &-formBody {
-    @apply flex flex-wrap items-center gap-y-5 gap-x-[calc(120px-36px)];
+    --padding-indent: 32px;
+
+    @apply flex flex-wrap items-center gap-y-5 gap-x-[calc(120px-var(--padding-indent))];
 
     width: 100%;
 
     .formItem {
       @apply flex items-center gap-1;
 
-      padding-left: 32px;
+      padding-left: var(--padding-indent);
       max-width: 100%;
 
       .label {

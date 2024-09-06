@@ -221,7 +221,7 @@ function _MathChapter1() {
       onValueChange={setAccordionValue}
       collapsible>
       <AccordionItem 
-        className="accordionItem"
+        className="MathChapter1-accordionItem"
         value="chapter1">
         <AccordionTrigger
           className="trigger"
@@ -285,20 +285,22 @@ function _MathChapter1() {
       </AccordionItem>
     </Accordion>
 
-    {detailFormState.chapter2_set.map((chapter2, indexOfChapter2) => {
-      return (
-        <MathChapter2
-          key={indexOfChapter2}
-          indexOfChapter2={indexOfChapter2}
-          chapter2={chapter2}
-          onChange={params => {
-            console.log('onChange() - params: ', params);
-          }}
-          onConfirmDelete={indexOfChapter2 => {
-            console.log('onConfirmDelete() - indexOfChapter2: ', indexOfChapter2);
-          }} />
-      );
-    })}
+    <div className="MathChapter1-chapter2Wrapper">
+      {detailFormState.chapter2_set.map((chapter2, indexOfChapter2) => {
+        return (
+          <MathChapter2
+            key={indexOfChapter2}
+            indexOfChapter2={indexOfChapter2}
+            chapter2={chapter2}
+            onChange={params => {
+              console.log('onChange() - params: ', params);
+            }}
+            onConfirmDelete={indexOfChapter2 => {
+              console.log('onConfirmDelete() - indexOfChapter2: ', indexOfChapter2);
+            }} />
+        );
+      })}
+    </div>
 
     <SearchModal
       className="MathChapter1-textbookSearchModal"
