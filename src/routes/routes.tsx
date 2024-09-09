@@ -23,6 +23,7 @@ import MathTextbookDetailPage from '@/pages/math/MathTextbookDetailPage/MathText
 import MathChapterPage from '@/pages/math/MathChapterPage/MathChapterPage';
 import MathChapterDetailPage from '@/pages/math/MathChapterDetailPage/MathChapterDetailPage';
 import MathAchievementPage from '@/pages/math/MathAchievementPage/MathAchievementPage';
+import MathAchievementDetailPage from '@/pages/math/MathAchievementDetailPage/MathAchievementDetailPage';
 import MathKnowledgeConceptPage from '@/pages/math/MathKnowledgeConceptPage/MathKnowledgeConceptPage';
 import MathSeriesSourcePage from '@/pages/math/MathSeriesSourcePage/MathSeriesSourcePage';
 import MathInstructionPage from '@/pages/math/MathInstructionPage/MathInstructionPage';
@@ -143,6 +144,12 @@ const routes = createBrowserRouter([
               .math
               .getAchievementPath(),
             element: <MathAchievementPage />,
+          },
+          {
+            path: routePathFactory
+              .math
+              .getAchievementAddPath(),
+            element: <MathAchievementDetailPage />
           },
 
           // 수학: 지식개념

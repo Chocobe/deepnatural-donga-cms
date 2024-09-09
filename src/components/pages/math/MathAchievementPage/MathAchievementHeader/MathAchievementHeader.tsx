@@ -5,6 +5,11 @@ import {
   useCallback,
   memo,
 } from 'react';
+// router
+import { 
+  useNavigate,
+} from 'react-router-dom';
+import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathAchievementPageStore from '@/store/mathStores/mathAchievementPageStore/mathAchievementPageStore';
 // ui
@@ -20,7 +25,6 @@ import {
 import { 
   Label,
 } from '@/components/shadcn-ui/ui/label';
-// import SearchModalTrigger from '@/components/shadcn-ui-custom/searchModals/SearchModalTrigger/SearchModalTrigger';
 import CommonSelect from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect';
 import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
@@ -73,6 +77,11 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
   // state
   //
   const [accordionValue, setAccordionValue] = useState('filters');
+
+  //
+  // hook
+  //
+  const navigate = useNavigate();
 
   // FIXME: mockup
   // const [searchParams, setSearchParams] = useState({
@@ -162,8 +171,11 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
   ]);
 
   const addMathAchievement = useCallback(() => {
-    console.log('addMathAchievement()');
-  }, []);
+    navigate(routePathFactory
+      .math
+      .getAchievementAddPath()
+    );
+  }, [navigate]);
 
   //
   // cache
@@ -309,15 +321,12 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
           </Button>
         </TBUTooltip>
 
-        <TBUTooltip>
-          <Button
-            className="actionButton"
-            onClick={addMathAchievement}
-            disabled>
-            <LuPlus className="icon" />
-            Add 성취기준(대)
-          </Button>
-        </TBUTooltip>
+        <Button
+          className="actionButton"
+          onClick={addMathAchievement}>
+          <LuPlus className="icon" />
+          Add 성취기준(대)
+        </Button>
       </div>
     </div>
   );
