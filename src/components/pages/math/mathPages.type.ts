@@ -1,6 +1,5 @@
 // type
 import { 
-  mathAchievementGradeClusterMapper,
   mathCurriculumMapper,
 } from '@/apis/models/mathModel.type';
 import { 
@@ -11,6 +10,7 @@ import {
 } from '../cmsPages.type';
 import { 
   cmsClassTypeMapper,
+  cmsGradeClusterMapper,
 } from '@/apis/models/cmsCommonModel.type';
 
 //
@@ -44,12 +44,12 @@ export const mathGradeClusterOptions: {
 } = (() => {
   const commonOptions: TCommonSelectOptionItem[] = [
     {
-      text: mathAchievementGradeClusterMapper.ELECTIVE_SUBJECT,
-      value: mathAchievementGradeClusterMapper.ELECTIVE_SUBJECT,
+      text: cmsGradeClusterMapper.ELECTIVE_SUBJECT,
+      value: cmsGradeClusterMapper.ELECTIVE_SUBJECT,
     },
     {
-      text: mathAchievementGradeClusterMapper.COMMON_SUBJECT,
-      value: mathAchievementGradeClusterMapper.COMMON_SUBJECT,
+      text: cmsGradeClusterMapper.COMMON_SUBJECT,
+      value: cmsGradeClusterMapper.COMMON_SUBJECT,
     },
   ] as const;
 
@@ -57,19 +57,19 @@ export const mathGradeClusterOptions: {
     [cmsClassTypeMapper.ELEMENTARY]: [
       ...commonOptions,
       {
-        text: mathAchievementGradeClusterMapper.ELEMENTARY_3_4,
-        value: mathAchievementGradeClusterMapper.ELEMENTARY_3_4,
+        text: cmsGradeClusterMapper.ELEMENTARY_3_4,
+        value: cmsGradeClusterMapper.ELEMENTARY_3_4,
       },
       {
-        text: mathAchievementGradeClusterMapper.ELEMENTARY_5_6,
-        value: mathAchievementGradeClusterMapper.ELEMENTARY_5_6,
+        text: cmsGradeClusterMapper.ELEMENTARY_5_6,
+        value: cmsGradeClusterMapper.ELEMENTARY_5_6,
       },
     ],
     [cmsClassTypeMapper.MIDDLE]: [
       ...commonOptions,
       {
-        text: mathAchievementGradeClusterMapper.MIDDLE,
-        value: mathAchievementGradeClusterMapper.MIDDLE,
+        text: cmsGradeClusterMapper.MIDDLE,
+        value: cmsGradeClusterMapper.MIDDLE,
       },
     ],
     [cmsClassTypeMapper.HIGH]: [

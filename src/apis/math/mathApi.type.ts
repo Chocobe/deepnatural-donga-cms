@@ -6,12 +6,12 @@ import {
 import { 
   TCMSClassType,
   TCMSElementaryGrade,
+  TCMSGradeCluster,
   TCMSTerm,
   TPaginationModel,
 } from '../models/cmsCommonModel.type';
 import { 
   TMathAchievement1Model,
-  TMathAchievementGradeCluster,
   TMathChapter1Model,
   TMathKnowledgeConcept1Model,
   TMathTextbookModel,
@@ -21,6 +21,8 @@ import {
   TMathQuestionModel,
   TMathChapter2Model,
   TMathChapter3Model,
+  TMathAchievement2Model,
+  TMathAchievement3Model,
 } from '../models/mathModel.type';
 
 /**
@@ -102,14 +104,28 @@ export type TRetrieveMathAchievementsApiRequestParams = TApiRequestNonBodyParams
   achievement3?: string;
   classtype?: TCMSClassType;
   curriculum?: TMathCurriculum;
-  grade_cluster?: TMathAchievementGradeCluster;
+  grade_cluster?: TCMSGradeCluster;
   page?: number;
   search?: string;
   title?: string;
 }>;
-
 /** (GET) 수학 성취기준 목록 조회 Response */
 export type TRetrieveMathAchievementsApiResponse = TPaginationModel<TMathAchievement1Model>;
+
+/** (POST) 수학 성취 기준 생성 RequestParams */
+// FIXME: `학년(군)` 타입명에 `achievement` 지우기
+export type TProduceMathAchievementApiRequestParams = TApiRequestBodyParams<
+  void,
+  void,
+  Omit<TMathAchievement1Model, 'id' | 'achievement2_set'> & {
+    achievement2_set: Array<Omit<TMathAchievement2Model, 'id' | 'achievement3_set'> & {
+      achievement3_set: Array<Omit<TMathAchievement3Model, 'id'>>;
+    }>;
+  }
+>;
+/** (POST) 수학 성취 기준 생성 Response */
+// TODO: 차후 응답 scheme 변경 가능성 있음
+export type TProduceMathAchievementApiResponse = TPaginationModel<TMathAchievement1Model>;
 
 // --- --- --- --- --- --- --- --- --- ---
 
