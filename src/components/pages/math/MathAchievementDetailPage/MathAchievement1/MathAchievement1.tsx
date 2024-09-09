@@ -30,6 +30,8 @@ import {
 import { 
   cmsClassTypeOptions,
   cmsGradeClusterOptions,
+  TCMSClassType,
+  TCMSGradeCluster,
 } from '@/apis/models/cmsCommonModel.type';
 // util
 import extractLastString from '@/utils/extractLastString/extractLastString';
@@ -81,6 +83,32 @@ function _MathAchievement1() {
     }));
   }, [updateDetailFormState]);
 
+  const onChangeSelect = useCallback((
+    value: string,
+    id: string = ''
+  ) => {
+    const key = extractLastString(id);
+
+    if (!key) {
+      return;
+    }
+
+    updateDetailFormState(old => ({
+      ...old,
+      [key]: value,
+    }));
+  }, [updateDetailFormState]);
+
+  const onChangeClassType = useCallback((value: string) => {
+    const classtype = value as TCMSClassType;
+
+    updateDetailFormState(old => ({
+      ...old,
+      classtype,
+      grade_cluster: cmsGradeClusterOptions[classtype][0].value as TCMSGradeCluster,
+    }));
+  }, [updateDetailFormState]);
+
   //
   // cache
   //
@@ -112,16 +140,6 @@ function _MathAchievement1() {
     onChangeInput,
   ]);
 
-  const onChangeSelect = useCallback((
-    value: string,
-    id?: string
-  ) => {
-    console.group('onChangeSelect()');
-    console.log('id: ', id);
-    console.log('value: ', value);
-    console.groupEnd();
-  }, []);
-
   const rightSideFormItems = useMemo(() => [
     {
       id: 'achievement1__curriculum',
@@ -146,7 +164,7 @@ function _MathAchievement1() {
           placeholder="선택해주세요"
           options={cmsClassTypeOptions}
           value={classtype}
-          onChange={onChangeSelect} />
+          onChange={onChangeClassType} />
       ),
     },
     {
@@ -164,7 +182,7 @@ function _MathAchievement1() {
     },
   ], [
     curriculum, classtype, grade_cluster,
-    onChangeSelect,
+    onChangeSelect, onChangeClassType,
   ]);
 
   return (<>
@@ -241,6 +259,7 @@ function _MathAchievement1() {
 
     <div className="MathAchievement1-achievement2Wrapper">
       {detailFormState.achievement2_set.map((achievement2, indexOfAchievement2) => {
+        // FIXME: `<MathAchieve2 />` 구현후, 주석해제
         // return (
         //   <MathAchievement2
         //     key={`${detailFormState.achievement2_set.length}-${indexOfAchievement2}`}
@@ -248,9 +267,9 @@ function _MathAchievement1() {
         //     achievement2={achievement2} />
         // );
         return (
-          <div>
+          <div key={`${detailFormState.achievement2_set.length}-${indexOfAchievement2}`}>
             <div>
-              {achievement2.title} ({indexOfAchievement2})
+              {achievement2.title} (indexOfAchievement2: {indexOfAchievement2})
             </div>
           </div>
         );

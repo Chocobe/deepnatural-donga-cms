@@ -1,5 +1,6 @@
 // ui
 import MathAchievementDetailHeader from '@/components/pages/math/MathAchievementDetailPage/MathAchievementDetailHeader/MathAchievementDetailHeader';
+import MathAchievement1 from '@/components/pages/math/MathAchievementDetailPage/MathAchievement1/MathAchievement1';
 // style
 import './MathAchievementDetailPage.css';
 
@@ -13,7 +14,7 @@ function MathAchievementDetailPage() {
       <div className="MathAchievementDetailPage-divider" />
 
       <div className="MathAchievementDetailPage-main">
-        Actions
+        <MathAchievement1 />
       </div>
 
       <div className="MathAchievementDetailPage-divider" />
