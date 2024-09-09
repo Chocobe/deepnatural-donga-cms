@@ -39,12 +39,10 @@ import {
 } from '@/apis/models/mathModel.type';
 import { 
   cmsClassTypeMapper,
-} from '@/apis/models/cmsCommonModel.type';
-import { 
   cmsClassTypeOptions,
   cmsGradeOptions,
   cmsTermOptions,
-} from '@/components/pages/cmsPages.type';
+} from '@/apis/models/cmsCommonModel.type';
 // util
 import { 
   TABLE_ROW_SELECTION_CHECKBOX_ID,

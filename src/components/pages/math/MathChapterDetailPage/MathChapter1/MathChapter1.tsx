@@ -35,11 +35,6 @@ import {
 } from 'react-icons/lu';
 // type
 import { 
-  cmsClassTypeOptions,
-  cmsGradeOptions,
-  cmsTermOptions,
-} from '@/components/pages/cmsPages.type';
-import { 
   TMathTextbookModel,
 } from '@/apis/models/mathModel.type';
 import { 
@@ -47,6 +42,9 @@ import {
 } from './MathChapter1.type';
 import { 
   cmsClassTypeMapper,
+  cmsClassTypeOptions,
+  cmsGradeOptions,
+  cmsTermOptions,
 } from '@/apis/models/cmsCommonModel.type';
 // util
 import extractLastString from '@/utils/extractLastString/extractLastString';

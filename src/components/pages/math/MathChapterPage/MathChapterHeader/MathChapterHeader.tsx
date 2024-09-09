@@ -44,12 +44,10 @@ import {
   TMathTextbookModel,
 } from '@/apis/models/mathModel.type';
 import { 
+  cmsClassTypeMapper,
   cmsClassTypeOptions,
   cmsGradeOptions,
   cmsTermOptions,
-} from '@/components/pages/cmsPages.type';
-import { 
-  cmsClassTypeMapper,
 } from '@/apis/models/cmsCommonModel.type';
 import { 
   mathQuestionHeaderTextbookSearchTypeOptions,

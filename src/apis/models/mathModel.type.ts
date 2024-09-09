@@ -6,6 +6,7 @@
 
 // type
 import { 
+  SELECT_OPTION_ITEM_ALL,
   cmsClassTypeMapper,
   // cmsSubjectMapper,
   TCMSClassType,
@@ -20,9 +21,6 @@ import {
 import { 
   TCommonSelectOptionItem,
 } from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect.type';
-import { 
-  SELECT_OPTION_ITEM_ALL,
-} from '@/components/pages/cmsPages.type';
 
 /** 수학 커리큘럼 */
 export const mathCurriculumMapper = {

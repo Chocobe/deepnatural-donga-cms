@@ -40,14 +40,6 @@ import {
 } from '@/utils/flatModels/flatMathModels';
 // type
 import { 
-  cmsClassTypeFilterOptions,
-  cmsClassTypeOptions,
-  cmsGradeFilterOptions,
-  cmsGradeOptions,
-  cmsTermFilterOptions,
-  cmsTermOptions,
-} from '@/components/pages/cmsPages.type';
-import { 
   mathQuestionHeaderSeriesSearchTypeOptions,
   mathQuestionHeaderTextbookSearchTypeOptions,
 } from './MathQuestionHeader.type';
@@ -58,6 +50,12 @@ import {
 } from '@/apis/models/mathModel.type';
 import { 
   cmsClassTypeMapper,
+  cmsClassTypeFilterOptions,
+  cmsClassTypeOptions,
+  cmsGradeFilterOptions,
+  cmsGradeOptions,
+  cmsTermFilterOptions,
+  cmsTermOptions,
 } from '@/apis/models/cmsCommonModel.type';
 // style
 import { 

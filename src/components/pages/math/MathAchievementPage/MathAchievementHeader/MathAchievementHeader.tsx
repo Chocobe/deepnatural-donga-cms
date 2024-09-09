@@ -35,9 +35,6 @@ import {
 } from 'react-icons/lu';
 // type
 import { 
-  cmsClassTypeFilterOptions,
-} from '@/components/pages/cmsPages.type';
-import { 
   TRetrieveMathAchievementsApiRequestParams,
 } from '@/apis/math/mathApi.type';
 import { 
@@ -45,6 +42,7 @@ import {
   TMathCurriculum,
 } from '@/apis/models/mathModel.type';
 import {
+  cmsClassTypeFilterOptions,
   cmsGradeClusterFilterOptions,
   TCMSClassType,
   TCMSGradeCluster,

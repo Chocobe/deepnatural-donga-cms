@@ -47,7 +47,7 @@ import {
   cmsClassTypeOptions,
   cmsGradeOptions,
   cmsTermOptions,
-} from '@/components/pages/cmsPages.type';
+} from '@/apis/models/cmsCommonModel.type';
 import { 
   mathInstructionHeaderSeriesSearchTypeOptions,
 } from './MathInstructionHeader.type';

@@ -30,7 +30,7 @@ import {
   cmsClassTypeFilterOptions,
   cmsGradeFilterOptions,
   cmsTermFilterOptions,
-} from '@/components/pages/cmsPages.type';
+} from '@/apis/models/cmsCommonModel.type';
 import { 
   mathCurriculumFilterOptions,
 } from '@/apis/models/mathModel.type';

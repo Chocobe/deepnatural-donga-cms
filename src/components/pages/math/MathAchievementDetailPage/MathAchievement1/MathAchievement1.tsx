@@ -25,12 +25,10 @@ import {
 } from 'react-icons/lu';
 // type
 import { 
-  cmsClassTypeOptions,
-} from '@/components/pages/cmsPages.type';
-import { 
   mathCurriculumOptions,
 } from '@/apis/models/mathModel.type';
 import { 
+  cmsClassTypeOptions,
   cmsGradeClusterOptions,
 } from '@/apis/models/cmsCommonModel.type';
 // util

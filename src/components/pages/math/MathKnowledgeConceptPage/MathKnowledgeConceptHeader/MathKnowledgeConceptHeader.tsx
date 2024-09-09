@@ -41,7 +41,8 @@ import {
 // type
 import { 
   cmsClassTypeFilterOptions,
-} from '@/components/pages/cmsPages.type';
+} from '@/apis/models/cmsCommonModel.type';
+
 import { 
   cmsGradeClusterFilterOptions,
 } from '@/apis/models/cmsCommonModel.type';

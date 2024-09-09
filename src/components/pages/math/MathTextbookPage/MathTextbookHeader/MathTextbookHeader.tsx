@@ -38,8 +38,6 @@ import {
   cmsTermFilterOptions,
   cmsGradeFilterOptions,
   cmsClassTypeFilterOptions,
-} from '@/components/pages/cmsPages.type';
-import { 
   TCMSClassType,
   TCMSElementaryGrade,
   TCMSTerm,
