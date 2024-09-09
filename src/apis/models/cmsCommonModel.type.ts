@@ -85,6 +85,18 @@ export const cmsGradeTemplate = Object
   });
 
 /**
+ * 학년(군)
+ */
+export const cmsGradeClusterMapper = {
+  ELECTIVE_SUBJECT: '선택과목',
+  COMMON_SUBJECT: '공통과목',
+  ELEMENTARY_3_4: '초3~4',
+  ELEMENTARY_5_6: '초5~6',
+  MIDDLE: '중1~3',
+} as const;
+export type TCMSGradeCluster = typeof cmsGradeClusterMapper[keyof typeof cmsGradeClusterMapper];
+
+/**
  * 학기
  */
 export const cmsTermMapper = {

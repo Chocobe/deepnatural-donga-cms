@@ -11,6 +11,7 @@ import {
   TCMSClassType,
   TCMSDifficulty,
   TCMSElementaryGrade,
+  TCMSGradeCluster,
   TCMSMiddleHighGrade,
   TCmsSourceType,
   TCMSSubject,
@@ -120,16 +121,6 @@ export type TMathChapterFlattenModel = {
 /**
  * Math Achievement (수학 성취기준)
  */
-/** 수학 성취기준 학년(군) 값 */
-export const mathAchievementGradeClusterMapper = {
-  ELECTIVE_SUBJECT: '선택과목',
-  COMMON_SUBJECT: '공통과목',
-  ELEMENTARY_3_4: '초3~4',
-  ELEMENTARY_5_6: '초5~6',
-  MIDDLE: '중1~3',
-} as const;
-export type TMathAchievementGradeCluster = typeof mathAchievementGradeClusterMapper[keyof typeof mathAchievementGradeClusterMapper];
-
 /** 수학 성취기준 공통 속성 */
 export type TMathAchievementCommonModel = {
   id: number;
@@ -151,7 +142,7 @@ export type TMathAchievement2Model = TMathAchievementCommonModel & {
 export type TMathAchievement1Model = TMathAchievementCommonModel & {
   curriculum: TMathCurriculum;
   classtype: TCMSClassType;
-  grade_cluster: TMathAchievementGradeCluster;
+  grade_cluster: TCMSGradeCluster;
   achievement2_set: TMathAchievement2Model[];
 };
 
@@ -186,7 +177,7 @@ export type TMathKnowledgeConcept2Model = TMathKnowledgeConceptCommonModel & {
         title: string;
         curriculum: TMathCurriculum;
         classtype: TCMSClassType;
-        grade_cluster: TMathAchievementGradeCluster;
+        grade_cluster: TCMSGradeCluster;
       };
     };
   };

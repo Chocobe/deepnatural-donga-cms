@@ -45,11 +45,11 @@ import {
   TRetrieveMathAchievementsApiRequestParams,
 } from '@/apis/math/mathApi.type';
 import { 
-  TMathAchievementGradeCluster, 
   TMathCurriculum,
 } from '@/apis/models/mathModel.type';
-import { 
+import {
   TCMSClassType,
+  TCMSGradeCluster,
 } from '@/apis/models/cmsCommonModel.type';
 // style
 import { 
@@ -151,7 +151,7 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
   const onChangeGradeCluster = useCallback((gradeCluster: string) => {
     updateSearchParamsForRetrieveMathAchievementsApi(old => {
       const _gradeCluster = gradeCluster.trim().length
-        ? gradeCluster as TMathAchievementGradeCluster
+        ? gradeCluster as TCMSGradeCluster
         : undefined;
 
       const params: TRetrieveMathAchievementsApiRequestParams = {
