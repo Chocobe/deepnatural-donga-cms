@@ -1,0 +1,17 @@
+.MathAchievementDetailFooter {
+  @apply flex justify-between gap-5;
+
+  &-leftSide,
+  &-rightSide {
+    @apply flex items-center gap-2.5;
+
+    .button {
+      @apply flex items-center gap-2;
+
+      .icon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}

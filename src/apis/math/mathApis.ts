@@ -23,9 +23,6 @@ import {
   TDeleteMathTextbookApiRequestParams,
   TDeleteMathTextbookApiResponse,
 
-  TRetrieveMathAchievementsApiRequestParams,
-  TRetrieveMathAchievementsApiResponse,
-
   TRetrieveMathKnowledgeConceptsApiRequestParams,
   TRetrieveMathKnowledgeConceptsApiResponse,
 
@@ -44,6 +41,13 @@ import {
 
   TProduceMathChapterApiRequestParams,
   TProduceMathChapterApiResponse,
+} from './mathApi.type';
+import {
+  TRetrieveMathAchievementsApiRequestParams,
+  TRetrieveMathAchievementsApiResponse,
+
+  TProduceMathAchievementApiRequestParams,
+  TProduceMathAchievementApiResponse,
 } from './mathApi.type';
 
 // FIXME: mockup
@@ -230,6 +234,26 @@ export const retrieveMathAchievementsApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .retrieveMathAchievements,
+});
+
+//
+// (POST) 수학 성취기준 생성
+//
+export const produceMathAchievementApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathAchievementApiRequestParams) => {
+    const {
+      payload,
+    } = excludeNullOrUndefinedProperties(params);
+
+    return api.post<TProduceMathAchievementApiResponse>(
+      mathApiUrlFactory.produceMathAchievementPath(),
+      payload
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathAchievement,
 });
 
 // --- --- --- --- --- --- --- --- --- ---
