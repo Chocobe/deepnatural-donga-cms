@@ -1,0 +1,77 @@
+.MathAchievement1 {
+  /*  */
+
+  &-accordionItem {
+    border: none;
+
+    padding-bottom: 100px;
+
+    .trigger {
+      @apply flex justify-between items-center gap-5;
+
+      padding: 16px !important;
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      color: #09090B;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 700;
+
+      .icon {
+        width: 16px;
+        height: 16px;
+
+        transition: all 0.28s ease;
+
+        color: #8E8E8E;
+
+        &.open {
+          transform: rotate(-180deg);
+        }
+      }
+    }
+
+    .formBody {
+      @apply flex flex-wrap gap-y-5 gap-x-[120px];
+
+      padding: 4px 16px;
+
+      width: 100%;
+
+      &-leftSide,
+      &-rightSide {
+        @apply flex flex-col gap-5;
+
+        max-width: 100%;
+
+        .formItem {
+          @apply flex items-center gap-1;
+
+          max-width: 100%;
+
+          .label {
+            flex-shrink: 0;
+            width: 123px;
+
+            color: #09090B;
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 500;
+          }
+
+          .editor {
+            flex-shrink: 1;
+            width: 424px;
+          }
+        }
+      }
+    }
+  }
+
+  &-achievement2Wrapper {
+    /*  */
+  }
+}

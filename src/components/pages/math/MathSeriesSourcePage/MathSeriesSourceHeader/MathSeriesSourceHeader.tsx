@@ -30,10 +30,10 @@ import {
   cmsClassTypeFilterOptions,
   cmsGradeFilterOptions,
   cmsTermFilterOptions,
-} from '@/components/pages/cmsPages.type';
+} from '@/apis/models/cmsCommonModel.type';
 import { 
   mathCurriculumFilterOptions,
-} from '../../mathPages.type';
+} from '@/apis/models/mathModel.type';
 // style
 import { 
   cn,

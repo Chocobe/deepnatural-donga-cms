@@ -16,18 +16,16 @@ import {
 } from '@/components/shadcn-ui/ui/input';
 // type
 import { 
-  cmsClassTypeOptions,
-  cmsGradeOptions,
-  cmsTermOptions,
-} from '@/components/pages/cmsPages.type';
-import { 
   mathCurriculumOptions,
-} from '../../mathPages.type';
+} from '@/apis/models/mathModel.type';
 import { 
   TMathTextbookModel, 
   TMathCurriculum,
 } from '@/apis/models/mathModel.type';
 import { 
+  cmsClassTypeOptions,
+  cmsGradeOptions,
+  cmsTermOptions,
   cmsElementaryGradeMapper,
   TCMSClassType,
   TCMSMiddleHighGrade,

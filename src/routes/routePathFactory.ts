@@ -38,12 +38,15 @@ const routePathFactory = {
       return `${this.getMathRootPath()}/chapter` as const;
     },
     getChapterAddPath() {
-      return `${this.getChapterPath()}/add` as string;
+      return `${this.getChapterPath()}/add` as const;
     },
 
     // 성취기준
     getAchievementPath() {
       return `${this.getMathRootPath()}/achievement` as const;
+    },
+    getAchievementAddPath() {
+      return `${this.getAchievementPath()}/add` as const;
     },
 
     // 지식개념

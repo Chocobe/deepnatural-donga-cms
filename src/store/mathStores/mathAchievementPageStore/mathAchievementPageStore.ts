@@ -49,6 +49,30 @@ const useMathAchievementPageStore = create(devtools<TMathAchievementPageStore>((
     }), false, 'setMathAchievementsData');
   },
 
+  clearDetailTargetMathAchievement: () => {
+    set(old => ({
+      ...old,
+      detailTargetAchievement: undefined,
+      detailFormState: initialMathAchievementPageStoreState.detailFormState,
+    }), false, 'clearDetailTargetMathAchievement');
+  },
+  setDetailTargetMathAchievement: detailTargetAchievement => {
+    set(old => ({
+      ...old,
+      detailTargetAchievement,
+      detailFormState: detailTargetAchievement,
+    }), false, 'setDetailTargetMathAchievement');
+  },
+  updateDetailFormState: callback => {
+    set(old => ({
+      ...old,
+      detailFormState: {
+        ...old.detailFormState,
+        ...callback(old.detailFormState),
+      },
+    }), false, 'updateDetailFormState');
+  },
+
   clearSelectedMathAchievements: () => {
     set(old => ({
       ...old,

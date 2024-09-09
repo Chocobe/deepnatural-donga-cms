@@ -45,8 +45,6 @@ import {
 } from '@/apis/models/mathModel.type';
 import { 
   cmsDifficultyTemplate,
-} from '@/components/pages/cmsPages.type';
-import { 
   cmsGradeTemplate, 
   cmsTermTemplate,
 } from '@/apis/models/cmsCommonModel.type';

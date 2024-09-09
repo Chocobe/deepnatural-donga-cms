@@ -4,6 +4,16 @@
 //
 // --- --- --- --- --- --- --- --- --- ---
 
+// type
+import { 
+  TCommonSelectOptionItem,
+} from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect.type';
+
+export const SELECT_OPTION_ITEM_ALL: TCommonSelectOptionItem = {
+  text: 'All',
+  value: ' ',
+} as const;
+
 /**
  * 페이지네이션
  */
@@ -42,6 +52,28 @@ export const cmsClassTypeMapper = {
   HIGH: '고등',
 } as const;
 export type TCMSClassType = typeof cmsClassTypeMapper[keyof typeof cmsClassTypeMapper];
+
+export const cmsClassTypeOptions: TCommonSelectOptionItem[] = [
+  {
+    text: '초등학교',
+    value: cmsClassTypeMapper.ELEMENTARY,
+  },
+  {
+    text: '중학교',
+    value: cmsClassTypeMapper.MIDDLE,
+  },
+  {
+    text: '고등학교',
+    value: cmsClassTypeMapper.HIGH,
+  },
+] as const;
+
+export const cmsClassTypeFilterOptions: TCommonSelectOptionItem[] = [
+  {
+    ...SELECT_OPTION_ITEM_ALL,
+  },
+  ...cmsClassTypeOptions,
+] as const;
 
 /** 
  * 학년 - 초등 
@@ -84,6 +116,149 @@ export const cmsGradeTemplate = Object
     [grade: string]: string;
   });
 
+export const cmsGradeOptions: {
+  [cmsClassTypeMapper.ELEMENTARY]: TCommonSelectOptionItem[];
+  [cmsClassTypeMapper.MIDDLE]: TCommonSelectOptionItem[];
+  [cmsClassTypeMapper.HIGH]: TCommonSelectOptionItem[];
+} = {
+  [cmsClassTypeMapper.ELEMENTARY]: Object
+    .values(cmsElementaryGradeMapper)
+    .sort((a, b) => a - b > 0 ? 1 : -1)
+    .map(grade => ({
+      text: grade === cmsElementaryGradeMapper.COMMON
+        ? '공통'
+        : `${grade}학년`,
+      value: String(grade),
+    })),
+  [cmsClassTypeMapper.MIDDLE]: Object
+    .values(cmsMiddleHighGradeMapper)
+    .sort((a, b) => a - b > 0 ? 1 : -1)
+    .map(grade => ({
+      text: grade === cmsMiddleHighGradeMapper.COMMON
+        ? '공통'
+        : `${grade}학년`,
+      value: String(grade),
+    })),
+  [cmsClassTypeMapper.HIGH]: Object
+    .values(cmsMiddleHighGradeMapper)
+    .sort((a, b) => a - b > 0 ? 1 : -1)
+    .map(grade => ({
+      text: grade === cmsMiddleHighGradeMapper.COMMON
+        ? '공통'
+        : `${grade}학년`,
+      value: String(grade),
+    })),
+} as const;
+
+export const cmsGradeFilterOptions: typeof cmsGradeOptions & {
+  [' ']: TCommonSelectOptionItem[];
+} = {
+  [' ']: [
+    {
+      ...SELECT_OPTION_ITEM_ALL,
+    },
+  ],
+  [cmsClassTypeMapper.ELEMENTARY]: [
+    {
+      ...SELECT_OPTION_ITEM_ALL,
+    },
+    ...cmsGradeOptions[cmsClassTypeMapper.ELEMENTARY]
+  ],
+  [cmsClassTypeMapper.MIDDLE]: [
+    {
+      ...SELECT_OPTION_ITEM_ALL,
+    },
+    ...cmsGradeOptions[cmsClassTypeMapper.MIDDLE],
+  ],
+  [cmsClassTypeMapper.HIGH]: [
+    {
+      ...SELECT_OPTION_ITEM_ALL,
+    },
+    ...cmsGradeOptions[cmsClassTypeMapper.HIGH],
+  ],
+} as const;
+
+/**
+ * 학년(군)
+ */
+export const cmsGradeClusterMapper = {
+  ELECTIVE_SUBJECT: '선택과목',
+  COMMON_SUBJECT: '공통과목',
+  ELEMENTARY_3_4: '초3~4',
+  ELEMENTARY_5_6: '초5~6',
+  MIDDLE: '중1~3',
+} as const;
+export type TCMSGradeCluster = typeof cmsGradeClusterMapper[keyof typeof cmsGradeClusterMapper];
+
+export const cmsGradeClusterOptions: {
+  [cmsClassTypeMapper.ELEMENTARY]: TCommonSelectOptionItem[];
+  [cmsClassTypeMapper.MIDDLE]: TCommonSelectOptionItem[];
+  [cmsClassTypeMapper.HIGH]: TCommonSelectOptionItem[];
+} = (() => {
+  const commonOptions: TCommonSelectOptionItem[] = [
+    {
+      text: cmsGradeClusterMapper.ELECTIVE_SUBJECT,
+      value: cmsGradeClusterMapper.ELECTIVE_SUBJECT,
+    },
+    {
+      text: cmsGradeClusterMapper.COMMON_SUBJECT,
+      value: cmsGradeClusterMapper.COMMON_SUBJECT,
+    },
+  ] as const;
+
+  return {
+    [cmsClassTypeMapper.ELEMENTARY]: [
+      ...commonOptions,
+      {
+        text: cmsGradeClusterMapper.ELEMENTARY_3_4,
+        value: cmsGradeClusterMapper.ELEMENTARY_3_4,
+      },
+      {
+        text: cmsGradeClusterMapper.ELEMENTARY_5_6,
+        value: cmsGradeClusterMapper.ELEMENTARY_5_6,
+      },
+    ],
+    [cmsClassTypeMapper.MIDDLE]: [
+      ...commonOptions,
+      {
+        text: cmsGradeClusterMapper.MIDDLE,
+        value: cmsGradeClusterMapper.MIDDLE,
+      },
+    ],
+    [cmsClassTypeMapper.HIGH]: [
+      ...commonOptions,
+    ],
+  } as const;
+})();
+
+export const cmsGradeClusterFilterOptions: typeof cmsGradeClusterOptions & {
+  [' ']: TCommonSelectOptionItem[];
+} = {
+  [' ']: [
+    {
+      ...SELECT_OPTION_ITEM_ALL,
+    },
+  ],
+  [cmsClassTypeMapper.ELEMENTARY]: [
+    {
+      ...SELECT_OPTION_ITEM_ALL,
+    },
+    ...cmsGradeClusterOptions[cmsClassTypeMapper.ELEMENTARY],
+  ],
+  [cmsClassTypeMapper.MIDDLE]: [
+    {
+      ...SELECT_OPTION_ITEM_ALL,
+    },
+    ...cmsGradeClusterOptions[cmsClassTypeMapper.MIDDLE],
+  ],
+  [cmsClassTypeMapper.HIGH]: [
+    {
+      ...SELECT_OPTION_ITEM_ALL,
+    },
+    ...cmsGradeClusterOptions[cmsClassTypeMapper.HIGH],
+  ],
+} as const;
+
 /**
  * 학기
  */
@@ -109,6 +284,23 @@ export const cmsTermTemplate = Object
   }, {} as {
     [term: string]: string;
   });
+
+export const cmsTermOptions: TCommonSelectOptionItem[] = Object
+  .values(cmsTermMapper)
+  .sort((a, b) => a - b > 0 ? 1 : -1)
+  .map(term => ({
+    text: term === cmsTermMapper.COMMON
+      ? '공통'
+      : `${term}학기`,
+    value: String(term),
+  }));
+
+export const cmsTermFilterOptions: TCommonSelectOptionItem[] = [
+  {
+    ...SELECT_OPTION_ITEM_ALL,
+  },
+  ...cmsTermOptions,
+] as const;
 
 /**
  * 출처 분류
@@ -157,3 +349,11 @@ export const cmsDifficultyMapper = {
   '5': 5,
 } as const;
 export type TCMSDifficulty = typeof cmsDifficultyMapper[keyof typeof cmsDifficultyMapper];
+
+export const cmsDifficultyTemplate = {
+  [cmsDifficultyMapper[1]]: '최하',
+  [cmsDifficultyMapper[2]]: '하',
+  [cmsDifficultyMapper[3]]: '중',
+  [cmsDifficultyMapper[4]]: '상',
+  [cmsDifficultyMapper[5]]: '최상',
+} as const;

@@ -61,7 +61,7 @@ const mathApiUrlFactory = (() => {
 
     /** (POST) 수학 단원 생성 */
     produceMathChapterPath() {
-      return `${BASE_PATH}chapters/`;
+      return this.retrieveMathChaptersPath();
     },
   };
 
@@ -72,6 +72,11 @@ const mathApiUrlFactory = (() => {
     /** (GET) 수학 성취기준 목록 */
     retrieveMathAchievementsPath() {
       return `${BASE_PATH}achievements/`;
+    },
+
+    /** (POST) 수학 성취기준 생성 */
+    produceMathAchievementPath() {
+      return this.retrieveMathAchievementsPath();
     },
   };
 

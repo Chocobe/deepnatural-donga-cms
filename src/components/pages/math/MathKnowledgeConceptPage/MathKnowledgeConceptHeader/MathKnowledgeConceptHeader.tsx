@@ -41,11 +41,11 @@ import {
 // type
 import { 
   cmsClassTypeFilterOptions,
-} from '@/components/pages/cmsPages.type';
+} from '@/apis/models/cmsCommonModel.type';
+
 import { 
-  mathCurriculumFilterOptions, 
-  mathGradeClusterFilterOptions,
-} from '../../mathPages.type';
+  cmsGradeClusterFilterOptions,
+} from '@/apis/models/cmsCommonModel.type';
 // util
 import { 
   flatMathAchievementModel,
@@ -55,6 +55,7 @@ import {
   mathKnowledgeConceptHeaderAchievementSearchTypeOptions,
 } from './MathKnowledgeConceptHeader.type';
 import { 
+  mathCurriculumFilterOptions,
   TMathAchievementFlattenModel,
 } from '@/apis/models/mathModel.type';
 // style
@@ -180,7 +181,7 @@ function _MathKnowledgeConceptHeader() {
           <CommonSelect
             id="grade_cluster"
             className="editor"
-            options={mathGradeClusterFilterOptions['초등']}
+            options={cmsGradeClusterFilterOptions['초등']}
             value={''}
             onChange={onChangeGradeCluster} />
         </TBUTooltip>

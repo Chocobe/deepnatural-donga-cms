@@ -40,26 +40,22 @@ import {
 } from '@/utils/flatModels/flatMathModels';
 // type
 import { 
-  mathCurriculumFilterOptions,
-} from '../../mathPages.type';
+  mathQuestionHeaderSeriesSearchTypeOptions,
+  mathQuestionHeaderTextbookSearchTypeOptions,
+} from './MathQuestionHeader.type';
 import { 
+  mathCurriculumFilterOptions,
+  TMathSeriesSourceFlattenModel, 
+  TMathTextbookModel,
+} from '@/apis/models/mathModel.type';
+import { 
+  cmsClassTypeMapper,
   cmsClassTypeFilterOptions,
   cmsClassTypeOptions,
   cmsGradeFilterOptions,
   cmsGradeOptions,
   cmsTermFilterOptions,
   cmsTermOptions,
-} from '@/components/pages/cmsPages.type';
-import { 
-  mathQuestionHeaderSeriesSearchTypeOptions,
-  mathQuestionHeaderTextbookSearchTypeOptions,
-} from './MathQuestionHeader.type';
-import { 
-  TMathSeriesSourceFlattenModel, 
-  TMathTextbookModel,
-} from '@/apis/models/mathModel.type';
-import { 
-  cmsClassTypeMapper,
 } from '@/apis/models/cmsCommonModel.type';
 // style
 import { 

@@ -40,7 +40,7 @@ import {
   cmsClassTypeOptions,
   cmsGradeOptions,
   cmsTermOptions,
-} from '@/components/pages/cmsPages.type';
+} from '@/apis/models/cmsCommonModel.type';
 // util
 import { 
   flatMathSeriesModel,
