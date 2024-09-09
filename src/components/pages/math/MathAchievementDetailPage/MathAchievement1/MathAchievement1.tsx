@@ -88,7 +88,7 @@ function _MathAchievement1() {
     value: string,
     id: string = ''
   ) => {
-    const key = extractLastString(id);
+    const key = extractLastString(id, '__');
 
     if (!key) {
       return;
