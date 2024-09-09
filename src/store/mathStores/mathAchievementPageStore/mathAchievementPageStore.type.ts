@@ -78,8 +78,8 @@ export const initialMathAchievementPageStoreState: TMathAchievementPageStoreStat
   detailTargetAchievement: undefined,
   detailFormState: {
     id: undefined,
-    no: '성취기준 번호',
-    title: '성취기준 제목',
+    no: '',
+    title: '',
     classtype: cmsClassTypeMapper.ELEMENTARY,
     curriculum: mathCurriculumMapper[2015],
     grade_cluster: cmsGradeClusterMapper.ELEMENTARY_3_4,

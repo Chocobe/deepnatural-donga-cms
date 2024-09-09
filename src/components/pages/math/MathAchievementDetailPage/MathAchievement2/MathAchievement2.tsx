@@ -26,6 +26,7 @@ import {
 import { 
   Checkbox,
 } from '@/components/shadcn-ui/ui/checkbox';
+import MathAchievement3 from '../MathAchievement3/MathAchievement3';
 // icon
 import { 
   LuPlus,
@@ -92,24 +93,23 @@ function _MathAchievement2(props: TMathAchievement2Props) {
     setIsChecked(isChecked => !isChecked);
   }, []);
 
-  // FIXME: `<MathAchieve3 />` 구현후, 주석해제
-  // const onChangeAchievement3IsChecked = useCallback((params: {
-  //   indexOfAchievement3: number;
-  //   isChecked: boolean;
-  // }) => {
-  //   const {
-  //     indexOfAchievement3,
-  //     isChecked,
-  //   } = params;
+  const onChangeAchievement3IsChecked = useCallback((params: {
+    indexOfAchievement3: number;
+    isChecked: boolean;
+  }) => {
+    const {
+      indexOfAchievement3,
+      isChecked,
+    } = params;
 
-  //   const indexOfAchievement3Set = indexOfAchievement3SetRef.current;
+    const indexOfAchievement3Set = indexOfAchievement3SetRef.current;
 
-  //   if (isChecked) {
-  //     indexOfAchievement3Set.add(indexOfAchievement3);
-  //   } else {
-  //     indexOfAchievement3Set.delete(indexOfAchievement3);
-  //   }
-  // }, []);
+    if (isChecked) {
+      indexOfAchievement3Set.add(indexOfAchievement3);
+    } else {
+      indexOfAchievement3Set.delete(indexOfAchievement3);
+    }
+  }, []);
 
   const onConfirmDelete = useCallback(() => {
     if (isChecked) {
@@ -374,18 +374,12 @@ function _MathAchievement2(props: TMathAchievement2Props) {
             {!!achievement2.achievement3_set.length && (
               <div className="list">
                 {achievement2.achievement3_set.map((achievement3, indexOfAchievement3) => (
-                  // FIXME: `<MathAchieve3 />` 구현후, 주석해제
-                  // <MathAchievement3
-                  //   key={`${achievement2.achievement3_set.length}-${indexOfAchievement3}`}
-                  //   indexOfChapter2={indexOfAchievement2}
-                  //   indexOfChapter3={indexOfAchievement3}
-                  //   achievement3={achievement3}
-                  //   onChangeAchievement3IsChecked={onChangeAchievement3IsChecked} />
-                  <div key={`${achievement2.achievement3_set.length}-${indexOfAchievement3}`}>
-                    <div>
-                      {achievement3.title} (indexOfAchievement3: {indexOfAchievement3})
-                    </div>
-                  </div>
+                  <MathAchievement3
+                    key={`${achievement2.achievement3_set.length}-${indexOfAchievement3}`}
+                    indexOfAchievement2={indexOfAchievement2}
+                    indexOfAchievement3={indexOfAchievement3}
+                    achievement3={achievement3}
+                    onChangeAchievement3IsChecked={onChangeAchievement3IsChecked} />
                 ))}
               </div>
             )}
