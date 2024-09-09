@@ -22,7 +22,7 @@ import {
 } from '@/components/pages/cmsPages.type';
 import { 
   mathCurriculumOptions,
-} from '../../mathPages.type';
+} from '@/apis/models/mathModel.type';
 import { 
   TMathTextbookModel, 
   TMathCurriculum,

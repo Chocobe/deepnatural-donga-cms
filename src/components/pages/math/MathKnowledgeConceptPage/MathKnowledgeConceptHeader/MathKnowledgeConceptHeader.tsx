@@ -43,9 +43,6 @@ import {
   cmsClassTypeFilterOptions,
 } from '@/components/pages/cmsPages.type';
 import { 
-  mathCurriculumFilterOptions, 
-} from '../../mathPages.type';
-import { 
   cmsGradeClusterFilterOptions,
 } from '@/apis/models/cmsCommonModel.type';
 // util
@@ -57,6 +54,7 @@ import {
   mathKnowledgeConceptHeaderAchievementSearchTypeOptions,
 } from './MathKnowledgeConceptHeader.type';
 import { 
+  mathCurriculumFilterOptions,
   TMathAchievementFlattenModel,
 } from '@/apis/models/mathModel.type';
 // style

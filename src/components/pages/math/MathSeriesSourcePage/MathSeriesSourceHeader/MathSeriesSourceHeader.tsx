@@ -33,7 +33,7 @@ import {
 } from '@/components/pages/cmsPages.type';
 import { 
   mathCurriculumFilterOptions,
-} from '../../mathPages.type';
+} from '@/apis/models/mathModel.type';
 // style
 import { 
   cn,

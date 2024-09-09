@@ -17,17 +17,41 @@ import {
   TCMSSubject,
   TCMSTerm,
 } from './cmsCommonModel.type';
+import { 
+  TCommonSelectOptionItem,
+} from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect.type';
+import { 
+  SELECT_OPTION_ITEM_ALL,
+} from '@/components/pages/cmsPages.type';
 
-/**
- * Math Textbook (수학 교과서)
- */
-/** Math Textbook (수학 교과서) - 커리큘럼 */
+/** 수학 커리큘럼 */
 export const mathCurriculumMapper = {
   '2015': '2015',
   '2022': '2022',
 } as const;
 export type TMathCurriculum = typeof mathCurriculumMapper[keyof typeof mathCurriculumMapper];
 
+export const mathCurriculumOptions: TCommonSelectOptionItem[] = [
+  {
+    text: mathCurriculumMapper[2015],
+    value: mathCurriculumMapper[2015],
+  },
+  {
+    text: mathCurriculumMapper[2022],
+    value: mathCurriculumMapper[2022],
+  },
+] as const;
+
+export const mathCurriculumFilterOptions: TCommonSelectOptionItem[] = [
+  {
+    ...SELECT_OPTION_ITEM_ALL,
+  },
+  ...mathCurriculumOptions,
+] as const;
+
+/**
+ * Math Textbook (수학 교과서)
+ */
 type TMathTextbookGenericModel<TClassType extends TCMSClassType> = {
   id: number;
   // TODO: 아직 API 미지원 속성

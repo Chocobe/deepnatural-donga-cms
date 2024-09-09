@@ -38,12 +38,10 @@ import {
   cmsClassTypeFilterOptions,
 } from '@/components/pages/cmsPages.type';
 import { 
-  mathCurriculumFilterOptions,
-} from '../../mathPages.type';
-import { 
   TRetrieveMathAchievementsApiRequestParams,
 } from '@/apis/math/mathApi.type';
 import { 
+  mathCurriculumFilterOptions,
   TMathCurriculum,
 } from '@/apis/models/mathModel.type';
 import {

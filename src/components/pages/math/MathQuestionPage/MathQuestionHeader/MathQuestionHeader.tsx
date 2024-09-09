@@ -40,9 +40,6 @@ import {
 } from '@/utils/flatModels/flatMathModels';
 // type
 import { 
-  mathCurriculumFilterOptions,
-} from '../../mathPages.type';
-import { 
   cmsClassTypeFilterOptions,
   cmsClassTypeOptions,
   cmsGradeFilterOptions,
@@ -55,6 +52,7 @@ import {
   mathQuestionHeaderTextbookSearchTypeOptions,
 } from './MathQuestionHeader.type';
 import { 
+  mathCurriculumFilterOptions,
   TMathSeriesSourceFlattenModel, 
   TMathTextbookModel,
 } from '@/apis/models/mathModel.type';
