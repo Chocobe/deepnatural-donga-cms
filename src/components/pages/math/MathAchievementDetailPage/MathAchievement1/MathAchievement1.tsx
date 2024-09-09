@@ -19,6 +19,7 @@ import {
   Input,
 } from '@/components/shadcn-ui/ui/input';
 import CommonSelect from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect';
+import MathAchievement2 from '../MathAchievement2/MathAchievement2';
 // icon
 import { 
   LuChevronDown,
@@ -259,19 +260,11 @@ function _MathAchievement1() {
 
     <div className="MathAchievement1-achievement2Wrapper">
       {detailFormState.achievement2_set.map((achievement2, indexOfAchievement2) => {
-        // FIXME: `<MathAchieve2 />` 구현후, 주석해제
-        // return (
-        //   <MathAchievement2
-        //     key={`${detailFormState.achievement2_set.length}-${indexOfAchievement2}`}
-        //     indexOfAchievement2={indexOfAchievement2}
-        //     achievement2={achievement2} />
-        // );
         return (
-          <div key={`${detailFormState.achievement2_set.length}-${indexOfAchievement2}`}>
-            <div>
-              {achievement2.title} (indexOfAchievement2: {indexOfAchievement2})
-            </div>
-          </div>
+          <MathAchievement2
+            key={`${detailFormState.achievement2_set.length}-${indexOfAchievement2}`}
+            indexOfAchievement2={indexOfAchievement2}
+            achievement2={achievement2} />
         );
       })}
     </div>

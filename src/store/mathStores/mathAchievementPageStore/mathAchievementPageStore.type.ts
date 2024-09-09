@@ -44,6 +44,22 @@ export type TMathAchievementPageStoreState = {
   selectedMathAchievements?: TMathAchievementFlattenModel[];
 };
 
+export const initialMathAchievementPageStoreDetailAchievement3: TMathAchievementPageStoreDetailAchievement3 = {
+  id: undefined,
+  no: '',
+  title: '',
+  code: '',
+} as const;
+
+export const initialMathAchievementPageStoreDetailAchievement2: TMathAchievementPageStoreDetailAchievement2 = {
+  id: undefined,
+  no: '',
+  title: '',
+  achievement3_set: [
+    initialMathAchievementPageStoreDetailAchievement3,
+  ],
+} as const;
+
 export const initialMathAchievementPageStoreState: TMathAchievementPageStoreState = {
   searchParamsForRetrieveMathAchievementsApi: {
     achievement2: undefined,
@@ -69,15 +85,7 @@ export const initialMathAchievementPageStoreState: TMathAchievementPageStoreStat
     grade_cluster: cmsGradeClusterMapper.ELEMENTARY_3_4,
     achievement2_set: [
       {
-        no: 'no-01',
-        title: 'title-01',
-        achievement3_set: [
-          {
-            no: '번호-01',
-            title: '제목-01',
-            code: '코드-01',
-          },
-        ],
+        ...initialMathAchievementPageStoreDetailAchievement2,
       },
     ],
   },
