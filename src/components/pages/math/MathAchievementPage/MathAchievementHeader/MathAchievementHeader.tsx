@@ -39,7 +39,6 @@ import {
 } from '@/components/pages/cmsPages.type';
 import { 
   mathCurriculumFilterOptions,
-  mathGradeClusterFilterOptions,
 } from '../../mathPages.type';
 import { 
   TRetrieveMathAchievementsApiRequestParams,
@@ -48,6 +47,7 @@ import {
   TMathCurriculum,
 } from '@/apis/models/mathModel.type';
 import {
+  cmsGradeClusterFilterOptions,
   TCMSClassType,
   TCMSGradeCluster,
 } from '@/apis/models/cmsCommonModel.type';
@@ -246,10 +246,10 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
           id="gradeCluster"
           className="editor"
           options={searchParamsForRetrieveMathAchievementsApi.classtype
-            ? mathGradeClusterFilterOptions[searchParamsForRetrieveMathAchievementsApi.classtype]
-            : mathGradeClusterFilterOptions[mathGradeClusterFilterOptions[' '][0].value]
+            ? cmsGradeClusterFilterOptions[searchParamsForRetrieveMathAchievementsApi.classtype]
+            : cmsGradeClusterFilterOptions[cmsGradeClusterFilterOptions[' '][0].value]
           }
-          value={searchParamsForRetrieveMathAchievementsApi.grade_cluster ?? mathGradeClusterFilterOptions[' '][0].value}
+          value={searchParamsForRetrieveMathAchievementsApi.grade_cluster ?? cmsGradeClusterFilterOptions[' '][0].value}
           onChange={onChangeGradeCluster} />
       ),
     },

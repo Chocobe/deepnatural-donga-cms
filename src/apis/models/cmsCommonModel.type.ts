@@ -4,6 +4,14 @@
 //
 // --- --- --- --- --- --- --- --- --- ---
 
+// type
+import { 
+  SELECT_OPTION_ITEM_ALL,
+} from '@/components/pages/cmsPages.type';
+import { 
+  TCommonSelectOptionItem,
+} from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect.type';
+
 /**
  * 페이지네이션
  */
@@ -95,6 +103,75 @@ export const cmsGradeClusterMapper = {
   MIDDLE: '중1~3',
 } as const;
 export type TCMSGradeCluster = typeof cmsGradeClusterMapper[keyof typeof cmsGradeClusterMapper];
+
+export const cmsGradeClusterOptions: {
+  [cmsClassTypeMapper.ELEMENTARY]: TCommonSelectOptionItem[];
+  [cmsClassTypeMapper.MIDDLE]: TCommonSelectOptionItem[];
+  [cmsClassTypeMapper.HIGH]: TCommonSelectOptionItem[];
+} = (() => {
+  const commonOptions: TCommonSelectOptionItem[] = [
+    {
+      text: cmsGradeClusterMapper.ELECTIVE_SUBJECT,
+      value: cmsGradeClusterMapper.ELECTIVE_SUBJECT,
+    },
+    {
+      text: cmsGradeClusterMapper.COMMON_SUBJECT,
+      value: cmsGradeClusterMapper.COMMON_SUBJECT,
+    },
+  ] as const;
+
+  return {
+    [cmsClassTypeMapper.ELEMENTARY]: [
+      ...commonOptions,
+      {
+        text: cmsGradeClusterMapper.ELEMENTARY_3_4,
+        value: cmsGradeClusterMapper.ELEMENTARY_3_4,
+      },
+      {
+        text: cmsGradeClusterMapper.ELEMENTARY_5_6,
+        value: cmsGradeClusterMapper.ELEMENTARY_5_6,
+      },
+    ],
+    [cmsClassTypeMapper.MIDDLE]: [
+      ...commonOptions,
+      {
+        text: cmsGradeClusterMapper.MIDDLE,
+        value: cmsGradeClusterMapper.MIDDLE,
+      },
+    ],
+    [cmsClassTypeMapper.HIGH]: [
+      ...commonOptions,
+    ],
+  } as const;
+})();
+
+export const cmsGradeClusterFilterOptions: typeof cmsGradeClusterOptions & {
+  [' ']: TCommonSelectOptionItem[];
+} = {
+  [' ']: [
+    {
+      ...SELECT_OPTION_ITEM_ALL,
+    },
+  ],
+  [cmsClassTypeMapper.ELEMENTARY]: [
+    {
+      ...SELECT_OPTION_ITEM_ALL,
+    },
+    ...cmsGradeClusterOptions[cmsClassTypeMapper.ELEMENTARY],
+  ],
+  [cmsClassTypeMapper.MIDDLE]: [
+    {
+      ...SELECT_OPTION_ITEM_ALL,
+    },
+    ...cmsGradeClusterOptions[cmsClassTypeMapper.MIDDLE],
+  ],
+  [cmsClassTypeMapper.HIGH]: [
+    {
+      ...SELECT_OPTION_ITEM_ALL,
+    },
+    ...cmsGradeClusterOptions[cmsClassTypeMapper.HIGH],
+  ],
+} as const;
 
 /**
  * 학기

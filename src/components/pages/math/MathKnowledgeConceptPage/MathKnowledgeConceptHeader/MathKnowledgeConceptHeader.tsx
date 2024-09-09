@@ -44,8 +44,10 @@ import {
 } from '@/components/pages/cmsPages.type';
 import { 
   mathCurriculumFilterOptions, 
-  mathGradeClusterFilterOptions,
 } from '../../mathPages.type';
+import { 
+  cmsGradeClusterFilterOptions,
+} from '@/apis/models/cmsCommonModel.type';
 // util
 import { 
   flatMathAchievementModel,
@@ -180,7 +182,7 @@ function _MathKnowledgeConceptHeader() {
           <CommonSelect
             id="grade_cluster"
             className="editor"
-            options={mathGradeClusterFilterOptions['초등']}
+            options={cmsGradeClusterFilterOptions['초등']}
             value={''}
             onChange={onChangeGradeCluster} />
         </TBUTooltip>
