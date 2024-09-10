@@ -1,16 +1,17 @@
 // react
 import {
-  useRef,
   useCallback,
-  useEffect,
   memo,
   ChangeEvent,
 } from 'react';
 // store
 import useMathTextbookPageStore from '@/store/mathStores/mathTextbookPageStore/mathTextbookPageStore';
+import useResultNoticeModalStore from '@/store/modalStores/resultNoticeModalStore/resultNoticeModalStore';
+// api
+import ApiManager from '@/apis/ApiManager';
 // hook
 import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
-import useResultNoticeModalStore from '@/store/modalStores/resultNoticeModalStore/resultNoticeModalStore';
+import useAutoFocus from '@/components/hooks/useAutoFocus';
 // ui
 import { 
   Select, 
@@ -42,7 +43,6 @@ import {
 import noticeMessageGroupFactory from '@/utils/noticeMessageGroupFactory';
 // style
 import './MathTextbookTableActions.css';
-import ApiManager from '@/apis/ApiManager';
 
 type TMathTextbookTableActionsProps = {
   retrieveMathTextbooks: (params: TRetrieveMathTextbooksApiRequestParams) => Promise<void>;
@@ -74,11 +74,6 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
   const openErrorNoticeModal = useResultNoticeModalStore(state => state.openErrorNoticeModal);
 
   //
-  // ref
-  //
-  const $searchInputRef = useRef<HTMLInputElement | null>(null);
-
-  //
   // callback
   //
   const onChangeSearchType = useCallback((searchType: string) => {
@@ -95,7 +90,7 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
   }, [updateSearchParamsForRetrieveMathTextbooksApi]);
 
   const onEnter = useCallback(() => {
-    $searchInputRef.current?.blur();
+    $editorRef.current?.blur();
 
     const params: TRetrieveMathTextbooksApiRequestParams = {
       searchParams: {
@@ -104,6 +99,8 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
     };
 
     retrieveMathTextbooks(params);
+
+    // eslint-disable-next-line
   }, [
     searchParamsForRetrieveMathTextbooksApi,
     retrieveMathTextbooks,
@@ -202,12 +199,9 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
     onKeyDown,
   } = useOnKeyDownEnterOrESC(onEnter, onESC);
 
-  //
-  // effect
-  //
-  useEffect(function focusSearchInput() {
-    $searchInputRef.current?.focus();
-  }, [mathTextbooksData]);
+  const {
+    $editorRef,
+  } = useAutoFocus(mathTextbooksData);
 
   return (
     <div className="MathTextbookTableActions">
@@ -240,7 +234,7 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
         </TBUTooltip>
 
         <InputWithIcon
-          ref={$searchInputRef}
+          ref={$editorRef}
           containerClassName="searchValue"
           placeholder="검색어를 입력해주세요"
           autoFocus

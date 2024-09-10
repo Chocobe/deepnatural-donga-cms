@@ -1,8 +1,6 @@
 // react
 import {
-  useRef,
   useCallback,
-  useEffect,
   memo,
   ChangeEvent,
 } from 'react';
@@ -10,6 +8,7 @@ import {
 import useMathKnowledgeConceptPageStore from '@/store/mathStores/mathKnowledgeConceptPageStore/mathKnowledgeConceptPageStore';
 // hook
 import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
+import useAutoFocus from '@/components/hooks/useAutoFocus';
 // ui
 import { 
   Select, 
@@ -61,11 +60,6 @@ function _MathKnowledgeConceptTableActions(props: TMathKnowledgeConceptTableActi
   const updateSearchParamsForRetrieveMathKnowledgeConceptsApi = useMathKnowledgeConceptPageStore(state => state.updateSearchParamsForRetrieveMathKnowledgeConceptsApi);
 
   //
-  // ref
-  //
-  const $searchInputRef = useRef<HTMLInputElement | null>(null);
-
-  //
   // callback
   //
   const onChangeSearchType = useCallback(() => {
@@ -84,13 +78,15 @@ function _MathKnowledgeConceptTableActions(props: TMathKnowledgeConceptTableActi
   }, [updateSearchParamsForRetrieveMathKnowledgeConceptsApi]);
 
   const onEnter = useCallback(() => {
-    $searchInputRef.current?.blur();
+    $editorRef.current?.blur();
 
     const params: TRetrieveMathKnowledgeConceptsApiRequestParams = {
       searchParams: searchParamsForRetrieveMathKnowledgeConceptsApi,
     };
 
     retrieveMathKnowledgeConcepts(params);
+
+    // eslint-disable-next-line
   }, [
     searchParamsForRetrieveMathKnowledgeConceptsApi,
     retrieveMathKnowledgeConcepts,
@@ -110,12 +106,9 @@ function _MathKnowledgeConceptTableActions(props: TMathKnowledgeConceptTableActi
     onKeyDown,
   } = useOnKeyDownEnterOrESC(onEnter, onESC);
 
-  //
-  // effect
-  //
-  useEffect(function focusSearchInput() {
-    $searchInputRef.current?.focus();
-  }, [mathKnowledgeConceptsData]);
+  const {
+    $editorRef,
+  } = useAutoFocus(mathKnowledgeConceptsData);
 
   return (
     <div className="MathKnowledgeConceptTableActions">
@@ -148,7 +141,7 @@ function _MathKnowledgeConceptTableActions(props: TMathKnowledgeConceptTableActi
         </TBUTooltip>
 
         <InputWithIcon
-          ref={$searchInputRef}
+          ref={$editorRef}
           containerClassName="searchInput"
           placeholder="검색어를 입력해주세요"
           autoFocus

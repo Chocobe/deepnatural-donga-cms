@@ -1,15 +1,14 @@
 // react
 import {
-  useRef,
   useState,
   useCallback,
-  useEffect,
   memo,
 } from 'react';
 // store
 import useMathSeriesSourcePageStore from '@/store/mathStores/mathSeriesSourcePageStore/mathSeriesSourcePageStore';
 // hook
 import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
+import useAutoFocus from '@/components/hooks/useAutoFocus';
 // ui
 import { 
   Select, 
@@ -44,11 +43,6 @@ function _MathSeriesSourceTableActions() {
   const mathSeriesSourcesData = useMathSeriesSourcePageStore(state => state.mathSeriesSourcesData);
 
   //
-  // ref
-  //
-  const $searchInputRef = useRef<HTMLInputElement | null>(null);
-
-  //
   // state
   //
   // FIXME: mockup
@@ -78,17 +72,11 @@ function _MathSeriesSourceTableActions() {
   //
   const {
     onKeyDown,
-  }  = useOnKeyDownEnterOrESC(
-    onEnter,
-    onESC
-  );
+  }  = useOnKeyDownEnterOrESC(onEnter, onESC);
 
-  //
-  // effe
-  //
-  useEffect(function focusSearchInput() {
-    $searchInputRef.current?.focus();
-  }, [mathSeriesSourcesData]);
+  const {
+    $editorRef,
+  } = useAutoFocus(mathSeriesSourcesData);
 
   return (
     <div className="MathSeriesSourceTableActions">
@@ -122,7 +110,7 @@ function _MathSeriesSourceTableActions() {
 
         <TBUTooltip>
           <InputWithIcon
-            ref={$searchInputRef}
+            ref={$editorRef}
             containerClassName="searchInput"
             placeholder="검색어를 입력해주세요"
             autoFocus
