@@ -7,9 +7,32 @@ import {
 } from 'zustand/middleware';
 // type
 import { 
+  initialMathKnowledgeConceptPageStoreDetailKC2,
   initialMathKnowledgeConceptPageStoreState,
   TMathKnowledgeConceptPageStore,
+  TMathKnowledgeConceptPageStoreDetailKC1,
 } from './mathKnowledgeConceptPageStore.type';
+import { 
+  TMathKnowledgeConcept1Model,
+} from '@/apis/models/mathModel.type';
+
+function parseKC1ToDetailFormState(
+  kc1: TMathKnowledgeConcept1Model
+): TMathKnowledgeConceptPageStoreDetailKC1 {
+  const {
+    kc2_set,
+    ...kc1Data
+  } = kc1;
+
+  return {
+    ...kc1Data,
+    kc2_set: kc2_set?.length
+      ? kc2_set
+      : [
+        initialMathKnowledgeConceptPageStoreDetailKC2
+      ],
+  };
+}
 
 const useMathKnowledgeConceptPageStore = create(devtools<TMathKnowledgeConceptPageStore>((set, _get) => ({
   ...initialMathKnowledgeConceptPageStoreState,
@@ -45,6 +68,30 @@ const useMathKnowledgeConceptPageStore = create(devtools<TMathKnowledgeConceptPa
       ...old,
       mathKnowledgeConceptsData,
     }), false, 'setMathKnowledgeConceptsData');
+  },
+
+  clearDetailTargetMathKnowledgeConcept: () => {
+    set(old => ({
+      ...old,
+      detailTargetMathKnowledgeConcept: initialMathKnowledgeConceptPageStoreState.detailTargetMathKnowledgeConcept,
+      detailFormState: initialMathKnowledgeConceptPageStoreState.detailFormState,
+    }), false, 'clearDetailTargetMathKnowledgeConcept');
+  },
+  setDetailTargetMathKnowledgeConcept: detailTargetMathKnowledgeConcept => {
+    set(old => ({
+      ...old,
+      detailTargetMathKnowledgeConcept,
+      detailFormState: parseKC1ToDetailFormState(detailTargetMathKnowledgeConcept),
+    }), false, 'setDetailTargetMathKnowledgeConcept');
+  },
+  updateDetailFormState: callback => {
+    set(old => ({
+      ...old,
+      detailFormState: {
+        ...old.detailFormState,
+        ...callback(old.detailFormState),
+      },
+    }), false, 'updateDetailFormState');
   },
 
   clearSelectedMathKnowledgeConcepts: () => {
