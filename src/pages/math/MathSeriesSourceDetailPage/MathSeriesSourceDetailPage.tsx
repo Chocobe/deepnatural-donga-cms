@@ -1,3 +1,5 @@
+// ui
+import MathSeriesSourceDetailHeader from '@/components/pages/math/MathSeriesSourceDetailPage/MathSeriesSourceDetailHeader/MathSeriesSourceDetailHeader';
 // style
 import './MathSeriesSourceDetailPage.css';
 
@@ -5,7 +7,7 @@ function MathSeriesSourceDetailPage() {
   return (
     <div className="MathSeriesSourceDetailPage">
       <div className="MathSeriesSourceDetailPage-header">
-        Header
+        <MathSeriesSourceDetailHeader />
       </div>
 
       <div className="MathSeriesSourceDetailPage-divider" />
