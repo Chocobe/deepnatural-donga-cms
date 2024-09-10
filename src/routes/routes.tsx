@@ -25,6 +25,7 @@ import MathChapterDetailPage from '@/pages/math/MathChapterDetailPage/MathChapte
 import MathAchievementPage from '@/pages/math/MathAchievementPage/MathAchievementPage';
 import MathAchievementDetailPage from '@/pages/math/MathAchievementDetailPage/MathAchievementDetailPage';
 import MathKnowledgeConceptPage from '@/pages/math/MathKnowledgeConceptPage/MathKnowledgeConceptPage';
+import MathKnowledgeConceptDetailPage from '@/pages/math/MathKnowledgeConceptDetailPage/MathKnowledgeConceptDetailPage';
 import MathSeriesSourcePage from '@/pages/math/MathSeriesSourcePage/MathSeriesSourcePage';
 import MathInstructionPage from '@/pages/math/MathInstructionPage/MathInstructionPage';
 import MathQuestionPage from '@/pages/math/MathQuestionPage/MathQuestionPage';
@@ -158,6 +159,12 @@ const routes = createBrowserRouter([
               .math
               .getKnowledgeConceptPath(),
             element: <MathKnowledgeConceptPage />,
+          },
+          {
+            path: routePathFactory
+              .math
+              .getKnowledgeConceptAddPage(),
+            element: <MathKnowledgeConceptDetailPage />,
           },
 
           // 수학: 시리즈-출처

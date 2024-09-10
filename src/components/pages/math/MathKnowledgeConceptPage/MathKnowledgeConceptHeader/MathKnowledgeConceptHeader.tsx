@@ -5,6 +5,11 @@ import {
   useMemo,
   memo,
 } from 'react';
+// router
+import { 
+  useNavigate,
+} from 'react-router-dom';
+import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathKnowledgeConceptPageStore from '@/store/mathStores/mathKnowledgeConceptPageStore/mathKnowledgeConceptPageStore';
 // hook
@@ -73,6 +78,14 @@ function _MathKnowledgeConceptHeader() {
   //
   const updateSearchParamsForRetrieveMathKnowledgeConceptsApi = useMathKnowledgeConceptPageStore(state => state.updateSearchParamsForRetrieveMathKnowledgeConceptsApi);
 
+  //
+  // hook
+  //
+  const navigate = useNavigate();
+
+  //
+  // callback
+  //
   // FIXME: 아직 API 미지원
   const onChangeCurriculum = useCallback((curriculum: string) => {
     console.log('curriculum: ', curriculum);
@@ -99,6 +112,13 @@ function _MathKnowledgeConceptHeader() {
       ...old,
     }));
   }, [updateSearchParamsForRetrieveMathKnowledgeConceptsApi]);
+
+  const addMathKnowledgeConcept = useCallback(() => {
+    navigate(routePathFactory
+      .math
+      .getKnowledgeConceptAddPage()
+    );
+  }, [navigate]);
 
   //
   // state
@@ -331,8 +351,7 @@ function _MathKnowledgeConceptHeader() {
         <TBUTooltip>
           <Button
             className="actionButton"
-            onClick={() => console.log('Add 지식개념')}
-            disabled>
+            onClick={addMathKnowledgeConcept}>
             <LuPlus className="icon" />
             Add 지식개념
           </Button>
