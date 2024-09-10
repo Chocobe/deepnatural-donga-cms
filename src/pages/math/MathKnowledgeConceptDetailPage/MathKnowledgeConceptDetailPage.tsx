@@ -1,3 +1,5 @@
+// ui
+import MathKnowledgeConceptDetailHeader from '@/components/pages/math/MathKnowledgeConceptDetailPage/MathKnowledgeConceptDetailHeader/MathKnowledgeConceptDetailHeader';
 // style
 import './MathKnowledgeConceptDetailPage.css';
 
@@ -5,7 +7,7 @@ function MathKnowledgeConceptDetailPage() {
   return (
     <div className="MathKnowledgeConceptDetailPage">
       <div className="MathKnowledgeConceptDetailPage-header">
-        Header
+        <MathKnowledgeConceptDetailHeader />
       </div>
 
       <div className="MathKnowledgeConceptDetailPage-divider" />
