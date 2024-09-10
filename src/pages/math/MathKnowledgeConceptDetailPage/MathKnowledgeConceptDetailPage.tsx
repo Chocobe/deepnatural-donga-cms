@@ -1,6 +1,7 @@
 // ui
 import MathKnowledgeConceptDetailHeader from '@/components/pages/math/MathKnowledgeConceptDetailPage/MathKnowledgeConceptDetailHeader/MathKnowledgeConceptDetailHeader';
 import MathKnowledgeConcept1 from '@/components/pages/math/MathKnowledgeConceptDetailPage/MathKnowledgeConcept1/MathKnowledgeConcept1';
+import MathKnowledgeConceptDetailFooter from '@/components/pages/math/MathKnowledgeConceptDetailPage/MathKnowledgeConceptDetailFooter/MathKnowledgeConceptDetailFooter';
 // style
 import './MathKnowledgeConceptDetailPage.css';
 
@@ -20,7 +21,7 @@ function MathKnowledgeConceptDetailPage() {
       <div className="MathKnowledgeConceptDetailPage-divider" />
 
       <div className="MathKnowledgeConceptDetailPage-footer">
-        Footer
+        <MathKnowledgeConceptDetailFooter />
       </div>
     </div>
   );

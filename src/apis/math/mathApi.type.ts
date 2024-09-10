@@ -23,6 +23,7 @@ import {
   TMathChapter3Model,
   TMathAchievement2Model,
   TMathAchievement3Model,
+  TMathKnowledgeConcept2Model,
 } from '../models/mathModel.type';
 
 /**
@@ -137,9 +138,21 @@ export type TRetrieveMathKnowledgeConceptsApiRequestParams = TApiRequestNonBodyP
   page?: number;
   search?: string;
 }>;
-
 /** (GET) 수학 지식개념 목록 조회 Response */
 export type TRetrieveMathKnowledgeConceptsApiResponse = TPaginationModel<TMathKnowledgeConcept1Model>;
+
+/** (POST) 수학 지식개념 생성 RequestParams */
+export type TProduceMathKnowledgeConceptApiRequestParams = TApiRequestBodyParams<
+  void,
+  void,
+  Omit<TMathKnowledgeConcept1Model, 'id' | 'kc2_set'> & {
+    kc2_set: Array<Omit<TMathKnowledgeConcept2Model, 'id' | 'achievement3'> & {
+      achievement3_id: number;
+    }>
+  }
+>;
+// FIXME: 실제 응답 확인하기
+export type TProduceMathKnowledgeConceptApiResponse = any;
 
 // --- --- --- --- --- --- --- --- --- ---
 
