@@ -27,6 +27,7 @@ import MathAchievementDetailPage from '@/pages/math/MathAchievementDetailPage/Ma
 import MathKnowledgeConceptPage from '@/pages/math/MathKnowledgeConceptPage/MathKnowledgeConceptPage';
 import MathKnowledgeConceptDetailPage from '@/pages/math/MathKnowledgeConceptDetailPage/MathKnowledgeConceptDetailPage';
 import MathSeriesSourcePage from '@/pages/math/MathSeriesSourcePage/MathSeriesSourcePage';
+import MathSeriesSourceDetailPage from '@/pages/math/MathSeriesSourceDetailPage/MathSeriesSourceDetailPage';
 import MathInstructionPage from '@/pages/math/MathInstructionPage/MathInstructionPage';
 import MathQuestionPage from '@/pages/math/MathQuestionPage/MathQuestionPage';
 // pages - english
@@ -173,6 +174,12 @@ const routes = createBrowserRouter([
               .math
               .getSeriesSourcePath(),
             element: <MathSeriesSourcePage />,
+          },
+          {
+            path: routePathFactory
+              .math
+              .getSeriesSourceAddPage(),
+            element: <MathSeriesSourceDetailPage />,
           },
 
           // 수학: 지문
