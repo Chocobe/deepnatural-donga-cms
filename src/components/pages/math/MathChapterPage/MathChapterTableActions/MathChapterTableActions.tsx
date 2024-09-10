@@ -1,15 +1,14 @@
 // react
 import {
-  useRef,
   useCallback,
   memo,
   ChangeEvent,
-  useEffect,
 } from 'react';
 // store
 import useMathChapterPageStore from '@/store/mathStores/mathChapterPageStore/mathChapterPageStore';
 // hook
 import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
+import useAutoFocus from '@/components/hooks/useAutoFocus';
 // ui
 import { 
   Select, 
@@ -62,11 +61,6 @@ function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
   const updateSearchParamsForRetrieveMathChaptersApi = useMathChapterPageStore(state => state.updateSearchParamsForRetrieveMathChaptersApi);
 
   //
-  // ref
-  //
-  const $searchInputRef = useRef<HTMLInputElement | null>(null);
-
-  //
   // callback
   //
   const onChangeSearchType = useCallback(() => {
@@ -83,7 +77,7 @@ function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
   }, [updateSearchParamsForRetrieveMathChaptersApi]);
 
   const onEnter = useCallback(() => {
-    $searchInputRef.current?.blur();
+    $editorRef.current?.blur();
 
     const params: TRetrieveMathChaptersApiRequestParams = {
       searchParams: {
@@ -92,6 +86,8 @@ function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
     };
 
     retrieveMathChapters(params);
+
+    // eslint-disable-next-line
   }, [
     searchParamsForRetrieveMathChaptersApi,
     retrieveMathChapters,
@@ -111,12 +107,9 @@ function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
     onKeyDown,
   } = useOnKeyDownEnterOrESC(onEnter, onESC);
 
-  //
-  // effect
-  //
-  useEffect(function focusSearchInput() {
-    $searchInputRef.current?.focus();
-  }, [mathChaptersData]);
+  const {
+    $editorRef,
+  } = useAutoFocus(mathChaptersData);
 
   return (
     <div className="MathChapterTableActions">
@@ -149,7 +142,7 @@ function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
         </TBUTooltip>
 
         <InputWithIcon
-          ref={$searchInputRef}
+          ref={$editorRef}
           containerClassName="searchValue"
           placeholder="검색어를 입력해주세요"
           autoFocus

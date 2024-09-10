@@ -1,8 +1,6 @@
 // react
 import {
-  useRef,
   useCallback,
-  useEffect,
   memo,
   ChangeEvent,
 } from 'react';
@@ -10,6 +8,7 @@ import {
 import useMathAchievementPageStore from '@/store/mathStores/mathAchievementPageStore/mathAchievementPageStore';
 // hook
 import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
+import useAutoFocus from '@/components/hooks/useAutoFocus';
 // ui
 import { 
   Select, 
@@ -60,11 +59,6 @@ function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) 
   const updateSearchParamsForRetrieveMathAchievementsApi = useMathAchievementPageStore(state => state.updateSearchParamsForRetrieveMathAchievementsApi);
 
   //
-  // ref
-  //
-  const $searchInputRef = useRef<HTMLInputElement | null>(null);
-
-  //
   // callback
   //
   const onChangeSearchType = useCallback(() => {
@@ -81,13 +75,15 @@ function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) 
   }, [updateSearchParamsForRetrieveMathAchievementsApi]);
 
   const onEnter = useCallback(() => {
-    $searchInputRef.current?.blur();
+    $editorRef.current?.blur();
 
     const params: TRetrieveMathAchievementsApiRequestParams = {
       searchParams: searchParamsForRetrieveMathAchievementsApi,
     };
 
     retrieveMathAchievements(params);
+
+    // eslint-disable-next-line
   }, [
     searchParamsForRetrieveMathAchievementsApi,
     retrieveMathAchievements,
@@ -107,12 +103,9 @@ function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) 
     onKeyDown,
   } = useOnKeyDownEnterOrESC(onEnter, onESC);
 
-  //
-  // effect
-  //
-  useEffect(function focusSearchInput() {
-    $searchInputRef.current?.focus();
-  }, [mathAchievementsData]);
+  const {
+    $editorRef,
+  } = useAutoFocus(mathAchievementsData);
 
   return (
     <div className="MathAchievementTableActions">
@@ -145,7 +138,7 @@ function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) 
         </TBUTooltip>
 
         <InputWithIcon
-          ref={$searchInputRef}
+          ref={$editorRef}
           containerClassName="searchInput"
           placeholder="검색어를 입력해주세요"
           autoFocus

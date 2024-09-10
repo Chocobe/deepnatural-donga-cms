@@ -172,7 +172,7 @@ export type TMathAchievement1Model = TMathAchievementCommonModel & {
 export type TMathAchievementFlattenModel = {
   achievement1: TMathAchievement1Model;
   achievement2: TMathAchievement2Model;
-  achievement3?: TMathAchievement3Model;
+  achievement3: TMathAchievement3Model;
 };
 
 // --- --- --- --- --- --- --- --- --- ---

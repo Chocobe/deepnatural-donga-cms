@@ -1,16 +1,18 @@
 // react
 import {
-  ChangeEvent,
-  memo,
   useCallback,
+  memo,
+  ChangeEvent,
 } from 'react';
 // hook
 import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
+import useAutoFocus from '@/components/hooks/useAutoFocus';
 // ui
 import CommonSelect from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect';
 import { 
   InputWithIcon,
 } from '@/components/shadcn-ui-custom/InputWithIcon/InputWithIcon';
+import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
 import { 
   LuSearch,
@@ -24,7 +26,6 @@ import {
 } from '@/apis/models/cmsCommonModel.type';
 // style
 import './SearchModalActions.css';
-import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 
 type TSearchModalActionsProps<TModel = any> = {
   searchTypeOptions: TCommonSelectOptionItem[];
@@ -71,9 +72,13 @@ function _SearchModalActions(props: TSearchModalActionsProps) {
   }, [onChangeSearchValue]);
 
   const onEnter = useCallback(() => {
+    $editorRef.current?.blur();
+
     const params = createParams(data?.current_page ?? 1);
 
     retrieverApiFunction(params);
+
+    // eslint-disable-next-line
   }, [
     data?.current_page,
     createParams, retrieverApiFunction,
@@ -84,10 +89,11 @@ function _SearchModalActions(props: TSearchModalActionsProps) {
   //
   const {
     onKeyDown,
-  } = useOnKeyDownEnterOrESC(
-    onEnter,
-    onESC
-  );
+  } = useOnKeyDownEnterOrESC(onEnter, onESC);
+
+  const {
+    $editorRef,
+  } = useAutoFocus(data);
 
   return (
     <div className="SearchModalActions">
@@ -102,6 +108,7 @@ function _SearchModalActions(props: TSearchModalActionsProps) {
 
       <div className="SearchModalActions-valueInput">
         <InputWithIcon
+          ref={$editorRef}
           value={searchValue}
           onChange={_onChangeSearchValue}
           onKeyDown={onKeyDown}

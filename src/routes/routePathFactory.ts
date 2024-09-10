@@ -53,6 +53,9 @@ const routePathFactory = {
     getKnowledgeConceptPath() {
       return `${this.getMathRootPath()}/knowledge-concept` as const;
     },
+    getKnowledgeConceptAddPage() {
+      return `${this.getKnowledgeConceptPath()}/add` as const;
+    },
 
     // 시리즈-출처
     getSeriesSourcePath() {

@@ -1,0 +1,220 @@
+.MathKnowledgeConcept1 {
+  /*  */
+
+  &-accordionItem {
+    padding-bottom: 34px;
+
+    border: none;
+    border-bottom: 1px solid hsl(var(--border));
+
+    .header {
+      /*  */
+
+      .actionsWrapper {
+        @apply flex justify-end items-end gap-5;
+
+        .deleteButton {
+          /*  */
+        }
+      }
+
+      .title {
+        margin-top: 8px;
+        padding: 16px;
+
+        color: #09090B;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 700;
+
+        border-top: 1px solid hsl(var(--border));
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+
+    .formBody {
+      @apply flex flex-wrap gap-y-5 gap-x-[120px];
+
+      padding: 4px 16px;
+
+      width: 100%;
+
+      &-leftSide,
+      &-rightSide {
+        @apply flex flex-col gap-5;
+
+        max-width: 100%;
+
+        .formItem {
+          @apply flex items-start gap-1;
+
+          max-width: 100%;
+
+          .label {
+            @apply inline-flex items-center;
+
+            flex-shrink: 0;
+            width: 123px;
+            height: 40px;
+
+            color: #09090B;
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 500;
+          }
+
+          .editor {
+            flex-shrink: 1;
+            width: 424px;
+          }
+        }
+      }
+    }
+  }
+
+  &-kc2Wrapper {
+    /*  */
+
+    .kc2 {
+      padding-left: 180px;
+    }
+  }
+}
+
+.MathKnowledgeConcept1-actionsWrapper {
+  padding: 0 16px 0 180px;
+
+  .actionItem {
+    margin-top: 34px;
+    padding-top: 10px;
+
+    border-top: 1px solid hsl(var(--border));
+
+    .addButton {
+      /*  */
+    }
+  }
+}
+
+.MathKnowledgeConcept1-achievementSearchModal {
+  /*  */
+
+  .headerRow {
+    position: sticky;
+    top: 0;
+
+    background-color: #fff;
+    box-shadow: -1px 1px 1px hsl(var(--border));
+
+    &:hover {
+      background-color: #fff;
+    }
+
+    & > * {
+      color: #0F172A;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 700;
+
+      border-right: 1px solid hsl(var(--border));
+
+      &:last-of-type {
+        border-right: none !important;
+      }
+    }
+
+    .table-row-selector {
+      width: 66px !important;
+      min-width: 66px !important;
+    }
+
+    .achievement1_no,
+    .achievement2_no,
+    .achievement3_no {
+      padding: 0;
+
+      width: 66px;
+      min-width: 66px;
+
+      text-align: center;
+      white-space: pre-wrap;
+
+      font-size: 14px;
+      line-height: 20px;
+      text-align: center;
+    }
+
+    .achievement1_title,
+    .achievement2_title,
+    .achievement3_title {
+      width: 220px;
+      min-width: 220px;
+    }
+
+    .code {
+      width: 180px;
+      min-width: 180px;
+    }
+
+    .achievement1_curriculum {
+      width: 90px;
+      min-width: 90px;
+    }
+
+    .achievement1_classtype {
+      width: 120px;
+      min-width: 120px;
+    }
+
+    .achievement1_grade_cluster {
+      width: 120px;
+      min-width: 120px;
+    }
+  }
+
+  .row {
+    cursor: pointer;
+
+    & > * {
+      padding: 13px 16px !important;
+
+      color: #0F172A !important;
+      font-size: 16px !important;
+      line-height: 24px !important;
+      font-weight: 400 !important;
+
+      border-right: 1px solid hsl(var(--border)) !important;
+
+      &:last-of-type {
+        border-right: none !important;
+      }
+    }
+
+    .no {
+      text-align: center;
+    }
+
+    .title {
+      /*  */
+    }
+
+    .code {
+      /*  */
+    }
+
+    .curriculum {
+      /*  */
+    }
+
+    .classtype {
+      /*  */
+    }
+
+    .cluster {
+      /*  */
+    }
+  }
+}

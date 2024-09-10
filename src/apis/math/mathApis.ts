@@ -23,9 +23,6 @@ import {
   TDeleteMathTextbookApiRequestParams,
   TDeleteMathTextbookApiResponse,
 
-  TRetrieveMathKnowledgeConceptsApiRequestParams,
-  TRetrieveMathKnowledgeConceptsApiResponse,
-
   TRetrieveMathSeriesSourcesApiRequestParams,
   TRetrieveMathSeriesSourcesApiResponse,
 
@@ -48,6 +45,13 @@ import {
 
   TProduceMathAchievementApiRequestParams,
   TProduceMathAchievementApiResponse,
+} from './mathApi.type';
+import {
+  TRetrieveMathKnowledgeConceptsApiRequestParams,
+  TRetrieveMathKnowledgeConceptsApiResponse,
+
+  TProduceMathKnowledgeConceptApiRequestParams,
+  TProduceMathKnowledgeConceptApiResponse,
 } from './mathApi.type';
 
 // FIXME: mockup
@@ -278,6 +282,26 @@ export const retrieveMathKnowledgeConceptsApi = createApiWithNoticeMessageGroup(
     .apis
     .math
     .retrieveMathKnowledgeConcepts,
+});
+
+//
+// (POST) 수학 지식개념 생성
+//
+export const produceMathKnowledgeConceptApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathKnowledgeConceptApiRequestParams) => {
+    const {
+      payload,
+    } = excludeNullOrUndefinedProperties(trimRecursive(params));
+
+    return api.post<TProduceMathKnowledgeConceptApiResponse>(
+      mathApiUrlFactory.produceMathKnowledgeConceptPath(),
+      payload
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathKnowledgeConcept
 });
 
 // --- --- --- --- --- --- --- --- --- ---

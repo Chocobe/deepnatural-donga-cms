@@ -88,6 +88,11 @@ const mathApiUrlFactory = (() => {
     retrieveMathKnowledgeConceptsPath() {
       return `${BASE_PATH}kcs/`;
     },
+
+    /** (POST) 수학 지식개념 생성 */
+    produceMathKnowledgeConceptPath() {
+      return this.retrieveMathKnowledgeConceptsPath();
+    },
   };
 
   //

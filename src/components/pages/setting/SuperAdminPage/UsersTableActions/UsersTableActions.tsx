@@ -1,11 +1,11 @@
 // react
 import {
-  useRef,
   useCallback,
-  useEffect,
   memo,
   ChangeEvent,
 } from 'react';
+// hook
+import useAutoFocus from '@/components/hooks/useAutoFocus';
 // ui
 import AddUserModal from '../AddUserModal/AddUserModal';
 import { 
@@ -51,11 +51,6 @@ function _UsersTableActions(props: TUsersTableActionsProps) {
   const updateSearchParamsForRetrieveUsersApi = useSuperAdminPageStore(state => state.updateSearchParamsForRetrieveUsersApi);
 
   //
-  // ref
-  //
-  const $searchInputRef = useRef<HTMLInputElement | null>(null);
-
-  //
   // callback
   //
   const onClickRemove = useCallback(() => {
@@ -63,7 +58,7 @@ function _UsersTableActions(props: TUsersTableActionsProps) {
   }, []);
 
   const onEnter = useCallback(() => {
-    $searchInputRef.current?.blur();
+    $editorRef.current?.blur();
 
     const params: TRetrieveUsersApiRequestParams = {
       searchParams: {
@@ -72,6 +67,8 @@ function _UsersTableActions(props: TUsersTableActionsProps) {
     };
 
     retrieveUsers(params);
+
+    // eslint-disable-next-line
   }, [searchParamsForRetrieveUsersApi, retrieveUsers]);
 
   const onESC = useCallback(() => {
@@ -97,12 +94,9 @@ function _UsersTableActions(props: TUsersTableActionsProps) {
     onKeyDown,
   } = useOnKeyDownEnterOrESC(onEnter, onESC);
 
-  //
-  // effect
-  //
-  useEffect(function focusSearchInput() {
-    $searchInputRef.current?.focus();
-  }, [usersData]);
+  const {
+    $editorRef,
+  } = useAutoFocus(usersData);
 
   return (
     <div className="UsersTableActions">
@@ -119,7 +113,7 @@ function _UsersTableActions(props: TUsersTableActionsProps) {
 
       <div className="UsersTableActions-rightSide">
         <InputWithIcon 
-          ref={$searchInputRef}
+          ref={$editorRef}
           className="UsersTableActions-rightSide-roleSearchInput"
           placeholder="검색어를 입력해주세요"
           autoFocus
