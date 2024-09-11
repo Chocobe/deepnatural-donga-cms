@@ -188,14 +188,12 @@ function _MathSeriesSourceHeader() {
           </Button>
         </TBUTooltip>
 
-        <TBUTooltip>
-          <Button
-            className="actionButton"
-            onClick={addMathSeriesSource}>
-            <LuPlus className="icon" />
-            Add 시리즈
-          </Button>
-        </TBUTooltip>
+        <Button
+          className="actionButton"
+          onClick={addMathSeriesSource}>
+          <LuPlus className="icon" />
+          Add 시리즈
+        </Button>
       </div>
     </div>
   );
