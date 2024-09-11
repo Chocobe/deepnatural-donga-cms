@@ -83,7 +83,8 @@ function _MathSeriesSourceDetailFooter() {
 
     const response = await ApiManager
       .math
-      .produceMathSeriesSourceApi(params);
+      .produceMathSeriesSourceApi
+      .callWithNoticeMessageGroup(params);
 
     return response?.data;
   }, [detailFormState]);
