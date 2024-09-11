@@ -1,0 +1,99 @@
+.MathSeries {
+  /*  */
+
+  &-accordionItem {
+    padding-bottom: 34px;
+
+    border: none;
+    border-bottom: 1px solid hsl(var(--border));
+
+    .header {
+      /*  */
+
+      .actionsWrapper {
+        @apply flex justify-end items-end gap-5;
+
+        .deleteButton {
+          /*  */
+        }
+      }
+
+      .title {
+        margin-top: 8px;
+        padding: 16px;
+
+        color: #09090B;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 700;
+
+        border-top: 1px solid hsl(var(--border));
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+
+    .formBody {
+      @apply flex flex-wrap gap-y-5 gap-x-[120px];
+
+      padding: 4px 16px;
+
+      width: 100%;
+
+      .wrapper {
+        @apply flex flex-col gap-5;
+
+        max-width: 100%;
+
+        .formItem {
+          @apply flex items-start gap-1;
+
+          max-width: 100%;
+
+          .label {
+            @apply inline-flex items-center;
+
+            flex-shrink: 0;
+            width: 123px;
+            height: 40px;
+
+            color: #09090B;
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 500;
+          }
+
+          .editor {
+            flex-shrink: 1;
+            width: 424px;
+          }
+        }
+      }
+    }
+  }
+
+  &-sourceWrapper {
+    /*  */
+
+    .source {
+      padding-left: 180px;
+    }
+  }
+}
+
+.MathSeries-actionsWrapper {
+  padding: 0 16px 0 180px;
+
+  .actionItem {
+    margin-top: 34px;
+    padding-top: 10px;
+
+    border-top: 1px solid hsl(var(--border));
+
+    .addButton {
+      /*  */
+    }
+  }
+}

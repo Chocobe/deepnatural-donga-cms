@@ -1,5 +1,6 @@
 // ui
 import MathSeriesSourceDetailHeader from '@/components/pages/math/MathSeriesSourceDetailPage/MathSeriesSourceDetailHeader/MathSeriesSourceDetailHeader';
+import MathSeries from '@/components/pages/math/MathSeriesSourceDetailPage/MathSeries/MathSeries';
 // style
 import './MathSeriesSourceDetailPage.css';
 
@@ -13,7 +14,7 @@ function MathSeriesSourceDetailPage() {
       <div className="MathSeriesSourceDetailPage-divider" />
 
       <div className="MathSeriesSourceDetailPage-main">
-        Main
+        <MathSeries />
       </div>
 
       <div className="MathSeriesSourceDetailPage-divider" />
