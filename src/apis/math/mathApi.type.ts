@@ -24,6 +24,7 @@ import {
   TMathAchievement2Model,
   TMathAchievement3Model,
   TMathKnowledgeConcept2Model,
+  TMathSourceModel,
 } from '../models/mathModel.type';
 
 /**
@@ -114,7 +115,6 @@ export type TRetrieveMathAchievementsApiRequestParams = TApiRequestNonBodyParams
 export type TRetrieveMathAchievementsApiResponse = TPaginationModel<TMathAchievement1Model>;
 
 /** (POST) 수학 성취 기준 생성 RequestParams */
-// FIXME: `학년(군)` 타입명에 `achievement` 지우기
 export type TProduceMathAchievementApiRequestParams = TApiRequestBodyParams<
   void,
   void,
@@ -157,15 +157,25 @@ export type TProduceMathKnowledgeConceptApiResponse = any;
 // --- --- --- --- --- --- --- --- --- ---
 
 /**
- * 수학 시리즈-출처 API
+ * 수학 시리즈-출처 목록 조회 RequestParams
  */
 /** (GET) 수학 시리즈-출처 목록 조회 RequestParrams */
 export type TRetrieveMathSeriesSourcesApiRequestParams = TApiRequestNonBodyParams<void, {
   page?: number;
 }>;
-
 /** (GET) 수학 시리즈-출처 목록 조회 Response */
 export type TRetrieveMathSeriesSourcesApiResponse = TPaginationModel<TMathSeriesModel>;
+
+/** (POST) 시리즈-출처 생성 RequestParams */
+export type TProduceMathSeriesSourceApiRequestParams = TApiRequestBodyParams<
+  void,
+  void,
+  Omit<TMathSeriesModel, 'id' | 'source_set'> & {
+    source_set: Array<Omit<TMathSourceModel, 'id'>>
+  }
+>;
+// FIXME: 실제 응답 확인하기
+export type TProduceMathSeriesSourceApiResponse = any;
 
 // --- --- --- --- --- --- --- --- --- ---
 

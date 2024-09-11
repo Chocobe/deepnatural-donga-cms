@@ -333,6 +333,13 @@ export const cmsSourceTypeMapper = {
 } as const;
 export type TCmsSourceType = typeof cmsSourceTypeMapper[keyof typeof cmsSourceTypeMapper];
 
+export const cmsSourceTypeOptions: TCommonSelectOptionItem[] = Object
+  .entries(cmsSourceTypeMapper)
+  .map((([text, value]) => ({
+    text,
+    value,
+  })));
+
 /**
  * 난이도
  */

@@ -108,7 +108,7 @@ function _MathSeriesSourceTable() {
         const classtype = props.row.original.source.classtype;
         const grade = props.cell.getValue();
 
-        if (!classtype || !grade) {
+        if (!classtype) {
           return '';
         }
 

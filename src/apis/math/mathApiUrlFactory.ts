@@ -103,6 +103,11 @@ const mathApiUrlFactory = (() => {
     retrieveMathSeriesSourcesPath() {
       return `${BASE_PATH}series/`;
     },
+
+    /** (POST) 수학 시리즈-출처 생성 */
+    produceMathSeriesSourcePath() {
+      return this.retrieveMathSeriesSourcesPath();
+    },
   };
 
   //

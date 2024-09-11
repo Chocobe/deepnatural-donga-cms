@@ -2,8 +2,14 @@
 import {
   useState,
   useMemo,
+  useCallback,
   memo,
 } from 'react';
+// router
+import { 
+  useNavigate,
+} from 'react-router-dom';
+import routePathFactory from '@/routes/routePathFactory';
 // ui
 import {
   Accordion,
@@ -108,6 +114,21 @@ function _MathSeriesSourceHeader() {
     },
   ], []);
 
+  //
+  // hook
+  //
+  const navigate = useNavigate();
+
+  //
+  // callback
+  //
+  const addMathSeriesSource = useCallback(() => {
+    navigate(routePathFactory
+      .math
+      .getSeriesSourceAddPage()
+    );
+  }, [navigate]);
+
   return (
     <div className="MathSeriesSourceHeader">
       <Accordion
@@ -167,15 +188,12 @@ function _MathSeriesSourceHeader() {
           </Button>
         </TBUTooltip>
 
-        <TBUTooltip>
-          <Button
-            className="actionButton"
-            onClick={() => console.log('Add 시리즈')}
-            disabled>
-            <LuPlus className="icon" />
-            Add 시리즈
-          </Button>
-        </TBUTooltip>
+        <Button
+          className="actionButton"
+          onClick={addMathSeriesSource}>
+          <LuPlus className="icon" />
+          Add 시리즈
+        </Button>
       </div>
     </div>
   );

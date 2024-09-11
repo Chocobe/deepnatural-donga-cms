@@ -1,3 +1,9 @@
+// react
+import {
+  useEffect,
+} from 'react';
+// store
+import useMathKnowledgeConceptPageStore from '@/store/mathStores/mathKnowledgeConceptPageStore/mathKnowledgeConceptPageStore';
 // ui
 import MathKnowledgeConceptDetailHeader from '@/components/pages/math/MathKnowledgeConceptDetailPage/MathKnowledgeConceptDetailHeader/MathKnowledgeConceptDetailHeader';
 import MathKnowledgeConcept1 from '@/components/pages/math/MathKnowledgeConceptDetailPage/MathKnowledgeConcept1/MathKnowledgeConcept1';
@@ -6,6 +12,20 @@ import MathKnowledgeConceptDetailFooter from '@/components/pages/math/MathKnowle
 import './MathKnowledgeConceptDetailPage.css';
 
 function MathKnowledgeConceptDetailPage() {
+  //
+  // mathKnowledgeConceptPage store
+  //
+  const clearDetailTargetMathKnowledgeConcept = useMathKnowledgeConceptPageStore(state => state.clearDetailTargetMathKnowledgeConcept);
+
+  //
+  // effect
+  //
+  useEffect(function cleanup() {
+    return () => {
+      clearDetailTargetMathKnowledgeConcept();
+    };
+  }, [clearDetailTargetMathKnowledgeConcept]);
+
   return (
     <div className="MathKnowledgeConceptDetailPage">
       <div className="MathKnowledgeConceptDetailPage-header">

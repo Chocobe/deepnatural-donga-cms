@@ -61,6 +61,9 @@ const routePathFactory = {
     getSeriesSourcePath() {
       return `${this.getMathRootPath()}/series-source` as const;
     },
+    getSeriesSourceAddPage() {
+      return `${this.getSeriesSourcePath()}/add` as const;
+    },
 
     // 지문
     getInstructionPath() {
