@@ -1,15 +1,3 @@
-// TODO: formItems => 2차 배열로 만들기
-// TODO: => 그룹 단위 표현을 의도함
-// TODO:
-// TODO: => => [제품명]
-// TODO: => => [학교급, 학년, 학기, 교육과정]
-// TODO: => => [과목, 판형, 저자, 발행처]
-// TODO: => => [사용기한, 사용범위, 사용권리]
-// TODO: => => [사용여부]
-
-// TODO: 차후 `<MathSource />` 구현 시, `max-width` 적용하기
-// TODO: => column 최대 4개 까지만
-
 // react
 import {
   useRef,
@@ -35,6 +23,7 @@ import {
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
+import MathSource from '../MathSource/MathSource';
 // icon
 import { 
   LuPlus,
@@ -80,23 +69,23 @@ function _MathSeries() {
   //
   // callback
   //
-  // const onChangeSourceIsChecked = useCallback((params: {
-  //   indexOfSource: number,
-  //   isChecked: boolean
-  // }) => {
-  //   const {
-  //     indexOfSource,
-  //     isChecked,
-  //   } = params;
+  const onChangeSourceIsChecked = useCallback((params: {
+    indexOfSource: number,
+    isChecked: boolean
+  }) => {
+    const {
+      indexOfSource,
+      isChecked,
+    } = params;
 
-  //   const indexOfSourceSet = indexOfSourceSetRef.current;
+    const indexOfSourceSet = indexOfSourceSetRef.current;
 
-  //   if (isChecked) {
-  //     indexOfSourceSet.add(indexOfSource);
-  //   } else {
-  //     indexOfSourceSet.delete(indexOfSource);
-  //   }
-  // }, []);
+    if (isChecked) {
+      indexOfSourceSet.add(indexOfSource);
+    } else {
+      indexOfSourceSet.delete(indexOfSource);
+    }
+  }, []);
 
   const onChangeInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -271,14 +260,10 @@ function _MathSeries() {
           <div 
             key={`${detailFormState.source_set?.length}-${indexOfSource}`}
             className="source">
-            {/* <MathKnowledgeConcept2
-              indexOfKC2={indexOfKC2}
-              kc2={kc2}
-              onChangeKC2IsChecked={onChangeSourceIsChecked}
-              openAchievementSearchModal={openAchievementSearchModal} /> */}
-            <div>
-              index: ({indexOfSource})
-            </div>
+            <MathSource
+              indexOfSource={indexOfSource}
+              source={source}
+              onChangeSourceIsChecked={onChangeSourceIsChecked} />
           </div>
         );
       })}
