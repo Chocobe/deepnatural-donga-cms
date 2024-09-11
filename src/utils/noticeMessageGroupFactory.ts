@@ -57,6 +57,7 @@ const noticeMessageGroupFactory: {
 
       // 시리즈-출처
       retrieveMathSeriesSources: TNoticeMessageGroup;
+      produceMathSeriesSources: TNoticeMessageGroup;
 
       // 지문
       retrieveMathInstructions: TNoticeMessageGroup;
@@ -396,6 +397,22 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('수학 시리즈-출처 정보 조회 중'),
         }),
         successMessage: undefined,
+      },
+
+      // (POST) 수학 시리즈-출처 생성
+      produceMathSeriesSources: {
+        loadingMessage: () => ({
+          title: '',
+          message: '신규 수학 시리즈-출처를 추가 중입니다.',
+        }),
+        errorMessage: () => ({
+          title: '추가하기 오류',
+          message: '오류가 발생하여 추가되지 않았습니다. 다시 시도해주세요.',
+        }),
+        successMessage: () => ({
+          title: '추가하기 완료',
+          message: '입력하신 내용이 성공적으로 추가되었습니다.',
+        }),
       },
 
       // --- --- --- --- --- --- --- --- --- ---

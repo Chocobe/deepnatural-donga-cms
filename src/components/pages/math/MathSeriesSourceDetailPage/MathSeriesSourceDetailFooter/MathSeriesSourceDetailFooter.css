@@ -1,0 +1,16 @@
+.MathSeriesSourceDetailFooter {
+  @apply flex justify-end gap-5;
+
+  &-rightSide {
+    @apply flex items-center gap-2.5;
+
+    .button {
+      @apply flex items-center gap-2;
+
+      .icon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}

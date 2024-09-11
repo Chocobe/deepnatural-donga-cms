@@ -75,7 +75,7 @@
   }
 
   &-sourceWrapper {
-    /*  */
+    @apply flex flex-col gap-[40px];
 
     .source {
       padding-left: 180px;

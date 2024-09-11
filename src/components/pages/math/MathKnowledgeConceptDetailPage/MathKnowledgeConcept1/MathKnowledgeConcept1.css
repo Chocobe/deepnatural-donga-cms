@@ -76,7 +76,7 @@
   }
 
   &-kc2Wrapper {
-    /*  */
+    @apply flex flex-col gap-[40px];
 
     .kc2 {
       padding-left: 180px;

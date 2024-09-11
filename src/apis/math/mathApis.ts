@@ -23,9 +23,6 @@ import {
   TDeleteMathTextbookApiRequestParams,
   TDeleteMathTextbookApiResponse,
 
-  TRetrieveMathSeriesSourcesApiRequestParams,
-  TRetrieveMathSeriesSourcesApiResponse,
-
   TRetrieveMathInstructionsApiRequestParams,
   TRetrieveMathInstructionsApiResponse,
 
@@ -52,6 +49,13 @@ import {
 
   TProduceMathKnowledgeConceptApiRequestParams,
   TProduceMathKnowledgeConceptApiResponse,
+} from './mathApi.type';
+import {
+  TRetrieveMathSeriesSourcesApiRequestParams,
+  TRetrieveMathSeriesSourcesApiResponse,
+
+  TProduceMathSeriesSourceApiRequestParams,
+  TProduceMathSeriesSourceApiResponse,
 } from './mathApi.type';
 
 // FIXME: mockup
@@ -326,6 +330,26 @@ export const retrieveMathSeriesSourcesApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .retrieveMathSeriesSources,
+});
+
+//
+// (POST) 시리즈-출처 생성
+//
+export const produceMathSeriesSourceApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathSeriesSourceApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    return api.post<TProduceMathSeriesSourceApiResponse>(
+      mathApiUrlFactory.produceMathSeriesSourcePath(),
+      payload
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathSeriesSources,
 });
 
 // --- --- --- --- --- --- --- --- --- ---
