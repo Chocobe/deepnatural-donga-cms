@@ -74,6 +74,9 @@ const routePathFactory = {
     getQuestionPath() {
       return `${this.getMathRootPath()}/question` as const;
     },
+    getQuestionToolPath() {
+      return `${this.getQuestionPath()}/tool` as const;
+    },
   },
 
   english: {
