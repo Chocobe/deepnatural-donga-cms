@@ -1,0 +1,23 @@
+.MathQuestionToolScreenCaptureButton {
+  padding: 12px;
+
+  border-radius: 50%;
+  background-color: #2644D9;
+
+  transition: all 0.18s ease;
+
+  &:hover {
+    background-color: #7D8FE8;
+  }
+
+  &:active {
+    background-color: #5269E0;
+  }
+
+  &:disabled {
+    background-color: #D4DAF7;
+
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
