@@ -24,7 +24,6 @@ const useInitMathPixAppKey = () => {
       .callWithNoticeMessageGroup();
 
     const data = response?.data;
-    console.log('data: ', data);
 
     if (data) {
       setMathPixAppKeyInfo_action(data);
