@@ -1,0 +1,45 @@
+.MathQuestionToolErrorModal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  > .iconWrapper {
+    font-size: 64px;
+    line-height: 64px;
+    text-align: center;
+  }
+
+  > .message {
+    color: #333333;
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 400;
+    text-align: center;
+    white-space: pre-line;
+  }
+
+  a {
+    color: #1687FF;
+    font-weight: 500;
+
+    outline: none;
+  }
+}
+
+.MathQuestionToolErrorModal-footer {
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+
+  > .confirmButton {
+    padding: 10px 20px;
+    width: 110px;
+
+    color: #fff;
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 600;
+  }
+}
