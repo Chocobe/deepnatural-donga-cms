@@ -1,0 +1,75 @@
+.ScreenCaptureConfirmModal {
+  /*  */
+
+  &-content {
+    width: 100%;
+    height: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    > .modalBody {
+      width: 100%;
+      height: 100%;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+
+      > .inner {
+        width: fit-content;
+        max-width: 62.5%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+
+        > .capturedImage {
+          width: 100%;
+
+          color: #fff;
+          font-size: 24px;
+          line-height: 36px;
+          font-weight: 700;
+        }
+
+        > .actionsWrapper {
+          padding: 10px;
+          width: fit-content;
+
+          display: flex;
+          align-items: center;
+          gap: 10px;
+
+          border-radius: 6px;
+          background-color: #00000054;
+
+          > .actionButton {
+            padding: 8px 16px;
+            width: fit-content;
+            height: fit-content;
+
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            color: #fff;
+            background-color: #4D66B2;
+            outline: none;
+
+            &:hover {
+              background-color: #94A3D1;
+            }
+
+            &:active {
+              background-color: #7185C1;
+            }
+          }
+        }
+      }
+    }
+  }
+}
