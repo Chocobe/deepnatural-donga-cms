@@ -1,0 +1,38 @@
+.MetadataSearchModal {
+  padding: 0 !important;
+
+  width: 100%;
+  min-width: 100%;
+  height: 100%;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  &-header {
+    padding: 72px 24px 20px;
+    max-height: fit-content;
+
+    align-items: center;
+
+    border-bottom: 1px solid #E2E8F0;
+
+    > * {
+      width: 100%;
+      max-width: 960px;
+    }
+  }
+
+  &-body {
+    flex: 1 1 auto;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+
+    > .pagination {
+      padding-bottom: 8px;
+    }
+  }
+}
