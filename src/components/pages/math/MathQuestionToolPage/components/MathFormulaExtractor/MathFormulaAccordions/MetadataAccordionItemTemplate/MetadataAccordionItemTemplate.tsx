@@ -93,14 +93,10 @@ function _MetadataAccordionItemTemplate<T extends TSearchApiBaseGeneric>(
   //
   // callback
   //
-  const onOpenSearchModal = useCallback(() => {
-    setIsOpenSearchModal(true);
-  }, []);
-
   const openSearchModal = useCallback((searchValue: string) => {
     setSearchValue(searchValue);
-    onOpenSearchModal();
-  }, [onOpenSearchModal]);
+    setIsOpenSearchModal(true);
+  }, []);
 
   const onEnterSearchInput = useCallback((searchValue: string) => {
     setSearchValue(searchValue);
@@ -171,13 +167,13 @@ function _MetadataAccordionItemTemplate<T extends TSearchApiBaseGeneric>(
 
   return (<>
     <AccordionItem 
-      className="MetadataAccordionItemTemplate"
+      className={cn(
+        'MetadataAccordionItemTemplate',
+        isTarget ? 'isTarget': ''
+      )}
       value={accordionValue}>
       <AccordionTrigger>
-        <div className={cn(
-          'MetadataAccordionItemTemplate-trigger',
-          isTarget ? 'isTarget': ''
-        )}>
+        <div className="MetadataAccordionItemTemplate-trigger">
           <div className="itemName">
             {header.label}
           </div>

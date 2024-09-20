@@ -1,11 +1,18 @@
 .MetadataAccordionItemTemplate {
   padding: 0 !important;
+  padding-right: 16px !important;
 
   & *:hover {
     text-decoration: none !important;
   }
   & * button {
     padding: 0 !important;
+  }
+
+  &.isTarget {
+    button {
+      background-color: #F6F9FD !important;
+    }
   }
 
   &-trigger {
@@ -19,10 +26,6 @@
     text-align: start;
 
     background-color: transparent;
-
-    &.isTarget {
-      background-color: #F6F9FD;
-    }
 
     > .itemName {
       flex-shrink: 0;
