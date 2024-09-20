@@ -1,0 +1,87 @@
+.KnowledgeConcept {
+  padding: 20px;
+  width: 100%;
+
+  border: 1px solid hsl(var(--border));
+
+  > .summaryWrapper {
+    display: grid;
+    grid-template-columns: 100px 1fr 20px;
+    gap: 8px;
+
+    > .label {
+      display: flex;
+      align-items: center;
+
+      color: #000;
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 600;
+    }
+
+    > .valueSummary {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
+
+      color: #000;
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 400;
+
+      &.placeholder {
+        color: #9E9E9E;
+      }
+    }
+
+    > .actionButton {
+      /*  */
+    }
+  }
+
+  > .detailWrapper {
+    margin-top: 12px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    > .searchWrapper {
+      /*  */
+    }
+
+    > .details {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      > .detail {
+        padding: 6px 0;
+
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+
+        font-size: 16px;
+        line-height: 24px;
+
+        > .label {
+          flex-shrink: 0;
+          width: 130px;
+
+          color: #000;
+          font-weight: 500;
+        }
+
+        > .value {
+          flex: 1;
+          width: 100%;
+
+          color: #424242;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}
