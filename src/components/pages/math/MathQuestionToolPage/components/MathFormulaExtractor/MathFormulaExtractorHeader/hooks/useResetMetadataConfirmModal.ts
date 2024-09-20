@@ -31,7 +31,12 @@ const useResetMetadataConfirmModal = () => {
     resetMetadataConfirmModalCancelButtonText,
   } = useResetMetadataConfirmModalMessage();
 
-  const openResetMetadataConfirmModal = useCallback((id: string) => {
+  //
+  // callback
+  //
+  const openResetMetadataConfirmModal = useCallback((
+    idOrOnConfirmFunction: string | (() => void)
+  ) => {
     openNoticeModal({
       title: resetMetadataConfirmModalTitle,
       message: resetMetadataConfirmModalMessage,
@@ -42,7 +47,10 @@ const useResetMetadataConfirmModal = () => {
       secondButton: {
         text: resetMetadataConfirmModalConfirmButtonText,
         variant: 'default',
-        onClick: () => clearMetadataItem_action(id),
+        // onClick: () => clearMetadataItem_action(id),
+        onClick: typeof idOrOnConfirmFunction === 'string'
+          ? () => clearMetadataItem_action(idOrOnConfirmFunction)
+          : idOrOnConfirmFunction,
       },
     });
   }, [
