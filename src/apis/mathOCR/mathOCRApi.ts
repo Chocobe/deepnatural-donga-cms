@@ -110,17 +110,32 @@ export const produceS3PresignedUrl = createApiWithNoticeMessageGroup({
 export const uploadFileToS3 = createApiWithNoticeMessageGroup({
   apiFunction: (params: TUploadFileToS3ApiRequestParams) => {
     const {
-      payload,
+      payload: {
+        url,
+        fields,
+        file,
+      },
     } = params;
 
-    const {
-      presignedUrl,
-      ..._payload
-    } = payload;
+    const formData = new FormData();
+
+    Object
+      .entries(fields)
+      .forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+    formData.append('file', file);
+    formData.append('Content-Type', file.type);
 
     return api.post<TUploadFileToS3ApiResponse>(
-      presignedUrl,
-      _payload
+      url,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
     );
   },
   noticeMessageGroup: noticeMessageGroupFactory

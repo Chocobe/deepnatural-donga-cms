@@ -43,9 +43,15 @@ const useIntegratedUploadFileApi = () => {
 
       // 1. (BE) PresignedUrl 생성 요청
       const responseForPresignedUrl = await produceS3PresignedUrl({
-        questionId,
-        extension,
+        payload: {
+          questionId,
+          extension,
+        },
       });
+
+      if (!responseForPresignedUrl?.data) {
+        return;
+      }
 
       const {
         url,

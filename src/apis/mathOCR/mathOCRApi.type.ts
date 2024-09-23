@@ -65,12 +65,8 @@ export type TUploadFileToS3ApiRequestParams = TApiRequestBodyParams<
   void, 
   void, 
   TProduceS3PresignedUrlApiResponse & {
-    presignedUrl: string;
     file: File;
   }
 >;
-// export type TUploadFileToS3ApiPayload = TProduceS3PresignedUrlApiResponse & {
-//   file: File;
-// };
 
 export type TUploadFileToS3ApiResponse = any;
