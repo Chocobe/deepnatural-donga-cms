@@ -29,6 +29,7 @@
       line-height: 24px;
       font-weight: 400;
 
+      border: 1px solid hsl(var(--border));
       border-radius: 6px;
       overflow: hidden;
 
