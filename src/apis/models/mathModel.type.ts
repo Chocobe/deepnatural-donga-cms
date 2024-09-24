@@ -52,10 +52,6 @@ export const mathCurriculumFilterOptions: TCommonSelectOptionItem[] = [
  */
 type TMathTextbookGenericModel<TClassType extends TCMSClassType> = {
   id: number;
-  // TODO: 아직 API 미지원 속성
-  /** 과목 */
-  // subject: typeof cmsCommonModelSubjectMapper.MATH;
-
   /** 교육과정 */
   curriculum: TMathCurriculum;
   /** 교과서명 */

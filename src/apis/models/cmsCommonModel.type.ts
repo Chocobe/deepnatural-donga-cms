@@ -157,12 +157,13 @@ export const cmsGradeFilterOptions: typeof cmsGradeOptions & {
     {
       ...SELECT_OPTION_ITEM_ALL,
     },
+    ...cmsGradeOptions[cmsClassTypeMapper.ELEMENTARY],
   ],
   [cmsClassTypeMapper.ELEMENTARY]: [
     {
       ...SELECT_OPTION_ITEM_ALL,
     },
-    ...cmsGradeOptions[cmsClassTypeMapper.ELEMENTARY]
+    ...cmsGradeOptions[cmsClassTypeMapper.ELEMENTARY],
   ],
   [cmsClassTypeMapper.MIDDLE]: [
     {

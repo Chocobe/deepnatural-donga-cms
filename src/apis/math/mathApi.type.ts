@@ -32,11 +32,16 @@ import {
  */
 /** (GET) 수학 교과서 목록 조회 RequestParams */
 export type TRetrieveMathTextbooksApiRequestParams = TApiRequestNonBodyParams<void, {
+  // 필터 속성
   classtype?: TCMSClassType;
   grade?: TCMSElementaryGrade | TCMSElementaryGrade;
-  page?: number;
-  search?: string;
   term?: TCMSTerm;
+  curriculum?: TMathCurriculum;
+  // 검색 속성
+  author?: string;
+  title?: string;
+  // 페이지
+  page?: number;
 }>;
 /** (GET) 수학 교과서 목록 조회 Response */
 export type TRetrieveMathTextbooksApiResponse = TPaginationModel<TMathTextbookModel>;

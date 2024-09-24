@@ -37,8 +37,6 @@ function _MathFormulaAccordions() {
   //
   useEffect(function initTargetIndexOfResultList() {
     setTargetIndexOfResultList([]);
-
-  // eslint-disable-next-line
   }, [submissionStatisticsState]);
 
   return (
