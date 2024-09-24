@@ -6,13 +6,9 @@ import {
 // store
 import useMathQuestionToolPageStore from '@/store/mathStores/mathQuestionToolPageStore/mathQuestionToolPageStore';
 // hook
-// FIXME: API 연동 후, 적용하기
-// import useIntegratedUploadFileApi from '../../../network/hooks/useIntegratedUploadFileApi';
-// FIXME: API 연동 후, 적용하기
-// import useMathPixOCRApi from '../../../network/hooks/useMathPixOCRApi';
+import useIntegratedUploadFileApi from '../../../network/hooks/useIntegratedUploadFileApi';
+import useMathPixOCRApi from '../../../network/hooks/useMathPixOCRApi';
 // api
-// FIXME: API 연동 후, 적용하기
-// import ApiManager from '@/network/ApiManager';
 import apiFeedbackMessageFactory from '../../../network/apiFeedbackMessageFactory';
 // ui
 import ScreenCaptureConfirmModal from '../../ui/ScreenCaptureConfirmModal/ScreenCaptureConfirmModal';
@@ -39,11 +35,13 @@ function _MathFormulaCaptureConfirmModal() {
   //
   // hook
   //
-  // FIXME: API 연동 후, 적용하기
-  // const { 
-  //   uploadFile,
-  // } = useIntegratedUploadFileApi();
-  // const { produceMathPixOCR } = useMathPixOCRApi();
+  const { 
+    uploadFile,
+  } = useIntegratedUploadFileApi();
+
+  const { 
+    produceMathPixOCR,
+  } = useMathPixOCRApi();
 
   //
   // callback
@@ -85,25 +83,20 @@ function _MathFormulaCaptureConfirmModal() {
         return;
       }
 
-      // FIXME: API 연동하기
       // // 1. 이미지 업로드
-      // const uploadedFileData = await uploadFile('', imageObjUrl);
+      const uploadedFileData = await uploadFile('', imageObjUrl);
 
-      // if (!uploadedFileData) {
-      //   throw new Error('파일 업로드 실패');
-      // }
+      if (!uploadedFileData) {
+        throw new Error('파일 업로드 실패');
+      }
 
-      // const {
-      //   fileUrl,
-      // } = uploadedFileData;
+      const {
+        fileUrl,
+      } = uploadedFileData;
 
-      // FIXME: API 연동하기
       // 2. Image => LaTeX 변환
-      // const responseOfMathPixOCR = await produceMathPixOCR(fileUrl);
-      // const data = responseOfMathPixOCR?.data;
-      const data = {
-        text: 'mockup - MathFormulaCaptureConfirmModal.tsx',
-      };
+      const responseOfMathPixOCR = await produceMathPixOCR(fileUrl);
+      const data = responseOfMathPixOCR?.data;
 
       // 3. `2번 결과` 를 기존 LaTeX 에 insert
       let latex = resultState.questionSets[indexOfResult][id] as string ?? '';
@@ -136,9 +129,8 @@ function _MathFormulaCaptureConfirmModal() {
     imageObjUrl, 
     targetElementState, 
     resultState,
-    // FIXME: API 연동하기
-    // uploadFile, 
-    // produceMathPixOCR, 
+    uploadFile, 
+    produceMathPixOCR, 
     setApiLoadingUiState_action,
     setQuestionSetsValue_action,
     resetApiLoadingUiState_action,

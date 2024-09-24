@@ -1,8 +1,9 @@
+// ui
+import MathFormulaExtractor from '@/components/pages/math/MathQuestionToolPage/components/MathFormulaExtractor/MathFormulaExtractor';
+
 function MathQuestionToolPage() {
   return (
-    <div className="w-full h-full justify-center items-center">
-      Math Question Tool Page
-    </div>
+    <MathFormulaExtractor />
   );
 }
 

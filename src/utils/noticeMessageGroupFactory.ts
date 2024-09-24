@@ -65,6 +65,14 @@ const noticeMessageGroupFactory: {
       // 문항
       retrieveMathQuestions: TNoticeMessageGroup;
     };
+    mathOCR: {
+      retrieveMathPixAppKey: TNoticeMessageGroup;
+      produceMathPixAppToken: TNoticeMessageGroup;
+      produceMathPixOCR: TNoticeMessageGroup;
+
+      produceS3PresignedUrl: TNoticeMessageGroup;
+      uploadFileToS3: TNoticeMessageGroup;
+    };
   };
 
   uis: {
@@ -439,6 +447,68 @@ const noticeMessageGroupFactory: {
         }),
         errorMessage: () => ({
           ...createNetworkErrorMessage('수학 문항 정보 조회 중'),
+        }),
+        successMessage: undefined,
+      },
+    },
+
+    mathOCR: {
+      // (GET) MathPix API Key 조회
+      retrieveMathPixAppKey: {
+        loadingMessage: () => ({
+          title: '',
+          message: 'Math Pix API 준비 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('Math Pix API 조회 중'),
+        }),
+        successMessage: undefined,
+      },
+
+      // (POST) MathPix API Token 발행
+      produceMathPixAppToken: {
+        loadingMessage: () => ({
+          title: '',
+          message: 'Math Pix API 준비 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('Math Pix API 조회 중'),
+        }),
+        successMessage: undefined,
+      },
+
+      // (POST) MathPix OCR 요청
+      produceMathPixOCR: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 OCR 처리 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 OCR 처리 중'),
+        }),
+        successMessage: undefined,
+      },
+
+      // (POST) AWS S3 presignedURL 생성
+      produceS3PresignedUrl: {
+        loadingMessage: () => ({
+          title: '',
+          message: '',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('이미지 업로드 준비중'),
+        }),
+        successMessage: undefined,
+      },
+
+      // (POST) AWS S3 파일 업로드
+      uploadFileToS3: {
+        loadingMessage: () => ({
+          title: '',
+          message: '',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('이미지 업로드 중'),
         }),
         successMessage: undefined,
       },
