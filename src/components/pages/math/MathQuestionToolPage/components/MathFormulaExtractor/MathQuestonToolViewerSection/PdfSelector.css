@@ -1,0 +1,14 @@
+.PdfSelector {
+  @apply gap-2;
+
+  width: fit-content !important;
+
+  border: none !important;
+  background-color: transparent !important;
+
+  &:focus,
+  &:focus-visible {
+    border: none !important;
+    box-shadow: none !important;
+  }
+}

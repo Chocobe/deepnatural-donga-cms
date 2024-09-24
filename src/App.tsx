@@ -10,6 +10,11 @@ import RootRouter from './routes/RootRouter';
 import useAuthApiStore from './store/authApiStore/authApiStore';
 // dayjs
 import initDayjs from './lib/dayjs/initDayjs';
+// mathjax
+import { 
+  MathJaxContext,
+} from 'better-react-mathjax';
+import mathJaxConfig from './lib/mathjax/mathJaxConfig';
 // ui
 import { 
   TooltipProvider,
@@ -49,9 +54,13 @@ function App() {
 
   return (
     <div className="App">
-      <TooltipProvider>
-        <RootRouter />
-      </TooltipProvider>
+      <MathJaxContext
+        version={3}
+        config={mathJaxConfig}>
+        <TooltipProvider>
+          <RootRouter />
+        </TooltipProvider>
+      </MathJaxContext>
 
       {/* Global modals */}
       <HistoryModal />

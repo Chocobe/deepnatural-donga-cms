@@ -1,0 +1,129 @@
+.MathQuestionToolWorkingSection {
+  padding: 20px;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  position: relative;
+
+  background-color: #fff;
+  overflow: hidden scroll;
+
+  @keyframes anim-mounted {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  > .title {
+    color: #000;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+
+    opacity: 0;
+    animation: anim-mounted 1s ease both;
+    animation-delay: 0.5s;
+  }
+
+  > .inner{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    opacity: 0;
+    animation: anim-mounted 1s ease both;
+    animation-delay: 0.5s;
+
+    > .actionsWrapper {
+      /*  */
+
+      > .addButton {
+        padding: 8px 16px;
+        height: auto;
+
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        border-radius: 6px;
+        border: 1px solid #4D66B2;
+        background-color: #4D66B2;
+
+        > .icon {
+          /*  */
+        }
+
+        > .text {
+          color: #fff;
+          font-size: 16px;
+          line-height: 24px;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  > .intro {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    background-color: #fff;
+
+    overflow: hidden;
+    z-index: 1;
+
+    &.showIntroFlag-true {
+      animation: anim-intro-true 1s ease both;
+
+      @keyframes anim-intro-true {
+        0% {
+          opacity: 0;
+        }
+        20% {
+          opacity: 1;
+        }
+        80% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          display: none;
+        }
+      }
+    }
+
+    &.showIntroFlag-false {
+      animation: anim-intro-false 1s ease-in-out both;
+
+      @keyframes anim-intro-false {
+        0% {
+          opacity: 0;
+        }
+        20% {
+          opacity: 1;
+        }
+        80% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          display: none;
+        }
+      }
+    }
+  }
+}

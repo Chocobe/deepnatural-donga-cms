@@ -1,0 +1,92 @@
+.MathFormulaExtractorHeader {
+  padding: 12px 20px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border: 1px solid hsl(var(--border));
+  background-color: #fff;
+
+  > .logoWrapper {
+    /*  */
+  }
+
+  > .rightSide {
+    display: flex;
+    align-items: center;
+    gap: 21px;
+
+    > .submissionStatistics {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      > .statistics {
+        color: #7E7E7E;
+        font-size: 14px;
+        line-height: 22px;
+        font-weight: 600;
+      }
+
+      > .divider {
+        width: 1px;
+        height: 22px;
+
+        background-color: #EEEEEE;
+      }
+    }
+
+    > .actionsWrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      > .actionButton {
+        padding: 7px 12px;
+
+        width: fit-content;
+        height: fit-content;
+
+        font-size: 14px;
+        line-height: 22px;
+        font-weight: 600;
+
+        &.exit {
+          color: #000;
+        }
+
+        &.submit {
+          color: #fff;
+          background-color: #2644D9;
+
+          &:hover {
+            /* background-color: ${({ theme }) => theme.colors.indigo[300]}; */
+            /* background-color: #2644D9; */
+            filter: brightness(1.2);
+          }
+
+          &:active {
+            /* background-color: ${({ theme }) => theme.colors.indigo[400]}; */
+            /* background-color: #2644D9; */
+            filter: brightness(0.8);
+          }
+
+          &:disabled {
+            color: #7D8FE8;
+            background-color: #D4DAF7;
+          }
+        }
+      }
+    }
+  }
+
+  > .taskNavigator {
+    padding: 4px;
+
+    gap: 0;
+
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+  }
+}

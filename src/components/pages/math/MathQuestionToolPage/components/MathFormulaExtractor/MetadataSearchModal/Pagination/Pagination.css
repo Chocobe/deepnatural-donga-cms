@@ -1,0 +1,38 @@
+.Pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > .pageButton {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #333333;
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 400;
+
+    border-radius: 6px;
+
+    &.currentPage {
+      color: #000;
+
+      background: rgba(0, 0, 0, 0.08);
+
+      pointer-events: none;
+    }
+  }
+
+  > .ellipsis {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

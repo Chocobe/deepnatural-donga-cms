@@ -1,0 +1,139 @@
+.MathEditor {
+  padding: 20px;
+  width: 100%;
+
+  border: 1px solid hsl(var(--border));
+
+  > .textareaWrapper {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 8px;
+
+    > .textareaLabel {
+      display: flex;
+      align-items: center;
+
+      color: #000;
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 600;
+    }
+
+    > .textarea {
+      padding: 8px 16px;
+      height: 38px;
+      min-height: auto;
+
+      color: #000;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 400;
+
+      border: 1px solid hsl(var(--border));
+      border-radius: 6px;
+      overflow: hidden;
+
+      resize: none;
+    }
+  }
+
+  > .previewWrapper {
+    height: 0;
+    margin-top: 20px;
+
+    overflow: hidden;
+    transition: height 0.28s ease-in-out;
+
+    > .scrollHeightWrapper {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 8px;
+
+      > .labelWrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 6px;
+
+        > .previewLabel {
+          color: #000;
+          font-size: 14px;
+          line-height: 22px;
+          font-weight: 600;
+        }
+
+        > .previewButton {
+          padding: 3px 8px;
+          width: auto;
+          height: auto;
+
+          color: #333333;
+          font-size: 12px;
+          line-height: 18px;
+          font-weight: 500;
+
+          background-color: #EEF2FC;
+          outline: none;
+
+          &:hover {
+            background-color: #F6F9FD;
+          }
+
+          &:active {
+            background-color: #E5ECFA;
+          }
+
+          &:focus-visible {
+            box-shadow: none;
+          }
+        }
+      }
+
+      > .MathEditor-preview {
+        padding: 8px 16px;
+        width: 100%;
+
+        border-radius: 6px;
+        border: 1px solid hsl(var(--border));
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        table{
+          appearance: initial;
+
+          /* <table border /> 스타일 재정의 */
+          &[border="1"] {
+            border-width: 1px;
+            border-color: #000;
+            border-collapse: separate;
+
+            thead,
+            tbody,
+            tr,
+            th,
+            td {
+              border: inherit;
+              border-width: inherit;
+              border-color: inherit;
+            }
+          }
+
+          /* <table align /> 스타일 재정의 */
+          &[align="left"] {
+            margin-right: auto;
+          }
+
+          &[align="center"] {
+            margin-left: auto;
+            margin-right: auto;
+          }
+
+          &[align="right"] {
+            margin-left: auto;
+          }
+        }
+      }
+    }
+  }
+}

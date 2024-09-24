@@ -30,6 +30,7 @@ import MathSeriesSourcePage from '@/pages/math/MathSeriesSourcePage/MathSeriesSo
 import MathSeriesSourceDetailPage from '@/pages/math/MathSeriesSourceDetailPage/MathSeriesSourceDetailPage';
 import MathInstructionPage from '@/pages/math/MathInstructionPage/MathInstructionPage';
 import MathQuestionPage from '@/pages/math/MathQuestionPage/MathQuestionPage';
+import MathQuestionToolPage from '@/pages/math/MathQuestionToolPage/MathQuestionToolPage';
 // pages - english
 import EnglishTextbookPage from '@/pages/english/EnglishTextbookPage/EnglishTextbookPage';
 import EnglishChapterPage from '@/pages/english/EnglishChapterPage/EnglishChapterPage';
@@ -197,6 +198,16 @@ const routes = createBrowserRouter([
               .getQuestionPath(),
             element: <MathQuestionPage />,
           },
+          {
+            path: routePathFactory
+              .math
+              .getQuestionPath() + '/:id',
+            element: (
+              <div className="w-full h-full justify-center items-center">
+                Question Detail Page
+              </div>
+            ),
+          },
         ],
       }, // Math CMS
 
@@ -315,6 +326,23 @@ const routes = createBrowserRouter([
       }, // Setting
     ],
   }, // CMS
+
+  // CMS Tool
+  {
+    element: (
+      <LoginRedirectMiddleware>
+        <Outlet />
+      </LoginRedirectMiddleware>
+    ),
+    children: [
+      {
+        path: routePathFactory
+          .math
+          .getQuestionToolPath(),
+        element: <MathQuestionToolPage />,
+      },
+    ],
+  },
 ]);
 
 export default routes;

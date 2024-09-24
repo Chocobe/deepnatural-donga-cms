@@ -1,0 +1,28 @@
+.MathFormulaExtractor {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  > .toolHeader {
+    flex-shrink: 0;
+  }
+
+  > .toolBody {
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+
+    display: grid;
+    grid-template-columns: 60% 40%;
+
+    > .viewerSection {
+        z-index: 1;
+    }
+
+    > .workingSection {
+      /*  */
+    }
+  }
+}

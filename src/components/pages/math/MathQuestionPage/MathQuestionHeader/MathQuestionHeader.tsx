@@ -2,8 +2,14 @@
 import {
   useState,
   useMemo,
+  useCallback,
   memo,
 } from 'react';
+// router
+import { 
+  useNavigate,
+} from 'react-router-dom';
+import routePathFactory from '@/routes/routePathFactory';
 // hook
 import useSearchModal from '@/components/shadcn-ui-custom/modals/SearchModal/hook/useSearchModal';
 // api
@@ -81,6 +87,8 @@ function _MathQuestionHeader() {
     openSearchModal: openSeriesSearchModal,
     closeSearchModal: closeSeriesSearchModal,
   } = useSearchModal();
+
+  const navigate = useNavigate();
 
   const {
     isOpenSearchModal: isOpenTextbookSearchModal,
@@ -294,6 +302,16 @@ function _MathQuestionHeader() {
     }),
   ], []);
 
+  //
+  // callback
+  //
+  const addMathQuestion = useCallback(() => {
+    navigate(routePathFactory
+      .math
+      .getQuestionToolPath()
+    );
+  }, [navigate]);
+
   return (<>
     <div className="MathQuestionHeader">
       <Accordion
@@ -344,20 +362,17 @@ function _MathQuestionHeader() {
       </Accordion>
 
       <div className="MathQuestionHeader-actions">
-        <TBUTooltip>
-          <Button
-            className="actionButton"
-            disabled>
-            <LuFileOutput className="icon" />
-            Import
-          </Button>
-        </TBUTooltip>
+        <Button
+          className="actionButton"
+          disabled>
+          <LuFileOutput className="icon" />
+          Import
+        </Button>
 
         <TBUTooltip>
           <Button
             className="actionButton"
-            onClick={() => console.log('Add 시리즈')}
-            disabled>
+            onClick={addMathQuestion}>
             <LuPencil className="icon" />
             신규문항 등록도구
           </Button>

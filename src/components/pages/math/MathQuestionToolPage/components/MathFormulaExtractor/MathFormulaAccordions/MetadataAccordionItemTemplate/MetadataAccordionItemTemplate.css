@@ -1,0 +1,126 @@
+.MetadataAccordionItemTemplate {
+  padding: 0 !important;
+  padding-right: 16px !important;
+
+  & *:hover {
+    text-decoration: none !important;
+  }
+  & * button {
+    padding: 0 !important;
+  }
+
+  &.isTarget {
+    button {
+      background-color: #F6F9FD !important;
+    }
+  }
+
+  &-trigger {
+    padding: 12px 16px;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    text-align: start;
+
+    background-color: transparent;
+
+    > .itemName {
+      flex-shrink: 0;
+      margin-right: 8px;
+      width: 130px;
+
+      color: #000;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 500;
+    }
+
+    > .valueSummary {
+      flex: 1;
+      width: 100%;
+
+      color: #424242;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 400;
+
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
+
+      &.placeholder {
+        color: #9E9E9E;
+      }
+    }
+
+    > .actionsWrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      > .actionButton {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+
+        cursor: pointer;
+
+        > * {
+          color: #000;
+        }
+      }
+    }
+  }
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    > .searchWrapper {
+      display: flex;
+      gap: 16px;
+
+      > * {
+        width: 100%;
+      }
+    }
+
+    > .detailsWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      > .detail {
+        padding: 6px 0;
+
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+
+        font-size: 16px;
+        line-height: 24px;
+
+        > .label {
+          flex-shrink: 0;
+          width: 130px;
+
+          color: #000;
+          font-weight: 500;
+        }
+
+        > .value {
+          flex: 1;
+          width: 100%;
+
+          color: #424242;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}

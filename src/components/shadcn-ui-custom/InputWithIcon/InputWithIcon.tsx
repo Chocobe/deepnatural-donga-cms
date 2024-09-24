@@ -2,15 +2,15 @@ import {
   forwardRef,
   memo,
   InputHTMLAttributes,
+  FC
 } from "react";
 import { cn } from '@/lib/shadcn-ui-utils';
-import { IconType } from 'react-icons';
 
 export interface InputWithIconProps
   extends InputHTMLAttributes<HTMLInputElement> {
   containerClassName?: string;
-  StartIcon?: IconType
-  EndIcon?: IconType
+  StartIcon?: FC<any>;
+  EndIcon?: FC<any>;
 }
 
 const _InputWithIcon = forwardRef<HTMLInputElement, InputWithIconProps>(({ 

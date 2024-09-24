@@ -1,0 +1,37 @@
+.SubjectAccordionItem {
+  padding: 12px 16px;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  text-align: start;
+
+  background-color: transparent;
+
+  > .label {
+    flex-shrink: 0;
+    margin-right: 8px;
+    width: 130px;
+
+    color: #000;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+  }
+
+  .subject-dropdown {
+    width: 100%;
+    height: auto;
+
+    color: #424242;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+
+    &.placeholder {
+      color: #9E9E9E;
+    }
+  }
+}
