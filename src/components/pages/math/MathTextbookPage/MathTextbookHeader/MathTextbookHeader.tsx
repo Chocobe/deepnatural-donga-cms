@@ -33,7 +33,7 @@ import {
   LuFileOutput,
   LuPlus,
 } from 'react-icons/lu';
-// types
+// type
 import { 
   cmsTermFilterOptions,
   cmsGradeFilterOptions,
@@ -45,6 +45,10 @@ import {
 import { 
   TRetrieveMathTextbooksApiRequestParams,
 } from '@/apis/math/mathApi.type';
+import { 
+  mathCurriculumFilterOptions, 
+  TMathCurriculum,
+} from '@/apis/models/mathModel.type';
 // style
 import { 
   cn,
@@ -103,6 +107,29 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
     searchParamsForRetrieveMathTextbooksApi,
     updateSearchParamsForRetrieveMathTextbooksApi,
     retrieveMathTextbooks,
+  ]);
+
+  const onChangeCurriculum = useCallback((curriculum: string) => {
+    const _curriculum = curriculum.trim().length
+      ? curriculum as TMathCurriculum
+      : undefined;
+
+    const params: TRetrieveMathTextbooksApiRequestParams = {
+      searchParams: {
+        ...searchParamsForRetrieveMathTextbooksApi,
+        curriculum: _curriculum,
+      },
+    };
+
+    retrieveMathTextbooks(params);
+    updateSearchParamsForRetrieveMathTextbooksApi(old => ({
+      ...old,
+      curriculum: _curriculum,
+    }));
+  }, [
+    searchParamsForRetrieveMathTextbooksApi,
+    retrieveMathTextbooks, 
+    updateSearchParamsForRetrieveMathTextbooksApi,
   ]);
 
   const onChangeGrade = useCallback((grade: string) => {
@@ -207,9 +234,26 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
           onChange={onChangeTerm} />
       ),
     },
+    {
+      id: 'curriculum',
+      label: '교육과정',
+      Component: (
+        <CommonSelect
+          id="curriculum"
+          options={mathCurriculumFilterOptions}
+          value={searchParamsForRetrieveMathTextbooksApi.curriculum ??
+            mathCurriculumFilterOptions[0].value
+          }
+          onChange={onChangeCurriculum}
+        />
+      )
+    }
   ], [
     searchParamsForRetrieveMathTextbooksApi,
-    onChangeClassType, onChangeGrade, onChangeTerm,
+    onChangeClassType, 
+    onChangeGrade, 
+    onChangeTerm,
+    onChangeCurriculum,
   ]);
 
   return (

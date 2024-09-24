@@ -30,10 +30,12 @@ export type TMathTextbookPageStoreState = {
 export const initialMathTextbookPageStoreState: TMathTextbookPageStoreState = {
   searchParamsForRetrieveMathTextbooksApi: {
     classtype: undefined,
+    curriculum: undefined,
     grade: undefined,
-    page: undefined,
-    search: undefined,
     term: undefined,
+    author: undefined,
+    title: undefined,
+    page: undefined,
   },
 
   mathTextbooksData: undefined,
@@ -41,8 +43,6 @@ export const initialMathTextbookPageStoreState: TMathTextbookPageStoreState = {
   detailTargetMathTextbook: undefined,
   detailFormState: {
     id: undefined,
-    // TODO: 아직 API 미지원 속성
-    // subject: cmsCommonModelSubjectMapper.MATH,
     curriculum: mathCurriculumMapper[2015],
     title: '',
     author: '',

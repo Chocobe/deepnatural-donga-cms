@@ -1,5 +1,6 @@
 // react
 import {
+  useState,
   useCallback,
   memo,
   ChangeEvent,
@@ -59,9 +60,6 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
   const mathTextbooksData = useMathTextbookPageStore(state => state.mathTextbooksData);
 
   const searchParamsForRetrieveMathTextbooksApi = useMathTextbookPageStore(state => state.searchParamsForRetrieveMathTextbooksApi);
-  const {
-    search = '',
-  } = searchParamsForRetrieveMathTextbooksApi;
 
   const updateSearchParamsForRetrieveMathTextbooksApi = useMathTextbookPageStore(state => state.updateSearchParamsForRetrieveMathTextbooksApi);
 
@@ -74,20 +72,30 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
   const openErrorNoticeModal = useResultNoticeModalStore(state => state.openErrorNoticeModal);
 
   //
+  // state
+  //
+  const [searchType, setSearchType] = useState<string>(
+    mathTextbookSearchTypeOptions[0].value
+  );
+
+  //
   // callback
   //
-  const onChangeSearchType = useCallback((searchType: string) => {
-    console.log('onChangeSearchType() - searchType: ', searchType);
-  }, []);
-
   const onChangeSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const search = e.target.value;
 
     updateSearchParamsForRetrieveMathTextbooksApi(searchParamsForRetrieveMathTextbooksApi => ({
       ...searchParamsForRetrieveMathTextbooksApi,
-      search,
+      title: undefined,
+      author: undefined,
+      ...{
+        [searchType]: search,
+      },
     }));
-  }, [updateSearchParamsForRetrieveMathTextbooksApi]);
+  }, [
+    searchType,
+    updateSearchParamsForRetrieveMathTextbooksApi,
+  ]);
 
   const onEnter = useCallback(() => {
     $editorRef.current?.blur();
@@ -206,51 +214,53 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
   return (
     <div className="MathTextbookTableActions">
       <div className="MathTextbookTableActions-leftSide">
-        <TBUTooltip>
-          <Select
-            value={''}
-            onValueChange={onChangeSearchType}>
-            <SelectTrigger className="searchTypeSelect">
-              <SelectValue placeholder="검색 항목 선택" />
-            </SelectTrigger>
+        <Select
+          value={searchType}
+          onValueChange={setSearchType}>
+          <SelectTrigger className="searchTypeSelect">
+            <SelectValue placeholder="검색 항목 선택" />
+          </SelectTrigger>
 
-            <SelectContent>
-              {mathTextbookSearchTypeOptions.map(item => {
-                const {
-                  text,
-                  value,
-                } = item;
+          <SelectContent>
+            {mathTextbookSearchTypeOptions.map(item => {
+              const {
+                text,
+                value,
+              } = item;
 
-                return (
-                  <SelectItem
-                    key={value}
-                    value={value}>
-                    {text}
-                  </SelectItem>
-                );
-              })}
-            </SelectContent>
-          </Select>
-        </TBUTooltip>
+              return (
+                <SelectItem
+                  key={value}
+                  value={value}>
+                  {text}
+                </SelectItem>
+              );
+            })}
+          </SelectContent>
+        </Select>
 
         <InputWithIcon
           ref={$editorRef}
           containerClassName="searchValue"
           placeholder="검색어를 입력해주세요"
           autoFocus
-          value={search}
+          value={searchParamsForRetrieveMathTextbooksApi[searchType] ?? ''}
           onChange={onChangeSearch}
           onKeyDown={onKeyDown}
           EndIcon={LuSearch} />
       </div>
 
       <div className="MathTextbookTableActions-rightSide">
-        <Button
-          className="actionButton"
-          disabled={!selectedMathTextbooks?.length}
-          onClick={onClickDelete}>
-          삭제
-        </Button>
+        <TBUTooltip>
+          <Button
+            className="actionButton"
+            // 삭제 기능 비활성
+            // disabled={!selectedMathTextbooks?.length}
+            disabled
+            onClick={onClickDelete}>
+            삭제
+          </Button>
+        </TBUTooltip>
 
         <TBUTooltip>
           <Button
