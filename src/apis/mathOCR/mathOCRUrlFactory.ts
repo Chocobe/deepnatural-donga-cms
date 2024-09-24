@@ -5,19 +5,19 @@ const mathOCRUrlFactory = (() => {
 
   return {
     produceS3PresignedUrl() {
-      return `${AWS_S3_BASE_URL}/Prod/upload/`;
+      return `${AWS_S3_BASE_URL}/Prod/upload/` as const;
     },
 
     retrieveMathPixAppKey() {
-      return `/mathpix/settings/`;
+      return `/mathpix/settings/` as const;
     },
 
     produceMathPixAppToken() {
-      return `${MATH_PIX_BASE_URL}/v3/app-tokens`;
+      return `${MATH_PIX_BASE_URL}/v3/app-tokens` as const;
     },
 
     produceMathPixOCR() {
-      return `${MATH_PIX_BASE_URL}/v3/text`;
+      return `${MATH_PIX_BASE_URL}/v3/text` as const;
     },
   } as const;
 })();
