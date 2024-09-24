@@ -44,11 +44,11 @@ const useEnglishCMSPathMatch = () => {
   const isEnglishSeriesSourcePath = !!englishSeriesSourcePathMatch;
 
   // 지문
-  const englishInstructionPathMatch = useMatch(routePathFactory
-    .english
-    .getInstructionPath() + '/*'
-  );
-  const isEnglishInstructionPath = !!englishInstructionPathMatch;
+  // const englishInstructionPathMatch = useMatch(routePathFactory
+  //   .english
+  //   .getInstructionPath() + '/*'
+  // );
+  // const isEnglishInstructionPath = !!englishInstructionPathMatch;
 
   // 문항
   const englishQuestionPathMatch = useMatch(routePathFactory
@@ -74,8 +74,8 @@ const useEnglishCMSPathMatch = () => {
     isEnglishSeriesSourcePath,
     englishSeriesSourcePathMatch,
     // 지문
-    isEnglishInstructionPath,
-    englishInstructionPathMatch,
+    // isEnglishInstructionPath,
+    // englishInstructionPathMatch,
     // 문항
     isEnglishQuestionPath,
     englishQuestionPathMatch,

@@ -28,7 +28,7 @@ import MathKnowledgeConceptPage from '@/pages/math/MathKnowledgeConceptPage/Math
 import MathKnowledgeConceptDetailPage from '@/pages/math/MathKnowledgeConceptDetailPage/MathKnowledgeConceptDetailPage';
 import MathSeriesSourcePage from '@/pages/math/MathSeriesSourcePage/MathSeriesSourcePage';
 import MathSeriesSourceDetailPage from '@/pages/math/MathSeriesSourceDetailPage/MathSeriesSourceDetailPage';
-import MathInstructionPage from '@/pages/math/MathInstructionPage/MathInstructionPage';
+// import MathInstructionPage from '@/pages/math/MathInstructionPage/MathInstructionPage';
 import MathQuestionPage from '@/pages/math/MathQuestionPage/MathQuestionPage';
 import MathQuestionToolPage from '@/pages/math/MathQuestionToolPage/MathQuestionToolPage';
 // pages - english
@@ -37,7 +37,7 @@ import EnglishChapterPage from '@/pages/english/EnglishChapterPage/EnglishChapte
 import EnglishAchievementPage from '@/pages/english/EnglishAchievementPage/EnglishAchievementPage';
 import EnglishKnowledgeConceptPage from '@/pages/english/EnglishKnowledgeConceptPage/EnglishKnowledgeConceptPage';
 import EnglishSeriesSourcePage from '@/pages/english/EnglishSeriesSourcePage/EnglishSeriesSourcePage';
-import EnglishInstructionPage from '@/pages/english/EnglishInstructionPage/EnglishInstructionPage';
+// import EnglishInstructionPage from '@/pages/english/EnglishInstructionPage/EnglishInstructionPage';
 import EnglishQuestionPage from '@/pages/english/EnglishQuestionPage/EnglishQuestionPage';
 // pages - setting
 import MyPage from '@/pages/setting/MyPage/MyPage';
@@ -184,12 +184,12 @@ const routes = createBrowserRouter([
           },
 
           // 수학: 지문
-          {
-            path: routePathFactory
-              .math
-              .getInstructionPath(),
-            element: <MathInstructionPage />,
-          },
+          // {
+          //   path: routePathFactory
+          //     .math
+          //     .getInstructionPath(),
+          //   element: <MathInstructionPage />,
+          // },
 
           // 수학: 문항
           {
@@ -263,12 +263,12 @@ const routes = createBrowserRouter([
           },
 
           // 영어: 지문
-          {
-            path: routePathFactory
-              .english
-              .getInstructionPath(),
-            element: <EnglishInstructionPage />,
-          },
+          // {
+          //   path: routePathFactory
+          //     .english
+          //     .getInstructionPath(),
+          //   element: <EnglishInstructionPage />,
+          // },
 
           // 영어: 문항
           {

@@ -66,9 +66,9 @@ const routePathFactory = {
     },
 
     // 지문
-    getInstructionPath() {
-      return `${this.getMathRootPath()}/instruction` as const;
-    },
+    // getInstructionPath() {
+    //   return `${this.getMathRootPath()}/instruction` as const;
+    // },
 
     // 문항
     getQuestionPath() {
@@ -110,9 +110,9 @@ const routePathFactory = {
     },
 
     // 지문
-    getInstructionPath() {
-      return `${this.getEnglishRootPath()}/instruction` as const;
-    },
+    // getInstructionPath() {
+    //   return `${this.getEnglishRootPath()}/instruction` as const;
+    // },
 
     // 문항
     getQuestionPath() {

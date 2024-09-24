@@ -24,7 +24,7 @@ import {
   LuTrophy,
   LuFlagTriangleRight,
   LuTags,
-  LuAlignLeft,
+  // LuAlignLeft,
   LuFileSpreadsheet,
 } from "react-icons/lu";
 import useMathCMSPathMatch from './useMathCMSPathMatch';
@@ -66,7 +66,7 @@ const useSidebarItems = () => {
     isMathAchievementPath,
     isMathKnowledgeConceptPath,
     isMathSeriesSourcePath,
-    isMathInstructionPath,
+    // isMathInstructionPath,
     isMathQuestionPath,
   } = useMathCMSPathMatch();
 
@@ -76,7 +76,7 @@ const useSidebarItems = () => {
     isEnglishAchievementPath,
     isEnglishKnowledgeConceptPath,
     isEnglishSeriesSourcePath,
-    isEnglishInstructionPath,
+    // isEnglishInstructionPath,
     isEnglishQuestionPath,
   } = useEnglishCMSPathMatch();
 
@@ -159,16 +159,16 @@ const useSidebarItems = () => {
         .getSeriesSourcePath()
       ),
     },
-    {
-      text: '지문',
-      IconComponent: LuAlignLeft,
-      isActive: isMathInstructionPath,
-      isHide: false,
-      onClick: () => navigate(routePathFactory
-        .math
-        .getInstructionPath()
-      ),
-    },
+    // {
+    //   text: '지문',
+    //   IconComponent: LuAlignLeft,
+    //   isActive: isMathInstructionPath,
+    //   isHide: false,
+    //   onClick: () => navigate(routePathFactory
+    //     .math
+    //     .getInstructionPath()
+    //   ),
+    // },
     {
       text: '문항',
       IconComponent: LuFileSpreadsheet,
@@ -181,7 +181,8 @@ const useSidebarItems = () => {
     },
   ], [
     isMathTextbookPath, isMathChapterPath, isMathAchievementPath,
-    isMathKnowledgeConceptPath, isMathSeriesSourcePath, isMathInstructionPath,
+    isMathKnowledgeConceptPath, isMathSeriesSourcePath, 
+    // isMathInstructionPath,
     isMathQuestionPath,
     navigate,
   ]);
@@ -237,16 +238,16 @@ const useSidebarItems = () => {
         .getSeriesSourcePath()
       ),
     },
-    {
-      text: '지문',
-      IconComponent: LuAlignLeft,
-      isActive: isEnglishInstructionPath,
-      isHide: false,
-      onClick: () => navigate(routePathFactory
-        .english
-        .getInstructionPath()
-      ),
-    },
+    // {
+    //   text: '지문',
+    //   IconComponent: LuAlignLeft,
+    //   isActive: isEnglishInstructionPath,
+    //   isHide: false,
+    //   onClick: () => navigate(routePathFactory
+    //     .english
+    //     .getInstructionPath()
+    //   ),
+    // },
     {
       text: '문항',
       IconComponent: LuFileSpreadsheet,
@@ -259,7 +260,8 @@ const useSidebarItems = () => {
     },
   ], [
     isEnglishTextbookPath, isEnglishChapterPath, isEnglishAchievementPath,
-    isEnglishKnowledgeConceptPath, isEnglishSeriesSourcePath, isEnglishInstructionPath,
+    isEnglishKnowledgeConceptPath, isEnglishSeriesSourcePath, 
+    // isEnglishInstructionPath,
     isEnglishQuestionPath,
     navigate,
   ]);
