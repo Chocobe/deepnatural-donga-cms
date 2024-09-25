@@ -1,5 +1,6 @@
 // react
 import {
+  useState,
   useCallback,
   memo,
   ChangeEvent,
@@ -53,29 +54,48 @@ function _MathKnowledgeConceptTableActions(props: TMathKnowledgeConceptTableActi
   //
   const mathKnowledgeConceptsData = useMathKnowledgeConceptPageStore(state => state.mathKnowledgeConceptsData);
   const searchParamsForRetrieveMathKnowledgeConceptsApi = useMathKnowledgeConceptPageStore(state => state.searchParamsForRetrieveMathKnowledgeConceptsApi);
-  const {
-    search = '',
-  } = searchParamsForRetrieveMathKnowledgeConceptsApi;
 
   const updateSearchParamsForRetrieveMathKnowledgeConceptsApi = useMathKnowledgeConceptPageStore(state => state.updateSearchParamsForRetrieveMathKnowledgeConceptsApi);
 
   //
+  // state
+  //
+  const [searchType, setSearchType] = useState(mathKnowledgeConceptSearchTypeOptions[0].value);
+
+  //
   // callback
   //
-  const onChangeSearchType = useCallback(() => {
-    console.log('onChangeSearchType()');
-  }, []);
+  const onChangeSearchType = useCallback((searchType: string) => {
+    updateSearchParamsForRetrieveMathKnowledgeConceptsApi(old => ({
+      ...old,
+      kc1_title: undefined,
+      kc2_title: undefined,
+      kc_search: undefined,
+    }));
+
+    setSearchType(searchType);
+
+    setTimeout(() => {
+      $editorRef.current?.focus();
+    }, 100);
+
+    // eslint-disable-next-line
+  }, [updateSearchParamsForRetrieveMathKnowledgeConceptsApi]);
 
   const onChangeSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const search = e.target.value;
 
     updateSearchParamsForRetrieveMathKnowledgeConceptsApi(old => ({
       ...old,
-      search: search?.length
-        ? search
-        : undefined,
+      kc1_title: undefined,
+      kc2_title: undefined,
+      kc_search: undefined,
+      [searchType]: search,
     }));
-  }, [updateSearchParamsForRetrieveMathKnowledgeConceptsApi]);
+  }, [
+    searchType,
+    updateSearchParamsForRetrieveMathKnowledgeConceptsApi,
+  ]);
 
   const onEnter = useCallback(() => {
     $editorRef.current?.blur();
@@ -95,7 +115,9 @@ function _MathKnowledgeConceptTableActions(props: TMathKnowledgeConceptTableActi
   const onESC = useCallback(() => {
     updateSearchParamsForRetrieveMathKnowledgeConceptsApi(old => ({
       ...old,
-      search: undefined,
+      kc1_title: undefined,
+      kc2_title: undefined,
+      kc_search: undefined,
     }));
   }, [updateSearchParamsForRetrieveMathKnowledgeConceptsApi]);
 
@@ -113,39 +135,37 @@ function _MathKnowledgeConceptTableActions(props: TMathKnowledgeConceptTableActi
   return (
     <div className="MathKnowledgeConceptTableActions">
       <div className="MathKnowledgeConceptTableActions-leftSide">
-        <TBUTooltip>
-          <Select
-            value={''}
-            onValueChange={onChangeSearchType}>
-            <SelectTrigger className="searchTypeSelect">
-              <SelectValue placeholder="검색 항목 선택" />
-            </SelectTrigger>
+        <Select
+          value={searchType}
+          onValueChange={onChangeSearchType}>
+          <SelectTrigger className="searchTypeSelect">
+            <SelectValue placeholder="검색 항목 선택" />
+          </SelectTrigger>
 
-            <SelectContent>
-              {mathKnowledgeConceptSearchTypeOptions.map(item => {
-                const {
-                  text,
-                  value,
-                } = item;
+          <SelectContent>
+            {mathKnowledgeConceptSearchTypeOptions.map(item => {
+              const {
+                text,
+                value,
+              } = item;
 
-                return (
-                  <SelectItem
-                    key={value}
-                    value={value}>
-                    {text}
-                  </SelectItem>
-                );
-              })}
-            </SelectContent>
-          </Select>
-        </TBUTooltip>
+              return (
+                <SelectItem
+                  key={value}
+                  value={value}>
+                  {text}
+                </SelectItem>
+              );
+            })}
+          </SelectContent>
+        </Select>
 
         <InputWithIcon
           ref={$editorRef}
-          containerClassName="searchInput"
+          containerClassName="searchValue"
           placeholder="검색어를 입력해주세요"
           autoFocus
-          value={search}
+          value={searchParamsForRetrieveMathKnowledgeConceptsApi[searchType] ?? ''}
           onChange={onChangeSearch}
           onKeyDown={onKeyDown}
           EndIcon={LuSearch} />

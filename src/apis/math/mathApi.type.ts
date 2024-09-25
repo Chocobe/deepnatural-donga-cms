@@ -155,8 +155,17 @@ export type TProduceMathAchievementApiResponse = TPaginationModel<TMathAchieveme
  */
 /** (GET) 수학 지식개념 목록 조회 RequestParams */
 export type TRetrieveMathKnowledgeConceptsApiRequestParams = TApiRequestNonBodyParams<void, {
+  // 필터 속성
+  achievement1_classtype?: TCMSClassType;
+  achievement1_curriculum?: TMathCurriculum;
+  achievement1_grade_cluster?: TCMSGradeCluster;
+  // 검색 속성
+  chapter_title?: string;
+  kc1_title?: string;
+  kc2_title?: string;
+  kc_search?: string;
+  // 페이지
   page?: number;
-  search?: string;
 }>;
 /** (GET) 수학 지식개념 목록 조회 Response */
 export type TRetrieveMathKnowledgeConceptsApiResponse = TPaginationModel<TMathKnowledgeConcept1Model>;

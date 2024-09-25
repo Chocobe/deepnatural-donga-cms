@@ -47,8 +47,14 @@ export const initialMathKnowledgeConceptPageStoreDetailKC1: TMathKnowledgeConcep
 
 export const initialMathKnowledgeConceptPageStoreState: TMathKnowledgeConceptPageStoreState = {
   searchParamsForRetrieveMathKnowledgeConceptsApi: {
+    achievement1_classtype: undefined,
+    achievement1_curriculum: undefined,
+    achievement1_grade_cluster: undefined,
+    chapter_title: undefined,
+    kc1_title: undefined,
+    kc2_title: undefined,
+    kc_search: undefined,
     page: undefined,
-    search: undefined,
   },
 
   mathKnowledgeConceptsData: undefined,

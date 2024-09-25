@@ -68,7 +68,7 @@ function MathKnowledgeConceptPage() {
   return (
     <div className="MathKnowledgeConceptPage">
       <div className="MathKnowledgeConceptPage-header">
-        <MathKnowledgeConceptHeader />
+        <MathKnowledgeConceptHeader retrieveMathKnowledgeConcepts={retrieveMathKnowledgeConcepts} />
       </div>
 
       <div className="MathKnowledgeConceptPage-actions">
