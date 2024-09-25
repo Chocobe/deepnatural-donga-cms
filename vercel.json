@@ -1,6 +1,10 @@
 {
   "rewrites":  [
     {
+      "source": "/staging/(.*)", 
+      "destination": "http://ec2-13-124-240-118.ap-northeast-2.compute.amazonaws.com:8000/$1"
+    },
+    {
       "source": "/(.*)", 
       "destination": "/"
     }
