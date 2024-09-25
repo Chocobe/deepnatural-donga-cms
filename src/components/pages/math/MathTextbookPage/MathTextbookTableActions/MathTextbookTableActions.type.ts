@@ -5,11 +5,11 @@ import {
 
 export const mathTextbookSearchTypeOptions: TCommonSelectOptionItem[] = [
   {
-    text: '교과서명',
-    value: 'title',
-  },
-  {
     text: '저자',
     value: 'author',
+  },
+  {
+    text: '교과서명',
+    value: 'title',
   },
 ] as const;

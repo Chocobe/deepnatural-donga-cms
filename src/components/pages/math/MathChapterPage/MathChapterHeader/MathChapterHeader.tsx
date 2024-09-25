@@ -89,13 +89,17 @@ function _MathChapterHeader(props: TMathChapterHeaderProps) {
   // callbakc
   //
   const onChangeClassType = useCallback((
-    textbook_classtype: string
+    classtype: string
   ) => {
     updateSearchParamsForRetrieveMathChaptersApi(old => {
+      const textbook_classtype = classtype.trim().length
+        ? classtype as TCMSClassType
+        : undefined;
+
       const params: TRetrieveMathChaptersApiRequestParams = {
         searchParams: {
           ...old,
-          textbook_classtype: textbook_classtype as TCMSClassType,
+          textbook_classtype,
           textbook_grade: undefined,
         },
       };
@@ -117,11 +121,15 @@ function _MathChapterHeader(props: TMathChapterHeaderProps) {
       return;
     }
 
+    const correctedValue = value?.trim()?.length
+      ? value
+      : undefined;
+
     updateSearchParamsForRetrieveMathChaptersApi(old => {
       const params: TRetrieveMathChaptersApiRequestParams = {
         searchParams: {
           ...old,
-          [id]: value,
+          [id]: correctedValue,
         },
       };
 
@@ -138,6 +146,19 @@ function _MathChapterHeader(props: TMathChapterHeaderProps) {
   // cache
   //
   const filterItems = useMemo(() => [
+    {
+      id: 'textbook_curriculum',
+      label: '교육과정',
+      Component: (
+        <CommonSelect
+          key="textbook_curriculum"
+          id="textbook_curriculum"
+          className="editor"
+          options={mathCurriculumFilterOptions}
+          value={textbook_curriculum ?? mathCurriculumFilterOptions[0].value}
+          onChange={onChangeFilter} />
+      ),
+    },
     {
       id: 'textbook_classtype',
       label: '학교급',
@@ -183,24 +204,11 @@ function _MathChapterHeader(props: TMathChapterHeaderProps) {
           onChange={onChangeFilter} />
       ),
     },
-    {
-      id: 'textbook_curriculum',
-      label: '교육과정',
-      Component: (
-        <CommonSelect
-          key="textbook_curriculum"
-          id="textbook_curriculum"
-          className="editor"
-          options={mathCurriculumFilterOptions}
-          value={textbook_curriculum ?? mathCurriculumFilterOptions[0].value}
-          onChange={onChangeFilter} />
-      ),
-    },
   ], [
+    textbook_curriculum,
     textbook_classtype,
     textbook_grade,
     textbook_term,
-    textbook_curriculum,
     onChangeClassType,
     onChangeFilter,
   ]);
