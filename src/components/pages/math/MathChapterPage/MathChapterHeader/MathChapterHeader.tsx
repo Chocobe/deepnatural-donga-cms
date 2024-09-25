@@ -89,13 +89,17 @@ function _MathChapterHeader(props: TMathChapterHeaderProps) {
   // callbakc
   //
   const onChangeClassType = useCallback((
-    textbook_classtype: string
+    classtype: string
   ) => {
     updateSearchParamsForRetrieveMathChaptersApi(old => {
+      const textbook_classtype = classtype.trim().length
+        ? classtype as TCMSClassType
+        : undefined;
+
       const params: TRetrieveMathChaptersApiRequestParams = {
         searchParams: {
           ...old,
-          textbook_classtype: textbook_classtype as TCMSClassType,
+          textbook_classtype,
           textbook_grade: undefined,
         },
       };
@@ -117,11 +121,15 @@ function _MathChapterHeader(props: TMathChapterHeaderProps) {
       return;
     }
 
+    const correctedValue = value?.trim()?.length
+      ? value
+      : undefined;
+
     updateSearchParamsForRetrieveMathChaptersApi(old => {
       const params: TRetrieveMathChaptersApiRequestParams = {
         searchParams: {
           ...old,
-          [id]: value,
+          [id]: correctedValue,
         },
       };
 
