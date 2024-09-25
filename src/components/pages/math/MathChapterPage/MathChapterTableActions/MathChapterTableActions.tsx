@@ -1,5 +1,6 @@
 // react
 import {
+  useState,
   useCallback,
   memo,
   ChangeEvent,
@@ -54,27 +55,52 @@ function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
   const mathChaptersData = useMathChapterPageStore(state => state.mathChaptersData);
 
   const searchParamsForRetrieveMathChaptersApi = useMathChapterPageStore(state => state.searchParamsForRetrieveMathChaptersApi);
-  const {
-    search = '',
-  } = searchParamsForRetrieveMathChaptersApi;
 
   const updateSearchParamsForRetrieveMathChaptersApi = useMathChapterPageStore(state => state.updateSearchParamsForRetrieveMathChaptersApi);
 
   //
+  // state
+  //
+  const [searchType, setSearchType] = useState<string>(
+    mathChapterSearchTypeOptions[0].value
+  );
+
+  //
   // callback
   //
-  const onChangeSearchType = useCallback(() => {
-    console.log('onChangeSearchType()');
-  }, []);
+  const onChangeSearchType = useCallback((searchType: string) => {
+    updateSearchParamsForRetrieveMathChaptersApi(old => ({
+      ...old,
+      chapter_title: undefined,
+      chapter1_title: undefined,
+      chapter2_title: undefined,
+      chapter3_title: undefined,
+    }));
+
+    setSearchType(searchType);
+
+    setTimeout(() => {
+      $editorRef.current?.focus();
+    }, 200);
+
+    // eslint-disable-next-line
+  }, [updateSearchParamsForRetrieveMathChaptersApi]);
 
   const onChangeSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const search = e.target.value;
 
     updateSearchParamsForRetrieveMathChaptersApi(old => ({
       ...old,
-      search,
+      chapter_title: undefined,
+      chapter1_title: undefined,
+      chapter2_title: undefined,
+      chapter3_title: undefined,
+      [searchType]: search,
     }));
-  }, [updateSearchParamsForRetrieveMathChaptersApi]);
+  }, [
+    searchType,
+    updateSearchParamsForRetrieveMathChaptersApi,
+  ]);
 
   const onEnter = useCallback(() => {
     $editorRef.current?.blur();
@@ -96,7 +122,10 @@ function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
   const onESC = useCallback(() => {
     updateSearchParamsForRetrieveMathChaptersApi(old => ({
       ...old,
-      search: undefined,
+      chapter_title: undefined,
+      chapter1_title: undefined,
+      chapter2_title: undefined,
+      chapter3_title: undefined,
     }));
   }, [updateSearchParamsForRetrieveMathChaptersApi]);
 
@@ -114,39 +143,37 @@ function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
   return (
     <div className="MathChapterTableActions">
       <div className="MathChapterTableActions-leftSide">
-        <TBUTooltip>
-          <Select
-            value={''}
-            onValueChange={onChangeSearchType}>
-            <SelectTrigger className="searchTypeSelect">
-              <SelectValue placeholder="검색 항목 선택" />
-            </SelectTrigger>
+        <Select
+          value={searchType}
+          onValueChange={onChangeSearchType}>
+          <SelectTrigger className="searchTypeSelect">
+            <SelectValue placeholder="검색 항목 선택" />
+          </SelectTrigger>
 
-            <SelectContent>
-              {mathChapterSearchTypeOptions.map(item => {
-                const {
-                  text,
-                  value,
-                } = item;
+          <SelectContent>
+            {mathChapterSearchTypeOptions.map(item => {
+              const {
+                text,
+                value,
+              } = item;
 
-                return (
-                  <SelectItem
-                    key={value}
-                    value={value}>
-                    {text}
-                  </SelectItem>
-                );
-              })}
-            </SelectContent>
-          </Select>
-        </TBUTooltip>
+              return (
+                <SelectItem
+                  key={value}
+                  value={value}>
+                  {text}
+                </SelectItem>
+              );
+            })}
+          </SelectContent>
+        </Select>
 
         <InputWithIcon
           ref={$editorRef}
           containerClassName="searchValue"
           placeholder="검색어를 입력해주세요"
           autoFocus
-          value={search}
+          value={searchParamsForRetrieveMathChaptersApi[searchType] ?? ''}
           onChange={onChangeSearch}
           onKeyDown={onKeyDown}
           EndIcon={LuSearch} />

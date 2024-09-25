@@ -59,9 +59,15 @@ export const initialMathChapterPageStoreDetailChapter2: TMathChapterPageStoreDet
 
 export const initialMathChapterPageStoreState: TMathChapterPageStoreState = {
   searchParamsForRetrieveMathChaptersApi: {
+    chapter_title: undefined,
+    chapter1_title: undefined,
+    chapter2_title: undefined,
+    chapter3_title: undefined,
+    textbook_classtype: undefined,
+    textbook_curriculum: undefined,
+    textbook_grade: undefined,
+    textbook_term: undefined,
     page: undefined,
-    textbook: undefined,
-    search: undefined,
   },
 
   mathChaptersData: undefined,

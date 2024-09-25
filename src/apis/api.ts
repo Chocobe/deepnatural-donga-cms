@@ -13,7 +13,10 @@ import mathOCRUrlFactory from './mathOCR/mathOCRUrlFactory';
 
 export default (function createAPI() {
   const api = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL,
+    // 프로덕션
+    // baseURL: import.meta.env.VITE_PRODUCTION_API_BASE_URL,
+    // 스테이징
+    baseURL: import.meta.env.VITE_DEVELOPMENT_API_BASE_URL,
     timeout: 10_000,
   });
 

@@ -81,6 +81,22 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
   //
   // callback
   //
+  const onChangeSearchType = useCallback((searchType: string) => {
+    updateSearchParamsForRetrieveMathTextbooksApi(old => ({
+      ...old,
+      title: undefined,
+      author: undefined,
+    }));
+
+    setSearchType(searchType);
+
+    setTimeout(() => {
+      $editorRef.current?.focus();
+    }, 100);
+
+    // eslint-disable-next-line
+  }, [updateSearchParamsForRetrieveMathTextbooksApi]);
+
   const onChangeSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const search = e.target.value;
 
@@ -115,9 +131,10 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
   ]);
 
   const onESC = useCallback(() => {
-    updateSearchParamsForRetrieveMathTextbooksApi(searchParamsForRetrieveMathTextbooksApi => ({
-      ...searchParamsForRetrieveMathTextbooksApi,
-      search: undefined,
+    updateSearchParamsForRetrieveMathTextbooksApi(old => ({
+      ...old,
+      title: undefined,
+      author: undefined,
     }));
   }, [updateSearchParamsForRetrieveMathTextbooksApi]);
 
@@ -216,7 +233,7 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
       <div className="MathTextbookTableActions-leftSide">
         <Select
           value={searchType}
-          onValueChange={setSearchType}>
+          onValueChange={onChangeSearchType}>
           <SelectTrigger className="searchTypeSelect">
             <SelectValue placeholder="검색 항목 선택" />
           </SelectTrigger>
