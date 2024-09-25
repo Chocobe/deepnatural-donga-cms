@@ -190,6 +190,20 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
   //
   const filterItems = useMemo(() => [
     {
+      id: 'curriculum',
+      label: '교육과정',
+      Component: (
+        <CommonSelect
+          id="curriculum"
+          options={mathCurriculumFilterOptions}
+          value={searchParamsForRetrieveMathTextbooksApi.curriculum ??
+            mathCurriculumFilterOptions[0].value
+          }
+          onChange={onChangeCurriculum}
+        />
+      )
+    },
+    {
       id: 'classtype',
       label: '학교급',
       Component: (
@@ -234,26 +248,12 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
           onChange={onChangeTerm} />
       ),
     },
-    {
-      id: 'curriculum',
-      label: '교육과정',
-      Component: (
-        <CommonSelect
-          id="curriculum"
-          options={mathCurriculumFilterOptions}
-          value={searchParamsForRetrieveMathTextbooksApi.curriculum ??
-            mathCurriculumFilterOptions[0].value
-          }
-          onChange={onChangeCurriculum}
-        />
-      )
-    }
   ], [
     searchParamsForRetrieveMathTextbooksApi,
+    onChangeCurriculum,
     onChangeClassType, 
     onChangeGrade, 
     onChangeTerm,
-    onChangeCurriculum,
   ]);
 
   return (

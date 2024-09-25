@@ -62,14 +62,16 @@ export const initialMathAchievementPageStoreDetailAchievement2: TMathAchievement
 
 export const initialMathAchievementPageStoreState: TMathAchievementPageStoreState = {
   searchParamsForRetrieveMathAchievementsApi: {
-    achievement2: undefined,
-    achievement3: undefined,
-    curriculum: undefined,
     classtype: undefined,
+    curriculum: undefined,
     grade_cluster: undefined,
-
+    achievement1_title: undefined,
+    achievement2_title: undefined,
+    achievement3_title: undefined,
+    achievement_code: undefined,
+    achievement_title: undefined,
     page: undefined,
-    title: undefined,
+    // 미사용 속성
     search: undefined,
   },
 

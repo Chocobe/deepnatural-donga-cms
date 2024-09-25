@@ -196,20 +196,8 @@ export const cmsGradeClusterOptions: {
   [cmsClassTypeMapper.MIDDLE]: TCommonSelectOptionItem[];
   [cmsClassTypeMapper.HIGH]: TCommonSelectOptionItem[];
 } = (() => {
-  const commonOptions: TCommonSelectOptionItem[] = [
-    {
-      text: cmsGradeClusterMapper.ELECTIVE_SUBJECT,
-      value: cmsGradeClusterMapper.ELECTIVE_SUBJECT,
-    },
-    {
-      text: cmsGradeClusterMapper.COMMON_SUBJECT,
-      value: cmsGradeClusterMapper.COMMON_SUBJECT,
-    },
-  ] as const;
-
   return {
     [cmsClassTypeMapper.ELEMENTARY]: [
-      ...commonOptions,
       {
         text: cmsGradeClusterMapper.ELEMENTARY_3_4,
         value: cmsGradeClusterMapper.ELEMENTARY_3_4,
@@ -220,14 +208,20 @@ export const cmsGradeClusterOptions: {
       },
     ],
     [cmsClassTypeMapper.MIDDLE]: [
-      ...commonOptions,
       {
         text: cmsGradeClusterMapper.MIDDLE,
         value: cmsGradeClusterMapper.MIDDLE,
       },
     ],
     [cmsClassTypeMapper.HIGH]: [
-      ...commonOptions,
+      {
+        text: cmsGradeClusterMapper.ELECTIVE_SUBJECT,
+        value: cmsGradeClusterMapper.ELECTIVE_SUBJECT,
+      },
+      {
+        text: cmsGradeClusterMapper.COMMON_SUBJECT,
+        value: cmsGradeClusterMapper.COMMON_SUBJECT,
+      },
     ],
   } as const;
 })();
@@ -239,6 +233,9 @@ export const cmsGradeClusterFilterOptions: typeof cmsGradeClusterOptions & {
     {
       ...SELECT_OPTION_ITEM_ALL,
     },
+    ...cmsGradeClusterOptions[cmsClassTypeMapper.ELEMENTARY],
+    ...cmsGradeClusterOptions[cmsClassTypeMapper.MIDDLE],
+    ...cmsGradeClusterOptions[cmsClassTypeMapper.HIGH],
   ],
   [cmsClassTypeMapper.ELEMENTARY]: [
     {

@@ -116,14 +116,20 @@ export type TProduceMathChapterApiResponse = TMathChapter1Model;
  */
 /** (GET) 수학 성취기준 목록 조회 RequestParams */
 export type TRetrieveMathAchievementsApiRequestParams = TApiRequestNonBodyParams<void, {
-  achievement2?: string;
-  achievement3?: string;
+  // 필터 속성
   classtype?: TCMSClassType;
   curriculum?: TMathCurriculum;
   grade_cluster?: TCMSGradeCluster;
+  // 검색 속성
+  achievement_title?: string;
+  achievement1_title?: string;
+  achievement2_title?: string;
+  achievement3_title?: string;
+  achievement_code?: string;
+  // 페이지
   page?: number;
+  // 미사용 속성
   search?: string;
-  title?: string;
 }>;
 /** (GET) 수학 성취기준 목록 조회 Response */
 export type TRetrieveMathAchievementsApiResponse = TPaginationModel<TMathAchievement1Model>;

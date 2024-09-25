@@ -16,7 +16,9 @@ export default (function createAPI() {
     // 프로덕션
     // baseURL: import.meta.env.VITE_PRODUCTION_API_BASE_URL,
     // 스테이징
-    baseURL: import.meta.env.VITE_DEVELOPMENT_API_BASE_URL,
+    baseURL: import.meta.env.DEV
+      ? import.meta.env.VITE_DEVELOPMENT_API_BASE_URL
+      : import.meta.env.VITE_STAGING_API_BASE_URL,
     timeout: 10_000,
   });
 

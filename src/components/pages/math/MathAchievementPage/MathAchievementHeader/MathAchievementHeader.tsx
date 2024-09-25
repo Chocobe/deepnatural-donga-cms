@@ -39,13 +39,12 @@ import {
 } from '@/apis/math/mathApi.type';
 import { 
   mathCurriculumFilterOptions,
-  TMathCurriculum,
 } from '@/apis/models/mathModel.type';
 import {
   cmsClassTypeFilterOptions,
   cmsGradeClusterFilterOptions,
+  SELECT_OPTION_ITEM_ALL,
   TCMSClassType,
-  TCMSGradeCluster,
 } from '@/apis/models/cmsCommonModel.type';
 // style
 import { 
@@ -66,6 +65,11 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
   // mathAchievementPage store
   //
   const searchParamsForRetrieveMathAchievementsApi = useMathAchievementPageStore(state => state.searchParamsForRetrieveMathAchievementsApi);
+  const {
+    classtype,
+    curriculum,
+    grade_cluster,
+  } = searchParamsForRetrieveMathAchievementsApi;
 
   const updateSearchParamsForRetrieveMathAchievementsApi = useMathAchievementPageStore(state => state.updateSearchParamsForRetrieveMathAchievementsApi);
 
@@ -79,58 +83,20 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
   //
   const navigate = useNavigate();
 
-  // FIXME: mockup
-  // const [searchParams, setSearchParams] = useState({
-  //   achievement2: '',
-  //   achievement3: '',
-  //   classtype: ' ',
-  //   curriculum: ' ',
-  //   gradeCluster: ' ',
-  // });
-
   //
   // callback
   //
-  // const openAchievement2SearchModal = useCallback(() => {
-  //   console.log('openAchievement2SearchModal()');
-  // }, []);
-
-  // const openAchievement3SearchModal = useCallback(() => {
-  //   console.log('openAchievement3SearchModal()');
-  // }, []);
-
-  const onChangeCurriculum = useCallback((curriculum: string) => {
-    updateSearchParamsForRetrieveMathAchievementsApi(old => {
-      const _curriculum = curriculum.trim().length
-        ? curriculum as TMathCurriculum
-        : undefined;
-
-      const params: TRetrieveMathAchievementsApiRequestParams = {
-        searchParams: {
-          ...old,
-          curriculum: _curriculum,
-        },
-      };
-
-      retrieveMathAchievements(params);
-
-      return params.searchParams;
-    });
-  }, [
-    retrieveMathAchievements,
-    updateSearchParamsForRetrieveMathAchievementsApi
-  ]);
 
   const onChangeClassType = useCallback((classtype: string) => {
     updateSearchParamsForRetrieveMathAchievementsApi(old => {
-      const _classtype = classtype.trim().length
+      const correctedClasstype = classtype.trim().length
         ? classtype as TCMSClassType
         : undefined;
 
       const params: TRetrieveMathAchievementsApiRequestParams = {
         searchParams: {
           ...old,
-          classtype: _classtype,
+          classtype: correctedClasstype,
           grade_cluster: undefined,
         },
       };
@@ -144,16 +110,23 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
     updateSearchParamsForRetrieveMathAchievementsApi,
   ]);
 
-  const onChangeGradeCluster = useCallback((gradeCluster: string) => {
-    updateSearchParamsForRetrieveMathAchievementsApi(old => {
-      const _gradeCluster = gradeCluster.trim().length
-        ? gradeCluster as TCMSGradeCluster
-        : undefined;
+  const onChangeSelect = useCallback((
+    value: string,
+    id?: string
+  ) => {
+    if (!id) {
+      return;
+    }
 
+    const correctedValue = value?.trim()?.length
+      ? value
+      : undefined;
+
+    updateSearchParamsForRetrieveMathAchievementsApi(old => {
       const params: TRetrieveMathAchievementsApiRequestParams = {
         searchParams: {
           ...old,
-          grade_cluster: _gradeCluster,
+          [id]: correctedValue,
         },
       };
 
@@ -177,39 +150,6 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
   // cache
   //
   const filterItems = useMemo(() => [
-    // FIXME: 사용여부 논의 필요
-    // {
-    //   id: 'achievement2',
-    //   label: '성취기준(중)',
-    //   Component: (
-    //     <TBUTooltip 
-    //       key="achievement2"
-    //       className="w-full">
-    //       <SearchModalTrigger
-    //         key="achievement2"
-    //         id="achievement2"
-    //         className="editor"
-    //         value={searchParamsForRetrieveMathAchievementsApi.achievement2 ?? ''}
-    //         onOpen={openAchievement2SearchModal} />
-    //     </TBUTooltip>
-    //   ),
-    // },
-    // {
-    //   id: 'achievement3',
-    //   label: '성취기준(소)',
-    //   Component: (
-    //     <TBUTooltip 
-    //       key="achievement3" 
-    //       className="w-full">
-    //       <SearchModalTrigger
-    //         key="achievement3"
-    //         id="achievement3"
-    //         className="editor"
-    //         value={searchParamsForRetrieveMathAchievementsApi.achievement3 ?? ''}
-    //         onOpen={openAchievement3SearchModal} />
-    //     </TBUTooltip>
-    //   ),
-    // },
     {
       id: 'curriculum',
       label: '교육과정',
@@ -218,8 +158,8 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
           id="curriculum"
           className="editor"
           options={mathCurriculumFilterOptions}
-          value={searchParamsForRetrieveMathAchievementsApi.curriculum ?? mathCurriculumFilterOptions[0].value}
-          onChange={onChangeCurriculum} />
+          value={curriculum ?? mathCurriculumFilterOptions[0].value}
+          onChange={onChangeSelect} />
       ),
     },
     {
@@ -230,32 +170,31 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
           id="classtype"
           className="editor"
           options={cmsClassTypeFilterOptions}
-          value={searchParamsForRetrieveMathAchievementsApi.classtype ?? cmsClassTypeFilterOptions[0].value}
+          value={classtype ?? cmsClassTypeFilterOptions[0].value}
           onChange={onChangeClassType} />
       ),
     },
     {
-      id: 'gradeCluster',
+      id: 'grade_cluster',
       label: '학년(군)',
       Component: (
         <CommonSelect
-          id="gradeCluster"
+          id="grade_cluster"
           className="editor"
-          options={searchParamsForRetrieveMathAchievementsApi.classtype
-            ? cmsGradeClusterFilterOptions[searchParamsForRetrieveMathAchievementsApi.classtype]
-            : cmsGradeClusterFilterOptions[cmsGradeClusterFilterOptions[' '][0].value]
+          options={classtype
+            ? cmsGradeClusterFilterOptions[classtype]
+            : cmsGradeClusterFilterOptions[SELECT_OPTION_ITEM_ALL.value]
           }
-          value={searchParamsForRetrieveMathAchievementsApi.grade_cluster ?? cmsGradeClusterFilterOptions[' '][0].value}
-          onChange={onChangeGradeCluster} />
+          value={grade_cluster ?? cmsGradeClusterFilterOptions[SELECT_OPTION_ITEM_ALL.value][0].value}
+          onChange={onChangeSelect} />
       ),
     },
   ], [
-    searchParamsForRetrieveMathAchievementsApi, 
-    // openAchievement2SearchModal,
-    // openAchievement3SearchModal,
-    onChangeCurriculum,
+    curriculum,
+    classtype,
+    grade_cluster,
+    onChangeSelect,
     onChangeClassType,
-    onChangeGradeCluster,
   ]);
 
   return (

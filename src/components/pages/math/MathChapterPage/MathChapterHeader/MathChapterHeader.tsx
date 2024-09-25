@@ -147,6 +147,19 @@ function _MathChapterHeader(props: TMathChapterHeaderProps) {
   //
   const filterItems = useMemo(() => [
     {
+      id: 'textbook_curriculum',
+      label: '교육과정',
+      Component: (
+        <CommonSelect
+          key="textbook_curriculum"
+          id="textbook_curriculum"
+          className="editor"
+          options={mathCurriculumFilterOptions}
+          value={textbook_curriculum ?? mathCurriculumFilterOptions[0].value}
+          onChange={onChangeFilter} />
+      ),
+    },
+    {
       id: 'textbook_classtype',
       label: '학교급',
       Component: (
@@ -191,24 +204,11 @@ function _MathChapterHeader(props: TMathChapterHeaderProps) {
           onChange={onChangeFilter} />
       ),
     },
-    {
-      id: 'textbook_curriculum',
-      label: '교육과정',
-      Component: (
-        <CommonSelect
-          key="textbook_curriculum"
-          id="textbook_curriculum"
-          className="editor"
-          options={mathCurriculumFilterOptions}
-          value={textbook_curriculum ?? mathCurriculumFilterOptions[0].value}
-          onChange={onChangeFilter} />
-      ),
-    },
   ], [
+    textbook_curriculum,
     textbook_classtype,
     textbook_grade,
     textbook_term,
-    textbook_curriculum,
     onChangeClassType,
     onChangeFilter,
   ]);

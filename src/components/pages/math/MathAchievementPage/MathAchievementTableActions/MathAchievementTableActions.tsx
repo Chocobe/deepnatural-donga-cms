@@ -1,5 +1,6 @@
 // react
 import {
+  useState,
   useCallback,
   memo,
   ChangeEvent,
@@ -54,25 +55,56 @@ function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) 
   const mathAchievementsData = useMathAchievementPageStore(state => state.mathAchievementsData);
 
   const searchParamsForRetrieveMathAchievementsApi = useMathAchievementPageStore(state => state.searchParamsForRetrieveMathAchievementsApi);
-  const search = searchParamsForRetrieveMathAchievementsApi.search ?? '';
 
   const updateSearchParamsForRetrieveMathAchievementsApi = useMathAchievementPageStore(state => state.updateSearchParamsForRetrieveMathAchievementsApi);
 
   //
+  // state
+  //
+  const [searchType, setSearchType] = useState(mathAchievementSearchTypeOptions[0].value);
+
+  //
   // callback
   //
-  const onChangeSearchType = useCallback(() => {
-    console.log('onChangeSearchType()');
-  }, []);
+  const onChangeSearchType = useCallback((searchType: string) => {
+    updateSearchParamsForRetrieveMathAchievementsApi(old => ({
+      ...old,
+      achievement_title: undefined,
+      achievement1_title: undefined,
+      achievement2_title: undefined,
+      achievement3_title: undefined,
+      achievement_code: undefined,
+    }));
+
+    setSearchType(searchType);
+
+    setTimeout(() => {
+      $editorRef.current?.focus();
+    }, 100);
+
+    // eslint-disable-next-line
+  }, [updateSearchParamsForRetrieveMathAchievementsApi]);
 
   const onChangeSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const search = e.target.value;
+    const value = e.target.value;
+
+    const correctedValue = value?.trim()?.length
+      ? value
+      : undefined;
 
     updateSearchParamsForRetrieveMathAchievementsApi(old => ({
       ...old,
-      search,
+      achievement_title: undefined,
+      achievement1_title: undefined,
+      achievement2_title: undefined,
+      achievement3_title: undefined,
+      achievement_code: undefined,
+      [searchType]: correctedValue,
     }));
-  }, [updateSearchParamsForRetrieveMathAchievementsApi]);
+  }, [
+    searchType,
+    updateSearchParamsForRetrieveMathAchievementsApi,
+  ]);
 
   const onEnter = useCallback(() => {
     $editorRef.current?.blur();
@@ -92,7 +124,11 @@ function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) 
   const onESC = useCallback(() => {
     updateSearchParamsForRetrieveMathAchievementsApi(old => ({
       ...old,
-      search: undefined,
+      achievement_title: undefined,
+      achievement1_title: undefined,
+      achievement2_title: undefined,
+      achievement3_title: undefined,
+      achievement_code: undefined,
     }));
   }, [updateSearchParamsForRetrieveMathAchievementsApi]);
 
@@ -110,39 +146,37 @@ function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) 
   return (
     <div className="MathAchievementTableActions">
       <div className="MathAchievementTableActions-leftSide">
-        <TBUTooltip>
-          <Select
-            value={''}
-            onValueChange={onChangeSearchType}>
-            <SelectTrigger className="searchTypeSelect">
-              <SelectValue placeholder="검색 항목 선택" />
-            </SelectTrigger>
+        <Select
+          value={searchType}
+          onValueChange={onChangeSearchType}>
+          <SelectTrigger className="searchTypeSelect">
+            <SelectValue placeholder="검색 항목 선택" />
+          </SelectTrigger>
 
-            <SelectContent>
-              {mathAchievementSearchTypeOptions.map(item => {
-                const {
-                  text,
-                  value,
-                } = item;
+          <SelectContent>
+            {mathAchievementSearchTypeOptions.map(item => {
+              const {
+                text,
+                value,
+              } = item;
 
-                return (
-                  <SelectItem
-                    key={value}
-                    value={value}>
-                    {text}
-                  </SelectItem>
-                );
-              })}
-            </SelectContent>
-          </Select>
-        </TBUTooltip>
+              return (
+                <SelectItem
+                  key={value}
+                  value={value}>
+                  {text}
+                </SelectItem>
+              );
+            })}
+          </SelectContent>
+        </Select>
 
         <InputWithIcon
           ref={$editorRef}
-          containerClassName="searchInput"
+          containerClassName="searchValue"
           placeholder="검색어를 입력해주세요"
           autoFocus
-          value={search}
+          value={searchParamsForRetrieveMathAchievementsApi[searchType] ?? ''}
           onChange={onChangeSearch}
           onKeyDown={onKeyDown}
           EndIcon={LuSearch} />

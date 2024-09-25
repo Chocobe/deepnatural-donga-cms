@@ -29,10 +29,7 @@ const useMathAchievementPageStore = create(devtools<TMathAchievementPageStore>((
   updateSearchParamsForRetrieveMathAchievementsApi: callback => {
     set(old => ({
       ...old,
-      searchParamsForRetrieveMathAchievementsApi: {
-        ...old.searchParamsForRetrieveMathAchievementsApi,
-        ...callback(old.searchParamsForRetrieveMathAchievementsApi),
-      },
+      searchParamsForRetrieveMathAchievementsApi: callback(old.searchParamsForRetrieveMathAchievementsApi),
     }), false, 'updateSearchParamsForRetrieveMathAchievementsApi');
   },
 
