@@ -44,11 +44,11 @@ const useMathCMSPathMatch = () => {
   const isMathSeriesSourcePath = !!mathSeriesSourcePathMatch;
 
   // 지문
-  const mathInstructionPathMatch = useMatch(routePathFactory
-    .math
-    .getInstructionPath() + '/*'
-  );
-  const isMathInstructionPath = !!mathInstructionPathMatch;
+  // const mathInstructionPathMatch = useMatch(routePathFactory
+  //   .math
+  //   .getInstructionPath() + '/*'
+  // );
+  // const isMathInstructionPath = !!mathInstructionPathMatch;
 
   // 문항
   const mathQuestionPathMatch = useMatch(routePathFactory
@@ -74,8 +74,8 @@ const useMathCMSPathMatch = () => {
     isMathSeriesSourcePath,
     mathSeriesSourcePathMatch,
     // 지문
-    isMathInstructionPath,
-    mathInstructionPathMatch,
+    // isMathInstructionPath,
+    // mathInstructionPathMatch,
     // 문항
     isMathQuestionPath,
     mathQuestionPathMatch,

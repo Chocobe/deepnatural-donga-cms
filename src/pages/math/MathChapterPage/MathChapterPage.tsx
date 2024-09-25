@@ -67,7 +67,7 @@ function MathChapterPage() {
   return (
     <div className="MathChapterPage">
       <div className="MathChapterPage-header">
-        <MathChapterHeader />
+        <MathChapterHeader retrieveMathChapters={retrieveMathChapters} />
       </div>
 
       <div className="MathChapterPage-actions">

@@ -79,9 +79,18 @@ export type TDeleteMathTextbookApiResponse = void;
  */
 /** (GET) 수학 단원 목록 조회 RequestParams */
 export type TRetrieveMathChaptersApiRequestParams = TApiRequestNonBodyParams<void, {
+  // 필터 속성
+  textbook_classtype?: TCMSClassType;
+  textbook_grade?: TCMSElementaryGrade | TCMSElementaryGrade;
+  textbook_term?: TCMSTerm;
+  textbook_curriculum?: TMathCurriculum;
+  // 검색 속성
+  chapter_title?: string;
+  chapter1_title?: string;
+  chapter2_title?: string;
+  chapter3_title?: string;
+  // 페이지
   page?: number;
-  textbook?: string;
-  search?: string;
 }>;
 /** (GET) 수학 단원 목록 조회 Response */
 export type TRetrieveMathChaptersApiResponse = TPaginationModel<TMathChapter1Model>;

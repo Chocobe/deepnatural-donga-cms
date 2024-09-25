@@ -29,9 +29,9 @@ type TCommonSelectProps = {
   options: TCommonSelectOptionItem[];
   placeholder?: string;
   disabled?: boolean;
-  value: string;
+  value: any;
   onChange: (
-    value: string,
+    value: any,
     id?: string
   ) => void;
   displayValue?: (targetOption: TCommonSelectOptionItem) => ReactNode;
