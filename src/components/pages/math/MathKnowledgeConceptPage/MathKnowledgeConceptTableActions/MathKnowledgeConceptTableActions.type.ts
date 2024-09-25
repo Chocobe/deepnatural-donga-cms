@@ -5,7 +5,15 @@ import {
 
 export const mathKnowledgeConceptSearchTypeOptions: TCommonSelectOptionItem[] = [
   {
-    text: 'KC1 제목',
-    value: 'kc1',
+    text: 'All',
+    value: 'kc_search',
+  },
+  {
+    text: 'Kc1',
+    value: 'kc1_title',
+  },
+  {
+    text: 'Kc2',
+    value: 'kc2_title',
   },
 ] as const;

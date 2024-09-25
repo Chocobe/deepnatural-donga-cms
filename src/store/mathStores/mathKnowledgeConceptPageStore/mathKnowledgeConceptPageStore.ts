@@ -50,10 +50,7 @@ const useMathKnowledgeConceptPageStore = create(devtools<TMathKnowledgeConceptPa
   updateSearchParamsForRetrieveMathKnowledgeConceptsApi: callback => {
     set(old => ({
       ...old,
-      searchParamsForRetrieveMathKnowledgeConceptsApi: {
-        ...old.searchParamsForRetrieveMathKnowledgeConceptsApi,
-        ...callback(old.searchParamsForRetrieveMathKnowledgeConceptsApi),
-      },
+      searchParamsForRetrieveMathKnowledgeConceptsApi: callback(old.searchParamsForRetrieveMathKnowledgeConceptsApi),
     }), false, 'updateSearchParamsForRetrieveMathKnowledgeConceptsApi');
   },
 
