@@ -9,11 +9,11 @@ export const mathKnowledgeConceptSearchTypeOptions: TCommonSelectOptionItem[] = 
     value: 'kc_search',
   },
   {
-    text: 'Kc1',
+    text: 'KC1',
     value: 'kc1_title',
   },
   {
-    text: 'Kc2',
+    text: 'KC2',
     value: 'kc2_title',
   },
 ] as const;
