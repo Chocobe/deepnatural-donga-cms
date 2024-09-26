@@ -17,7 +17,16 @@ export type TMathQuestionPageStoreState = {
 
 export const initialMathQuestionPageStoreState: TMathQuestionPageStoreState = {
   searchParamsForRetrieveMathQuestionsApi: {
+    curriculum: undefined,
+    source_classtype: undefined,
+    source_grade: undefined,
+    source_term: undefined,
+    internal_id: undefined,
+    instruction_inquiry: undefined,
     page: undefined,
+    content: undefined,
+    inquiry: undefined,
+    instruction: undefined,
   },
 
   mathQuestionsData: undefined,

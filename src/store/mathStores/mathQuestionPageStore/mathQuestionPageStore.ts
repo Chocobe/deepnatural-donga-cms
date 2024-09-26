@@ -29,10 +29,7 @@ const useMathQuestionPageStore = create(devtools<TMathQuestionPageStore>((set, _
   updateSearchParamsForRetrieveMathQuestionsApi: callback => {
     set(old => ({
       ...old,
-      searchParamsForRetrieveMathQuestionsApi: {
-        ...old.searchParamsForRetrieveMathQuestionsApi,
-        ...callback(old.searchParamsForRetrieveMathQuestionsApi),
-      },
+      searchParamsForRetrieveMathQuestionsApi: callback(old.searchParamsForRetrieveMathQuestionsApi),
     }), false, 'updateSearchParamsForRetrieveMathQuestionsApi');
   },
 

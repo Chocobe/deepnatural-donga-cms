@@ -68,11 +68,11 @@ function MathQuestionPage() {
   return (
     <div className="MathQuestionPage">
       <div className="MathQuestionPage-header">
-        <MathQuestionHeader />
+        <MathQuestionHeader retrieveMathQuestions={retrieveMathQuestions} />
       </div>
 
       <div className="MathQuestionPage-actions">
-        <MathQuestionTableActions />
+        <MathQuestionTableActions retrieveMathQuestions={retrieveMathQuestions} />
       </div>
 
       <div className="MathQuestionPage-table">

@@ -5,11 +5,15 @@ import {
 
 export const mathQuestionSearchTypeOptions: TCommonSelectOptionItem[] = [
   {
-    text: '지문',
-    value: 'instruction',
+    text: 'All',
+    value: 'content',
   },
   {
-    text: '발문',
-    value: 'inquery',
+    text: '문항 ID',
+    value: 'internal_id',
+  },
+  {
+    text: '지문/발문',
+    value: 'instruction_inquiry',
   },
 ] as const;
