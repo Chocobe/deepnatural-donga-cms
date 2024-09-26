@@ -5,6 +5,10 @@ import {
 
 export const mathTextbookSearchTypeOptions: TCommonSelectOptionItem[] = [
   {
+    text: 'All',
+    value: 'textbook_search',
+  },
+  {
     text: '저자',
     value: 'author',
   },
