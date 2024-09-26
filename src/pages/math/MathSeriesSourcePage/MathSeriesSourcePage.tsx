@@ -68,11 +68,11 @@ function MathSeriesSourcePage() {
   return (
     <div className="MathSeriesSourcePage">
       <div className="MathSeriesSourcePage-header">
-        <MathSeriesSourceHeader />
+        <MathSeriesSourceHeader retrieveMathSeriesSources={retrieveMathSeriesSources} />
       </div>
 
       <div className="MathSeriesSourcePage-actions">
-        <MathSeriesSourceTableActions />
+        <MathSeriesSourceTableActions retrieveMathSeriesSources={retrieveMathSeriesSources} />
       </div>
 
       <div className="MathSeriesSourcePage-table">

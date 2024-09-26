@@ -3,6 +3,7 @@ import {
   useState,
   useCallback,
   memo,
+  ChangeEvent,
 } from 'react';
 // store
 import useMathSeriesSourcePageStore from '@/store/mathStores/mathSeriesSourcePageStore/mathSeriesSourcePageStore';
@@ -33,39 +34,96 @@ import {
 import { 
   mathSeriesSourceSearchTypeOptions,
 } from './MathSeriesSourceTableActions.type';
+import { 
+  TRetrieveMathSeriesSourcesApiRequestParams,
+} from '@/apis/math/mathApi.type';
 // style
 import './MathSeriesSourceTableActions.css';
 
-function _MathSeriesSourceTableActions() {
+type TMathSeriesSourceTableActionProps = {
+  retrieveMathSeriesSources: (params: TRetrieveMathSeriesSourcesApiRequestParams) => Promise<void>;
+};
+
+function _MathSeriesSourceTableActions(props: TMathSeriesSourceTableActionProps) {
+  const {
+    retrieveMathSeriesSources,
+  } = props;
+
   //
   // mathSeriesSourcePage store
   //
   const mathSeriesSourcesData = useMathSeriesSourcePageStore(state => state.mathSeriesSourcesData);
 
+  const searchParamsForRetrieveMathSeriesSourcesApi = useMathSeriesSourcePageStore(state => state.searchParamsForRetrieveMathSeriesSourcesApi);
+
+  const updateSearchParamsForRetrieveMathSeriesSourcesApi = useMathSeriesSourcePageStore(state => state.updateSearchParamsForRetrieveMathSeriesSourcesApi);
+
   //
   // state
   //
   // FIXME: mockup
-  const [search, _setSearch] = useState('');
+  const [searchType, setSearchType] = useState(mathSeriesSourceSearchTypeOptions[0].value);
 
   //
   // callback
   //
-  const onChangeSearchType = useCallback(() => {
-    console.log('onChangeSearchType()');
-  }, []);
+  const onChangeSearchType = useCallback((searchType: string) => {
+    updateSearchParamsForRetrieveMathSeriesSourcesApi(old => ({
+      ...old,
+      series_source: undefined,
+      series_title: undefined,
+      source_name: undefined,
+    }));
 
-  const onChangeSearch = useCallback(() => {
-    console.log('onChangeSearch()');
-  }, []);
+    setSearchType(searchType);
+
+    setTimeout(() => {
+      $editorRef.current?.focus();
+    }, 100);
+
+    // eslint-disable-next-line
+  }, [updateSearchParamsForRetrieveMathSeriesSourcesApi]);
+
+  const onChangeSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const search = e.target.value;
+
+    updateSearchParamsForRetrieveMathSeriesSourcesApi(old => ({
+      ...old,
+      series_source: undefined,
+      series_title: undefined,
+      source_name: undefined,
+      [searchType]: search,
+    }));
+  }, [
+    searchType,
+    updateSearchParamsForRetrieveMathSeriesSourcesApi,
+  ]);
 
   const onEnter = useCallback(() => {
-    console.log('onEnter()');
-  }, []);
+    $editorRef.current?.blur();
+
+    const params: TRetrieveMathSeriesSourcesApiRequestParams = {
+      searchParams: {
+        ...searchParamsForRetrieveMathSeriesSourcesApi,
+      },
+    };
+
+    retrieveMathSeriesSources(params);
+
+    // eslint-disable-next-line
+  }, [
+    searchParamsForRetrieveMathSeriesSourcesApi,
+    retrieveMathSeriesSources
+  ]);
 
   const onESC = useCallback(() => {
-    console.log('onESC()');
-  }, []);
+    updateSearchParamsForRetrieveMathSeriesSourcesApi(old => ({
+      ...old,
+      series_source: undefined,
+      series_title: undefined,
+      source_name: undefined,
+    }));
+  }, [updateSearchParamsForRetrieveMathSeriesSourcesApi]);
 
   //
   // hook
@@ -81,45 +139,40 @@ function _MathSeriesSourceTableActions() {
   return (
     <div className="MathSeriesSourceTableActions">
       <div className="MathSeriesSourceTableActions-leftSide">
-        <TBUTooltip>
-          <Select
-            value={''}
-            onValueChange={onChangeSearchType}>
-            <SelectTrigger className="searchTypeSelect">
-              <SelectValue placeholder="검색 항목 선택" />
-            </SelectTrigger>
+        <Select
+          value={searchType}
+          onValueChange={onChangeSearchType}>
+          <SelectTrigger className="searchTypeSelect">
+            <SelectValue placeholder="검색 항목 선택" />
+          </SelectTrigger>
 
-            <SelectContent>
-              {mathSeriesSourceSearchTypeOptions.map(item => {
-                const {
-                  text,
-                  value,
-                } = item;
+          <SelectContent>
+            {mathSeriesSourceSearchTypeOptions.map(item => {
+              const {
+                text,
+                value,
+              } = item;
 
-                return (
-                  <SelectItem
-                    key={value}
-                    value={value}>
-                    {text}
-                  </SelectItem>
-                );
-              })}
-            </SelectContent>
-          </Select>
-        </TBUTooltip>
+              return (
+                <SelectItem
+                  key={value}
+                  value={value}>
+                  {text}
+                </SelectItem>
+              );
+            })}
+          </SelectContent>
+        </Select>
 
-        <TBUTooltip>
-          <InputWithIcon
-            ref={$editorRef}
-            containerClassName="searchInput"
-            placeholder="검색어를 입력해주세요"
-            autoFocus
-            value={search}
-            onChange={onChangeSearch}
-            onKeyDown={onKeyDown}
-            EndIcon={LuSearch}
-            disabled />
-        </TBUTooltip>
+        <InputWithIcon
+          ref={$editorRef}
+          containerClassName="searchValue"
+          placeholder="검색어를 입력해주세요"
+          autoFocus
+          value={searchParamsForRetrieveMathSeriesSourcesApi[searchType] ?? ''}
+          onChange={onChangeSearch}
+          onKeyDown={onKeyDown}
+          EndIcon={LuSearch} />
       </div>
 
       <div className="MathSeriesSourceTableActions-rightSide">

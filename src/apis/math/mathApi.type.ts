@@ -34,13 +34,13 @@ import {
 export type TRetrieveMathTextbooksApiRequestParams = TApiRequestNonBodyParams<void, {
   // 필터 속성
   classtype?: TCMSClassType;
-  grade?: TCMSElementaryGrade | TCMSElementaryGrade;
+  grade?: TCMSElementaryGrade;
   term?: TCMSTerm;
   curriculum?: TMathCurriculum;
   // 검색 속성
   author?: string;
   title?: string;
-  // 페이지
+  // 페이지 속성
   page?: number;
 }>;
 /** (GET) 수학 교과서 목록 조회 Response */
@@ -81,7 +81,7 @@ export type TDeleteMathTextbookApiResponse = void;
 export type TRetrieveMathChaptersApiRequestParams = TApiRequestNonBodyParams<void, {
   // 필터 속성
   textbook_classtype?: TCMSClassType;
-  textbook_grade?: TCMSElementaryGrade | TCMSElementaryGrade;
+  textbook_grade?: TCMSElementaryGrade;
   textbook_term?: TCMSTerm;
   textbook_curriculum?: TMathCurriculum;
   // 검색 속성
@@ -89,7 +89,7 @@ export type TRetrieveMathChaptersApiRequestParams = TApiRequestNonBodyParams<voi
   chapter1_title?: string;
   chapter2_title?: string;
   chapter3_title?: string;
-  // 페이지
+  // 페이지 속성
   page?: number;
 }>;
 /** (GET) 수학 단원 목록 조회 Response */
@@ -126,7 +126,7 @@ export type TRetrieveMathAchievementsApiRequestParams = TApiRequestNonBodyParams
   achievement2_title?: string;
   achievement3_title?: string;
   achievement_code?: string;
-  // 페이지
+  // 페이지 속성
   page?: number;
   // 미사용 속성
   search?: string;
@@ -164,7 +164,7 @@ export type TRetrieveMathKnowledgeConceptsApiRequestParams = TApiRequestNonBodyP
   kc1_title?: string;
   kc2_title?: string;
   kc_search?: string;
-  // 페이지
+  // 페이지 속성
   page?: number;
 }>;
 /** (GET) 수학 지식개념 목록 조회 Response */
@@ -190,6 +190,16 @@ export type TProduceMathKnowledgeConceptApiResponse = any;
  */
 /** (GET) 수학 시리즈-출처 목록 조회 RequestParrams */
 export type TRetrieveMathSeriesSourcesApiRequestParams = TApiRequestNonBodyParams<void, {
+  // 필터 속성
+  source_classtype?: TCMSClassType;
+  source_curriculum?: TMathCurriculum;
+  source_grade?: TCMSElementaryGrade;
+  source_term?: TCMSTerm;
+  // 검색 속성
+  series_source?: string;
+  series_title?: string;
+  source_name?: string;
+  // 페이지 속성
   page?: number;
 }>;
 /** (GET) 수학 시리즈-출처 목록 조회 Response */

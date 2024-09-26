@@ -54,6 +54,13 @@ export const initialMathSeriesSourcePageStoreDetailSource: TMathSeriesSourcePage
 
 export const initialMathSeriesSourcePageStoreState: TMathSeriesSourcePageStoreState = {
   searchParamsForRetrieveMathSeriesSourcesApi: {
+    source_classtype: undefined,
+    source_curriculum: undefined,
+    source_grade: undefined,
+    source_term: undefined,
+    series_source: undefined,
+    series_title: undefined,
+    source_name: undefined,
     page: undefined,
   },
 
