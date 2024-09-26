@@ -20,14 +20,14 @@ import {
 } from '@/components/shadcn-ui/ui/select';
 import { 
   InputWithAddon,
-} from '@/components/shadcn-ui-custom/InputWithAddon/InputWithAddon';
+  SearchButtonForInputWithAddon,
+} from '@/components/shadcn-ui-custom/InputWithAddon';
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
 import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
 import { 
-  LuSearch,
   LuFileInput,
 } from 'react-icons/lu';
 // type
@@ -121,6 +121,23 @@ function _MathKnowledgeConceptTableActions(props: TMathKnowledgeConceptTableActi
     }));
   }, [updateSearchParamsForRetrieveMathKnowledgeConceptsApi]);
 
+  const SearchButtonAddon = useCallback((props: any) => {
+    return (
+      <SearchButtonForInputWithAddon
+        {...props}
+        onClick={() => {
+          retrieveMathKnowledgeConcepts({
+            searchParams: searchParamsForRetrieveMathKnowledgeConceptsApi,
+          });
+        }} />
+    );
+
+    // eslint-disable-next-line
+  }, [
+    searchParamsForRetrieveMathKnowledgeConceptsApi,
+    retrieveMathKnowledgeConcepts,
+  ]);
+
   //
   // hook
   //
@@ -168,7 +185,7 @@ function _MathKnowledgeConceptTableActions(props: TMathKnowledgeConceptTableActi
           value={searchParamsForRetrieveMathKnowledgeConceptsApi[searchType] ?? ''}
           onChange={onChangeSearch}
           onKeyDown={onKeyDown}
-          RightAddon={LuSearch} />
+          RightAddon={SearchButtonAddon} />
       </div>
 
       <div className="MathKnowledgeConceptTableActions-rightSide">
