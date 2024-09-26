@@ -19,8 +19,8 @@ import {
   SelectItem,
 } from '@/components/shadcn-ui/ui/select';
 import { 
-  InputWithIcon,
-} from '@/components/shadcn-ui-custom/InputWithIcon/InputWithIcon';
+  InputWithAddon,
+} from '@/components/shadcn-ui-custom/InputWithAddon/InputWithAddon';
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
@@ -171,7 +171,7 @@ function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) 
           </SelectContent>
         </Select>
 
-        <InputWithIcon
+        <InputWithAddon
           ref={$editorRef}
           containerClassName="searchValue"
           placeholder="검색어를 입력해주세요"
@@ -179,7 +179,7 @@ function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) 
           value={searchParamsForRetrieveMathAchievementsApi[searchType] ?? ''}
           onChange={onChangeSearch}
           onKeyDown={onKeyDown}
-          EndIcon={LuSearch} />
+          RightAddon={LuSearch} />
       </div>
 
       <div className="MathAchievementTableActions-rightSide">

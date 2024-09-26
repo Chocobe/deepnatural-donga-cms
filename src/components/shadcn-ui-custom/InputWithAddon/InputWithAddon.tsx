@@ -6,19 +6,19 @@ import {
 } from "react";
 import { cn } from '@/lib/shadcn-ui-utils';
 
-export interface InputWithIconProps
+export interface InputWithAddonProps
   extends InputHTMLAttributes<HTMLInputElement> {
   containerClassName?: string;
-  StartIcon?: FC<any>;
-  EndIcon?: FC<any>;
+  LeftAddon?: FC<any>;
+  RightAddon?: FC<any>;
 }
 
-const _InputWithIcon = forwardRef<HTMLInputElement, InputWithIconProps>(({ 
+const _InputWithAddon = forwardRef<HTMLInputElement, InputWithAddonProps>(({ 
   containerClassName,
   className,
   type,
-  StartIcon,
-  EndIcon,
+  LeftAddon,
+  RightAddon,
   ...props 
 }, ref) => {
   return (
@@ -31,23 +31,23 @@ const _InputWithIcon = forwardRef<HTMLInputElement, InputWithIconProps>(({
         type={type}
         className={cn(
           "peer flex h-10 w-full rounded-md border border-input bg-background py-2 px-4 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50",
-          StartIcon ? "pl-10" : "",
-          EndIcon ? "pr-10" : "",
+          LeftAddon ? "pl-10" : "",
+          RightAddon ? "pr-10" : "",
           className
         )}
         ref={ref}
         {...props}/>
 
-      {StartIcon && (
-        <StartIcon 
+      {LeftAddon && (
+        <LeftAddon 
           className={cn(
             'absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500 peer-focus:text-gray-900',
             props.disabled ? 'cursor-not-allowed opacity-50' : ''
           )} />
       )}
 
-      {EndIcon && (
-        <EndIcon 
+      {RightAddon && (
+        <RightAddon 
           className={cn(
             "absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500 peer-focus:text-gray-900",
             props.disabled ? 'cursor-not-allowed opacity-50' : ''
@@ -56,6 +56,6 @@ const _InputWithIcon = forwardRef<HTMLInputElement, InputWithIconProps>(({
     </div>
   );
 });
-_InputWithIcon.displayName = "InputWithIcon";
+_InputWithAddon.displayName = "InputWithAddon";
 
-export const InputWithIcon = memo(_InputWithIcon) as typeof _InputWithIcon;
+export const InputWithAddon = memo(_InputWithAddon) as typeof _InputWithAddon;
