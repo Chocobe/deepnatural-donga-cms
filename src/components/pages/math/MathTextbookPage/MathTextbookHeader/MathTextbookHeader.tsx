@@ -312,7 +312,7 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
             className="actionButton"
             disabled>
             <LuFileOutput className="icon" />
-            Import
+            업로드
           </Button>
         </TBUTooltip>
 
@@ -320,7 +320,7 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
           className="actionButton"
           onClick={addMathTextbook}>
           <LuPlus className="icon" />
-          Add 교과서
+          교과서 추가
         </Button>
       </div>
     </div>

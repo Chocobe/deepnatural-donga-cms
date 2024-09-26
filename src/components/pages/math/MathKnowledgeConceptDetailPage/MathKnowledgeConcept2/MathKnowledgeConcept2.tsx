@@ -150,7 +150,7 @@ function _MathKnowledgeConcept2(props: TMathKnowledgeConcept2Props) {
     },
     {
       id: `${indexOfKC2}-kc2__achievement3`,
-      label: '성취기준(소)',
+      label: '성취기준',
       Component: (
         <SearchModalTrigger
           id={`${indexOfKC2}-kc2__achievement3`}

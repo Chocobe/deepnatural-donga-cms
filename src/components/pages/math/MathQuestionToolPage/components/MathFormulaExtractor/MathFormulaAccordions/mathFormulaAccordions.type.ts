@@ -153,7 +153,7 @@ export const knowledgeConceptMetadataTemplate = {
     },
     {
       key: 'achievement3',
-      label: '성취기준(소)',
+      label: '성취기준명',
     },
     {
       key: 'achievement2',

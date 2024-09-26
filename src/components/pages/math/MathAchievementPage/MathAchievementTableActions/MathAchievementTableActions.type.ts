@@ -17,7 +17,7 @@ export const mathAchievementSearchTypeOptions: TCommonSelectOptionItem[] = [
     value: 'achievement2_title',
   },
   {
-    text: '성취기준',
+    text: '성취기준명',
     value: 'achievement3_title',
   },
   {

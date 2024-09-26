@@ -127,7 +127,7 @@ function _MathAchievement1() {
     },
     {
       id: 'achievement1__title',
-      label: '성취기준(대) 제목',
+      label: '성취기준(대)',
       Component: (
         <Input
           id="achievement1__title"

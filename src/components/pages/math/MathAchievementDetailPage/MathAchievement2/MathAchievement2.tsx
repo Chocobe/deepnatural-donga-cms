@@ -166,7 +166,7 @@ function _MathAchievement2(props: TMathAchievement2Props) {
 
       openNoticeModal({
         title: '성취기준(중) 삭제',
-        message: `[성취기준(중)]을 삭제할 경우 [성취기준(소)]도 같이 삭제됩니다.\n정말 삭제 하시겠습니까?`,
+        message: `[성취기준(중)]을 삭제할 경우 [성취기준]도 같이 삭제됩니다.\n정말 삭제 하시겠습니까?`,
         firstButton: {
           text: '취소',
           variant: 'outline',
@@ -184,8 +184,8 @@ function _MathAchievement2(props: TMathAchievement2Props) {
     if (indexOfAchievement3SetRef.current.size) {
       if (numOfAchievement3 < 2) {
         openNoticeModal({
-          title: '성취기준(소) 삭제 불가',
-          message: '마지막 남은 [성취기준(소)] 입니다. 더이상 삭제할 수 없습니다.\n최소 [성취기준(소)] 수량은 1개 입니다.',
+          title: '성취기준 삭제 불가',
+          message: '마지막 남은 [성취기준] 입니다. 더이상 삭제할 수 없습니다.\n최소 [성취기준] 수량은 1개 입니다.',
           firstButton: {
             text: '확인',
             variant: 'outline',
@@ -196,8 +196,8 @@ function _MathAchievement2(props: TMathAchievement2Props) {
       }
 
       openNoticeModal({
-        title: '성취기준(소) 삭제',
-        message: '성취기준(소)를 정말 삭제 하시겠습니까?',
+        title: '성취기준 삭제',
+        message: '성취기준을 정말 삭제 하시겠습니까?',
         firstButton: {
           text: '취소',
           variant: 'outline',
@@ -214,7 +214,7 @@ function _MathAchievement2(props: TMathAchievement2Props) {
 
     openNoticeModal({
       title: '',
-      message: '삭제할 성취기준(중) 또는 성취기준(소)를 선택해주세요',
+      message: '삭제할 성취기준(중) 또는 성취기준을 선택해주세요',
       firstButton: {
         text: '확인',
         variant: 'outline',
@@ -390,7 +390,7 @@ function _MathAchievement2(props: TMathAchievement2Props) {
                 variant="outline"
                 onClick={addMathAchievement3}>
                 <LuPlus className="icon" />
-                성취기준(소)
+                성취기준
               </Button>
             </div>
           </div>

@@ -147,7 +147,7 @@ function _MathKnowledgeConceptTable() {
     }),
     columnHelper.display({
       id: 'achievement3Title',
-      header: '성취기준',
+      header: '성취기준명',
       cell: props => {
         const achievement3Title = props.row.original
           .kc2

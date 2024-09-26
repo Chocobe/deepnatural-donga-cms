@@ -129,7 +129,7 @@ function _MathAchievement3(props: TMathAchievement3Props) {
     },
     {
       id: `${indexOfAchievement2}-${indexOfAchievement3}-achievement3__title`,
-      label: '성취기준(소) 제목',
+      label: '성취기준',
       Component: (
         <Input
           id={`${indexOfAchievement2}-${indexOfAchievement3}-achievement3__title`}
@@ -164,7 +164,7 @@ function _MathAchievement3(props: TMathAchievement3Props) {
           onCheckedChange={onChangeIsChecked} />
 
         <div className="title">
-          성취기준(소)
+          성취기준
         </div>
       </div>
 

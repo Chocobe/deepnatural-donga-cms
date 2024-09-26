@@ -65,7 +65,7 @@ function _MathKnowledgeConceptFooter(props: TMathKnowledgeConceptFooterProps) {
   return (
     <div className="MathKnowledgeConceptFooter">
       <div className="MathKnowledgeConceptFooter-leftSide">
-        Total {count} 성취기준(소)
+        Total {count} 성취기준
       </div>
 
       <div className="MathKnowledgeConceptFooter-rightSide">

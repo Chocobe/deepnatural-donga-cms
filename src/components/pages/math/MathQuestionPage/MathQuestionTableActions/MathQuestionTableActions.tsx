@@ -206,7 +206,7 @@ function _MathQuestionTableActions(props: TMathQuestionTableActionsProps) {
             className="actionButton"
             disabled>
             <LuFileInput className="icon" />
-            Export
+            다운로드
           </Button>
         </TBUTooltip>
       </div>

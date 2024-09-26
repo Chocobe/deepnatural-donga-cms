@@ -9,15 +9,15 @@ export const mathChapterSearchTypeOptions: TCommonSelectOptionItem[] = [
     value: 'chapter_title',
   },
   {
-    text: '대단원 제목',
+    text: '대단원명',
     value: 'chapter1_title',
   },
   {
-    text: '중단원 제목',
+    text: '중단원명',
     value: 'chapter2_title',
   },
   {
-    text: '소단원 제목',
+    text: '소단원명',
     value: 'chapter3_title',
   },
 ] as const;

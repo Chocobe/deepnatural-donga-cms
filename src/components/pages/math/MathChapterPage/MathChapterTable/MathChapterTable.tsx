@@ -88,13 +88,13 @@ function _MathChapterTable() {
       header: '대단원\n번호',
     }),
     columnHelper.accessor('chapter1.title', {
-      header: '대단원 제목',
+      header: '대단원명',
     }),
     columnHelper.accessor('chapter2.no', {
       header: '중단원\n번호',
     }),
     columnHelper.accessor('chapter2.title', {
-      header: '중단원 제목',
+      header: '중단원명',
     }),
     columnHelper.display({
       id: 'no',
@@ -107,7 +107,7 @@ function _MathChapterTable() {
     }),
     columnHelper.display({
       id: 'title',
-      header: '소단원 제목',
+      header: '소단원명',
       cell: props => {
         const chapter3 = props.row.original.chapter3;
 

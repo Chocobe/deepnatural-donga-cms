@@ -433,7 +433,7 @@ function _MathQuestionHeader(props: TMathQuestionHeaderProps) {
           className="actionButton"
           disabled>
           <LuFileOutput className="icon" />
-          Import
+          업로드
         </Button>
 
         <TBUTooltip>
