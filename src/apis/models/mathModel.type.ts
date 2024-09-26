@@ -105,6 +105,8 @@ export type TMathChapterCommonModel = {
   title: string;
   /** 순서 */
   no: string;
+  /** 교과서 ID */
+  textbook_id: number;
 };
 
 /** 수학 교과서 소단원 */

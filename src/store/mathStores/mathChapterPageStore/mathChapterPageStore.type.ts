@@ -12,19 +12,19 @@ import {
 } from '@/apis/models/mathModel.type';
 
 export type TMathChapterPageStoreDetailChapter3 =
-  & Omit<TMathChapter3Model, 'id'>
-  & Partial<Pick<TMathChapter3Model, 'id'>>;
+  & Omit<TMathChapter3Model, 'id' | 'textbook_id'>
+  & Partial<Pick<TMathChapter3Model, 'id' | 'textbook_id'>>;
 
 export type TMathChapterPageStoreDetailChapter2 =
-  & Omit<TMathChapter2Model, 'id' | 'chapter3_set'>
-  & Partial<Pick<TMathChapter2Model, 'id'>> 
+  & Omit<TMathChapter2Model, 'id' | 'chapter3_set' | 'textbook_id'>
+  & Partial<Pick<TMathChapter2Model, 'id' | 'textbook_id'>> 
   & {
     chapter3_set: TMathChapterPageStoreDetailChapter3[];
   };
 
 export type TMathChapterPageStoreDetailChapter1 =
-  & Omit<TMathChapter1Model, 'id' | 'textbook_title' | 'chapter2_set'>
-  & Partial<Pick<TMathChapter1Model, 'id' | 'textbook_title'>> 
+  & Omit<TMathChapter1Model, 'id' | 'textbook_title' | 'textbook_id' | 'chapter2_set'>
+  & Partial<Pick<TMathChapter1Model, 'id' | 'textbook_title' | 'textbook_id'>> 
   & {
     textbook_id?: number;
     chapter2_set: TMathChapterPageStoreDetailChapter2[];

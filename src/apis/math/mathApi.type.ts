@@ -99,10 +99,10 @@ export type TRetrieveMathChaptersApiResponse = TPaginationModel<TMathChapter1Mod
 export type TProduceMathChapterApiRequestParams = TApiRequestBodyParams<
   void, 
   void, 
-  Omit<TMathChapter1Model, 'id' | 'textbook_title' | 'chapter2_set'> & {
+  Omit<TMathChapter1Model, 'id' | 'textbook_title' | 'textbook_id' | 'chapter2_set'> & {
     textbook_id: number;
-    chapter2_set: Array<Omit<TMathChapter2Model, 'id' | 'chapter3_set'> & {
-      chapter3_set: Array<Omit<TMathChapter3Model, 'id'>>;
+    chapter2_set: Array<Omit<TMathChapter2Model, 'id' | 'chapter3_set' | 'textbook_id'> & {
+      chapter3_set: Array<Omit<TMathChapter3Model, 'id' | 'textbook_id'>>;
     }>;
   }
 >;
