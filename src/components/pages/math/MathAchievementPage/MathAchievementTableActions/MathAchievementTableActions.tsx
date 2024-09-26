@@ -142,8 +142,6 @@ function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) 
           });
         }} />
     );
-
-    // eslint-disable-next-line
   }, [
     searchParamsForRetrieveMathAchievementsApi,
     retrieveMathAchievements,

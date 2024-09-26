@@ -131,8 +131,6 @@ function _MathKnowledgeConceptTableActions(props: TMathKnowledgeConceptTableActi
           });
         }} />
     );
-
-    // eslint-disable-next-line
   }, [
     searchParamsForRetrieveMathKnowledgeConceptsApi,
     retrieveMathKnowledgeConcepts,

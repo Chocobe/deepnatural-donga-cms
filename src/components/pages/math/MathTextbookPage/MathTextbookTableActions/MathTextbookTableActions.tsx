@@ -227,8 +227,6 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
           });
         }} />
     );
-
-    // eslint-disable-next-line
   }, [
     searchParamsForRetrieveMathTextbooksApi,
     retrieveMathTextbooks,

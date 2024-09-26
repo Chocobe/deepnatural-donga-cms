@@ -134,8 +134,6 @@ function _MathQuestionTableActions(props: TMathQuestionTableActionsProps) {
           });
         }} />
     );
-
-    // eslint-disable-next-line
   }, [
     searchParamsForRetrieveMathQuestionsApi,
     retrieveMathQuestions,
