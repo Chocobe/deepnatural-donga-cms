@@ -76,53 +76,6 @@ function _MathKnowledgeConceptTable() {
       header: TableRowSelectorHeader,
       cell: TableRowSelectorCell,
     }),
-    columnHelper.accessor('kc1.title', {
-      id: '1_kcTitle',
-      header: 'KC1 제목',
-    }),
-    columnHelper.accessor('kc2.title', {
-      id: '2_kcTitle',
-      header: 'KC2 제목',
-    }),
-    columnHelper.display({
-      id: 'achievement1_title',
-      header: '성취기준(대) 제목',
-      cell: props => {
-        const achievement1Title = props.row.original.
-          kc2.
-          achievement3.
-          achievement2.
-          achievement1.
-          title;
-
-        return achievement1Title;
-      },
-    }),
-    columnHelper.display({
-      id: 'achievement2_title',
-      header: '성취기준(중) 제목',
-      cell: props => {
-        const achievement2Title = props.row.original
-          .kc2
-          .achievement3
-          .achievement2
-          .title;
-
-        return achievement2Title;
-      },
-    }),
-    columnHelper.display({
-      id: 'achievement3Title',
-      header: '성취기준(소) 제목',
-      cell: props => {
-        const achievement3Title = props.row.original
-          .kc2
-          .achievement3
-          .title;
-
-        return achievement3Title;
-      },
-    }),
     columnHelper.display({
       id: 'curriculum',
       header: '교육과정',
@@ -164,6 +117,53 @@ function _MathKnowledgeConceptTable() {
 
         return gradeCluster;
       },
+    }),
+    columnHelper.display({
+      id: 'achievement1_title',
+      header: '성취기준(대)',
+      cell: props => {
+        const achievement1Title = props.row.original.
+          kc2.
+          achievement3.
+          achievement2.
+          achievement1.
+          title;
+
+        return achievement1Title;
+      },
+    }),
+    columnHelper.display({
+      id: 'achievement2_title',
+      header: '성취기준(중)',
+      cell: props => {
+        const achievement2Title = props.row.original
+          .kc2
+          .achievement3
+          .achievement2
+          .title;
+
+        return achievement2Title;
+      },
+    }),
+    columnHelper.display({
+      id: 'achievement3Title',
+      header: '성취기준',
+      cell: props => {
+        const achievement3Title = props.row.original
+          .kc2
+          .achievement3
+          .title;
+
+        return achievement3Title;
+      },
+    }),
+    columnHelper.accessor('kc1.title', {
+      id: '1_kcTitle',
+      header: 'KC1',
+    }),
+    columnHelper.accessor('kc2.title', {
+      id: '2_kcTitle',
+      header: 'KC2',
     }),
   ], []);
 
