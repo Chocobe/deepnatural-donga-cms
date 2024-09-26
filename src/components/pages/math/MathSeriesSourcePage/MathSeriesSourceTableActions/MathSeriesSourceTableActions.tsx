@@ -20,14 +20,14 @@ import {
 } from '@/components/shadcn-ui/ui/select';
 import { 
   InputWithAddon,
-} from '@/components/shadcn-ui-custom/InputWithAddon/InputWithAddon';
+  SearchButtonForInputWithAddon,
+} from '@/components/shadcn-ui-custom/InputWithAddon';
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
 import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
 import { 
-  LuSearch,
   LuFileInput,
 } from 'react-icons/lu';
 // type
@@ -125,6 +125,23 @@ function _MathSeriesSourceTableActions(props: TMathSeriesSourceTableActionProps)
     }));
   }, [updateSearchParamsForRetrieveMathSeriesSourcesApi]);
 
+  const SearchButtonAddon = useCallback((props: any) => {
+    return (
+      <SearchButtonForInputWithAddon
+        {...props}
+        onClick={() => {
+          retrieveMathSeriesSources({
+            searchParams: searchParamsForRetrieveMathSeriesSourcesApi,
+          });
+        }} />
+    );
+
+    // eslint-disable-next-line
+  }, [
+    searchParamsForRetrieveMathSeriesSourcesApi,
+    retrieveMathSeriesSources,
+  ]);
+
   //
   // hook
   //
@@ -172,7 +189,7 @@ function _MathSeriesSourceTableActions(props: TMathSeriesSourceTableActionProps)
           value={searchParamsForRetrieveMathSeriesSourcesApi[searchType] ?? ''}
           onChange={onChangeSearch}
           onKeyDown={onKeyDown}
-          RightAddon={LuSearch} />
+          RightAddon={SearchButtonAddon} />
       </div>
 
       <div className="MathSeriesSourceTableActions-rightSide">
