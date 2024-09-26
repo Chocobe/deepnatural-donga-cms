@@ -135,8 +135,6 @@ function _MathSeriesSourceTableActions(props: TMathSeriesSourceTableActionProps)
           });
         }} />
     );
-
-    // eslint-disable-next-line
   }, [
     searchParamsForRetrieveMathSeriesSourcesApi,
     retrieveMathSeriesSources,

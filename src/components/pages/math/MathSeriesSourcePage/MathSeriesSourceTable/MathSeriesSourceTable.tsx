@@ -31,7 +31,8 @@ import {
   TABLE_ROW_SELECTION_CHECKBOX_ID,
 } from '@/lib/tanstack-reactTable-utils/tanstack-reactTable-utils';
 // dayjs
-import dayjs from 'dayjs';
+// FIXME: 미사용 처리
+// import dayjs from 'dayjs';
 // type
 import { 
   TMathSeriesSourceFlattenModel,
@@ -84,12 +85,6 @@ function _MathSeriesSourceTable() {
       header: TableRowSelectorHeader,
       cell: TableRowSelectorCell,
     }),
-    columnHelper.accessor('series.title', {
-      header: '시리즈 제목',
-    }),
-    columnHelper.accessor('source.name', {
-      header: '제품명',
-    }),
     columnHelper.accessor('source.curriculum', {
       header: '교육\n과정',
     }),
@@ -128,23 +123,30 @@ function _MathSeriesSourceTable() {
     columnHelper.accessor('source.serviceyear', {
       header: '판형',
     }),
-    columnHelper.accessor('source.publisher', {
-      header: '발행처',
+    columnHelper.accessor('series.title', {
+      header: '시리즈',
     }),
-    columnHelper.accessor('source.expiration_date', {
-      header: '사용기간',
-      cell: props => {
-        const expiration_date = props.cell.getValue();
-
-        return dayjs(expiration_date).format('YY년 MM일 DD일');
-      },
+    columnHelper.accessor('source.name', {
+      header: '제품명',
     }),
     columnHelper.accessor('source.source_type', {
-      header: '사용범위',
+      header: '제품 분류',
     }),
-    columnHelper.accessor('source.isview', {
-      header: '사용여부',
-    }),
+    // FIXME: 미사용 처리
+    // columnHelper.accessor('source.publisher', {
+    //   header: '발행처',
+    // }),
+    // columnHelper.accessor('source.expiration_date', {
+    //   header: '사용기간',
+    //   cell: props => {
+    //     const expiration_date = props.cell.getValue();
+
+    //     return dayjs(expiration_date).format('YY년 MM일 DD일');
+    //   },
+    // }),
+    // columnHelper.accessor('source.isview', {
+    //   header: '사용여부',
+    // }),
   ], []);
 
   //

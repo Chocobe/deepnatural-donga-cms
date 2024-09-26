@@ -30,16 +30,6 @@
       min-width: 66px !important;
     }
 
-    .title {
-      width: 10%;
-      min-width: 180px;
-    }
-
-    .name {
-      width: 20%;
-      min-width: 360px;
-    }
-
     .curriculum {
       padding: 0;
 
@@ -62,6 +52,16 @@
     .serviceyear {
       width: 80px;
       min-width: 80px;
+    }
+
+    .title {
+      width: 10%;
+      min-width: 180px;
+    }
+
+    .name {
+      width: 20%;
+      min-width: 360px;
     }
 
     .publisher {
@@ -105,14 +105,6 @@
       }
     }
 
-    .title {
-      /*  */
-    }
-
-    .name {
-      /*  */
-    }
-
     .curriculum {
       text-align: center;
     }
@@ -124,6 +116,14 @@
     .grade,
     .term,
     .serviceyear {
+      /*  */
+    }
+
+    .title {
+      /*  */
+    }
+
+    .name {
       /*  */
     }
 

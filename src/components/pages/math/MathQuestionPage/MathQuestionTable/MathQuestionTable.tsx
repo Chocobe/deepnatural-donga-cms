@@ -88,6 +88,10 @@ function _MathQuestionTable() {
     columnHelper.accessor('internal_id', {
       header: '문항 ID',
     }),
+    columnHelper.accessor('source.curriculum', {
+      id: 'curriculum',
+      header: '교육과정',
+    }),
     columnHelper.accessor('source.classtype', {
       id: 'classtype',
       header: '학교급',
@@ -109,10 +113,6 @@ function _MathQuestionTable() {
 
         return cmsTermTemplate[term];
       },
-    }),
-    columnHelper.accessor('source.curriculum', {
-      id: 'curriculum',
-      header: '교육과정',
     }),
     //FIXME: `MathQuestionModel` 에 `kc` 추가되면 적용하기
     columnHelper.display({

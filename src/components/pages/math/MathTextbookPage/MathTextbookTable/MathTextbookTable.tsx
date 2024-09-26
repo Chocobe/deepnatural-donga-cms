@@ -87,12 +87,6 @@ function MathTextbookTable() {
     columnHelper.accessor('curriculum', {
       header: '교육과정',
     }),
-    columnHelper.accessor('title', {
-      header: '교과서명',
-    }),
-    columnHelper.accessor('author', {
-      header: '저자',
-    }),
     columnHelper.accessor('classtype', {
       header: '학교급',
       cell: props => {
@@ -130,6 +124,12 @@ function MathTextbookTable() {
 
         return valueItem?.text ?? ' ';
       },
+    }),
+    columnHelper.accessor('title', {
+      header: '교과서명',
+    }),
+    columnHelper.accessor('author', {
+      header: '저자',
     }),
   ], []);
 

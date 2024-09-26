@@ -139,8 +139,6 @@ function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
           });
         }} />
     );
-
-    // eslint-disable-next-line
   }, [
     searchParamsForRetrieveMathChaptersApi,
     retrieveMathChapters,

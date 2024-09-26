@@ -81,23 +81,32 @@ function _MathAchievementTable() {
       header: TableRowSelectorHeader,
       cell: TableRowSelectorCell,
     }),
+    columnHelper.accessor('achievement1.curriculum', {
+      header: '교육과정',
+    }),
+    columnHelper.accessor('achievement1.classtype', {
+      header: '학교급',
+    }),
+    columnHelper.accessor('achievement1.grade_cluster', {
+      header: '학년(군)',
+    }),
     columnHelper.accessor('achievement1.no', {
       header: '성취기준\n(대)순번',
     }),
     columnHelper.accessor('achievement1.title', {
-      header: '성취기준(대) 제목',
+      header: '성취기준(대)',
     }),
     columnHelper.accessor('achievement2.no', {
       header: '성취기준\n(중)순번',
     }),
     columnHelper.accessor('achievement2.title', {
-      header: '성취기준(중) 제목',
+      header: '성취기준(중)',
     }),
     columnHelper.accessor('achievement3.no', {
-      header: '성취기준\n(소)순번',
+      header: '성취기준\n순번',
     }),
     columnHelper.accessor('achievement3.title', {
-      header: '성취기준(소) 제목',
+      header: '성취기준',
     }),
     columnHelper.display({
       id: 'code',
@@ -107,15 +116,6 @@ function _MathAchievementTable() {
 
         return achievement3?.code ?? '';
       },
-    }),
-    columnHelper.accessor('achievement1.curriculum', {
-      header: '교육과정',
-    }),
-    columnHelper.accessor('achievement1.classtype', {
-      header: '학교급',
-    }),
-    columnHelper.accessor('achievement1.grade_cluster', {
-      header: '학년(군)',
     }),
   ], []);
 

@@ -44,21 +44,6 @@
       text-align: center;
     }
 
-    .kcTitle {
-      width: 30%;
-      min-width: 300px;
-    }
-
-    .title {
-      width: 20%;
-      min-width: 200px;
-    }
-
-    .achievement3Title {
-      width: 40%;
-      min-width: 400px;
-    }
-
     .curriculum {
       width: 90px;
       min-width: 90px;
@@ -76,6 +61,21 @@
     .cluster {
       width: 90px;
       min-width: 90px;
+    }
+
+    .title {
+      width: 20%;
+      min-width: 200px;
+    }
+
+    .achievement3Title {
+      width: 40%;
+      min-width: 400px;
+    }
+
+    .kcTitle {
+      width: 30%;
+      min-width: 300px;
     }
   }
 
@@ -97,14 +97,6 @@
       }
     }
 
-    .kcTitle {
-      /*  */
-    }
-
-    .title {
-      /*  */
-    }
-
     .curriculum {
       text-align: center;
     }
@@ -114,6 +106,14 @@
     }
 
     .cluster {
+      /*  */
+    }
+
+    .kcTitle {
+      /*  */
+    }
+
+    .title {
       /*  */
     }
   }
