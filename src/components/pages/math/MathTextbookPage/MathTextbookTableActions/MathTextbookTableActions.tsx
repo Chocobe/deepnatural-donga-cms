@@ -24,13 +24,13 @@ import {
 import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 import { 
   InputWithAddon,
-} from '@/components/shadcn-ui-custom/InputWithAddon/InputWithAddon';
+  SearchButtonForInputWithAddon,
+} from '@/components/shadcn-ui-custom/InputWithAddon';
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
 // icon
 import {
-  LuSearch,
   LuFileInput,
 } from 'react-icons/lu';
 // type
@@ -217,6 +217,23 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
     openSuccessNoticeModal, onConfirmDelete,
   ]);
 
+  const SearchButtonAddon = useCallback((props: any) => {
+    return (
+      <SearchButtonForInputWithAddon
+        {...props}
+        onClick={() => {
+          retrieveMathTextbooks({
+            searchParams: searchParamsForRetrieveMathTextbooksApi,
+          });
+        }} />
+    );
+
+    // eslint-disable-next-line
+  }, [
+    searchParamsForRetrieveMathTextbooksApi,
+    retrieveMathTextbooks,
+  ]);
+
   //
   // hook
   //
@@ -264,7 +281,7 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
           value={searchParamsForRetrieveMathTextbooksApi[searchType] ?? ''}
           onChange={onChangeSearch}
           onKeyDown={onKeyDown}
-          RightAddon={LuSearch} />
+          RightAddon={SearchButtonAddon} />
       </div>
 
       <div className="MathTextbookTableActions-rightSide">
