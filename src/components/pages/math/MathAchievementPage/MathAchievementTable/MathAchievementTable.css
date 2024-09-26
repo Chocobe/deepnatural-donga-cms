@@ -30,6 +30,21 @@
       min-width: 66px !important;
     }
 
+    .curriculum {
+      width: 90px;
+      min-width: 90px;
+    }
+
+    .classtype {
+      width: 120px;
+      min-width: 120px;
+    }
+
+    .cluster {
+      width: 120px;
+      min-width: 120px;
+    }
+
     .no {
       padding: 0;
 
@@ -53,21 +68,6 @@
       width: 180px;
       min-width: 180px;
     }
-
-    .curriculum {
-      width: 90px;
-      min-width: 90px;
-    }
-
-    .classtype {
-      width: 120px;
-      min-width: 120px;
-    }
-
-    .cluster {
-      width: 120px;
-      min-width: 120px;
-    }
   }
 
   .row {
@@ -88,18 +88,6 @@
       }
     }
 
-    .no {
-      text-align: center;
-    }
-
-    .title {
-      /*  */
-    }
-
-    .code {
-      /*  */
-    }
-
     .curriculum {
       /*  */
     }
@@ -109,6 +97,18 @@
     }
 
     .cluster {
+      /*  */
+    }
+
+    .no {
+      text-align: center;
+    }
+
+    .title {
+      /*  */
+    }
+
+    .code {
       /*  */
     }
   }
