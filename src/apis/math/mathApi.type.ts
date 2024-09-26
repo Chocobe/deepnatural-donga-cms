@@ -236,7 +236,20 @@ export type TRetrieveMathInstructionsApiResponse = TPaginationModel<TMathInstruc
  */
 /** (GET) 수학 문항 목록 조회 RequestParams */
 export type TRetrieveMathQuestionsApiRequestParams = TApiRequestNonBodyParams<void, {
+  // 필터 속성
+  curriculum?: TMathCurriculum;
+  source_classtype?: TCMSClassType;
+  source_grade?: TCMSElementaryGrade;
+  source_term?: TCMSTerm;
+  // 검색 속성
+  content?: string;
+  internal_id?: string;
+  instruction_inquiry?: string;
+  // 페이지 속성
   page?: number;
+  // 미사용 속성
+  inquiry?: string;
+  instruction?: string;
 }>;
 
 /** (GET) 수학 문항 목록 조회 Response */

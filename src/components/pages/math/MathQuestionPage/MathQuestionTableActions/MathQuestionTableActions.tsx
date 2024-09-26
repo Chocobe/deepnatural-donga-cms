@@ -1,12 +1,15 @@
 // react
 import {
-  useRef,
   useState,
   useCallback,
   memo,
+  ChangeEvent,
 } from 'react';
+// store
+import useMathQuestionPageStore from '@/store/mathStores/mathQuestionPageStore/mathQuestionPageStore';
 // hook
 import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
+import useAutoFocus from '@/components/hooks/useAutoFocus';
 // ui
 import { 
   Select, 
@@ -31,39 +34,95 @@ import {
 import { 
   mathQuestionSearchTypeOptions,
 } from './MathQuestionTableActions.type';
+import { 
+  TRetrieveMathQuestionsApiRequestParams,
+} from '@/apis/math/mathApi.type';
 // style
 import './MathQuestionTableActions.css';
 
-function _MathQuestionTableActions() {
+type TMathQuestionTableActionsProps = {
+  retrieveMathQuestions: (params: TRetrieveMathQuestionsApiRequestParams) => Promise<void>;
+};
+
+function _MathQuestionTableActions(props: TMathQuestionTableActionsProps) {
+  const {
+    retrieveMathQuestions,
+  } = props;
+
   //
-  // ref
+  // mathQuestionPage store
   //
-  const $searchInputRef = useRef<HTMLInputElement | null>(null);
+  const mathQuestionsData = useMathQuestionPageStore(state => state.mathQuestionsData);
+  const searchParamsForRetrieveMathQuestionsApi = useMathQuestionPageStore(state => state.searchParamsForRetrieveMathQuestionsApi);
+
+  const updateSearchParamsForRetrieveMathQuestionsApi = useMathQuestionPageStore(state => state.updateSearchParamsForRetrieveMathQuestionsApi);
 
   //
   // state
   //
-  // FIXME: mockup
-  const [search, _setSearch] = useState('');
+  const [searchType, setSearchType] = useState(mathQuestionSearchTypeOptions[0].value);
 
   //
   // callback
   //
-  const onChangeSearchType = useCallback(() => {
-    console.log('onChangeSearchType()');
-  }, []);
+  const onChangeSearchType = useCallback((searchType: string) => {
+    updateSearchParamsForRetrieveMathQuestionsApi(old => ({
+      ...old,
+      content: undefined,
+      internal_id: undefined,
+      instruction_inquiry: undefined,
+    }));
 
-  const onChangeSearch = useCallback(() => {
-    console.log('onChangeSearch()');
-  }, []);
+    setSearchType(searchType);
+
+    setTimeout(() => {
+      $editorRef.current?.focus();
+    }, 100);
+
+    // eslint-disable-next-line
+  }, [updateSearchParamsForRetrieveMathQuestionsApi]);
+
+  const onChangeSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const search = e.target.value;
+
+    updateSearchParamsForRetrieveMathQuestionsApi(old => ({
+      ...old,
+      content: undefined,
+      internal_id: undefined,
+      instruction_inquiry: undefined,
+      [searchType]: search,
+    }));
+  }, [
+    searchType,
+    updateSearchParamsForRetrieveMathQuestionsApi,
+  ]);
 
   const onEnter = useCallback(() => {
-    console.log('onEnter()');
-  }, []);
+    $editorRef.current?.blur();
+
+    const params: TRetrieveMathQuestionsApiRequestParams = {
+      searchParams: {
+        ...searchParamsForRetrieveMathQuestionsApi,
+      },
+    };
+
+    retrieveMathQuestions(params);
+
+    // eslint-disable-next-line
+  }, [
+    searchParamsForRetrieveMathQuestionsApi,
+    retrieveMathQuestions,
+    updateSearchParamsForRetrieveMathQuestionsApi,
+  ]);
 
   const onESC = useCallback(() => {
-    console.log('onESC()');
-  }, []);
+    updateSearchParamsForRetrieveMathQuestionsApi(old => ({
+      ...old,
+      content: undefined,
+      internal_id: undefined,
+      instruction_inquiry: undefined,
+    }));
+  }, [updateSearchParamsForRetrieveMathQuestionsApi]);
 
   //
   // hook
@@ -75,48 +134,47 @@ function _MathQuestionTableActions() {
     onESC
   );
 
+  const {
+    $editorRef,
+  } = useAutoFocus(mathQuestionsData);
+
   return (
     <div className="MathQuestionTableActions">
       <div className="MathQuestionTableActions-leftSide">
-        <TBUTooltip>
-          <Select
-            value={''}
-            onValueChange={onChangeSearchType}>
-            <SelectTrigger className="searchTypeSelect">
-              <SelectValue placeholder="검색 항목 선택" />
-            </SelectTrigger>
+        <Select
+          value={searchType}
+          onValueChange={onChangeSearchType}>
+          <SelectTrigger className="searchTypeSelect">
+            <SelectValue placeholder="검색 항목 선택" />
+          </SelectTrigger>
 
-            <SelectContent>
-              {mathQuestionSearchTypeOptions.map(item => {
-                const {
-                  text,
-                  value,
-                } = item;
+          <SelectContent>
+            {mathQuestionSearchTypeOptions.map(item => {
+              const {
+                text,
+                value,
+              } = item;
 
-                return (
-                  <SelectItem
-                    key={value}
-                    value={value}>
-                    {text}
-                  </SelectItem>
-                );
-              })}
-            </SelectContent>
-          </Select>
-        </TBUTooltip>
+              return (
+                <SelectItem
+                  key={value}
+                  value={value}>
+                  {text}
+                </SelectItem>
+              );
+            })}
+          </SelectContent>
+        </Select>
 
-        <TBUTooltip>
-          <InputWithIcon
-            ref={$searchInputRef}
-            containerClassName="searchInput"
-            placeholder="검색어를 입력해주세요"
-            autoFocus
-            value={search}
-            onChange={onChangeSearch}
-            onKeyDown={onKeyDown}
-            EndIcon={LuSearch}
-            disabled />
-        </TBUTooltip>
+        <InputWithIcon
+          ref={$editorRef}
+          containerClassName="searchValue"
+          placeholder="검색어를 입력해주세요"
+          autoFocus
+          value={searchParamsForRetrieveMathQuestionsApi[searchType] ?? ''}
+          onChange={onChangeSearch}
+          onKeyDown={onKeyDown}
+          EndIcon={LuSearch} />
       </div>
 
       <div className="MathQuestionTableActions-rightSide">
