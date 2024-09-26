@@ -20,14 +20,14 @@ import {
 } from '@/components/shadcn-ui/ui/select';
 import { 
   InputWithAddon,
-} from '@/components/shadcn-ui-custom/InputWithAddon/InputWithAddon';
+  SearchButtonForInputWithAddon,
+} from '@/components/shadcn-ui-custom/InputWithAddon';
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
 import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
 import { 
-  LuSearch,
   LuFileInput,
 } from 'react-icons/lu';
 // type
@@ -132,6 +132,23 @@ function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) 
     }));
   }, [updateSearchParamsForRetrieveMathAchievementsApi]);
 
+  const SearchButtonAddon = useCallback((props: any) => {
+    return (
+      <SearchButtonForInputWithAddon
+        {...props}
+        onClick={() => {
+          retrieveMathAchievements({
+            searchParams: searchParamsForRetrieveMathAchievementsApi,
+          });
+        }} />
+    );
+
+    // eslint-disable-next-line
+  }, [
+    searchParamsForRetrieveMathAchievementsApi,
+    retrieveMathAchievements,
+  ]);
+
   //
   // hook
   //
@@ -179,7 +196,7 @@ function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) 
           value={searchParamsForRetrieveMathAchievementsApi[searchType] ?? ''}
           onChange={onChangeSearch}
           onKeyDown={onKeyDown}
-          RightAddon={LuSearch} />
+          RightAddon={SearchButtonAddon} />
       </div>
 
       <div className="MathAchievementTableActions-rightSide">
