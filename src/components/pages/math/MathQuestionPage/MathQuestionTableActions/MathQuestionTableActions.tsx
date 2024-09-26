@@ -20,14 +20,14 @@ import {
 } from '@/components/shadcn-ui/ui/select';
 import { 
   InputWithAddon,
-} from '@/components/shadcn-ui-custom/InputWithAddon/InputWithAddon';
+  SearchButtonForInputWithAddon,
+} from '@/components/shadcn-ui-custom/InputWithAddon';
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
 import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
 import { 
-  LuSearch,
   LuFileInput,
 } from 'react-icons/lu';
 // type
@@ -124,6 +124,23 @@ function _MathQuestionTableActions(props: TMathQuestionTableActionsProps) {
     }));
   }, [updateSearchParamsForRetrieveMathQuestionsApi]);
 
+  const SearchButtonAddon = useCallback((props: any) => {
+    return (
+      <SearchButtonForInputWithAddon
+        {...props}
+        onClick={() => {
+          retrieveMathQuestions({
+            searchParams: searchParamsForRetrieveMathQuestionsApi,
+          });
+        }} />
+    );
+
+    // eslint-disable-next-line
+  }, [
+    searchParamsForRetrieveMathQuestionsApi,
+    retrieveMathQuestions,
+  ]);
+
   //
   // hook
   //
@@ -174,7 +191,7 @@ function _MathQuestionTableActions(props: TMathQuestionTableActionsProps) {
           value={searchParamsForRetrieveMathQuestionsApi[searchType] ?? ''}
           onChange={onChangeSearch}
           onKeyDown={onKeyDown}
-          RightAddon={LuSearch} />
+          RightAddon={SearchButtonAddon} />
       </div>
 
       <div className="MathQuestionTableActions-rightSide">
