@@ -10,8 +10,8 @@ import useAutoFocus from '@/components/hooks/useAutoFocus';
 // ui
 import CommonSelect from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect';
 import { 
-  InputWithIcon,
-} from '@/components/shadcn-ui-custom/InputWithIcon/InputWithIcon';
+  InputWithAddon,
+} from '@/components/shadcn-ui-custom/InputWithAddon/InputWithAddon';
 import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
 import { 
@@ -107,13 +107,13 @@ function _SearchModalActions(props: TSearchModalActionsProps) {
       </div>
 
       <div className="SearchModalActions-valueInput">
-        <InputWithIcon
+        <InputWithAddon
           ref={$editorRef}
           value={searchValue}
           onChange={_onChangeSearchValue}
           onKeyDown={onKeyDown}
           placeholder="검색어를 입력해 주세요"
-          EndIcon={LuSearch}
+          RightAddon={LuSearch}
           autoFocus />
       </div>
     </div>

@@ -23,14 +23,14 @@ import {
 } from '@/components/shadcn-ui/ui/select';
 import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 import { 
-  InputWithIcon,
-} from '@/components/shadcn-ui-custom/InputWithIcon/InputWithIcon';
+  InputWithAddon,
+  SearchButtonForInputWithAddon,
+} from '@/components/shadcn-ui-custom/InputWithAddon';
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
 // icon
 import {
-  LuSearch,
   LuFileInput,
 } from 'react-icons/lu';
 // type
@@ -217,6 +217,23 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
     openSuccessNoticeModal, onConfirmDelete,
   ]);
 
+  const SearchButtonAddon = useCallback((props: any) => {
+    return (
+      <SearchButtonForInputWithAddon
+        {...props}
+        onClick={() => {
+          retrieveMathTextbooks({
+            searchParams: searchParamsForRetrieveMathTextbooksApi,
+          });
+        }} />
+    );
+
+    // eslint-disable-next-line
+  }, [
+    searchParamsForRetrieveMathTextbooksApi,
+    retrieveMathTextbooks,
+  ]);
+
   //
   // hook
   //
@@ -256,7 +273,7 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
           </SelectContent>
         </Select>
 
-        <InputWithIcon
+        <InputWithAddon
           ref={$editorRef}
           containerClassName="searchValue"
           placeholder="검색어를 입력해주세요"
@@ -264,7 +281,7 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
           value={searchParamsForRetrieveMathTextbooksApi[searchType] ?? ''}
           onChange={onChangeSearch}
           onKeyDown={onKeyDown}
-          EndIcon={LuSearch} />
+          RightAddon={SearchButtonAddon} />
       </div>
 
       <div className="MathTextbookTableActions-rightSide">

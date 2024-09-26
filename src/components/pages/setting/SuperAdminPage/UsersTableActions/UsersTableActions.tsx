@@ -12,8 +12,8 @@ import {
   Button,
 } from '@/components/shadcn-ui/ui/button';
 import {
-  InputWithIcon,
-} from '@/components/shadcn-ui-custom/InputWithIcon/InputWithIcon';
+  InputWithAddon,
+} from '@/components/shadcn-ui-custom/InputWithAddon/InputWithAddon';
 import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // store
 import useSuperAdminPageStore from '@/store/settingStores/superAdminPageStore/superAdminPageStore';
@@ -112,7 +112,7 @@ function _UsersTableActions(props: TUsersTableActionsProps) {
       </div>
 
       <div className="UsersTableActions-rightSide">
-        <InputWithIcon 
+        <InputWithAddon
           ref={$editorRef}
           className="UsersTableActions-rightSide-roleSearchInput"
           placeholder="검색어를 입력해주세요"
@@ -120,7 +120,7 @@ function _UsersTableActions(props: TUsersTableActionsProps) {
           value={search}
           onChange={onChangeSearch}
           onKeyDown={onKeyDown}
-          EndIcon={LuSearch} />
+          RightAddon={LuSearch} />
 
         <AddUserModal />
       </div>

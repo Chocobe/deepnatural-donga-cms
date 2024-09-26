@@ -19,15 +19,15 @@ import {
   SelectItem,
 } from '@/components/shadcn-ui/ui/select';
 import { 
-  InputWithIcon,
-} from '@/components/shadcn-ui-custom/InputWithIcon/InputWithIcon';
+  InputWithAddon,
+  SearchButtonForInputWithAddon,
+} from '@/components/shadcn-ui-custom/InputWithAddon';
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
 import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
 import { 
-  LuSearch,
   LuFileInput,
 } from 'react-icons/lu';
 // type
@@ -121,6 +121,23 @@ function _MathKnowledgeConceptTableActions(props: TMathKnowledgeConceptTableActi
     }));
   }, [updateSearchParamsForRetrieveMathKnowledgeConceptsApi]);
 
+  const SearchButtonAddon = useCallback((props: any) => {
+    return (
+      <SearchButtonForInputWithAddon
+        {...props}
+        onClick={() => {
+          retrieveMathKnowledgeConcepts({
+            searchParams: searchParamsForRetrieveMathKnowledgeConceptsApi,
+          });
+        }} />
+    );
+
+    // eslint-disable-next-line
+  }, [
+    searchParamsForRetrieveMathKnowledgeConceptsApi,
+    retrieveMathKnowledgeConcepts,
+  ]);
+
   //
   // hook
   //
@@ -160,7 +177,7 @@ function _MathKnowledgeConceptTableActions(props: TMathKnowledgeConceptTableActi
           </SelectContent>
         </Select>
 
-        <InputWithIcon
+        <InputWithAddon
           ref={$editorRef}
           containerClassName="searchValue"
           placeholder="검색어를 입력해주세요"
@@ -168,7 +185,7 @@ function _MathKnowledgeConceptTableActions(props: TMathKnowledgeConceptTableActi
           value={searchParamsForRetrieveMathKnowledgeConceptsApi[searchType] ?? ''}
           onChange={onChangeSearch}
           onKeyDown={onKeyDown}
-          EndIcon={LuSearch} />
+          RightAddon={SearchButtonAddon} />
       </div>
 
       <div className="MathKnowledgeConceptTableActions-rightSide">

@@ -16,8 +16,8 @@ import {
   SelectItem,
 } from '@/components/shadcn-ui/ui/select';
 import { 
-  InputWithIcon,
-} from '@/components/shadcn-ui-custom/InputWithIcon/InputWithIcon';
+  InputWithAddon,
+} from '@/components/shadcn-ui-custom/InputWithAddon/InputWithAddon';
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
@@ -106,7 +106,7 @@ function _MathInstructionTableActions() {
         </TBUTooltip>
 
         <TBUTooltip>
-          <InputWithIcon
+          <InputWithAddon
             ref={$searchInputRef}
             containerClassName="searchInput"
             placeholder="검색어를 입력해주세요"
@@ -114,7 +114,7 @@ function _MathInstructionTableActions() {
             value={search}
             onChange={onChangeSearch}
             onKeyDown={onKeyDown}
-            EndIcon={LuSearch}
+            RightAddon={LuSearch}
             disabled />
         </TBUTooltip>
       </div>

@@ -10,8 +10,8 @@ import {
 } from 'react';
 // ui
 import { 
-  InputWithIcon,
-} from '@/components/shadcn-ui-custom/InputWithIcon/InputWithIcon';
+  InputWithAddon,
+} from '@/components/shadcn-ui-custom/InputWithAddon/InputWithAddon';
 // icons
 import { 
   FiSearch,
@@ -101,7 +101,7 @@ function _SearchInput(props: TSearchInputProps) {
           'searchInputWrapper',
           { disabled }
         )}>
-        <InputWithIcon 
+        <InputWithAddon
           ref={$inputSearchValue}
           className="inputTempSearchValue"
           placeholder={placeholder}
@@ -109,10 +109,10 @@ function _SearchInput(props: TSearchInputProps) {
           value={tempSearchValue}
           onChange={onChangeTempSearchValue}
           onKeyUp={onKeyUp}
-          StartIcon={(params: any) => (
+          LeftAddon={(params: any) => (
             <FiSearch {...params} />
           )}
-          EndIcon={(props: any) => (
+          RightAddon={(props: any) => (
             <button 
               {...props}
               onClick={onClearSearchValue}>

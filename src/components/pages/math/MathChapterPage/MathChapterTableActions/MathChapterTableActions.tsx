@@ -19,8 +19,9 @@ import {
   SelectItem,
 } from '@/components/shadcn-ui/ui/select';
 import { 
-  InputWithIcon,
-} from '@/components/shadcn-ui-custom/InputWithIcon/InputWithIcon';
+  InputWithAddon,
+  SearchButtonForInputWithAddon,
+} from '@/components/shadcn-ui-custom/InputWithAddon';
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
@@ -28,7 +29,6 @@ import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
 import { 
   LuFileInput,
-  LuSearch,
 } from 'react-icons/lu';
 // type
 import { 
@@ -129,6 +129,23 @@ function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
     }));
   }, [updateSearchParamsForRetrieveMathChaptersApi]);
 
+  const SearchButtonAddon = useCallback((props: any) => {
+    return (
+      <SearchButtonForInputWithAddon
+        {...props}
+        onClick={() => {
+          retrieveMathChapters({
+            searchParams: searchParamsForRetrieveMathChaptersApi,
+          });
+        }} />
+    );
+
+    // eslint-disable-next-line
+  }, [
+    searchParamsForRetrieveMathChaptersApi,
+    retrieveMathChapters,
+  ]);
+
   //
   // hook
   //
@@ -168,7 +185,7 @@ function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
           </SelectContent>
         </Select>
 
-        <InputWithIcon
+        <InputWithAddon
           ref={$editorRef}
           containerClassName="searchValue"
           placeholder="검색어를 입력해주세요"
@@ -176,7 +193,7 @@ function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
           value={searchParamsForRetrieveMathChaptersApi[searchType] ?? ''}
           onChange={onChangeSearch}
           onKeyDown={onKeyDown}
-          EndIcon={LuSearch} />
+          RightAddon={SearchButtonAddon} />
       </div>
 
       <div className="MathChapterTableActions-rightSide">
