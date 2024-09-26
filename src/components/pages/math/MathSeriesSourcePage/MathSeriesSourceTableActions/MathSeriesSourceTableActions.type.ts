@@ -5,11 +5,15 @@ import {
 
 export const mathSeriesSourceSearchTypeOptions: TCommonSelectOptionItem[] = [
   {
-    text: '시리즈 제목',
-    value: 'title',
+    text: 'All',
+    value: 'series_source',
   },
   {
-    text: '판형',
-    value: 'serviceyear',
+    text: '시리즈',
+    value: 'series_title',
+  },
+  {
+    text: '제품명',
+    value: 'source_name',
   },
 ] as const;

@@ -10,6 +10,8 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import routePathFactory from '@/routes/routePathFactory';
+// store
+import useMathSeriesSourcePageStore from '@/store/mathStores/mathSeriesSourcePageStore/mathSeriesSourcePageStore';
 // ui
 import {
   Accordion,
@@ -36,83 +38,175 @@ import {
   cmsClassTypeFilterOptions,
   cmsGradeFilterOptions,
   cmsTermFilterOptions,
+  SELECT_OPTION_ITEM_ALL,
+  TCMSClassType,
 } from '@/apis/models/cmsCommonModel.type';
 import { 
   mathCurriculumFilterOptions,
 } from '@/apis/models/mathModel.type';
+import { 
+  TRetrieveMathSeriesSourcesApiRequestParams,
+} from '@/apis/math/mathApi.type';
 // style
 import { 
   cn,
 } from '@/lib/shadcn-ui-utils';
 import './MathSeriesSourceHeader.css';
 
-function _MathSeriesSourceHeader() {
+type TMathSeriesSourceHeaderProps = {
+  retrieveMathSeriesSources: (params: TRetrieveMathSeriesSourcesApiRequestParams) => Promise<void>;
+};
+
+function _MathSeriesSourceHeader(props: TMathSeriesSourceHeaderProps) {
+  const {
+    retrieveMathSeriesSources,
+  } = props;
+
+  //
+  // mathSeriesSourcePage store
+  //
+  const searchParamsForRetrieveMathSeriesSourcesApi = useMathSeriesSourcePageStore(state => state.searchParamsForRetrieveMathSeriesSourcesApi);
+  const {
+    source_curriculum,
+    source_classtype,
+    source_grade,
+    source_term,
+  } = searchParamsForRetrieveMathSeriesSourcesApi;
+
+  const updateSearchParamsForRetrieveMathSeriesSourcesApi = useMathSeriesSourcePageStore(state => state.updateSearchParamsForRetrieveMathSeriesSourcesApi);
+
   //
   // state
   //
   const [accordionValue, setAccordionValue] = useState('filters');
 
   //
+  // callback
+  //
+  const onChangeSelect = useCallback((
+    value: string,
+    id?: string
+  ) => {
+    if (!id) {
+      return;
+    }
+
+    updateSearchParamsForRetrieveMathSeriesSourcesApi(old => {
+      const correctedValue = value?.trim()?.length
+        ? value
+        : undefined;
+
+      const params: TRetrieveMathSeriesSourcesApiRequestParams = {
+        searchParams: {
+          ...old,
+          [id]: correctedValue,
+        },
+      };
+
+      retrieveMathSeriesSources(params);
+
+      return params.searchParams;
+    });
+  }, [
+    retrieveMathSeriesSources,
+    updateSearchParamsForRetrieveMathSeriesSourcesApi
+  ]);
+
+  const onChangeClassType = useCallback((
+    classtype: string
+  ) => {
+    updateSearchParamsForRetrieveMathSeriesSourcesApi(old => {
+      const source_classtype = classtype.trim().length
+        ? classtype as TCMSClassType
+        : undefined;
+
+      const params: TRetrieveMathSeriesSourcesApiRequestParams = {
+        searchParams: {
+          ...old,
+          source_classtype,
+          source_grade: undefined,
+        },
+      };
+
+      retrieveMathSeriesSources(params);
+
+      return params.searchParams;
+    });
+  }, [
+    retrieveMathSeriesSources,
+    updateSearchParamsForRetrieveMathSeriesSourcesApi,
+  ]);
+
+  //
   // cache
   //
   const filterItems = useMemo(() => [
     {
-      id: 'curriculum',
+      id: 'source_curriculum',
       label: '교육과정',
       Component: (
-        <TBUTooltip className="w-full">
-          <CommonSelect
-            id="curriculum"
-            className="editor"
-            options={mathCurriculumFilterOptions}
-            value={' '}
-            onChange={() => console.log('curriculum')} />
-        </TBUTooltip>
+        <CommonSelect
+          key="source_curriculum"
+          id="source_curriculum"
+          className="editor"
+          options={mathCurriculumFilterOptions}
+          value={source_curriculum ?? mathCurriculumFilterOptions[0].value}
+          onChange={onChangeSelect} />
       ),
     },
     {
-      id: 'classtype',
+      id: 'source_classtype',
       label: '학교급',
       Component: (
-        <TBUTooltip className="w-full">
-          <CommonSelect
-            id="classtype"
-            className="editor"
-            options={cmsClassTypeFilterOptions}
-            value={' '}
-            onChange={() => console.log('classtype')} />
-        </TBUTooltip>
+        <CommonSelect
+          key="source_classtype"
+          id="source_classtype"
+          className="editor"
+          options={cmsClassTypeFilterOptions}
+          value={source_classtype ?? cmsClassTypeFilterOptions[0].value}
+          onChange={onChangeClassType} />
       ),
     },
     {
-      id: 'grade',
+      id: 'source_grade',
       label: '학년',
       Component: (
-        <TBUTooltip className="w-full">
-          <CommonSelect
-            id="grade"
-            className="editor"
-            options={cmsGradeFilterOptions['초등']}
-            value={' '}
-            onChange={() => console.log('grade')} />
-        </TBUTooltip>
+        <CommonSelect
+          key="source_grade"
+          id="source_grade"
+          className="editor"
+          options={source_classtype
+            ? cmsGradeFilterOptions[source_classtype]
+            : cmsGradeFilterOptions[SELECT_OPTION_ITEM_ALL.value]
+          }
+          value={source_grade ?? cmsGradeFilterOptions[SELECT_OPTION_ITEM_ALL.value][0].value}
+          onChange={onChangeSelect} />
       ),
     },
     {
-      id: 'term',
+      id: 'source_term',
       label: '학기',
       Component: (
-        <TBUTooltip className="w-full">
-          <CommonSelect
-            id="term"
-            className="editor"
-            options={cmsTermFilterOptions}
-            value={' '}
-            onChange={() => console.log('term')} />
-        </TBUTooltip>
+        <CommonSelect
+          key="source_term"
+          id="source_term"
+          className="editor"
+          options={cmsTermFilterOptions}
+          value={typeof source_term === 'undefined'
+            ? cmsTermFilterOptions[0].value
+            : source_term
+          }
+          onChange={onChangeSelect} />
       ),
     },
-  ], []);
+  ], [
+    source_curriculum,
+    source_classtype,
+    source_grade,
+    source_term,
+    onChangeSelect,
+    onChangeClassType,
+  ]);
 
   //
   // hook

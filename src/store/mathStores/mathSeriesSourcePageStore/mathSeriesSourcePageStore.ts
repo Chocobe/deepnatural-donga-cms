@@ -52,10 +52,7 @@ const useMathSeriesSourcePageStore = create(devtools<TMathSeriesSourcePageStore>
   updateSearchParamsForRetrieveMathSeriesSourcesApi: callback => {
     set(old => ({
       ...old,
-      searchParamsForRetrieveMathSeriesSourcesApi: {
-        ...old.searchParamsForRetrieveMathSeriesSourcesApi,
-        ...callback(old.searchParamsForRetrieveMathSeriesSourcesApi),
-      },
+      searchParamsForRetrieveMathSeriesSourcesApi: callback(old.searchParamsForRetrieveMathSeriesSourcesApi),
     }), false, 'updateSearchParamsForRetrieveMathSeriesSourcesApi');
   },
 
