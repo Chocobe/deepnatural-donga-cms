@@ -65,7 +65,7 @@ function _MathAchievementFooter(props: TMathAchievementFooterProps) {
   return (
     <div className="MathAchievementFooter">
       <div className="MathAchievementFooter-leftSide">
-        Total {count} 성취기준(소)
+        Total {count} 성취기준
       </div>
 
       <div className="MathAchievementFooter-rightSide">

@@ -252,7 +252,7 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
             className="actionButton"
             disabled>
             <LuFileOutput className="icon" />
-            Import
+            업로드
           </Button>
         </TBUTooltip>
 
@@ -260,7 +260,7 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
           className="actionButton"
           onClick={addMathAchievement}>
           <LuPlus className="icon" />
-          Add 성취기준(대)
+          성취기준(대) 추가
         </Button>
       </div>
     </div>

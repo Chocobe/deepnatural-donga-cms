@@ -278,7 +278,7 @@ function _MathChapterHeader(props: TMathChapterHeaderProps) {
             className="actionButton"
             disabled>
             <LuFileOutput className="icon" />
-            Import
+            업로드
           </Button>
         </TBUTooltip>
 
@@ -286,7 +286,7 @@ function _MathChapterHeader(props: TMathChapterHeaderProps) {
           className="actionButton"
           onClick={addMathChapter}>
           <LuPlus className="icon" />
-          Add 교과서 단원(대)
+          교과서 대단원 추가
         </Button>
       </div>
     </div>

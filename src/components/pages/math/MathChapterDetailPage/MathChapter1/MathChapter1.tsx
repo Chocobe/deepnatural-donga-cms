@@ -152,7 +152,7 @@ function _MathChapter1() {
     },
     {
       id: 'chapter1__title',
-      label: '대단원 제목',
+      label: '대단원명',
       Component: (
         <Input
           id="chapter1__title"

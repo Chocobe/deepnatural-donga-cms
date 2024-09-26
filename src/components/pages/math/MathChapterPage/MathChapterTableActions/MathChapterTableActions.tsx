@@ -200,7 +200,7 @@ function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
             className="actionButton"
             disabled>
             <LuFileInput className="icon" />
-            Export
+            다운로드
           </Button>
         </TBUTooltip>
       </div>

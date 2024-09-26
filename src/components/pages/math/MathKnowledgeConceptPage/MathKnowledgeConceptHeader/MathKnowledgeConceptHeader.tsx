@@ -261,7 +261,7 @@ function _MathKnowledgeConceptHeader(props: TMathKnowledgeConceptHeaderProps) {
   //   }),
   //   achievementColumnHelper.accessor('achievement1.title', {
   //     id: 'achievement1Title',
-  //     header: '성취기준(대) 제목',
+  //     header: '성취기준(대)',
   //     cell: props => {
   //       const title = props.getValue();
 
@@ -278,7 +278,7 @@ function _MathKnowledgeConceptHeader(props: TMathKnowledgeConceptHeaderProps) {
   //   }),
   //   achievementColumnHelper.accessor('achievement2.title', {
   //     id: 'achievement2Title',
-  //     header: '성취기준(중) 제목',
+  //     header: '성취기준(중)',
   //     cell: props => {
   //       const title = props.getValue();
 
@@ -291,11 +291,11 @@ function _MathKnowledgeConceptHeader(props: TMathKnowledgeConceptHeaderProps) {
   //   }),
   //   achievementColumnHelper.accessor('achievement3.no', {
   //     id: 'achievement3No',
-  //     header: '성취기준\n(소)순번',
+  //     header: '성취기준명\n순번',
   //   }),
   //   achievementColumnHelper.accessor('achievement3.title', {
   //     id: 'achievement3Title',
-  //     header: '성취기준(소) 제목',
+  //     header: '성취기준명',
   //     cell: props => {
   //       const title = props.getValue();
 
@@ -384,7 +384,7 @@ function _MathKnowledgeConceptHeader(props: TMathKnowledgeConceptHeaderProps) {
             className="actionButton"
             disabled>
             <LuFileOutput className="icon" />
-            Import
+            업로드
           </Button>
         </TBUTooltip>
 
@@ -393,7 +393,7 @@ function _MathKnowledgeConceptHeader(props: TMathKnowledgeConceptHeaderProps) {
             className="actionButton"
             onClick={addMathKnowledgeConcept}>
             <LuPlus className="icon" />
-            Add 지식개념
+            지식개념 추가
           </Button>
         </TBUTooltip>
       </div>

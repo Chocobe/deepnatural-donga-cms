@@ -161,7 +161,7 @@ function _MathInstructionHeader() {
     }),
     seriesColumnHelper.accessor('source.source_type', {
       id: 'type',
-      header: '사용범위',
+      header: '제품 분류',
     }),
     seriesColumnHelper.accessor('source.isview', {
       id: 'isview',
@@ -224,17 +224,17 @@ function _MathInstructionHeader() {
             className="actionButton"
             disabled>
             <LuFileOutput className="icon" />
-            Import
+            업로드
           </Button>
         </TBUTooltip>
 
         <TBUTooltip>
           <Button
             className="actionButton"
-            onClick={() => console.log('Add 지문')}
+            onClick={() => console.log('지문 추가')}
             disabled>
             <LuPlus className="icon" />
-            Add 지문
+            지문 추가
           </Button>
         </TBUTooltip>
       </div>

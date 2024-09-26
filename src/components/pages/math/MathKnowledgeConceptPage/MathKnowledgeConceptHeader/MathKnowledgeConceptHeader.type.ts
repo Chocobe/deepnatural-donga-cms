@@ -14,7 +14,7 @@ export const mathKnowledgeConceptHeaderAchievementSearchTypeOptions: TCommonSele
     value: 'achievement2',
   },
   {
-    text: '성취기준(소)',
+    text: '성취기준',
     value: 'achievement3',
   },
 ] as const;

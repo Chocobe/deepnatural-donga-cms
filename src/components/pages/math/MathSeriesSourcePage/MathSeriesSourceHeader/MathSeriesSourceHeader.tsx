@@ -278,7 +278,7 @@ function _MathSeriesSourceHeader(props: TMathSeriesSourceHeaderProps) {
             className="actionButton"
             disabled>
             <LuFileOutput className="icon" />
-            Import
+            업로드
           </Button>
         </TBUTooltip>
 
@@ -286,7 +286,7 @@ function _MathSeriesSourceHeader(props: TMathSeriesSourceHeaderProps) {
           className="actionButton"
           onClick={addMathSeriesSource}>
           <LuPlus className="icon" />
-          Add 시리즈
+          시리즈-출처 추가
         </Button>
       </div>
     </div>

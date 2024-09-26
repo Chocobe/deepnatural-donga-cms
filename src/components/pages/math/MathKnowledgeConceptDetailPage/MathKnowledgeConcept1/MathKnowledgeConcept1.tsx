@@ -331,19 +331,19 @@ function _MathKnowledgeConcept1() {
       header: '성취기준\n(대)순번',
     }),
     achievementColumnHelper.accessor('achievement1.title', {
-      header: '성취기준(대) 제목',
+      header: '성취기준(대)',
     }),
     achievementColumnHelper.accessor('achievement2.no', {
       header: '성취기준\n(중)순번',
     }),
     achievementColumnHelper.accessor('achievement2.title', {
-      header: '성취기준(중) 제목',
+      header: '성취기준(중)',
     }),
     achievementColumnHelper.accessor('achievement3.no', {
-      header: '성취기준\n(소)순번',
+      header: '성취기준명\n순번',
     }),
     achievementColumnHelper.accessor('achievement3.title', {
-      header: '성취기준(소) 제목',
+      header: '성취기준명',
     }),
     achievementColumnHelper.display({
       id: 'code',

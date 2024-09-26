@@ -103,10 +103,10 @@ function _MathAchievementTable() {
       header: '성취기준(중)',
     }),
     columnHelper.accessor('achievement3.no', {
-      header: '성취기준\n순번',
+      header: '성취기준명\n순번',
     }),
     columnHelper.accessor('achievement3.title', {
-      header: '성취기준',
+      header: '성취기준명',
     }),
     columnHelper.display({
       id: 'code',

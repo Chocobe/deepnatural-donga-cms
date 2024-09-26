@@ -67,7 +67,7 @@ function _MathSource(props: TMathSourceProps) {
     // Group: [판형, 발행처]
     serviceyear,
     publisher,
-    // Group: [사용기한, 사용범위]
+    // Group: [사용기한, 제품 분류]
     expiration_date,
     source_type,
     // Group: [사용여부]
@@ -268,7 +268,7 @@ function _MathSource(props: TMathSourceProps) {
         ),
       },
     ],
-    // Group: [사용기한, 사용범위]
+    // Group: [사용기한, 제품 분류]
     [
       {
         id: `${indexOfSource}-source__expiration_date`,
@@ -284,7 +284,7 @@ function _MathSource(props: TMathSourceProps) {
       },
       {
         id: `${indexOfSource}-source__source_type`,
-        label: '사용범위',
+        label: '제품 분류',
         Component: (
           <CommonSelect
             id={`${indexOfSource}-source__source_type`}

@@ -238,7 +238,7 @@ export type TMathSourceModel = {
   publisher: string;
   /** 사용기간 */
   expiration_date: string;
-  /** 출처 유형 (사용범위) */
+  /** 출처 유형 (제품 분류) */
   source_type: TCmsSourceType;
   /** 사용여부 */
   isview: boolean;
