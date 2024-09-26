@@ -79,13 +79,13 @@ export const cmsClassTypeFilterOptions: TCommonSelectOptionItem[] = [
  * 학년 - 초등 
  */
 export const cmsElementaryGradeMapper = {
-  COMMON: 0,
   '1': 1,
   '2': 2,
   '3': 3,
   '4': 4,
   '5': 5,
   '6': 6,
+  COMMON: 0,
 } as const;
 export type TCMSElementaryGrade = typeof cmsElementaryGradeMapper[keyof typeof cmsElementaryGradeMapper];
 
@@ -93,10 +93,10 @@ export type TCMSElementaryGrade = typeof cmsElementaryGradeMapper[keyof typeof c
  * 학년 - 중고등 
  */
 export const cmsMiddleHighGradeMapper = {
-  COMMON: 0,
   '1': 1,
   '2': 2,
   '3': 3,
+  COMMON: 0,
 } as const;
 export type TCMSMiddleHighGrade = typeof cmsMiddleHighGradeMapper[keyof typeof cmsMiddleHighGradeMapper];
 
@@ -123,7 +123,15 @@ export const cmsGradeOptions: {
 } = {
   [cmsClassTypeMapper.ELEMENTARY]: Object
     .values(cmsElementaryGradeMapper)
-    .sort((a, b) => a - b > 0 ? 1 : -1)
+    .sort((a, b) => {
+      if (a === 0) {
+        return 1;
+      }
+
+      return a - b > 0
+        ? 1
+        : -1;
+    })
     .map(grade => ({
       text: grade === cmsElementaryGradeMapper.COMMON
         ? '공통'
@@ -132,7 +140,15 @@ export const cmsGradeOptions: {
     })),
   [cmsClassTypeMapper.MIDDLE]: Object
     .values(cmsMiddleHighGradeMapper)
-    .sort((a, b) => a - b > 0 ? 1 : -1)
+    .sort((a, b) => {
+      if (a === 0) {
+        return 1;
+      }
+
+      return a - b > 0
+        ? 1
+        : -1;
+    })
     .map(grade => ({
       text: grade === cmsMiddleHighGradeMapper.COMMON
         ? '공통'
@@ -141,7 +157,15 @@ export const cmsGradeOptions: {
     })),
   [cmsClassTypeMapper.HIGH]: Object
     .values(cmsMiddleHighGradeMapper)
-    .sort((a, b) => a - b > 0 ? 1 : -1)
+    .sort((a, b) => {
+      if (a === 0) {
+        return 1;
+      }
+
+      return a - b > 0
+        ? 1
+        : -1;
+    })
     .map(grade => ({
       text: grade === cmsMiddleHighGradeMapper.COMMON
         ? '공통'
@@ -261,9 +285,9 @@ export const cmsGradeClusterFilterOptions: typeof cmsGradeClusterOptions & {
  * 학기
  */
 export const cmsTermMapper = {
-  COMMON: 0,
   FIRST_TERM: 1,
   SECOND_TERM: 2,
+  COMMON: 0,
 } as const;
 export type TCMSTerm = typeof cmsTermMapper[keyof typeof cmsTermMapper];
 
@@ -285,7 +309,15 @@ export const cmsTermTemplate = Object
 
 export const cmsTermOptions: TCommonSelectOptionItem[] = Object
   .values(cmsTermMapper)
-  .sort((a, b) => a - b > 0 ? 1 : -1)
+  .sort((a, b) => {
+    if (a === 0) {
+      return 1;
+    }
+
+    return a - b > 0
+      ? 1
+      : -1;
+  })
   .map(term => ({
     text: term === cmsTermMapper.COMMON
       ? '공통'
