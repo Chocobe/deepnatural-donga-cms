@@ -101,12 +101,12 @@ export type TProduceMathChapterApiRequestParams = TApiRequestBodyParams<
   void, 
   Omit<TMathChapter1Model, 'id' | 'textbook_title' | 'textbook_id' | 'chapter2_set'> & {
     textbook_id: number;
-    chapter2_set: Array<Omit<TMathChapter2Model, 'id' | 'chapter3_set' | 'textbook_id'> & {
-      chapter3_set: Array<Omit<TMathChapter3Model, 'id' | 'textbook_id'>>;
+    chapter2_set: Array<Omit<TMathChapter2Model, 'id' | 'chapter3_set'> & {
+      chapter3_set: Array<Omit<TMathChapter3Model, 'id'>>;
     }>;
   }
 >;
-// TODO: 실제 응답 확인하기
+/** (POST) 수학 단원 생성 Response */
 export type TProduceMathChapterApiResponse = TMathChapter1Model;
 
 // --- --- --- --- --- --- --- --- --- ---

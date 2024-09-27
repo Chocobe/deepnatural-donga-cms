@@ -105,7 +105,14 @@ function _MathChapterDetailFooter() {
         no,
         title,
         textbook_id,
-        chapter2_set,
+        chapter2_set: chapter2_set.map(chapter2 => ({
+          ...chapter2,
+          textbook_id,
+          chapter3_set: chapter2.chapter3_set.map(chapter3 => ({
+            ...chapter3,
+            textbook_id,
+          })),
+        })),
       },
     };
 
