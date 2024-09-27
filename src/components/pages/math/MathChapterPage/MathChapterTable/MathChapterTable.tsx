@@ -46,6 +46,11 @@ import {
 import { 
   TMathChapterFlattenModel,
 } from '@/apis/models/mathModel.type';
+import { 
+  cmsClassTypeOptions, 
+  cmsGradeOptions, 
+  cmsTermOptions,
+} from '@/apis/models/cmsCommonModel.type';
 // style
 import './MathChapterTable.css';
 
@@ -85,6 +90,50 @@ function _MathChapterTable() {
       id: TABLE_ROW_SELECTION_CHECKBOX_ID,
       header: TableRowSelectorHeader,
       cell: TableRowSelectorCell,
+    }),
+    columnHelper.display({
+      id: 'curriculum',
+      header: '교육과정',
+      cell: props => {
+        const curriculum = props.row.original.chapter1.textbook_curriculum;
+
+        return curriculum;
+      },
+    }),
+    columnHelper.display({
+      id: 'classtype',
+      header: '학교급',
+      cell: props => {
+        const classtype = props.row.original.chapter1.textbook_classtype;
+
+        return cmsClassTypeOptions.find(({ value }) => classtype === value)?.text 
+          ?? '';
+      },
+    }),
+    columnHelper.display({
+      id: 'grade',
+      header: '학년',
+      cell: props => {
+        const classtype = props.row.original.chapter1.textbook_classtype;
+        const grade = props.row.original.chapter1.textbook_grade;
+
+        if (!classtype) {
+          return '';
+        }
+
+        return cmsGradeOptions[classtype]?.find(({ value }) => Number(value) === grade)?.text
+          ?? '';
+      },
+    }),
+    columnHelper.display({
+      id: 'term',
+      header: '학기',
+      cell: props => {
+        const term = props.row.original.chapter1.textbook_term;
+
+        return cmsTermOptions.find(({ value }) => Number(value) === term)?.text
+          ?? '';
+      },
     }),
     columnHelper.accessor('chapter1.textbook_title', {
       id: 'textbook',

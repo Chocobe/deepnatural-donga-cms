@@ -30,6 +30,28 @@
       min-width: 66px !important;
     }
 
+    .curriculum {
+      width: 90px;
+      min-width: 90px;
+
+      text-align: center;
+    }
+
+    .classtype {
+      width: 90px;
+      min-width: 90px;
+
+      text-align: center;
+    }
+
+    .grade,
+    .term {
+      width: 80px;
+      min-width: 80px;
+
+      text-align: center;
+    }
+
     .textbook {
       width: 25%;
       min-width: 250px;
@@ -70,6 +92,19 @@
       &:last-of-type {
         border-right: none !important;
       }
+    }
+
+    .curriculum {
+      text-align: center;
+    }
+
+    .classtype {
+      /*  */
+    }
+
+    .grade,
+    .term {
+      text-align: center;
     }
 
     .textbook {

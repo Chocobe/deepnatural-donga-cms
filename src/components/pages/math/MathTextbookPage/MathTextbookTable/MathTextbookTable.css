@@ -31,23 +31,25 @@
     }
 
     .curriculum {
-      width: 200px !important;
-      min-width: 200px !important;
+      width: 90px;
+      min-width: 90px;
+
+      text-align: center;
     }
 
     .classtype {
-      width: 170px !important;
-      min-width: 170px !important;
+      width: 90px;
+      min-width: 90px;
+
+      text-align: center;
     }
 
-    .grade {
-      width: 150px !important;
-      min-width: 150px !important;
-    }
-
+    .grade,
     .term {
-      width: 150px !important;
-      min-width: 150px !important;
+      width: 80px;
+      min-width: 80px;
+
+      text-align: center;
     }
 
     .title {
@@ -83,19 +85,16 @@
     }
 
     .curriculum {
-      /*  */
+      text-align: center;
     }
 
     .classtype {
       /*  */
     }
 
-    .grade {
-      /*  */
-    }
-
+    .grade,
     .term {
-      /*  */
+      text-align: center;
     }
 
     .title {
