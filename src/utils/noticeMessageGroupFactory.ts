@@ -9,6 +9,7 @@ export type TNoticeMessageGroup = {
   loadingMessage: TNoticeMessageFunction;
   errorMessage: TNoticeMessageFunction;
   successMessage?: TNoticeMessageFunction;
+  successSonner?: TNoticeMessageFunction;
 };
 
 const createNetworkErrorMessage = (
@@ -94,6 +95,7 @@ const noticeMessageGroupFactory: {
           message: '아이디 또는 비밀번호가 일치하지 않습니다.',
         }),
         successMessage: undefined,
+        successSonner: undefined,
       },
 
       // 로그아웃
@@ -106,6 +108,7 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('로그아웃 중'),
         }),
         successMessage: undefined,
+        successSonner: undefined,
       },
 
       // 임시 비밀번호 생성
@@ -118,6 +121,7 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('임시 비밀번호 생성 중'),
         }),
         successMessage: undefined,
+        successSonner: undefined,
       },
 
       // 회원가입
@@ -129,7 +133,8 @@ const noticeMessageGroupFactory: {
         errorMessage: () => ({
           ...createNetworkErrorMessage('신규 사용자를 등록하는 중'),
         }),
-        successMessage: () => ({
+        successMessage: undefined,
+        successSonner: () => ({
           title: '',
           message: '신규 사용자 등록이 완료되었습니다.',
         }),
@@ -148,6 +153,7 @@ const noticeMessageGroupFactory: {
           title: '비밀번호 찾기',
           message: '등록된 이메일로 임시발급된 비밀번호를 보내드렸습니다.',
         }),
+        successSonner: undefined,
       },
 
       // (GET) 현재 계정의 사용자 정보
@@ -159,10 +165,8 @@ const noticeMessageGroupFactory: {
         errorMessage: () => ({
           ...createNetworkErrorMessage('사용자 정보 조회 중'),
         }),
-        successMessage: () => ({
-          title: '',
-          message: '',
-        }),
+        successMessage: undefined,
+        successSonner: undefined,
       },
 
       // (GET) 그룹 목록
@@ -175,6 +179,7 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('그룹 목록 조회 중'),
         }),
         successMessage: undefined,
+        successSonner: undefined,
       },
 
       // (GET) 사용자 수
@@ -187,6 +192,7 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('전체 사용자 수를 파악하는 도중'),
         }),
         successMessage: undefined,
+        successSonner: undefined,
       },
 
       // (GET) 사용자 목록
@@ -198,10 +204,8 @@ const noticeMessageGroupFactory: {
         errorMessage: () => ({
           ...createNetworkErrorMessage('사용자 목록 조회 중'),
         }),
-        successMessage: () => ({
-          title: '',
-          message: '',
-        }),
+        successMessage: undefined,
+        successSonner: undefined,
       },
 
       // (PATCH) 사용자 수정
@@ -213,7 +217,8 @@ const noticeMessageGroupFactory: {
         errorMessage: () => ({
           ...createNetworkErrorMessage('사용자 수정 중'),
         }),
-        successMessage: () => ({
+        successMessage: undefined,
+        successSonner: () => ({
           title: '',
           message: '입력하신 내용이 성공적으로 저장되었습니다.',
         }),
@@ -231,6 +236,7 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('수학 교과서 목록을 불러오는 중'),
         }),
         successMessage: undefined,
+        successSonner: undefined,
       },
 
       // (GET) 수학 교과서 조회
@@ -243,6 +249,7 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('수학 교과서 상세정보 조회 중'),
         }),
         successMessage: undefined,
+        successSonner: undefined,
       },
 
       // (PATCH) 수학 교과서 수정
@@ -254,7 +261,8 @@ const noticeMessageGroupFactory: {
         errorMessage: () => ({
           ...createNetworkErrorMessage('교과서 정보 수정 중'),
         }),
-        successMessage: () => ({
+        successMessage: undefined,
+        successSonner: () => ({
           title: '',
           message: '입력하신 교과서 정보를 성공적으로 수정 완료하였습니다.',
         }),
@@ -269,7 +277,8 @@ const noticeMessageGroupFactory: {
         errorMessage: () => ({
           ...createNetworkErrorMessage('신규 교과서 등록 중'),
         }),
-        successMessage: () => ({
+        successMessage: undefined,
+        successSonner: () => ({
           title: '',
           message: '신규 교과서 등록을 성공적으로 완료하였습니다.',
         }),
@@ -285,7 +294,8 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('교과서 삭제 중'),
           title: '삭제 오류',
         }),
-        successMessage: () => ({
+        successMessage: undefined,
+        successSonner: () => ({
           title: '',
           message: '교과서 삭제를 성공적으로 완료 하였습니다.',
         }),
@@ -301,6 +311,7 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('수학 교과서 히스토리를 불러오는 중'),
         }),
         successMessage: undefined,
+        successSonner: undefined,
       },
 
       // --- --- --- --- --- --- --- --- --- ---
@@ -315,6 +326,7 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('수학 단원 정보를 조회 중'),
         }),
         successMessage: undefined,
+        successSonner: undefined,
       },
 
       // (POST) 수학 단원 생성
@@ -327,7 +339,8 @@ const noticeMessageGroupFactory: {
           title: '추가하기 오류',
           message: '오류가 발생하여 추가되지 않았습니다. 다시 시도해주세요.',
         }),
-        successMessage: () => ({
+        successMessage: undefined,
+        successSonner: () => ({
           title: '추가하기 완료',
           message: '입력하신 내용이 성공적으로 추가되었습니다.',
         }),
@@ -345,6 +358,7 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('수학 성취기준 정보를 조회 중'),
         }),
         successMessage: undefined,
+        successSonner: undefined,
       },
 
       // (POST) 수학 성취기준 생성
@@ -357,7 +371,8 @@ const noticeMessageGroupFactory: {
           title: '추가하기 오류',
           message: '오류가 발생하여 추가되지 않았습니다. 다시 시도해주세요.',
         }),
-        successMessage: () => ({
+        successMessage: undefined,
+        successSonner: () => ({
           title: '추가하기 완료',
           message: '입력하신 내용이 성공적으로 추가되었습니다.',
         }),
@@ -375,6 +390,7 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('수학 지식개념 정보 조회 중'),
         }),
         successMessage: undefined,
+        successSonner: undefined,
       },
 
       // (POST) 수학 지식개념 생성
@@ -387,7 +403,8 @@ const noticeMessageGroupFactory: {
           title: '추가하기 오류',
           message: '오류가 발생하여 추가되지 않았습니다. 다시 시도해주세요.',
         }),
-        successMessage: () => ({
+        successMessage: undefined,
+        successSonner: () => ({
           title: '추가하기 완료',
           message: '입력하신 내용이 성공적으로 추가되었습니다.',
         }),
@@ -405,6 +422,7 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('수학 시리즈-출처 정보 조회 중'),
         }),
         successMessage: undefined,
+        successSonner: undefined,
       },
 
       // (POST) 수학 시리즈-출처 생성
@@ -417,7 +435,8 @@ const noticeMessageGroupFactory: {
           title: '추가하기 오류',
           message: '오류가 발생하여 추가되지 않았습니다. 다시 시도해주세요.',
         }),
-        successMessage: () => ({
+        successMessage: undefined,
+        successSonner: () => ({
           title: '추가하기 완료',
           message: '입력하신 내용이 성공적으로 추가되었습니다.',
         }),
@@ -435,6 +454,7 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('수학 지문 정보 조회 중'),
         }),
         successMessage: undefined,
+        successSonner: undefined,
       },
 
       // --- --- --- --- --- --- --- --- --- ---
@@ -449,6 +469,7 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('수학 문항 정보 조회 중'),
         }),
         successMessage: undefined,
+        successSonner: undefined,
       },
     },
 
@@ -463,6 +484,7 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('Math Pix API 조회 중'),
         }),
         successMessage: undefined,
+        successSonner: undefined,
       },
 
       // (POST) MathPix API Token 발행
@@ -475,6 +497,7 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('Math Pix API 조회 중'),
         }),
         successMessage: undefined,
+        successSonner: undefined,
       },
 
       // (POST) MathPix OCR 요청
@@ -487,6 +510,7 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('수학 OCR 처리 중'),
         }),
         successMessage: undefined,
+        successSonner: undefined,
       },
 
       // (POST) AWS S3 presignedURL 생성
@@ -499,6 +523,7 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('이미지 업로드 준비중'),
         }),
         successMessage: undefined,
+        successSonner: undefined,
       },
 
       // (POST) AWS S3 파일 업로드
@@ -511,6 +536,7 @@ const noticeMessageGroupFactory: {
           ...createNetworkErrorMessage('이미지 업로드 중'),
         }),
         successMessage: undefined,
+        successSonner: undefined,
       },
     },
   },

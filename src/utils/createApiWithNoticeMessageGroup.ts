@@ -1,6 +1,8 @@
 // store
 import useLoadingModalStore from '@/store/modalStores/loadingModalStore/loadingModalStore';
 import useResultNoticeModalStore from '@/store/modalStores/resultNoticeModalStore/resultNoticeModalStore';
+// ui
+import openSonner from '@/components/shadcn-ui/ui/Sonner/openSonner';
 // type
 import { 
   TNoticeMessageGroup,
@@ -36,17 +38,23 @@ const createApiWithNoticeMessageGroup = <TResponse, TParams = void>(hofParams: {
         isDisabled?: boolean;
         params?: Array<any>;
       };
+      successSonner?: {
+        isDisabled?: boolean;
+        params: Array<any>;
+      };
     }
   ) => {
     const {
       loadingMessage: loadingMessageOptions,
       errorMessage: errorMessageOptions,
       successMessage: successMessageOptions,
+      successSonner: successSonnerOptions,
     } = options ?? {};
 
     const {
       loadingMessage,
       successMessage,
+      successSonner,
       errorMessage,
     } = noticeMessageGroup;
 
@@ -78,6 +86,10 @@ const createApiWithNoticeMessageGroup = <TResponse, TParams = void>(hofParams: {
             variant: 'default',
           },
         });
+
+      !successSonnerOptions?.isDisabled
+        && successSonner
+        && openSonner(successSonner());
 
       return response;
     } catch(error: any) {
