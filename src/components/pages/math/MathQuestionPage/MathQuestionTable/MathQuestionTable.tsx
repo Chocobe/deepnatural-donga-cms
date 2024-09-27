@@ -114,17 +114,31 @@ function _MathQuestionTable() {
         return cmsTermTemplate[term];
       },
     }),
-    //FIXME: `MathQuestionModel` 에 `kc` 추가되면 적용하기
-    columnHelper.display({
-      id: 'kc1',
+    columnHelper.accessor('kc1_title', {
+      id: 'kc1_title',
       header: 'KC1',
-      cell: 'TBU'
+      cell: props => {
+        const kc1_title = props.getValue();
+
+        return (
+          <TableEllipsisCell maxRows={2}>
+            {kc1_title}
+          </TableEllipsisCell>
+        );
+      },
     }),
-    //FIXME: `MathQuestionModel` 에 `kc` 추가되면 적용하기
-    columnHelper.display({
-      id: 'kc2',
+    columnHelper.accessor('kc2_title', {
+      id: 'kc2_title',
       header: 'KC2',
-      cell: 'TBU'
+      cell: props => {
+        const kc2_title = props.getValue();
+
+        return (
+          <TableEllipsisCell maxRows={2}>
+            {kc2_title}
+          </TableEllipsisCell>
+        );
+      },
     }),
     columnHelper.display({
       id: 'instruction_inquery',

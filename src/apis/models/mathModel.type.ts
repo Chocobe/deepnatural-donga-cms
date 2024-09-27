@@ -330,6 +330,11 @@ export type TMathQuestionModel = {
   /** 과목 */
   subject: TCMSSubject;
 
+  /** 지식개념1 */
+  kc1_title: string;
+  /** 지식개념2 */
+  kc2_title: string;
+
   /** 키워드 */
   keyword: string;
   /** 행동 영역 */
