@@ -22,6 +22,9 @@ import {
 import HistoryModal from './components/shadcn-ui-custom/modals/HistoryModal/HistoryModal';
 import ResultNoticeModal from './components/shadcn-ui-custom/modals/ResultNoticeModal/ResultNoticeModal';
 import LoadingModal from './components/shadcn-ui-custom/modals/LoadingModal/LoadingModal';
+import { 
+  Toaster,
+} from 'sonner';
 // style
 import './App.css';
 
@@ -66,6 +69,7 @@ function App() {
       <HistoryModal />
       <ResultNoticeModal />
       <LoadingModal />
+      <Toaster />
     </div>
   );
 }
