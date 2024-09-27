@@ -47,6 +47,7 @@ const noticeMessageGroupFactory: {
       // 단원정보
       retrieveMathChapters: TNoticeMessageGroup;
       retrieveMathChapter: TNoticeMessageGroup;
+      putMathChapter: TNoticeMessageGroup;
       produceMathChapter: TNoticeMessageGroup;
 
       // 성취기준
@@ -341,6 +342,22 @@ const noticeMessageGroupFactory: {
         }),
         successMessage: undefined,
         successSonner: undefined,
+      },
+
+      // (PUT) 수학 단원 수정
+      putMathChapter: {
+        loadingMessage: () => ({
+          title: '',
+          message: '단원 정보를 수정 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('단원 정보 수정 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '입력하신 단원 정보를 성공적으로 수정 완료하였습니다.',
+        }),
       },
 
       // (POST) 수학 단원 생성

@@ -4,6 +4,7 @@ import {
   TPatchMathTextbookApiRequestParams,
   TDeleteMathTextbookApiRequestParams,
   TRetrieveMathChapterApiRequestParams,
+  TPutMathChapterApiRequestParams,
 } from './mathApi.type';
 
 const mathApiUrlFactory = (() => {
@@ -69,6 +70,11 @@ const mathApiUrlFactory = (() => {
       } = params;
 
       return `${this.retrieveMathChaptersPath()}${chapterId}`;
+    },
+
+    /** (PUT) 수학 단원 수정 */
+    putMathChapterPath(params: TPutMathChapterApiRequestParams) {
+      return this.retrieveMathChapterPath(params);
     },
 
     /** (POST) 수학 단원 생성 */

@@ -121,7 +121,7 @@ export type TMathChapter2Model = TMathChapterCommonModel & {
 /** 수학 교과서 대단원 */
 export type TMathChapter1Model = TMathChapterCommonModel & {
   /** 교과서명 */
-  textbook_title: string;
+  textbook_title?: string;
   /** 중단원 목록 */
   chapter2_set: TMathChapter2Model[];
 };

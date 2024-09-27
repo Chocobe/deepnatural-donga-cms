@@ -30,6 +30,9 @@ import {
   TRetrieveMathChapterApiRequestParams,
   TRetrieveMathChapterApiResponse,
 
+  TPutMathChapterApiRequestParams,
+  TPutMathChapterApiResponse,
+
   TProduceMathChapterApiRequestParams,
   TProduceMathChapterApiResponse,
 } from './mathApi.type';
@@ -222,6 +225,24 @@ export const retrieveMathChapterApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .retrieveMathChapter,
+});
+
+//
+// (PUT) 수학 단원 수정
+//
+export const putMathChapterApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TPutMathChapterApiRequestParams) => {
+    const _params = excludeNullOrUndefinedProperties(params);
+
+    return api.put<TPutMathChapterApiResponse>(
+      mathApiUrlFactory.putMathChapterPath(_params),
+      _params.payload
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .putMathChapter
 });
 
 //
