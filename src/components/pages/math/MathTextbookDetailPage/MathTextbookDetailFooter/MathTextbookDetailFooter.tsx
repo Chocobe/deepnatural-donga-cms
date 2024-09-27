@@ -119,25 +119,19 @@ function _MathTextbookDetailFooter(props: TMathTextbookDetailFooterProps) {
 
   const onClickAdd = useCallback(async () => {
     const mathTextbook = await produceMathTextbook();
-    const textbookId = mathTextbook?.id;
 
-    if (!textbookId) {
+    if (!mathTextbook?.id) {
       return;
     }
 
-    navigate(
-      routePathFactory
-        .math
-        .getTextbookDetailPath(textbookId), 
-      {
-        replace: true,
-      }
+    navigate(routePathFactory
+      .math
+      .getTextbookPath()
     );
   }, [produceMathTextbook, navigate]);
 
   return (<>
     <div className="MathTextbookDetailFooter">
-      {/* FIXME: useMemo 로 변경하기 */}
       {isDetailMode
         ? (<>
           <Button
