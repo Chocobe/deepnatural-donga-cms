@@ -140,6 +140,12 @@ const routes = createBrowserRouter([
               .getChapterAddPath(),
             element: <MathChapterDetailPage />
           },
+          {
+            path: routePathFactory
+              .math
+              .getChapterDetailPath(':chapterId'),
+            element: <MathChapterDetailPage />
+          },
 
           // 수학: 성취기준
           {

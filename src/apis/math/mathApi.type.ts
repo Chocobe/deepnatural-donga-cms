@@ -95,6 +95,13 @@ export type TRetrieveMathChaptersApiRequestParams = TApiRequestNonBodyParams<voi
 /** (GET) 수학 단원 목록 조회 Response */
 export type TRetrieveMathChaptersApiResponse = TPaginationModel<TMathChapter1Model>;
 
+/** (GET) 수학 단원 조회 RequestParams */
+export type TRetrieveMathChapterApiRequestParams = TApiRequestNonBodyParams<{
+  chapterId: string;
+}, void>;
+/** (GET) 수학 단원 조회 Response */
+export type TRetrieveMathChapterApiResponse = TMathChapter1Model;
+
 /** (POST) 수학 단원 생성 RequestParams */
 export type TProduceMathChapterApiRequestParams = TApiRequestBodyParams<
   void, 

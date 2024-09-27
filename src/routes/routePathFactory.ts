@@ -40,6 +40,9 @@ const routePathFactory = {
     getChapterAddPath() {
       return `${this.getChapterPath()}/add` as const;
     },
+    getChapterDetailPath(chapterId: string | number) {
+      return `${this.getChapterPath()}/${chapterId}` as const;
+    },
 
     // 성취기준
     getAchievementPath() {

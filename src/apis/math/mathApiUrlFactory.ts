@@ -3,6 +3,7 @@ import {
   TRetrieveMathTextbookApiRequestParams,
   TPatchMathTextbookApiRequestParams,
   TDeleteMathTextbookApiRequestParams,
+  TRetrieveMathChapterApiRequestParams,
 } from './mathApi.type';
 
 const mathApiUrlFactory = (() => {
@@ -57,6 +58,17 @@ const mathApiUrlFactory = (() => {
     /** (GET) 수학 단원 목록 */
     retrieveMathChaptersPath() {
       return `${BASE_PATH}chapters/`;
+    },
+
+    /** (GET) 수학 단원 조회 */
+    retrieveMathChapterPath(params: TRetrieveMathChapterApiRequestParams) {
+      const {
+        pathParams: {
+          chapterId,
+        },
+      } = params;
+
+      return `${this.retrieveMathChaptersPath()}${chapterId}`;
     },
 
     /** (POST) 수학 단원 생성 */

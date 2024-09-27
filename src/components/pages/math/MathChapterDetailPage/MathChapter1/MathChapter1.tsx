@@ -38,14 +38,14 @@ import {
   TMathTextbookModel,
 } from '@/apis/models/mathModel.type';
 import { 
-  mathChapter1TextbookSearchTypeOptions,
-} from './MathChapter1.type';
-import { 
   cmsClassTypeMapper,
   cmsClassTypeOptions,
   cmsGradeOptions,
   cmsTermOptions,
 } from '@/apis/models/cmsCommonModel.type';
+import { 
+  mathTextbookSearchTypeOptions,
+} from '../../MathTextbookPage/MathTextbookTableActions/MathTextbookTableActions.type';
 // util
 import extractLastString from '@/utils/extractLastString/extractLastString';
 // style
@@ -231,12 +231,6 @@ function _MathChapter1() {
     textbookColumnHelper.accessor('curriculum', {
       header: '교육과정',
     }),
-    textbookColumnHelper.accessor('title', {
-      header: '교과서명',
-    }),
-    textbookColumnHelper.accessor('author', {
-      header: '저자',
-    }),
     textbookColumnHelper.accessor('classtype', {
       header: '학교급',
       cell: props => {
@@ -274,6 +268,12 @@ function _MathChapter1() {
 
         return valueItem?.text ?? ' ';
       },
+    }),
+    textbookColumnHelper.accessor('title', {
+      header: '교과서명',
+    }),
+    textbookColumnHelper.accessor('author', {
+      header: '저자',
     }),
   ], []);
 
@@ -371,7 +371,7 @@ function _MathChapter1() {
         .retrieveMathTextbooksApi
         .callWithNoticeMessageGroup
       }
-      searchTypeOptions={mathChapter1TextbookSearchTypeOptions}
+      searchTypeOptions={mathTextbookSearchTypeOptions}
       tableColumns={textbookColumns}
       onClickRow={onSelectTextbook} />
   </>);

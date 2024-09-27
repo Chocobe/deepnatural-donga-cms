@@ -34,7 +34,15 @@ import {
 // style
 import './MathChapterDetailFooter.css';
 
-function _MathChapterDetailFooter() {
+type TMathChapterDetailFooterProps = {
+  isDetailMode: boolean;
+}
+
+function _MathChapterDetailFooter(props: TMathChapterDetailFooterProps) {
+  const {
+    isDetailMode,
+  } = props;
+
   //
   // mathChapterPage store
   //
@@ -55,30 +63,6 @@ function _MathChapterDetailFooter() {
   //
   // callback
   //
-  const addMathChapter2 = useCallback(() => {
-    updateDetailFormState(old => ({
-      ...old,
-      chapter2_set: [
-        ...(old.chapter2_set ?? []),
-        {
-          ...initialMathChapterPageStoreDetailChapter2,
-        },
-      ],
-    }));
-  }, [updateDetailFormState]);
-
-  const onClickSaveAndAdd = useCallback(() => {
-    console.log('저장후 추가하기');
-  }, []);
-
-  const onClickSaveAndRemain = useCallback(() => {
-    console.log('저장후 계속해서 수정하기');
-  }, []);
-
-  const onClickSave = useCallback(() => {
-    console.log('저장하기');
-  }, []);
-
   const produceMathChapter = useCallback(async () => {
     const {
       no,
@@ -127,6 +111,30 @@ function _MathChapterDetailFooter() {
     openNoticeModal,
   ]);
 
+  const addMathChapter2 = useCallback(() => {
+    updateDetailFormState(old => ({
+      ...old,
+      chapter2_set: [
+        ...(old.chapter2_set ?? []),
+        {
+          ...initialMathChapterPageStoreDetailChapter2,
+        },
+      ],
+    }));
+  }, [updateDetailFormState]);
+
+  const onClickSaveAndAdd = useCallback(() => {
+    console.log('저장후 추가하기');
+  }, []);
+
+  const onClickSaveAndRemain = useCallback(() => {
+    console.log('저장후 계속해서 수정하기');
+  }, []);
+
+  const onClickSave = useCallback(() => {
+    console.log('저장하기');
+  }, []);
+
   const onClickAdd = useCallback(async () => {
     const mathChapter = await produceMathChapter();
 
@@ -140,22 +148,12 @@ function _MathChapterDetailFooter() {
     );
   }, [produceMathChapter, navigate]);
 
-  // FIXME: props 로 받아오기
-  const isAdditionMode = true;
-
   //
   // cache
   //
   const buttonItems = useMemo(() => {
-    return isAdditionMode
+    return isDetailMode
       ? [
-        {
-          text: '추가하기',
-          variant: 'default',
-          onClick: onClickAdd,
-          IconComponent: LuSave,
-        },
-      ]: [
         {
           text: '저장후 추가하기',
           variant: 'secondary',
@@ -174,9 +172,16 @@ function _MathChapterDetailFooter() {
           onClick: onClickSave,
           IconComponent: LuSave,
         },
+      ]: [
+        {
+          text: '추가하기',
+          variant: 'default',
+          onClick: onClickAdd,
+          IconComponent: LuSave,
+        },
       ];
   }, [
-    isAdditionMode,
+    isDetailMode,
     onClickAdd,
     onClickSaveAndAdd,
     onClickSaveAndRemain,

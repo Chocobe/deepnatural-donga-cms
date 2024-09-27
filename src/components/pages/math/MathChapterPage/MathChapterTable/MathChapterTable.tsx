@@ -3,9 +3,15 @@ import {
   useRef,
   useState,
   useMemo,
+  useCallback,
   useEffect,
   memo,
 } from 'react';
+// router
+import { 
+  useNavigate,
+} from 'react-router-dom';
+import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathChapterPageStore from '@/store/mathStores/mathChapterPageStore/mathChapterPageStore';
 // hook
@@ -141,6 +147,20 @@ function _MathChapterTable() {
     effectDef: tableData,
   });
 
+  const navigate = useNavigate();
+
+  //
+  // callback
+  //
+  const goToDetailPage = useCallback((mathChapter: TMathChapterFlattenModel) => {
+    const chapterId = mathChapter.chapter1.id;
+
+    navigate(routePathFactory
+      .math
+      .getChapterDetailPath(chapterId)
+    );
+  }, [navigate]);
+
   //
   // effect
   //
@@ -180,7 +200,7 @@ function _MathChapterTable() {
             key={row.id}
             className="row"
             data-state={row.getIsSelected() && 'selected'}
-            onClick={() => console.log('상세 페이지 이동')}>
+            onClick={() => goToDetailPage(row.original)}>
             {row.getVisibleCells().map(cell => (
               <TableCell
                 key={cell.id}

@@ -22,16 +22,13 @@ import {
 
   TDeleteMathTextbookApiRequestParams,
   TDeleteMathTextbookApiResponse,
-
-  TRetrieveMathInstructionsApiRequestParams,
-  TRetrieveMathInstructionsApiResponse,
-
-  TRetrieveMathQuestionsApiRequestParams,
-  TRetrieveMathQuestionsApiResponse,
 } from './mathApi.type';
 import {
   TRetrieveMathChaptersApiRequestParams,
   TRetrieveMathChaptersApiResponse,
+
+  TRetrieveMathChapterApiRequestParams,
+  TRetrieveMathChapterApiResponse,
 
   TProduceMathChapterApiRequestParams,
   TProduceMathChapterApiResponse,
@@ -56,6 +53,14 @@ import {
 
   TProduceMathSeriesSourceApiRequestParams,
   TProduceMathSeriesSourceApiResponse,
+} from './mathApi.type';
+import {
+  TRetrieveMathInstructionsApiRequestParams,
+  TRetrieveMathInstructionsApiResponse,
+} from './mathApi.type';
+import {
+  TRetrieveMathQuestionsApiRequestParams,
+  TRetrieveMathQuestionsApiResponse,
 } from './mathApi.type';
 
 // FIXME: mockup
@@ -200,6 +205,23 @@ export const retrieveMathChaptersApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .retrieveMathChapters,
+});
+
+//
+// (GET) 수학 단원 조회
+//
+export const retrieveMathChapterApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathChapterApiRequestParams) => {
+    const _params = excludeNullOrUndefinedProperties(params);
+
+    return api.get<TRetrieveMathChapterApiResponse>(
+      mathApiUrlFactory.retrieveMathChapterPath(_params)
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .retrieveMathChapter,
 });
 
 //

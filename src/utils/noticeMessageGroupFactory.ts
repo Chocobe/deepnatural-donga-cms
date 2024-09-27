@@ -46,6 +46,7 @@ const noticeMessageGroupFactory: {
 
       // 단원정보
       retrieveMathChapters: TNoticeMessageGroup;
+      retrieveMathChapter: TNoticeMessageGroup;
       produceMathChapter: TNoticeMessageGroup;
 
       // 성취기준
@@ -324,6 +325,19 @@ const noticeMessageGroupFactory: {
         }),
         errorMessage: () => ({
           ...createNetworkErrorMessage('수학 단원 정보를 조회 중'),
+        }),
+        successMessage: undefined,
+        successSonner: undefined,
+      },
+
+      // (GET) 수학 단원 조회
+      retrieveMathChapter: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 단원 상세정보를 불러오고 있습니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 단원 상세정보 조회 중'),
         }),
         successMessage: undefined,
         successSonner: undefined,
