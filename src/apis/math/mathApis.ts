@@ -195,8 +195,6 @@ export const retrieveMathChaptersApi = createApiWithNoticeMessageGroup({
       searchParams,
     } = excludeNullOrUndefinedProperties(params);
 
-    console.log('searchParams: ', searchParams);
-
     return api.get<TRetrieveMathChaptersApiResponse>(
       mathApiUrlFactory.retrieveMathChaptersPath(),
       {
@@ -275,8 +273,6 @@ export const retrieveMathAchievementsApi = createApiWithNoticeMessageGroup({
     const {
       searchParams,
     } = excludeNullOrUndefinedProperties(params);
-
-    console.log('searchParams: ', searchParams);
 
     return api.get<TRetrieveMathAchievementsApiResponse>(
       mathApiUrlFactory.retrieveMathAchievementsPath(),
