@@ -31,8 +31,10 @@
     }
 
     .curriculum {
-      width: 200px !important;
-      min-width: 200px !important;
+      width: 90px !important;
+      min-width: 90px !important;
+
+      text-align: center;
     }
 
     .classtype {

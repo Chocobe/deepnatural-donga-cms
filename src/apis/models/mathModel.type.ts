@@ -122,6 +122,14 @@ export type TMathChapter2Model = TMathChapterCommonModel & {
 export type TMathChapter1Model = TMathChapterCommonModel & {
   /** 교과서명 */
   textbook_title?: string;
+  /** (교과서) 교육과정 */
+  textbook_curriculum?: TMathCurriculum,
+  /** (교과서) 학교급 */
+  textbook_classtype?: TCMSClassType,
+  /** (교과서) 학년 */
+  textbook_grade?: TCMSElementaryGrade,
+  /** (교과서) 학기 */
+  textbook_term?: TCMSTerm
   /** 중단원 목록 */
   chapter2_set: TMathChapter2Model[];
 };
