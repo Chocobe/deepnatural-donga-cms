@@ -171,8 +171,8 @@ function _MathKnowledgeConceptDetailFooter() {
   ]);
 
   return (
-    <div className="MathChapterDetailFooter">
-      <div className="MathChapterDetailFooter-rightSide">
+    <div className="MathKnowledgeConceptDetailFooter">
+      <div className="MathKnowledgeConceptDetailFooter-rightSide">
         {buttonItems.map((item, index) => {
           const {
             text,

@@ -29,18 +29,28 @@ import {
   initialMathChapterPageStoreDetailChapter2,
 } from '@/store/mathStores/mathChapterPageStore/mathChapterPageStore.type';
 import { 
+  TPutMathChapterApiRequestParams,
   TProduceMathChapterApiRequestParams,
 } from '@/apis/math/mathApi.type';
 // style
 import './MathChapterDetailFooter.css';
 
-function _MathChapterDetailFooter() {
+type TMathChapterDetailFooterProps = {
+  isDetailMode: boolean;
+}
+
+function _MathChapterDetailFooter(props: TMathChapterDetailFooterProps) {
+  const {
+    isDetailMode,
+  } = props;
+
   //
   // mathChapterPage store
   //
   const detailFormState = useMathChapterPageStore(state => state.detailFormState);
 
   const updateDetailFormState = useMathChapterPageStore(state => state.updateDetailFormState);
+  const clearDetailTargetMathChapter = useMathChapterPageStore(state => state.clearDetailTargetMathChapter);
 
   //
   // resultNoticeMessage store
@@ -55,29 +65,56 @@ function _MathChapterDetailFooter() {
   //
   // callback
   //
-  const addMathChapter2 = useCallback(() => {
-    updateDetailFormState(old => ({
-      ...old,
-      chapter2_set: [
-        ...(old.chapter2_set ?? []),
-        {
-          ...initialMathChapterPageStoreDetailChapter2,
+  const patchMathChapter = useCallback(async () => {
+    const {
+      id,
+      textbook_id,
+      ...payload
+    } = detailFormState;
+
+    if (!id) {
+      return;
+    }
+
+    if (!textbook_id) {
+      openNoticeModal({
+        title: '',
+        message: '교과서를 선택해 주세요.',
+        firstButton: {
+          text: '확인',
+          variant: 'outline',
         },
-      ],
-    }));
-  }, [updateDetailFormState]);
+      });
 
-  const onClickSaveAndAdd = useCallback(() => {
-    console.log('저장후 추가하기');
-  }, []);
+      return;
+    }
 
-  const onClickSaveAndRemain = useCallback(() => {
-    console.log('저장후 계속해서 수정하기');
-  }, []);
+    const params: TPutMathChapterApiRequestParams = {
+      pathParams: {
+        chapterId: id,
+      },
+      payload: {
+        ...payload,
+        textbook_id,
+        chapter2_set: payload.chapter2_set.map(chapter2 => ({
+          ...chapter2,
+          textbook_id,
+          chapter3_set: chapter2.chapter3_set.map(chapter3 => ({
+            ...chapter3,
+            textbook_id,
+          }))
+        }))
+      },
+    };
 
-  const onClickSave = useCallback(() => {
-    console.log('저장하기');
-  }, []);
+    return ApiManager
+      .math
+      .putMathChapterApi
+      .callWithNoticeMessageGroup(params);
+  }, [
+    detailFormState,
+    openNoticeModal,
+  ]);
 
   const produceMathChapter = useCallback(async () => {
     const {
@@ -105,7 +142,14 @@ function _MathChapterDetailFooter() {
         no,
         title,
         textbook_id,
-        chapter2_set,
+        chapter2_set: chapter2_set.map(chapter2 => ({
+          ...chapter2,
+          textbook_id,
+          chapter3_set: chapter2.chapter3_set.map(chapter3 => ({
+            ...chapter3,
+            textbook_id,
+          })),
+        })),
       },
     };
 
@@ -120,6 +164,46 @@ function _MathChapterDetailFooter() {
     openNoticeModal,
   ]);
 
+  const addMathChapter2 = useCallback(() => {
+    updateDetailFormState(old => ({
+      ...old,
+      chapter2_set: [
+        ...(old.chapter2_set ?? []),
+        {
+          ...initialMathChapterPageStoreDetailChapter2,
+        },
+      ],
+    }));
+  }, [updateDetailFormState]);
+
+  const onClickSaveAndAdd = useCallback(async () => {
+    await patchMathChapter();
+
+    clearDetailTargetMathChapter();
+
+    navigate(routePathFactory
+      .math
+      .getChapterAddPath()
+    );
+  }, [
+    patchMathChapter,
+    clearDetailTargetMathChapter,
+    navigate,
+  ]);
+
+  const onClickSaveAndRemain = useCallback(async () => {
+    await patchMathChapter();
+  }, [patchMathChapter]);
+
+  const onClickSave = useCallback(async () => {
+    await patchMathChapter();
+
+    navigate(routePathFactory
+      .math
+      .getChapterPath()
+    );
+  }, [patchMathChapter, navigate]);
+
   const onClickAdd = useCallback(async () => {
     const mathChapter = await produceMathChapter();
 
@@ -133,22 +217,12 @@ function _MathChapterDetailFooter() {
     );
   }, [produceMathChapter, navigate]);
 
-  // FIXME: props 로 받아오기
-  const isAdditionMode = true;
-
   //
   // cache
   //
   const buttonItems = useMemo(() => {
-    return isAdditionMode
+    return isDetailMode
       ? [
-        {
-          text: '추가하기',
-          variant: 'default',
-          onClick: onClickAdd,
-          IconComponent: LuSave,
-        },
-      ]: [
         {
           text: '저장후 추가하기',
           variant: 'secondary',
@@ -167,9 +241,16 @@ function _MathChapterDetailFooter() {
           onClick: onClickSave,
           IconComponent: LuSave,
         },
+      ]: [
+        {
+          text: '추가하기',
+          variant: 'default',
+          onClick: onClickAdd,
+          IconComponent: LuSave,
+        },
       ];
   }, [
-    isAdditionMode,
+    isDetailMode,
     onClickAdd,
     onClickSaveAndAdd,
     onClickSaveAndRemain,
@@ -184,7 +265,7 @@ function _MathChapterDetailFooter() {
           variant="default"
           onClick={addMathChapter2}>
           <LuPlus className="icon" />
-          교과서 단원(중)
+          중단원 추가
         </Button>
       </div>
 

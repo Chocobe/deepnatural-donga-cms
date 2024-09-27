@@ -374,7 +374,7 @@ function _MathChapter2(props: TMathChapter2Props) {
                 variant="outline"
                 onClick={addMathChapter3}>
                 <LuPlus className="icon" />
-                교과서 단원(소)
+                소단원 추가
               </Button>
             </div>
           </div>

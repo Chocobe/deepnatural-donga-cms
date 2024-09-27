@@ -54,9 +54,13 @@
       min-width: 70px;
     }
 
-    .curriculum,
-    .kc1,
-    .kc2 {
+    .kc1_title,
+    .kc2_title {
+      width: 20%;
+      min-width: 250px;
+    }
+
+    .curriculum {
       width: 90px;
       min-width: 90px;
     }
@@ -137,9 +141,12 @@
       /*  */
     }
 
-    .curriculum,
-    .kc1,
-    .kc2 {
+    .kc1_title,
+    .kc2_title {
+      /*  */
+    }
+
+    .curriculum {
       /*  */
     }
 

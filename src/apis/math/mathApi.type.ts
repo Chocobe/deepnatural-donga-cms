@@ -95,18 +95,36 @@ export type TRetrieveMathChaptersApiRequestParams = TApiRequestNonBodyParams<voi
 /** (GET) 수학 단원 목록 조회 Response */
 export type TRetrieveMathChaptersApiResponse = TPaginationModel<TMathChapter1Model>;
 
+/** (GET) 수학 단원 조회 RequestParams */
+export type TRetrieveMathChapterApiRequestParams = TApiRequestNonBodyParams<{
+  chapterId: string | number;
+}, void>;
+/** (GET) 수학 단원 조회 Response */
+export type TRetrieveMathChapterApiResponse = TMathChapter1Model;
+
+/** (PUT) 수학 단원 수정 RequestParams */
+export type TPutMathChapterApiRequestParams = TApiRequestBodyParams<{
+  chapterId: string | number;
+}, void, Omit<TMathChapter1Model, 'id' | 'chapter2_set'> & {
+  chapter2_set: Array<Omit<TMathChapter2Model, 'id' | 'chapter3_set'> & {
+    chapter3_set: Array<Omit<TMathChapter3Model, 'id'>>;
+  }>;
+}>;
+/** (PUT) 수학 단원 수정 Response */
+export type TPutMathChapterApiResponse = TMathChapter1Model;
+
 /** (POST) 수학 단원 생성 RequestParams */
 export type TProduceMathChapterApiRequestParams = TApiRequestBodyParams<
   void, 
   void, 
   Omit<TMathChapter1Model, 'id' | 'textbook_title' | 'textbook_id' | 'chapter2_set'> & {
     textbook_id: number;
-    chapter2_set: Array<Omit<TMathChapter2Model, 'id' | 'chapter3_set' | 'textbook_id'> & {
-      chapter3_set: Array<Omit<TMathChapter3Model, 'id' | 'textbook_id'>>;
+    chapter2_set: Array<Omit<TMathChapter2Model, 'id' | 'chapter3_set'> & {
+      chapter3_set: Array<Omit<TMathChapter3Model, 'id'>>;
     }>;
   }
 >;
-// TODO: 실제 응답 확인하기
+/** (POST) 수학 단원 생성 Response */
 export type TProduceMathChapterApiResponse = TMathChapter1Model;
 
 // --- --- --- --- --- --- --- --- --- ---
