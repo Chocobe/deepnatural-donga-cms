@@ -5554,10 +5554,10 @@ v8-to-istanbul@^9.0.1:
     "@types/istanbul-lib-coverage" "^2.0.1"
     convert-source-map "^2.0.0"
 
-vaul@^0.9.4:
-  version "0.9.4"
-  resolved "https://registry.yarnpkg.com/vaul/-/vaul-0.9.4.tgz#2e1d8f90481a9f25169226f9cd6f764ad30ca65e"
-  integrity sha512-pcyIy1nEk6798ReNQpbVH/T/dYnoJ3bwyq7jmSp134s+bSvpWoSWQthm3/jfsQRvHNYIEK4ZKbkHUJ3YfLfw1w==
+vaul@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vaul/-/vaul-1.0.0.tgz#b2c84e626ffa417ee9352cdfc435b26e8f60f547"
+  integrity sha512-TegfMkwy86RSvSiIVREG6OqgRL7agqRsKYyWYacyVUAdpcIi34QoCOED476Mbf8J5d06e1hygSdvJhehlxEBhQ==
   dependencies:
     "@radix-ui/react-dialog" "^1.1.1"
 
