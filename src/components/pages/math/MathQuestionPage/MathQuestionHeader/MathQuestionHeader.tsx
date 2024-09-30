@@ -6,9 +6,6 @@ import {
   memo,
 } from 'react';
 // router
-import { 
-  useNavigate,
-} from 'react-router-dom';
 import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathQuestionPageStore from '@/store/mathStores/mathQuestionPageStore/mathQuestionPageStore';
@@ -125,17 +122,15 @@ function _MathQuestionHeader(props: TMathQuestionHeaderProps) {
   //   closeSearchModal: closeSeriesSearchModal,
   // } = useSearchModal();
 
-  const navigate = useNavigate();
-
   //
   // callback
   //
   const addMathQuestion = useCallback(() => {
-    navigate(routePathFactory
-      .math
-      .getQuestionToolPath()
+    window.open(
+      routePathFactory.math.getQuestionToolPath(),
+      '_blank',
     );
-  }, [navigate]);
+  }, []);
 
   const onChangeSelect = useCallback((
     value: string,

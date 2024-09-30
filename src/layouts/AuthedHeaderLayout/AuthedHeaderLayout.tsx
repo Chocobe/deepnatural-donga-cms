@@ -1,23 +1,15 @@
 // react
 import {
   useMemo,
-  useEffect,
   memo,
   PropsWithChildren,
 } from 'react';
-// store
-import useAuthApiStore from '@/store/authApiStore/authApiStore';
-import { 
-  createSuccessApiSliceState,
-} from '@/store/apiStateUtils';
 // hook
 import useCMSNavigatorItems from '@/components/layouts/CMSNavigator/hooks/useCMSNavigator';
-import useIsLoggedIn from '@/hooks/useIsLoggedIn';
+import useInitUserInfoAndGroups from './hooks/useInitUserInfoAndGroups';
 // ui
 import CMSNavigator from '@/components/layouts/CMSNavigator/CMSNavigator';
 import AccountAction from '@/components/layouts/AccountAction/AccountAction';
-// api
-import ApiManager from '@/apis/ApiManager';
 // style
 import { 
   cn,
@@ -35,21 +27,13 @@ function _AuthedHeaderLayout(props: TAuthedHeaderLayoutProps) {
   } = props;
 
   //
-  // authApi store
-  //
-  const setUserInfoState = useAuthApiStore(state => state.userInfo.action.setUserInfoState);
-  const setGroupsState = useAuthApiStore(state => state.groups.action.setGroupsState);
-
-  //
   // hook
   //
   const {
     cmsNavigatorItems,
   } = useCMSNavigatorItems();
 
-  const {
-    isLoggedIn,
-  } = useIsLoggedIn();
+  useInitUserInfoAndGroups();
 
   //
   // cache
@@ -61,35 +45,6 @@ function _AuthedHeaderLayout(props: TAuthedHeaderLayoutProps) {
       ?? '';
   }, [cmsNavigatorItems]);
 
-  //
-  // effect
-  //
-  useEffect(() => {
-    const retrieveUser = async () => {
-      const response = await ApiManager
-        .auth
-        .retrieveUserInfoApi();
-
-      if (response.data) {
-        setUserInfoState(createSuccessApiSliceState(response.data));
-      }
-    };
-
-    const retrieveGroups = async () => {
-      const response = await ApiManager
-        .auth
-        .retrieveGroupsApi();
-
-      if (response.data) {
-        setGroupsState(createSuccessApiSliceState(response.data));
-      }
-    };
-
-    if (isLoggedIn) {
-      retrieveUser();
-      retrieveGroups();
-    }
-  }, [isLoggedIn, setUserInfoState, setGroupsState]);
 
   return (
     <div className={cn(
