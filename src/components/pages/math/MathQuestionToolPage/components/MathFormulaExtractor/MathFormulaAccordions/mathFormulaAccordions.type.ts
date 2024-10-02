@@ -1,3 +1,8 @@
+// type
+import { 
+  mathQuestionTypeOptions,
+} from '@/apis/models/mathModel.type';
+
 /**
  * 출처, 지식개념, 교과서 (총 3개)
  */
@@ -55,7 +60,7 @@ export type TQuestionSetItemTemplate = {
   label: string;
   type: 'latex' | 'text' | 'number' | 'boolean' | 'enum/string' | 'enum/number' | 'kc2';
   options?: Array<{
-    label: string;
+    text: string;
     value: string | number;
   }>;
 
@@ -325,23 +330,23 @@ export const subjectOptions = [
 //
 const behaviorDomainOptions = [
   {
-    label: '계산',
+    text: '계산',
     value: '계산',
   },
   {
-    label: '이해',
+    text: '이해',
     value: '이해',
   },
   {
-    label: '추론',
+    text: '추론',
     value: '추론',
   },
   {
-    label: '내적문제해결',
+    text: '내적문제해결',
     value: '내적문제해결',
   },
   {
-    label: '외적문제해결',
+    text: '외적문제해결',
     value: '외적문제해결',
   },
 ];
@@ -351,23 +356,23 @@ const behaviorDomainOptions = [
 //
 const difficultyOptions = [
   {
-    label: '1',
+    text: '1',
     value: 1,
   },
   {
-    label: '2',
+    text: '2',
     value: 2,
   },
   {
-    label: '3',
+    text: '3',
     value: 3,
   },
   {
-    label: '4',
+    text: '4',
     value: 4,
   },
   {
-    label: '5',
+    text: '5',
     value: 5,
   },
 ];
@@ -376,46 +381,40 @@ const difficultyOptions = [
 // 문제 유형 (<option />) 
 //
 export const questionTypeOptionsMapper = {
-  '객관식(단답형)': '객관식(단답형)',
-  '객관식(다답형)': '객관식(다답형)',
-  '주관식(단답형)': '주관식(단답형)',
-  '주관식(선택형)': '주관식(선택형)',
-  '주관식(서술형)': '주관식(서술형)',
-  '주관식(그리기)': '주관식(그리기)',
-  '주관식(선긋기)': '주관식(선긋기)',
+  '객관식-단답형': '객관식-단답형',
+  '객관식-다답형': '객관식-다답형',
+  '주관식-단답형': '주관식-단답형',
+  '주관식-선택형-기본': '주관식-선택형-기본',
+  '주관식-선택형-무순': '주관식-선택형-무순',
+  '주관식-선택형-유순': '주관식-선택형-유순',
+  '주관식-서술형': '주관식-서술형',
+  '주관식-그리기형': '주관식-그리기형',
+  '주관식-선긋기형': '주관식-선긋기형',
 } as const;
-const questionTypeOptions = Object
-  .values(questionTypeOptionsMapper)
-  .reduce((options, key) => [
-    ...options,
-    {
-      label: key,
-      value: key,
-    }
-  ], [] as Array<{ label: string; value: string }>);
+export type TMathQuestionType = typeof questionTypeOptionsMapper[keyof typeof questionTypeOptionsMapper];
 
 //
 // 선택지 유형 (<options />)
 //
 const choiceTypeOptions = [
   {
-    label: 'ㄱㄴㄷ',
+    text: 'ㄱㄴㄷ',
     value: 'ㄱㄴㄷ',
   },
   {
-    label: '가나다',
+    text: '가나다',
     value: '가나다',
   },
   {
-    label: '123',
+    text: '123',
     value: '123',
   },
   {
-    label: 'abc',
+    text: 'abc',
     value: 'abc',
   },
   {
-    label: '기타',
+    text: '기타',
     value: '기타',
   },
 ];
@@ -487,7 +486,7 @@ export const questionSetCommonTemplate: TQuestionSetTemplate = [
     id: 'question_type',
     label: '문제 유형', 
     type: 'enum/string', 
-    options: questionTypeOptions,
+    options: mathQuestionTypeOptions,
     placeholder: '문제 유형을 선택해주세요',
     required: true,
     value: '',
@@ -728,13 +727,15 @@ const questionSetDrawingAnswerTemplateFactory = (): TQuestionSetTemplate => {
 };
 
 export const questionTypeTemplateMapper = {
-  [questionTypeOptionsMapper['객관식(단답형)']]: questionSetChoiceTemplateFactory,
-  [questionTypeOptionsMapper['객관식(다답형)']]: questionSetChoiceTemplateFactory,
+  [questionTypeOptionsMapper['객관식-단답형']]: questionSetChoiceTemplateFactory,
+  [questionTypeOptionsMapper['객관식-다답형']]: questionSetChoiceTemplateFactory,
 
-  [questionTypeOptionsMapper['주관식(단답형)']]: questionSetShortAnswerTemplateFactory,
-  [questionTypeOptionsMapper['주관식(선택형)']]: questionSetShortChoiceTemplateFactory,
-  [questionTypeOptionsMapper['주관식(서술형)']]: questionSetLongAnswerTemplateFactory,
+  [questionTypeOptionsMapper['주관식-단답형']]: questionSetShortAnswerTemplateFactory,
+  [questionTypeOptionsMapper['주관식-선택형-기본']]: questionSetShortChoiceTemplateFactory,
+  [questionTypeOptionsMapper['주관식-선택형-무순']]: questionSetShortChoiceTemplateFactory,
+  [questionTypeOptionsMapper['주관식-선택형-유순']]: questionSetShortChoiceTemplateFactory,
+  [questionTypeOptionsMapper['주관식-서술형']]: questionSetLongAnswerTemplateFactory,
 
-  [questionTypeOptionsMapper['주관식(그리기)']]: questionSetDrawingAnswerTemplateFactory,
-  [questionTypeOptionsMapper['주관식(선긋기)']]: questionSetDrawingAnswerTemplateFactory,
+  [questionTypeOptionsMapper['주관식-그리기']]: questionSetDrawingAnswerTemplateFactory,
+  [questionTypeOptionsMapper['주관식-선긋기']]: questionSetDrawingAnswerTemplateFactory,
 } as const;

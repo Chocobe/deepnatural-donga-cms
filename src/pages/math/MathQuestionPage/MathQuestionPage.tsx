@@ -12,6 +12,7 @@ import MathQuestionHeader from '@/components/pages/math/MathQuestionPage/MathQue
 import MathQuestionTableActions from '@/components/pages/math/MathQuestionPage/MathQuestionTableActions/MathQuestionTableActions';
 import MathQuestionTable from '@/components/pages/math/MathQuestionPage/MathQuestionTable/MathQuestionTable';
 import MathQuestionFooter from '@/components/pages/math/MathQuestionPage/MathQuestionFooter/MathQuestionFooter';
+import MathQuestionPreviewDrawer from '@/components/pages/math/MathQuestionPage/MathQuestionPreviewDrawer/MathQuestionPreviewDrawer';
 // type
 import { 
   TRetrieveMathQuestionsApiRequestParams,
@@ -82,6 +83,8 @@ function MathQuestionPage() {
       <div className="MathQuestionPage-footer">
         <MathQuestionFooter retrieveMathQuestions={retrieveMathQuestions} />
       </div>
+
+      <MathQuestionPreviewDrawer />
     </div>
   );
 }
