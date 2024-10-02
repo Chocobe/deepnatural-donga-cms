@@ -11,8 +11,8 @@ export type TMathPixAuthSliceState = {
   };
 
   appTokenInfo: {
-    appToken?: string;
-    appTokenExpiresAt?: string;
+    app_token?: string;
+    app_token_expires_at?: string;
   };
 };
 
@@ -23,8 +23,8 @@ export const initialMathPixAuthSliceState: TMathPixAuthSliceState = {
   },
 
   appTokenInfo: {
-    appToken: undefined,
-    appTokenExpiresAt: undefined,
+    app_token: undefined,
+    app_token_expires_at: undefined,
   },
 };
 

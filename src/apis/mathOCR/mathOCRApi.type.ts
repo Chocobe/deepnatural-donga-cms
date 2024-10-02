@@ -15,8 +15,8 @@ export type TRetrieveMathPixAppKeyApiResponse = {
 // produceMathPixAppToken
 //
 export type TProduceMathPixAppTokenApiResponse = {
-  appToken: string;
-  appTokenExpiresAt: string;
+  app_token: string;
+  app_token_expires_at: string;
 };
 
 //
@@ -26,13 +26,13 @@ export type TProduceMathPixOCRApiRequestParams = TApiRequestBodyParams<void, voi
   src: string;
 }>;
 export type TProduceMathPixOCRApiResponse = {
-  autoRotateConfidence: number;
-  autoRotateDegrees: number;
+  auto_rotate_confidence: number;
+  auto_rotate_degrees: number;
   confidence: number;
-  confidenceRate: number;
-  isHandwritten: boolean;
-  isPrinted: boolean;
-  requestId: string;
+  confidence_rate: number;
+  is_handwritten: boolean;
+  is_printed: boolean;
+  request_id: string;
   text: string;
   version: 'RSK-M100';
 };
@@ -69,4 +69,4 @@ export type TUploadFileToS3ApiRequestParams = TApiRequestBodyParams<
   }
 >;
 
-export type TUploadFileToS3ApiResponse = any;
+export type TUploadFileToS3ApiResponse = undefined;

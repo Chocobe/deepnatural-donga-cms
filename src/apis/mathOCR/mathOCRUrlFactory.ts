@@ -5,7 +5,7 @@ const mathOCRUrlFactory = (() => {
 
   return {
     produceS3PresignedUrl() {
-      return `${AWS_S3_BASE_URL}/Prod/upload/` as const;
+      return `${AWS_S3_BASE_URL}/prod/upload` as const;
     },
 
     retrieveMathPixAppKey() {
