@@ -192,10 +192,9 @@ export type TRetrieveMathKnowledgeConceptsApiResponse = TPaginationModel<TMathKn
 export type TProduceMathKnowledgeConceptApiRequestParams = TApiRequestBodyParams<
   void,
   void,
-  Omit<TMathKnowledgeConcept1Model, 'id' | 'kc2_set'> & {
-    kc2_set: Array<Omit<TMathKnowledgeConcept2Model, 'id' | 'achievement3'> & {
-      achievement3_id: number;
-    }>
+  Pick<TMathKnowledgeConcept1Model, 'title' | 'comment'> & {
+    achievement3_id: number;
+    kc2_set: Array<Pick<TMathKnowledgeConcept2Model, 'title' | 'comment'>>;
   }
 >;
 // FIXME: 실제 응답 확인하기

@@ -10,13 +10,14 @@ import {
 } from '@/apis/models/mathModel.type';
 
 export type TMathKnowledgeConceptPageStoreDetailKC2 =
-  & Omit<TMathKnowledgeConcept2Model, 'id' | 'achievement3'>
-  & Partial<Pick<TMathKnowledgeConcept2Model, 'id' | 'achievement3'>>;
+  & Pick<TMathKnowledgeConcept2Model, 'title' | 'comment'>
+  & Partial<Pick<TMathKnowledgeConcept2Model, 'id'>>;
 
 export type TMathKnowledgeConceptPageStoreDetailKC1 =
-  & Omit<TMathKnowledgeConcept1Model, 'id' | 'kc2_set'>
+  & Pick<TMathKnowledgeConcept1Model, 'title' | 'comment'>
   & Partial<Pick<TMathKnowledgeConcept1Model, 'id'>>
   & {
+    achievement3_id?: number;
     kc2_set: TMathKnowledgeConceptPageStoreDetailKC2[];
   };
 
@@ -35,13 +36,13 @@ export const initialMathKnowledgeConceptPageStoreDetailKC2: TMathKnowledgeConcep
   id: undefined,
   title: '',
   comment: '',
-  achievement3: undefined,
 };
 
 export const initialMathKnowledgeConceptPageStoreDetailKC1: TMathKnowledgeConceptPageStoreDetailKC1 = {
   id: undefined,
   title: '',
   comment: '',
+  achievement3_id: undefined,
   kc2_set: [],
 };
 
@@ -64,12 +65,12 @@ export const initialMathKnowledgeConceptPageStoreState: TMathKnowledgeConceptPag
     id: undefined,
     title: '',
     comment: '',
+    achievement3_id: undefined,
     kc2_set: [
       {
         id: undefined,
         title: '',
         comment: '',
-        achievement3: undefined,
       },
     ],
   },
