@@ -13,6 +13,7 @@ export type TMathQuestionPageStoreState = {
   mathQuestionsData?: TRetrieveMathQuestionsApiResponse;
 
   selectedMathQuestions?: TMathQuestionModel[];
+  previewMathQuestion?: TMathQuestionModel;
 };
 
 export const initialMathQuestionPageStoreState: TMathQuestionPageStoreState = {
@@ -32,6 +33,7 @@ export const initialMathQuestionPageStoreState: TMathQuestionPageStoreState = {
   mathQuestionsData: undefined,
 
   selectedMathQuestions: undefined,
+  previewMathQuestion: undefined,
 } as const;
 
 export type TMathQuestionPageStoreAction = {
@@ -49,6 +51,9 @@ export type TMathQuestionPageStoreAction = {
 
   clearSelectedMathQuestions: () => void;
   setSelectedMathQuestions: (selectedMathQuestions: TMathQuestionModel[]) => void;
+
+  clearPreviewMathQuestion: () => void;
+  setPreviewMathQuestion: (previewMathQuestion: TMathQuestionModel) => void;
 };
 
 export type TMathQuestionPageStore =

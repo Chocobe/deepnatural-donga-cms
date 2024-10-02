@@ -3,6 +3,7 @@ import {
   useRef,
   useState,
   useMemo,
+  useCallback,
   memo,
 } from 'react';
 // store
@@ -14,6 +15,7 @@ import {
   useReactTable,
   createColumnHelper,
   RowSelectionState,
+  CellContext,
 } from '@tanstack/react-table';
 import TableRowSelectorHeader from '@/components/shadcn-ui-custom/TableRowSelectorHeader/TableRowSelectorHeader';
 import TableRowSelectorCell from '@/components/shadcn-ui-custom/TableRowSelectorCell/TableRowSelectorCell';
@@ -61,6 +63,8 @@ function _MathQuestionTable() {
 
   const setSelectedMathQuestions = useMathQuestionPageStore(state => state.setSelectedMathQuestions);
 
+  const setPreviewMathQuestion = useMathQuestionPageStore(state => state.setPreviewMathQuestion);
+
   //
   // ref
   //
@@ -70,6 +74,17 @@ function _MathQuestionTable() {
   // state
   //
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+
+  //
+  // callback
+  //
+  const onClickPreview = useCallback((
+    tableCellContext: CellContext<TMathQuestionModel, unknown>
+  ) => {
+    const mathQuestion = tableCellContext.row.original;
+
+    setPreviewMathQuestion(mathQuestion);
+  }, [setPreviewMathQuestion]);
 
   //
   // cache
@@ -173,8 +188,7 @@ function _MathQuestionTable() {
           variant="ghost"
           onClick={(e) => {
             e.stopPropagation();
-
-            console.log('onClick() - 미리보기: ', props.row.original);
+            onClickPreview(props);
           }}>
           <LuMonitor />
         </Button>
@@ -201,7 +215,7 @@ function _MathQuestionTable() {
           : <LuFrown className="icon" />;
       },
     }),
-  ], []);
+  ], [onClickPreview]);
 
   //
   // hook

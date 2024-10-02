@@ -3,6 +3,7 @@ import createApiWithNoticeMessageGroup from '@/utils/createApiWithNoticeMessageG
 import api from '../api';
 import noticeMessageGroupFactory from '@/utils/noticeMessageGroupFactory';
 import { 
+  TProduceMathPixAppTokenApiResponse,
   TProduceMathPixOCRApiRequestParams,
   TProduceMathPixOCRApiResponse,
   TProduceS3PresignedUrlApiRequestParams,
@@ -22,7 +23,6 @@ import mathOCRUrlFactory from './mathOCRUrlFactory';
  */
 export const retrieveMathPixAppKey = createApiWithNoticeMessageGroup({
   apiFunction: () => {
-    // TODO: `api request interceptor` 에 `token` 적용하기
     return api.get<TRetrieveMathPixAppKeyApiResponse>(
       mathOCRUrlFactory.retrieveMathPixAppKey()
     );
@@ -39,7 +39,7 @@ export const retrieveMathPixAppKey = createApiWithNoticeMessageGroup({
  */
 export const produceMathPixAppToken = createApiWithNoticeMessageGroup({
   apiFunction: () => {
-    return api.post<any>(
+    return api.post<TProduceMathPixAppTokenApiResponse>(
       mathOCRUrlFactory.produceMathPixAppToken()
     );
   },

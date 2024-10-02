@@ -37,8 +37,8 @@ const createMathPixAuthSlice: StateCreator<
                   app_key: undefined,
                 },
                 appTokenInfo: {
-                  appToken: undefined,
-                  appTokenExpiresAt: undefined,
+                  app_token: undefined,
+                  app_token_expires_at: undefined,
                 },
               },
             },
@@ -71,10 +71,9 @@ const createMathPixAuthSlice: StateCreator<
 
       setMathPixTokenInfo_action: (params: TProduceMathPixAppTokenApiResponse) => {
         set(old => {
-          // 
           const {
-            appToken,
-            appTokenExpiresAt,
+            app_token,
+            app_token_expires_at,
           } = params;
 
           return {
@@ -84,8 +83,8 @@ const createMathPixAuthSlice: StateCreator<
               state: {
                 ...old.mathPixAuth.state,
                 appTokenInfo: {
-                  appToken,
-                  appTokenExpiresAt,
+                  app_token,
+                  app_token_expires_at,
                 },
               },
             },

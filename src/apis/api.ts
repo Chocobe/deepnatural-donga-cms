@@ -28,6 +28,7 @@ export default (function createAPI() {
 
       const isMathPixAuthApi = url?.includes(mathOCRUrlFactory.produceMathPixAppToken());
       const isMathPixApi = url?.includes(import.meta.env.VITE_MATH_PIX_API_BASE_URL);
+      const isCMSApi = url?.includes(import.meta.env.VITE_CMS_API_PATH);
 
       switch(true) {
         case isMathPixAuthApi: {
@@ -35,7 +36,8 @@ export default (function createAPI() {
             .getState()
             .mathPixAuth
             .state
-            .appKeyInfo;
+            .appKeyInfo
+            .app_key;
 
           config.headers['app_key'] = mathPixAppKey;
           break;
@@ -49,12 +51,13 @@ export default (function createAPI() {
             .mathPixAuth
             .state;
 
-          config.headers['app_token'] = appTokenInfo.appToken;
-          config.headers['app_token_expires_at'] = appTokenInfo.appTokenExpiresAt;
+          config.headers['app_token'] = appTokenInfo.app_token;
+          config.headers['app_token_expires_at'] = appTokenInfo.app_token_expires_at;
+
           break;
         }
 
-        default: {
+        case isCMSApi: {
           const loginToken = useAuthApiStore
             .getState()
             .login
@@ -98,7 +101,8 @@ export default (function createAPI() {
 
         const mathPixAppToken = responseOfProduceMathPixAppToken.data;
 
-        useMathQuestionToolPageStore()
+        useMathQuestionToolPageStore
+          .getState()
           .mathPixAuth
           .action
           .setMathPixTokenInfo_action(mathPixAppToken);

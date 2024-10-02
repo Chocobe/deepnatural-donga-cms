@@ -58,6 +58,19 @@ const useMathQuestionPageStore = create(devtools<TMathQuestionPageStore>((set, _
       selectedMathQuestions,
     }), false, 'setSelectedMathQuestions');
   },
+
+  clearPreviewMathQuestion: () => {
+    set(old => ({
+      ...old,
+      previewMathQuestion: initialMathQuestionPageStoreState.previewMathQuestion,
+    }), false, 'clearPreviewMathQuestion');
+  },
+  setPreviewMathQuestion: previewMathQuestion => {
+    set(old => ({
+      ...old,
+      previewMathQuestion,
+    }), false, 'setPreviewMathQuestion');
+  },
 }), {
   name: 'MathQuestionPageStore',
 }));

@@ -95,20 +95,22 @@ function _QuestionSetAccordionItem(props: TQuestionSetAccordionItemProps) {
     const templateFactory = questionTypeTemplateMapper[questionType];
 
     switch(questionType) {
-      case questionTypeOptionsMapper['객관식(단답형)']:
-      case questionTypeOptionsMapper['객관식(다답형)']: {
+      case questionTypeOptionsMapper['객관식-단답형']:
+      case questionTypeOptionsMapper['객관식-다답형']: {
         return templateFactory();
       }
-      case questionTypeOptionsMapper['주관식(단답형)']:
-      case questionTypeOptionsMapper['주관식(선택형)']: {
+      case questionTypeOptionsMapper['주관식-단답형']:
+      case questionTypeOptionsMapper['주관식-선택형-기본']:
+      case questionTypeOptionsMapper['주관식-선택형-무순']:
+      case questionTypeOptionsMapper['주관식-선택형-유순']: {
         const shortAnswerCount = data.short_answer_count as number;
         return templateFactory?.(shortAnswerCount ?? 0) ?? [];
       }
-      case questionTypeOptionsMapper['주관식(서술형)']: {
+      case questionTypeOptionsMapper['주관식-서술형']: {
         return templateFactory();
       }
-      case questionTypeOptionsMapper['주관식(그리기)']:
-      case questionTypeOptionsMapper['주관식(선긋기)']: {
+      case questionTypeOptionsMapper['주관식-그리기']:
+      case questionTypeOptionsMapper['주관식-선긋기']: {
         return templateFactory();
       }
       default: {

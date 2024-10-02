@@ -310,6 +310,13 @@ export const mathQuestionTypeMapper = {
 } as const;
 export type TMathQuestionType = typeof mathQuestionTypeMapper[keyof typeof mathQuestionTypeMapper];
 
+export const mathQuestionTypeOptions: TCommonSelectOptionItem[] = Object
+  .values(mathQuestionTypeMapper)
+  .map(mathQuestionType => ({
+    text: mathQuestionType,
+    value: mathQuestionType,
+  }));
+
 /** 선택지 유형 */
 export const mathChoiceType = {
   'NONE': null,

@@ -27,7 +27,7 @@ type TEnumEditorProps = {
   className?: string;
   label: string;
   options?: Array<{
-    label: string;
+    text: string;
     value: string | number;
   }>;
   placeholder?: string;
@@ -87,7 +87,7 @@ function _EnumEditor(props: TEnumEditorProps) {
         <SelectContent>
           {options?.map(option => {
             const {
-              label,
+              text,
               value,
             } = option;
 
@@ -96,7 +96,7 @@ function _EnumEditor(props: TEnumEditorProps) {
                 key={`${indexOfResult}-${id}-${value}`}
                 className="option"
                 value={value as string}>
-                {label}
+                {text}
               </SelectItem>
             );
           })}
