@@ -15,6 +15,7 @@ import './SearchModalTrigger.css';
 type TSearchModalTriggerProps = {
   className?: string;
   id: string;
+  tabIndex?: number;
   placeholder?: string;
   value: string;
   onOpen: () => void;
@@ -24,6 +25,7 @@ function _SearchModalTrigger(props: TSearchModalTriggerProps) {
   const {
     className,
     id,
+    tabIndex,
     placeholder = '',
     value,
     onOpen,
@@ -37,6 +39,7 @@ function _SearchModalTrigger(props: TSearchModalTriggerProps) {
         className
       )}
       variant="link"
+      tabIndex={tabIndex}
       onClick={onOpen}>
       <div className={cn(
         'value',
