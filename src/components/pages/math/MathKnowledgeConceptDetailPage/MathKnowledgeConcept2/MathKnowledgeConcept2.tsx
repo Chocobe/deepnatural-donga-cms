@@ -22,7 +22,6 @@ import {
 import { 
   Textarea,
 } from '@/components/shadcn-ui/ui/textarea';
-import SearchModalTrigger from '@/components/shadcn-ui-custom/searchModals/SearchModalTrigger/SearchModalTrigger';
 // type
 import { 
   TMathKnowledgeConceptPageStoreDetailKC2,
@@ -39,7 +38,6 @@ type TMathKnowledgeConcept2Props = {
     indexOfKC2: number;
     isChecked: boolean;
   }) => void;
-  openAchievementSearchModal: (indexOfKC2: number) => void;
 };
 
 function _MathKnowledgeConcept2(props: TMathKnowledgeConcept2Props) {
@@ -47,13 +45,11 @@ function _MathKnowledgeConcept2(props: TMathKnowledgeConcept2Props) {
     indexOfKC2,
     kc2,
     onChangeKC2IsChecked,
-    openAchievementSearchModal,
   } = props;
 
   const {
     title,
     comment,
-    achievement3,
   } = kc2;
 
   //
@@ -129,10 +125,6 @@ function _MathKnowledgeConcept2(props: TMathKnowledgeConcept2Props) {
     adjustTextareaHeight($textarea);
   }, [onChangeInput, adjustTextareaHeight]);
 
-  const _openAchievementSearchModal = useCallback(() => {
-    openAchievementSearchModal(indexOfKC2);
-  }, [indexOfKC2, openAchievementSearchModal]);
-
   //
   // cache
   //
@@ -149,18 +141,6 @@ function _MathKnowledgeConcept2(props: TMathKnowledgeConcept2Props) {
       ),
     },
     {
-      id: `${indexOfKC2}-kc2__achievement3`,
-      label: '성취기준',
-      Component: (
-        <SearchModalTrigger
-          id={`${indexOfKC2}-kc2__achievement3`}
-          className="editor"
-          value={achievement3?.title ?? ''}
-          placeholder="성취기준을 선택해주세요"
-          onOpen={_openAchievementSearchModal} />
-      ),
-    },
-    {
       id: `${indexOfKC2}-kc2__comment`,
       label: '참고',
       Component: (
@@ -173,10 +153,11 @@ function _MathKnowledgeConcept2(props: TMathKnowledgeConcept2Props) {
       ),
     },
   ], [
-    indexOfKC2, title, comment,
-    achievement3?.title,
-    onChangeInput, onChangeTextarea,
-    _openAchievementSearchModal,
+    indexOfKC2,
+    title,
+    comment,
+    onChangeInput, 
+    onChangeTextarea,
   ]);
 
   //

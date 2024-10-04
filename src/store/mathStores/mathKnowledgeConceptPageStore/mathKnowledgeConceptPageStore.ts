@@ -13,11 +13,11 @@ import {
   TMathKnowledgeConceptPageStoreDetailKC1,
 } from './mathKnowledgeConceptPageStore.type';
 import { 
-  TMathKnowledgeConcept1Model,
-} from '@/apis/models/mathModel.type';
+  TRetrieveMathKnowledgeConceptApiResponse,
+} from '@/apis/math/mathApi.type';
 
 function parseKC1ToDetailFormState(
-  kc1: TMathKnowledgeConcept1Model
+  kc1: TRetrieveMathKnowledgeConceptApiResponse
 ): TMathKnowledgeConceptPageStoreDetailKC1 {
   const {
     kc2_set,
@@ -89,6 +89,12 @@ const useMathKnowledgeConceptPageStore = create(devtools<TMathKnowledgeConceptPa
         ...callback(old.detailFormState),
       },
     }), false, 'updateDetailFormState');
+  },
+  updateDetailFormStateReference: callback => {
+    set(old => ({
+      ...old,
+      detailFormStateReference: callback(old.detailFormStateReference),
+    }));
   },
 
   clearSelectedMathKnowledgeConcepts: () => {

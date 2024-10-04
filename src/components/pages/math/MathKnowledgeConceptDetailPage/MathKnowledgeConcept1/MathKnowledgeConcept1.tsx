@@ -32,6 +32,7 @@ import {
   Button,
 } from '@/components/shadcn-ui/ui/button';
 import SearchModal from '@/components/shadcn-ui-custom/modals/SearchModal/SearchModal';
+import SearchModalTrigger from '@/components/shadcn-ui-custom/searchModals/SearchModalTrigger/SearchModalTrigger';
 import MathKnowledgeConcept2 from '../MathKnowledgeConcept2/MathKnowledgeConcept2';
 import { 
   createColumnHelper,
@@ -51,7 +52,6 @@ import {
 } from '@/apis/models/mathModel.type';
 import { 
   initialMathKnowledgeConceptPageStoreDetailKC2,
-  TMathKnowledgeConceptPageStoreDetailKC2,
 } from '@/store/mathStores/mathKnowledgeConceptPageStore/mathKnowledgeConceptPageStore.type';
 import { 
   mathKC1AchievementSearchTypeOptions,
@@ -71,10 +71,18 @@ function _MathKnowledgeConcept1() {
     comment,
     kc2_set,
   } = detailFormState;
-
   const numOfKC2 = kc2_set.length;
 
+  const detailFormStateReference = useMathKnowledgeConceptPageStore(state => state.detailFormStateReference);
+  const {
+    achievement,
+  } = detailFormStateReference;
+  const {
+    title: achievement3Title,
+  } = achievement?.achievement3 ?? {};
+
   const updateDetailFormState = useMathKnowledgeConceptPageStore(state => state.updateDetailFormState);
+  const updateDetailFormStateReference = useMathKnowledgeConceptPageStore(state => state.updateDetailFormStateReference);
 
   //
   // resultNoticeModal store
@@ -109,11 +117,6 @@ function _MathKnowledgeConcept1() {
   //
   // callback
   //
-  const openAchievementSearchModal = useCallback((indexOfKC2: number) => {
-    searchModalTargetIndexOfKC2Ref.current = indexOfKC2;
-    openSearchModal();
-  }, [openSearchModal]);
-
   const onChangeKC2IsChecked = useCallback((params: {
     indexOfKC2: number,
     isChecked: boolean
@@ -159,49 +162,16 @@ function _MathKnowledgeConcept1() {
     adjustTextareaHeight($textarea);
   }, [onChangeInput, adjustTextareaHeight]);
 
-  const parseFlattenAchievementForDetailFormState = useCallback((
-    flattenAchievement: TMathAchievementFlattenModel
-  ) => {
-    const {
-      achievement1,
-      achievement2,
-      achievement3,
-    } = flattenAchievement;
-
-    const {
-      no: _no,
-      achievement2_set: _achievement2_set,
-      ...achievement1Data
-    } = achievement1;
-
-    const parsedAchievement3: TMathKnowledgeConceptPageStoreDetailKC2['achievement3'] = {
-      id: achievement3.id,
-      title: achievement3.title,
-      achievement2: {
-        id: achievement2.id,
-        title: achievement2.title,
-        achievement1: {
-          ...achievement1Data,
-        },
-      },
-    };
-
-    return parsedAchievement3;
-  }, []);
-
   const onSelectAchievement3 = useCallback((
-    flattenAchievement: TMathAchievementFlattenModel
+    achievement: TMathAchievementFlattenModel
   ) => {
     updateDetailFormState(old => ({
       ...old,
-      kc2_set: old.kc2_set?.map((kc2, index) => {
-        return index !== searchModalTargetIndexOfKC2Ref.current
-          ? kc2
-          : {
-            ...kc2,
-            achievement3: parseFlattenAchievementForDetailFormState(flattenAchievement),
-          };
-      }) ?? [],
+      achievement3_id: achievement.achievement3.id,
+    }));
+    updateDetailFormStateReference(old => ({
+      ...old,
+      achievement,
     }));
 
     searchModalTargetIndexOfKC2Ref.current = undefined;
@@ -211,7 +181,7 @@ function _MathKnowledgeConcept1() {
     });
   }, [
     updateDetailFormState,
-    parseFlattenAchievementForDetailFormState,
+    updateDetailFormStateReference,
     closeSearchModal,
   ]);
 
@@ -306,11 +276,30 @@ function _MathKnowledgeConcept1() {
         <Input
           id="kc1__title"
           className="editor"
+          tabIndex={1}
           value={title}
           onChange={onChangeInput} />
       ),
     },
-  ], [title, onChangeInput]);
+    {
+      id: 'kc1_achievement3',
+      label: '성취기준',
+      Component: (
+        <SearchModalTrigger
+          tabIndex={3}
+          id="kc1_achievement3"
+          className="editor"
+          placeholder="성취기준을 선택해주세요."
+          value={achievement3Title ?? ''}
+          onOpen={openSearchModal} />
+      )
+    }
+  ], [
+    title, 
+    achievement3Title,
+    onChangeInput,
+    openSearchModal,
+  ]);
 
   const rightSideFormItems = useMemo(() => [
     {
@@ -320,12 +309,16 @@ function _MathKnowledgeConcept1() {
         <Textarea
           id="kc1__comment"
           className="editor textarea"
+          tabIndex={2}
           value={comment ?? ''}
           onChange={onChangeTextarea} />
       ),
     },
   ], [comment, onChangeTextarea]);
 
+  // FIXME: 성취기준 Cell 추가하기
+  // FIXME: 성취기준 Cell 추가하기
+  // FIXME: 성취기준 Cell 추가하기
   const achievementColumns = useMemo(() => [
     achievementColumnHelper.accessor('achievement1.no', {
       header: '성취기준\n(대)순번',
@@ -450,8 +443,7 @@ function _MathKnowledgeConcept1() {
             <MathKnowledgeConcept2
               indexOfKC2={indexOfKC2}
               kc2={kc2}
-              onChangeKC2IsChecked={onChangeKC2IsChecked}
-              openAchievementSearchModal={openAchievementSearchModal} />
+              onChangeKC2IsChecked={onChangeKC2IsChecked} />
           </div>
         );
       })}

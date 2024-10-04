@@ -59,6 +59,9 @@ const routePathFactory = {
     getKnowledgeConceptAddPage() {
       return `${this.getKnowledgeConceptPath()}/add` as const;
     },
+    getKnowledgeConceptDetailPage(kc1Id: string | number) {
+      return `${this.getKnowledgeConceptPath()}/${kc1Id}` as const;
+    },
 
     // 시리즈-출처
     getSeriesSourcePath() {

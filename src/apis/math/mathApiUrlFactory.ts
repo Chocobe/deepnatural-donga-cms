@@ -5,6 +5,7 @@ import {
   TDeleteMathTextbookApiRequestParams,
   TRetrieveMathChapterApiRequestParams,
   TPutMathChapterApiRequestParams,
+  TRetrieveMathKnowledgeConceptApiRequestParams,
 } from './mathApi.type';
 
 const mathApiUrlFactory = (() => {
@@ -105,6 +106,17 @@ const mathApiUrlFactory = (() => {
     /** (GET) 수학 지식개념 목록 */
     retrieveMathKnowledgeConceptsPath() {
       return `${BASE_PATH}kcs/`;
+    },
+
+    /** (GET) 수학 지식개념 조회 */
+    retrieveMathKnowledgeConceptPath(params: TRetrieveMathKnowledgeConceptApiRequestParams) {
+      const {
+        pathParams: {
+          kc1Id,
+        }
+      } = params;
+
+      return `${this.retrieveMathKnowledgeConceptsPath()}${kc1Id}`;
     },
 
     /** (POST) 수학 지식개념 생성 */

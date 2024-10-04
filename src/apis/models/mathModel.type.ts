@@ -183,6 +183,9 @@ export type TMathAchievementFlattenModel = {
 
 // --- --- --- --- --- --- --- --- --- ---
 
+// FIXME: (2024.10.02) 여기까지 작업함 - KC Model 변경사항 반영
+// FIXME: (2024.10.02) 여기까지 작업함 - KC Model 변경사항 반영
+// FIXME: (2024.10.02) 여기까지 작업함 - KC Model 변경사항 반영
 /**
  * Math KnowledgeConcept (수학 지식개념)
  */
@@ -193,7 +196,29 @@ export type TMathKnowledgeConceptCommonModel = {
   comment: string | null;
 }
 /** 수학 지식개념 2 */
-export type TMathKnowledgeConcept2Model = TMathKnowledgeConceptCommonModel & {
+// export type TMathKnowledgeConcept2Model = TMathKnowledgeConceptCommonModel & {
+//   achievement3: {
+//     id: number;
+//     title: string;
+//     achievement2: {
+//       id: number;
+//       title: string;
+//       achievement1: {
+//         id: number;
+//         title: string;
+//         curriculum: TMathCurriculum;
+//         classtype: TCMSClassType;
+//         grade_cluster: TCMSGradeCluster;
+//       };
+//     };
+//   };
+// };
+export type TMathKnowledgeConcept2Model = TMathKnowledgeConceptCommonModel;
+
+/** 수학 지식개념 1 */
+export type TMathKnowledgeConcept1Model = TMathKnowledgeConceptCommonModel & {
+  kc2_set: TMathKnowledgeConcept2Model[];
+  achievement3_id: number;
   achievement3: {
     id: number;
     title: string;
@@ -209,11 +234,6 @@ export type TMathKnowledgeConcept2Model = TMathKnowledgeConceptCommonModel & {
       };
     };
   };
-};
-
-/** 수학 지식개념 1 */
-export type TMathKnowledgeConcept1Model = TMathKnowledgeConceptCommonModel & {
-  kc2_set: TMathKnowledgeConcept2Model[];
 };
 
 /** 수학 지식개념 평탄화 모델 */

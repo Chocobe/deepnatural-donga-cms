@@ -174,6 +174,12 @@ const routes = createBrowserRouter([
               .getKnowledgeConceptAddPage(),
             element: <MathKnowledgeConceptDetailPage />,
           },
+          {
+            path: routePathFactory
+              .math
+              .getKnowledgeConceptDetailPage(':kc1Id'),
+            element: <MathKnowledgeConceptDetailPage />,
+          },
 
           // 수학: 시리즈-출처
           {

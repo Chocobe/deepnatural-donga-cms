@@ -56,6 +56,7 @@ const noticeMessageGroupFactory: {
 
       // 지식개념
       retrieveMathKnowledgeConcepts: TNoticeMessageGroup;
+      retrieveMathKnowledgeConcept: TNoticeMessageGroup;
       produceMathKnowledgeConcept: TNoticeMessageGroup;
 
       // 시리즈-출처
@@ -413,6 +414,19 @@ const noticeMessageGroupFactory: {
 
       // (GET) 수학 지식개념 목록
       retrieveMathKnowledgeConcepts: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 지식개념 정보를 조회 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 지식개념 정보 조회 중'),
+        }),
+        successMessage: undefined,
+        successSonner: undefined,
+      },
+
+      // (GET) 수학 지식개념 조회
+      retrieveMathKnowledgeConcept: {
         loadingMessage: () => ({
           title: '',
           message: '수학 지식개념 정보를 조회 중입니다.',

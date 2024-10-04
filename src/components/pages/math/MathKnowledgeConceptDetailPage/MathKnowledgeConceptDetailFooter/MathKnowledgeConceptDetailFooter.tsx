@@ -66,14 +66,11 @@ function _MathKnowledgeConceptDetailFooter() {
     const {
       title,
       comment,
+      achievement3_id,
       kc2_set,
     } = detailFormState;
 
-    const hasEmptyAchievement = kc2_set.some(kc2 => {
-      return !kc2.achievement3;
-    });
-
-    if (hasEmptyAchievement) {
+    if (!achievement3_id) {
       openNoticeModal({
         title: '',
         message: '성취기준을 선택해 주세요.',
@@ -90,10 +87,8 @@ function _MathKnowledgeConceptDetailFooter() {
       payload: {
         title,
         comment,
-        kc2_set: kc2_set.map(kc2 => ({
-          ...kc2,
-          achievement3_id: kc2.achievement3?.id as number,
-        })),
+        achievement3_id,
+        kc2_set,
       },
     };
 
