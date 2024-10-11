@@ -6,6 +6,7 @@ import {
   TRetrieveMathChapterApiRequestParams,
   TPutMathChapterApiRequestParams,
   TRetrieveMathKnowledgeConceptApiRequestParams,
+  TPutMathKnowledgeConceptApiRequestParams,
 } from './mathApi.type';
 
 const mathApiUrlFactory = (() => {
@@ -122,6 +123,11 @@ const mathApiUrlFactory = (() => {
     /** (POST) 수학 지식개념 생성 */
     produceMathKnowledgeConceptPath() {
       return this.retrieveMathKnowledgeConceptsPath();
+    },
+
+    /** (PUT) 수학 지식개념 수정 */
+    putMathKnowledgeConceptPath(params: TPutMathKnowledgeConceptApiRequestParams) {
+      return this.retrieveMathKnowledgeConceptPath(params);
     },
   };
 

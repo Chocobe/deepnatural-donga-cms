@@ -22,6 +22,8 @@ import {
 
   TDeleteMathTextbookApiRequestParams,
   TDeleteMathTextbookApiResponse,
+  TPutMathKnowledgeConceptApiRequestParams,
+  TPutMathKnowledgeConceptApiResponse,
 } from './mathApi.type';
 import {
   TRetrieveMathChaptersApiRequestParams,
@@ -367,6 +369,24 @@ export const produceMathKnowledgeConceptApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .produceMathKnowledgeConcept
+});
+
+//
+// (PUT) 수학 지식개념 수정
+//
+export const putMathKnowledgeConceptApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TPutMathKnowledgeConceptApiRequestParams) => {
+    const _params = excludeNullOrUndefinedProperties(params);
+
+    return api.put<TPutMathKnowledgeConceptApiResponse>(
+      mathApiUrlFactory.putMathKnowledgeConceptPath(_params),
+      _params.payload
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .putMathKnowledgeConcept,
 });
 
 // --- --- --- --- --- --- --- --- --- ---

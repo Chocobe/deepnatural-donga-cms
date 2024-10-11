@@ -27,15 +27,26 @@ import {
 // type
 import { 
   TProduceMathKnowledgeConceptApiRequestParams,
+  TPutMathKnowledgeConceptApiRequestParams,
 } from '@/apis/math/mathApi.type';
 // style
 import './MathKnowledgeConceptDetailFooter.css';
 
-function _MathKnowledgeConceptDetailFooter() {
+type TMathKnowledgeConceptDetailFooterProps = {
+  isDetailMode: boolean;
+};
+
+function _MathKnowledgeConceptDetailFooter(props: TMathKnowledgeConceptDetailFooterProps) {
+  const {
+    isDetailMode,
+  } = props;
+
   //
   // mathKnowledgeConceptPage store
   //
   const detailFormState = useMathKnowledgeConceptPageStore(state => state.detailFormState);
+
+  const clearDetailTargetMathKnowledgeConcept = useMathKnowledgeConceptPageStore(state => state.clearDetailTargetMathKnowledgeConcept);
 
   //
   // resultNoticeMessage store
@@ -50,18 +61,6 @@ function _MathKnowledgeConceptDetailFooter() {
   //
   // callback
   //
-  const onClickSaveAndAdd = useCallback(() => {
-    console.log('저장후 추가하기');
-  }, []);
-
-  const onClickSaveAndRemain = useCallback(() => {
-    console.log('저장후 계속해서 수정하기');
-  }, []);
-
-  const onClickSave = useCallback(() => {
-    console.log('저장하기');
-  }, []);
-
   const produceMathKnowledgeConcept = useCallback(async () => {
     const {
       title,
@@ -106,6 +105,58 @@ function _MathKnowledgeConceptDetailFooter() {
     openNoticeModal,
   ]);
 
+  const putMathKnowledgeConcept = useCallback(async () => {
+    const {
+      id,
+      title,
+      comment,
+      achievement3_id,
+      kc2_set,
+    } = detailFormState;
+
+    if (!id) {
+      return;
+    }
+
+    if (!achievement3_id) {
+      openNoticeModal({
+        title: '',
+        message: '성취기준을 선택해 주세요.',
+        firstButton: {
+          text: '확인',
+          variant: 'outline',
+        },
+      });
+
+      return;
+    }
+
+    const params: TPutMathKnowledgeConceptApiRequestParams = {
+      pathParams: {
+        kc1Id: id,
+      },
+      payload: {
+        achievement3_id,
+        title: title,
+        comment: comment,
+        kc2_set: kc2_set.map(kc2 => ({
+          title: kc2.title,
+          comment: kc2.comment || null,
+          kc1: String(id),
+          achievement3: String(achievement3_id),
+        })),
+      },
+    };
+
+    return ApiManager
+      .math
+      .putMathKnowledgeConceptApi
+      .callWithNoticeMessageGroup(params);
+  }, [
+    detailFormState,
+    openNoticeModal,
+  ]);
+
   const onClickAdd = useCallback(async () => {
     const mathKnowledgeConcept = await produceMathKnowledgeConcept();
 
@@ -122,46 +173,72 @@ function _MathKnowledgeConceptDetailFooter() {
     navigate,
   ]);
 
-  // FIXME: props 로 받아오기
-  const isAdditionMode = true;
+  const onClickSaveAndAdd = useCallback(async () => {
+    await putMathKnowledgeConcept();
+
+    clearDetailTargetMathKnowledgeConcept();
+
+    navigate(routePathFactory
+      .math
+      .getKnowledgeConceptAddPage()
+    );
+  }, [
+    putMathKnowledgeConcept,
+    clearDetailTargetMathKnowledgeConcept,
+    navigate,
+  ]);
+
+  const onClickSaveAndRemain = useCallback(async () => {
+    await putMathKnowledgeConcept();
+  }, [putMathKnowledgeConcept]);
+
+  const onClickSave = useCallback(async () => {
+    await putMathKnowledgeConcept();
+
+    navigate(routePathFactory
+      .math
+      .getKnowledgeConceptPath()
+    );
+  }, [
+    putMathKnowledgeConcept,
+    navigate,
+  ]);
 
   //
   // cache
   //
   const buttonItems = useMemo(() => {
-    return isAdditionMode
+    return isDetailMode
       ? [
-        {
-          text: '추가하기',
-          variant: 'default',
-          onClick: onClickAdd,
-          IconComponent: LuSave,
-        },
-      ]: [
         {
           text: '저장후 추가하기',
           variant: 'secondary',
           onClick: onClickSaveAndAdd,
           IconComponent: undefined,
-          isTBU: true,
         },
         {
           text: '저장후 계속해서 수정하기',
           variant: 'secondary',
           onClick: onClickSaveAndRemain,
           IconComponent: undefined,
-          isTBU: true,
         },
         {
           text: '저장하기',
           variant: 'default',
           onClick: onClickSave,
           IconComponent: LuSave,
+        },
+      ]: [
+        {
+          text: '추가하기',
+          variant: 'default',
+          onClick: onClickAdd,
+          IconComponent: LuSave,
           isTBU: true,
         },
       ];
   }, [
-    isAdditionMode,
+    isDetailMode,
     onClickAdd,
     onClickSaveAndAdd,
     onClickSaveAndRemain,

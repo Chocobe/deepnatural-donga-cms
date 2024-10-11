@@ -34,8 +34,7 @@ function MathKnowledgeConceptDetailPage() {
   //
   const routeParams = useParams();
   const kc1Id = routeParams.kc1Id;
-  // FIXME: PUT KC API 연동 시, 주석 해제
-  // const isDetailMode = !!kc1Id;
+  const isDetailMode = !!kc1Id;
 
   //
   // callback
@@ -92,7 +91,7 @@ function MathKnowledgeConceptDetailPage() {
       <div className="MathKnowledgeConceptDetailPage-divider" />
 
       <div className="MathKnowledgeConceptDetailPage-footer">
-        <MathKnowledgeConceptDetailFooter />
+        <MathKnowledgeConceptDetailFooter isDetailMode={isDetailMode} />
       </div>
     </div>
   );

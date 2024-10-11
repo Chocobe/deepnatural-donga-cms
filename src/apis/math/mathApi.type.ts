@@ -209,6 +209,18 @@ export type TProduceMathKnowledgeConceptApiRequestParams = TApiRequestBodyParams
 // FIXME: 실제 응답 확인하기
 export type TProduceMathKnowledgeConceptApiResponse = any;
 
+/** (PUT) 수학 지식개념 수정 RequestParams */
+export type TPutMathKnowledgeConceptApiRequestParams = TApiRequestBodyParams<{
+  kc1Id: string | number;
+}, void, Pick<TMathKnowledgeConcept1Model, 'title' | 'comment' | 'achievement3_id'> & {
+  kc2_set: Array<
+    Pick<TMathKnowledgeConcept2Model, 'title' | 'comment' | 'kc1' | 'achievement3'>
+  >;
+}>;
+// FIXME: 실제 응답 확인하기
+/** (PUT) 수학 지식개념 수정 Response */
+export type TPutMathKnowledgeConceptApiResponse = any;
+
 // --- --- --- --- --- --- --- --- --- ---
 
 /**
