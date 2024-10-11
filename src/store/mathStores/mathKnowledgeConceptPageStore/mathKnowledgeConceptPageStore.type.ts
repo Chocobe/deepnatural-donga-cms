@@ -31,7 +31,15 @@ export type TMathKnowledgeConceptPageStoreState = {
   detailTargetMathKnowledgeConcept?: TRetrieveMathKnowledgeConceptApiResponse;
   detailFormState: TMathKnowledgeConceptPageStoreDetailKC1;
   detailFormStateReference: {
-    achievement?: TMathAchievementFlattenModel;
+    // achievement?: Partial<TMathAchievementFlattenModel>;
+    // achievement?: {
+    //   achievement1?: Partial<TMathAchievementFlattenModel['achievement1']>;
+    //   achievement2?: Partial<TMathAchievementFlattenModel['achievement2']>;
+    //   achievement3: Partial<TMathAchievementFlattenModel['achievement3']>;
+    // }
+    achievement?: Partial<Omit<TMathAchievementFlattenModel, 'achievement3'>> & {
+      achievement3?: Pick<TMathAchievementFlattenModel['achievement3'], 'id' | 'title'>
+    };
   };
 
   selectedMathKnowledgeConcepts?: TMathKnowledgeConceptFlattenModel[];

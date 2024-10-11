@@ -72,6 +72,7 @@ const useMathKnowledgeConceptPageStore = create(devtools<TMathKnowledgeConceptPa
       ...old,
       detailTargetMathKnowledgeConcept: initialMathKnowledgeConceptPageStoreState.detailTargetMathKnowledgeConcept,
       detailFormState: initialMathKnowledgeConceptPageStoreState.detailFormState,
+      detailFormStateReference: initialMathKnowledgeConceptPageStoreState.detailFormStateReference,
     }), false, 'clearDetailTargetMathKnowledgeConcept');
   },
   setDetailTargetMathKnowledgeConcept: detailTargetMathKnowledgeConcept => {
@@ -79,6 +80,16 @@ const useMathKnowledgeConceptPageStore = create(devtools<TMathKnowledgeConceptPa
       ...old,
       detailTargetMathKnowledgeConcept,
       detailFormState: parseKC1ToDetailFormState(detailTargetMathKnowledgeConcept),
+      detailFormStateReference: {
+        achievement: {
+          achievement1: undefined,
+          achievement2: undefined,
+          achievement3: {
+            id: detailTargetMathKnowledgeConcept.achievement3_id,
+            title: detailTargetMathKnowledgeConcept.achievement3.title,
+          },
+        },
+      },
     }), false, 'setDetailTargetMathKnowledgeConcept');
   },
   updateDetailFormState: callback => {

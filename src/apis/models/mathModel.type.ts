@@ -192,6 +192,7 @@ export type TMathKnowledgeConceptCommonModel = {
   title: string;
   comment: string | null;
 }
+
 /** 수학 지식개념 2 */
 export type TMathKnowledgeConcept2Model = TMathKnowledgeConceptCommonModel & {
   kc1: string;
@@ -202,7 +203,7 @@ export type TMathKnowledgeConcept2Model = TMathKnowledgeConceptCommonModel & {
 
 /** 수학 지식개념 1 */
 export type TMathKnowledgeConcept1Model = TMathKnowledgeConceptCommonModel & {
-  kc2_set: TMathKnowledgeConcept2Model[];
+  kc2_set: TMathKnowledgeConceptCommonModel[];
 
   achievement3_id: number;
   achievement3: {

@@ -25,7 +25,6 @@ import {
   TMathAchievement3Model,
   TMathKnowledgeConcept2Model,
   TMathSourceModel,
-  TMathKnowledgeConceptCommonModel,
 } from '../models/mathModel.type';
 
 /**
@@ -189,19 +188,13 @@ export type TRetrieveMathKnowledgeConceptsApiRequestParams = TApiRequestNonBodyP
 /** (GET) 수학 지식개념 목록 조회 Response */
 export type TRetrieveMathKnowledgeConceptsApiResponse = TPaginationModel<TMathKnowledgeConcept1Model>;
 
-// FIXME: API 확인 필요
+// FIXME: searchParams 정의 추가하기
 /** (GET) 수학 지식개념 조회 RequestParams */
 export type TRetrieveMathKnowledgeConceptApiRequestParams = TApiRequestNonBodyParams<{
   kc1Id: string | number;
 }, void>;
-// FIXME: API 확인 필요
 /** (GET) 수학 지식개념 조회 Response */
-export type TRetrieveMathKnowledgeConceptApiResponse =
-  & Pick<TMathKnowledgeConcept1Model, 'id' | 'title' | 'comment'>
-  & {
-    achievement3_id: number;
-    kc2_set: TMathKnowledgeConceptCommonModel[];
-  };
+export type TRetrieveMathKnowledgeConceptApiResponse = TMathKnowledgeConcept1Model;
 
 /** (POST) 수학 지식개념 생성 RequestParams */
 export type TProduceMathKnowledgeConceptApiRequestParams = TApiRequestBodyParams<

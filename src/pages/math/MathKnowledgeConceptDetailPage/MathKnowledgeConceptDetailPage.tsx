@@ -40,7 +40,7 @@ function MathKnowledgeConceptDetailPage() {
   //
   // callback
   //
-  const retrieveMathKnowledgeConcept = useCallback(async () => {
+  const retreiveDetailData = useCallback(async () => {
     if (!kc1Id) {
       return;
     }
@@ -67,9 +67,9 @@ function MathKnowledgeConceptDetailPage() {
   //
   // effect
   //
-  useEffect(function _retrieveMathKnowledgeConcept() {
-    retrieveMathKnowledgeConcept();
-  }, [retrieveMathKnowledgeConcept]);
+  useEffect(function _retrieveDetailData() {
+    retreiveDetailData();
+  }, [retreiveDetailData]);
 
   useEffect(function cleanup() {
     return () => {
