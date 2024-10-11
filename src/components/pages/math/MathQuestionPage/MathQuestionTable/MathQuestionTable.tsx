@@ -6,6 +6,11 @@ import {
   useCallback,
   memo,
 } from 'react';
+// router
+import { 
+  useNavigate,
+} from 'react-router-dom';
+import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathQuestionPageStore from '@/store/mathStores/mathQuestionPageStore/mathQuestionPageStore';
 // ui
@@ -76,6 +81,11 @@ function _MathQuestionTable() {
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
   //
+  // hook
+  //
+  const navigate = useNavigate();
+
+  //
   // callback
   //
   const onClickPreview = useCallback((
@@ -85,6 +95,15 @@ function _MathQuestionTable() {
 
     setPreviewMathQuestion(mathQuestion);
   }, [setPreviewMathQuestion]);
+
+  const goToDetailPage = useCallback((mathQuestion: TMathQuestionModel) => {
+    const questionId = mathQuestion.id;
+
+    navigate(routePathFactory
+      .math
+      .getQuestionDetailPage(questionId)
+    );
+  }, [navigate]);
 
   //
   // cache
@@ -267,7 +286,7 @@ function _MathQuestionTable() {
             key={row.id}
             className="row"
             data-state={row.getIsSelected() && 'selected'}
-            onClick={() => console.log('상세 페이지 이동')}>
+            onClick={() => goToDetailPage(row.original)}>
             {row.getVisibleCells().map(cell => (
               <TableCell
                 key={cell.id}

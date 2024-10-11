@@ -80,6 +80,9 @@ const routePathFactory = {
     getQuestionPath() {
       return `${this.getMathRootPath()}/question` as const;
     },
+    getQuestionDetailPage(questionId: string | number) {
+      return `${this.getQuestionPath()}/${questionId}` as const;
+    },
     getQuestionToolPath() {
       return `${this.getQuestionPath()}/tool` as const;
     },
