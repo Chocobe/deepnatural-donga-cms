@@ -188,18 +188,38 @@ export type TRetrieveMathKnowledgeConceptsApiRequestParams = TApiRequestNonBodyP
 /** (GET) 수학 지식개념 목록 조회 Response */
 export type TRetrieveMathKnowledgeConceptsApiResponse = TPaginationModel<TMathKnowledgeConcept1Model>;
 
+// FIXME: searchParams 정의 추가하기
+/** (GET) 수학 지식개념 조회 RequestParams */
+export type TRetrieveMathKnowledgeConceptApiRequestParams = TApiRequestNonBodyParams<{
+  kc1Id: string | number;
+}, void>;
+/** (GET) 수학 지식개념 조회 Response */
+export type TRetrieveMathKnowledgeConceptApiResponse = TMathKnowledgeConcept1Model;
+
 /** (POST) 수학 지식개념 생성 RequestParams */
 export type TProduceMathKnowledgeConceptApiRequestParams = TApiRequestBodyParams<
   void,
   void,
-  Omit<TMathKnowledgeConcept1Model, 'id' | 'kc2_set'> & {
-    kc2_set: Array<Omit<TMathKnowledgeConcept2Model, 'id' | 'achievement3'> & {
-      achievement3_id: number;
-    }>
+  Pick<TMathKnowledgeConcept1Model, 'title' | 'comment' | 'achievement3_id'> & {
+    // TODO: 신규 `kc1` 값은 아직 존재하지 않음 - 확인필요
+    // kc2_set: Array<Pick<TMathKnowledgeConcept2Model, 'title' | 'comment' | 'kc1' | 'achievement3'>>;
+    kc2_set: Array<Pick<TMathKnowledgeConcept2Model, 'title' | 'comment' | 'achievement3'>>;
   }
 >;
 // FIXME: 실제 응답 확인하기
 export type TProduceMathKnowledgeConceptApiResponse = any;
+
+/** (PUT) 수학 지식개념 수정 RequestParams */
+export type TPutMathKnowledgeConceptApiRequestParams = TApiRequestBodyParams<{
+  kc1Id: string | number;
+}, void, Pick<TMathKnowledgeConcept1Model, 'title' | 'comment' | 'achievement3_id'> & {
+  kc2_set: Array<
+    Pick<TMathKnowledgeConcept2Model, 'title' | 'comment' | 'kc1' | 'achievement3'>
+  >;
+}>;
+// FIXME: 실제 응답 확인하기
+/** (PUT) 수학 지식개념 수정 Response */
+export type TPutMathKnowledgeConceptApiResponse = any;
 
 // --- --- --- --- --- --- --- --- --- ---
 

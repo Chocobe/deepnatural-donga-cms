@@ -3,8 +3,15 @@ import {
   useRef,
   useState,
   useMemo,
+  useCallback,
+  useEffect,
   memo,
 } from 'react';
+// router
+import { 
+  useNavigate,
+} from 'react-router-dom';
+import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathKnowledgeConceptPageStore from '@/store/mathStores/mathKnowledgeConceptPageStore/mathKnowledgeConceptPageStore';
 // ui
@@ -49,6 +56,7 @@ function _MathKnowledgeConceptTable() {
   const mathKnowledgeConceptsData = useMathKnowledgeConceptPageStore(state => state.mathKnowledgeConceptsData);
 
   const setSelectedMathKnowledgeConcepts = useMathKnowledgeConceptPageStore(state => state.setSelectedMathKnowledgeConcepts);
+  const clearSelectedMathKnowledgeConcepts = useMathKnowledgeConceptPageStore(state => state.clearSelectedMathKnowledgeConcepts);
 
   //
   // ref
@@ -81,7 +89,7 @@ function _MathKnowledgeConceptTable() {
       header: '교육과정',
       cell: props => {
         const curriculum = props.row.original
-          .kc2
+          .kc1
           .achievement3
           .achievement2
           .achievement1
@@ -95,7 +103,7 @@ function _MathKnowledgeConceptTable() {
       header: '학교급',
       cell: props => {
         const classtype = props.row.original
-          .kc2
+          .kc1
           .achievement3
           .achievement2
           .achievement1
@@ -109,7 +117,7 @@ function _MathKnowledgeConceptTable() {
       header: '학년(군)',
       cell: props => {
         const gradeCluster = props.row.original
-          .kc2
+          .kc1
           .achievement3
           .achievement2
           .achievement1
@@ -122,12 +130,12 @@ function _MathKnowledgeConceptTable() {
       id: 'achievement1_title',
       header: '성취기준(대)',
       cell: props => {
-        const achievement1Title = props.row.original.
-          kc2.
-          achievement3.
-          achievement2.
-          achievement1.
-          title;
+        const achievement1Title = props.row.original
+          .kc1
+          .achievement3
+          .achievement2
+          .achievement1
+          .title;
 
         return achievement1Title;
       },
@@ -137,7 +145,7 @@ function _MathKnowledgeConceptTable() {
       header: '성취기준(중)',
       cell: props => {
         const achievement2Title = props.row.original
-          .kc2
+          .kc1
           .achievement3
           .achievement2
           .title;
@@ -150,7 +158,7 @@ function _MathKnowledgeConceptTable() {
       header: '성취기준명',
       cell: props => {
         const achievement3Title = props.row.original
-          .kc2
+          .kc1
           .achievement3
           .title;
 
@@ -188,6 +196,30 @@ function _MathKnowledgeConceptTable() {
     },
   });
 
+  const navigate = useNavigate();
+
+  //
+  // callback
+  //
+  const goToDetailPage = useCallback((mathKnowledgeConcept: TMathKnowledgeConceptFlattenModel) => {
+    const kc1Id = mathKnowledgeConcept.kc1.id;
+
+    navigate(routePathFactory
+      .math
+      .getKnowledgeConceptDetailPage(kc1Id)
+    );
+  }, [navigate]);
+
+  //
+  // effect
+  //
+  useEffect(function _clearSelectedMathKnowledgeConcepts() {
+    setRowSelection({});
+    clearSelectedMathKnowledgeConcepts();
+
+    // eslint-disable-next-line
+  }, [tableData]);
+
   return (
     <Table
       ref={$tableRef}
@@ -217,7 +249,7 @@ function _MathKnowledgeConceptTable() {
             key={row.id}
             className="row"
             data-state={row.getIsSelected() && 'selected'}
-            onClick={() => console.log('상세 페이지 이동')}>
+            onClick={() => goToDetailPage(row.original)}>
             {row.getVisibleCells().map(cell => (
               <TableCell
                 key={cell.id}

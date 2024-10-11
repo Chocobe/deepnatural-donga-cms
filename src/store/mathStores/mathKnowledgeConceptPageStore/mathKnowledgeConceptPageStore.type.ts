@@ -1,22 +1,25 @@
 // type
 import { 
+  TRetrieveMathKnowledgeConceptApiResponse,
   TRetrieveMathKnowledgeConceptsApiRequestParams,
   TRetrieveMathKnowledgeConceptsApiResponse,
 } from '@/apis/math/mathApi.type';
 import { 
+  TMathAchievementFlattenModel,
   TMathKnowledgeConcept1Model,
   TMathKnowledgeConcept2Model,
   TMathKnowledgeConceptFlattenModel,
 } from '@/apis/models/mathModel.type';
 
 export type TMathKnowledgeConceptPageStoreDetailKC2 =
-  & Omit<TMathKnowledgeConcept2Model, 'id' | 'achievement3'>
-  & Partial<Pick<TMathKnowledgeConcept2Model, 'id' | 'achievement3'>>;
+  & Pick<TMathKnowledgeConcept2Model, 'title' | 'comment'>
+  & Partial<Pick<TMathKnowledgeConcept2Model, 'id'>>;
 
 export type TMathKnowledgeConceptPageStoreDetailKC1 =
-  & Omit<TMathKnowledgeConcept1Model, 'id' | 'kc2_set'>
+  & Pick<TMathKnowledgeConcept1Model, 'title' | 'comment'>
   & Partial<Pick<TMathKnowledgeConcept1Model, 'id'>>
   & {
+    achievement3_id?: number;
     kc2_set: TMathKnowledgeConceptPageStoreDetailKC2[];
   };
 
@@ -25,8 +28,19 @@ export type TMathKnowledgeConceptPageStoreState = {
 
   mathKnowledgeConceptsData?: TRetrieveMathKnowledgeConceptsApiResponse;
 
-  detailTargetMathKnowledgeConcept?: TMathKnowledgeConcept1Model;
+  detailTargetMathKnowledgeConcept?: TRetrieveMathKnowledgeConceptApiResponse;
   detailFormState: TMathKnowledgeConceptPageStoreDetailKC1;
+  detailFormStateReference: {
+    // achievement?: Partial<TMathAchievementFlattenModel>;
+    // achievement?: {
+    //   achievement1?: Partial<TMathAchievementFlattenModel['achievement1']>;
+    //   achievement2?: Partial<TMathAchievementFlattenModel['achievement2']>;
+    //   achievement3: Partial<TMathAchievementFlattenModel['achievement3']>;
+    // }
+    achievement?: Partial<Omit<TMathAchievementFlattenModel, 'achievement3'>> & {
+      achievement3?: Pick<TMathAchievementFlattenModel['achievement3'], 'id' | 'title'>
+    };
+  };
 
   selectedMathKnowledgeConcepts?: TMathKnowledgeConceptFlattenModel[];
 };
@@ -35,13 +49,13 @@ export const initialMathKnowledgeConceptPageStoreDetailKC2: TMathKnowledgeConcep
   id: undefined,
   title: '',
   comment: '',
-  achievement3: undefined,
 };
 
 export const initialMathKnowledgeConceptPageStoreDetailKC1: TMathKnowledgeConceptPageStoreDetailKC1 = {
   id: undefined,
   title: '',
   comment: '',
+  achievement3_id: undefined,
   kc2_set: [],
 };
 
@@ -64,14 +78,17 @@ export const initialMathKnowledgeConceptPageStoreState: TMathKnowledgeConceptPag
     id: undefined,
     title: '',
     comment: '',
+    achievement3_id: undefined,
     kc2_set: [
       {
         id: undefined,
         title: '',
         comment: '',
-        achievement3: undefined,
       },
     ],
+  },
+  detailFormStateReference: {
+    achievement: undefined,
   },
 
   selectedMathKnowledgeConcepts: undefined,
@@ -91,11 +108,16 @@ export type TMathKnowledgeConceptPageStoreAction = {
   setMathKnowledgeConceptsData: (mathKnowledgeConceptsData: TRetrieveMathKnowledgeConceptsApiResponse) => void;
 
   clearDetailTargetMathKnowledgeConcept: () => void;
-  setDetailTargetMathKnowledgeConcept: (detailTargetMathKnowledgeConcept: TMathKnowledgeConcept1Model) => void
+  setDetailTargetMathKnowledgeConcept: (detailTargetMathKnowledgeConcept: TRetrieveMathKnowledgeConceptApiResponse) => void
   updateDetailFormState: (
     callback: (
       detailFormState: Partial<TMathKnowledgeConceptPageStoreState['detailFormState']>
     ) => Partial<TMathKnowledgeConceptPageStoreState['detailFormState']>
+  ) => void;
+  updateDetailFormStateReference: (
+    callback: (
+      reference: TMathKnowledgeConceptPageStoreState['detailFormStateReference']
+    ) => TMathKnowledgeConceptPageStoreState['detailFormStateReference']
   ) => void;
 
   clearSelectedMathKnowledgeConcepts: () => void;

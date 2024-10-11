@@ -56,7 +56,9 @@ const noticeMessageGroupFactory: {
 
       // 지식개념
       retrieveMathKnowledgeConcepts: TNoticeMessageGroup;
+      retrieveMathKnowledgeConcept: TNoticeMessageGroup;
       produceMathKnowledgeConcept: TNoticeMessageGroup;
+      putMathKnowledgeConcept: TNoticeMessageGroup;
 
       // 시리즈-출처
       retrieveMathSeriesSources: TNoticeMessageGroup;
@@ -424,6 +426,19 @@ const noticeMessageGroupFactory: {
         successSonner: undefined,
       },
 
+      // (GET) 수학 지식개념 조회
+      retrieveMathKnowledgeConcept: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 지식개념 정보를 조회 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 지식개념 정보 조회 중'),
+        }),
+        successMessage: undefined,
+        successSonner: undefined,
+      },
+
       // (POST) 수학 지식개념 생성
       produceMathKnowledgeConcept: {
         loadingMessage: () => ({
@@ -438,6 +453,22 @@ const noticeMessageGroupFactory: {
         successSonner: () => ({
           title: '추가하기 완료',
           message: '입력하신 내용이 성공적으로 추가되었습니다.',
+        }),
+      },
+
+      // (PUT) 수학 지식개념 수정
+      putMathKnowledgeConcept: {
+        loadingMessage: () => ({
+          title: '',
+          message: '지식개념을 수정 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('지식개념 수정 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '입력하신 지식개념을 성공적으로 수정 완료하였습니다.',
         }),
       },
 

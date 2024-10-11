@@ -22,6 +22,8 @@ import {
 
   TDeleteMathTextbookApiRequestParams,
   TDeleteMathTextbookApiResponse,
+  TPutMathKnowledgeConceptApiRequestParams,
+  TPutMathKnowledgeConceptApiResponse,
 } from './mathApi.type';
 import {
   TRetrieveMathChaptersApiRequestParams,
@@ -46,6 +48,9 @@ import {
 import {
   TRetrieveMathKnowledgeConceptsApiRequestParams,
   TRetrieveMathKnowledgeConceptsApiResponse,
+
+  TRetrieveMathKnowledgeConceptApiRequestParams,
+  TRetrieveMathKnowledgeConceptApiResponse,
 
   TProduceMathKnowledgeConceptApiRequestParams,
   TProduceMathKnowledgeConceptApiResponse,
@@ -332,6 +337,21 @@ export const retrieveMathKnowledgeConceptsApi = createApiWithNoticeMessageGroup(
 });
 
 //
+// (GET) 수학 지식개념 조회
+//
+export const retrieveMathKnowledgeConceptApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathKnowledgeConceptApiRequestParams) => {
+    return api.get<TRetrieveMathKnowledgeConceptApiResponse>(
+      mathApiUrlFactory.retrieveMathKnowledgeConceptPath(params)
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .retrieveMathKnowledgeConcept,
+});
+
+//
 // (POST) 수학 지식개념 생성
 //
 export const produceMathKnowledgeConceptApi = createApiWithNoticeMessageGroup({
@@ -349,6 +369,24 @@ export const produceMathKnowledgeConceptApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .produceMathKnowledgeConcept
+});
+
+//
+// (PUT) 수학 지식개념 수정
+//
+export const putMathKnowledgeConceptApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TPutMathKnowledgeConceptApiRequestParams) => {
+    const _params = excludeNullOrUndefinedProperties(params);
+
+    return api.put<TPutMathKnowledgeConceptApiResponse>(
+      mathApiUrlFactory.putMathKnowledgeConceptPath(_params),
+      _params.payload
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .putMathKnowledgeConcept,
 });
 
 // --- --- --- --- --- --- --- --- --- ---

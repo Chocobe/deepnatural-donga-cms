@@ -13,11 +13,11 @@ import {
   TMathKnowledgeConceptPageStoreDetailKC1,
 } from './mathKnowledgeConceptPageStore.type';
 import { 
-  TMathKnowledgeConcept1Model,
-} from '@/apis/models/mathModel.type';
+  TRetrieveMathKnowledgeConceptApiResponse,
+} from '@/apis/math/mathApi.type';
 
 function parseKC1ToDetailFormState(
-  kc1: TMathKnowledgeConcept1Model
+  kc1: TRetrieveMathKnowledgeConceptApiResponse
 ): TMathKnowledgeConceptPageStoreDetailKC1 {
   const {
     kc2_set,
@@ -72,6 +72,7 @@ const useMathKnowledgeConceptPageStore = create(devtools<TMathKnowledgeConceptPa
       ...old,
       detailTargetMathKnowledgeConcept: initialMathKnowledgeConceptPageStoreState.detailTargetMathKnowledgeConcept,
       detailFormState: initialMathKnowledgeConceptPageStoreState.detailFormState,
+      detailFormStateReference: initialMathKnowledgeConceptPageStoreState.detailFormStateReference,
     }), false, 'clearDetailTargetMathKnowledgeConcept');
   },
   setDetailTargetMathKnowledgeConcept: detailTargetMathKnowledgeConcept => {
@@ -79,6 +80,16 @@ const useMathKnowledgeConceptPageStore = create(devtools<TMathKnowledgeConceptPa
       ...old,
       detailTargetMathKnowledgeConcept,
       detailFormState: parseKC1ToDetailFormState(detailTargetMathKnowledgeConcept),
+      detailFormStateReference: {
+        achievement: {
+          achievement1: undefined,
+          achievement2: undefined,
+          achievement3: {
+            id: detailTargetMathKnowledgeConcept.achievement3_id,
+            title: detailTargetMathKnowledgeConcept.achievement3.title,
+          },
+        },
+      },
     }), false, 'setDetailTargetMathKnowledgeConcept');
   },
   updateDetailFormState: callback => {
@@ -89,6 +100,12 @@ const useMathKnowledgeConceptPageStore = create(devtools<TMathKnowledgeConceptPa
         ...callback(old.detailFormState),
       },
     }), false, 'updateDetailFormState');
+  },
+  updateDetailFormStateReference: callback => {
+    set(old => ({
+      ...old,
+      detailFormStateReference: callback(old.detailFormStateReference),
+    }));
   },
 
   clearSelectedMathKnowledgeConcepts: () => {

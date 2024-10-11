@@ -65,7 +65,7 @@ function _MathChapterDetailFooter(props: TMathChapterDetailFooterProps) {
   //
   // callback
   //
-  const patchMathChapter = useCallback(async () => {
+  const putMathChapter = useCallback(async () => {
     const {
       id,
       textbook_id,
@@ -177,7 +177,7 @@ function _MathChapterDetailFooter(props: TMathChapterDetailFooterProps) {
   }, [updateDetailFormState]);
 
   const onClickSaveAndAdd = useCallback(async () => {
-    await patchMathChapter();
+    await putMathChapter();
 
     clearDetailTargetMathChapter();
 
@@ -186,23 +186,23 @@ function _MathChapterDetailFooter(props: TMathChapterDetailFooterProps) {
       .getChapterAddPath()
     );
   }, [
-    patchMathChapter,
+    putMathChapter,
     clearDetailTargetMathChapter,
     navigate,
   ]);
 
   const onClickSaveAndRemain = useCallback(async () => {
-    await patchMathChapter();
-  }, [patchMathChapter]);
+    await putMathChapter();
+  }, [putMathChapter]);
 
   const onClickSave = useCallback(async () => {
-    await patchMathChapter();
+    await putMathChapter();
 
     navigate(routePathFactory
       .math
       .getChapterPath()
     );
-  }, [patchMathChapter, navigate]);
+  }, [putMathChapter, navigate]);
 
   const onClickAdd = useCallback(async () => {
     const mathChapter = await produceMathChapter();

@@ -5,6 +5,8 @@ import {
   TDeleteMathTextbookApiRequestParams,
   TRetrieveMathChapterApiRequestParams,
   TPutMathChapterApiRequestParams,
+  TRetrieveMathKnowledgeConceptApiRequestParams,
+  TPutMathKnowledgeConceptApiRequestParams,
 } from './mathApi.type';
 
 const mathApiUrlFactory = (() => {
@@ -107,9 +109,25 @@ const mathApiUrlFactory = (() => {
       return `${BASE_PATH}kcs/`;
     },
 
+    /** (GET) 수학 지식개념 조회 */
+    retrieveMathKnowledgeConceptPath(params: TRetrieveMathKnowledgeConceptApiRequestParams) {
+      const {
+        pathParams: {
+          kc1Id,
+        }
+      } = params;
+
+      return `${this.retrieveMathKnowledgeConceptsPath()}${kc1Id}`;
+    },
+
     /** (POST) 수학 지식개념 생성 */
     produceMathKnowledgeConceptPath() {
       return this.retrieveMathKnowledgeConceptsPath();
+    },
+
+    /** (PUT) 수학 지식개념 수정 */
+    putMathKnowledgeConceptPath(params: TPutMathKnowledgeConceptApiRequestParams) {
+      return this.retrieveMathKnowledgeConceptPath(params);
     },
   };
 
