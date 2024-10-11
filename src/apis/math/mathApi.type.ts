@@ -25,6 +25,7 @@ import {
   TMathAchievement3Model,
   TMathKnowledgeConcept2Model,
   TMathSourceModel,
+  TMathKnowledgeConceptCommonModel,
 } from '../models/mathModel.type';
 
 /**
@@ -188,13 +189,28 @@ export type TRetrieveMathKnowledgeConceptsApiRequestParams = TApiRequestNonBodyP
 /** (GET) 수학 지식개념 목록 조회 Response */
 export type TRetrieveMathKnowledgeConceptsApiResponse = TPaginationModel<TMathKnowledgeConcept1Model>;
 
+// FIXME: API 확인 필요
+/** (GET) 수학 지식개념 조회 RequestParams */
+export type TRetrieveMathKnowledgeConceptApiRequestParams = TApiRequestNonBodyParams<{
+  kc1Id: string | number;
+}, void>;
+// FIXME: API 확인 필요
+/** (GET) 수학 지식개념 조회 Response */
+export type TRetrieveMathKnowledgeConceptApiResponse =
+  & Pick<TMathKnowledgeConcept1Model, 'id' | 'title' | 'comment'>
+  & {
+    achievement3_id: number;
+    kc2_set: TMathKnowledgeConceptCommonModel[];
+  };
+
 /** (POST) 수학 지식개념 생성 RequestParams */
 export type TProduceMathKnowledgeConceptApiRequestParams = TApiRequestBodyParams<
   void,
   void,
-  Pick<TMathKnowledgeConcept1Model, 'title' | 'comment'> & {
-    achievement3_id: number;
-    kc2_set: Array<Pick<TMathKnowledgeConcept2Model, 'title' | 'comment'>>;
+  Pick<TMathKnowledgeConcept1Model, 'title' | 'comment' | 'achievement3_id'> & {
+    // TODO: 신규 `kc1` 값은 아직 존재하지 않음 - 확인필요
+    // kc2_set: Array<Pick<TMathKnowledgeConcept2Model, 'title' | 'comment' | 'kc1' | 'achievement3'>>;
+    kc2_set: Array<Pick<TMathKnowledgeConcept2Model, 'title' | 'comment' | 'achievement3'>>;
   }
 >;
 // FIXME: 실제 응답 확인하기

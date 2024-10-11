@@ -47,6 +47,9 @@ import {
   TRetrieveMathKnowledgeConceptsApiRequestParams,
   TRetrieveMathKnowledgeConceptsApiResponse,
 
+  TRetrieveMathKnowledgeConceptApiRequestParams,
+  TRetrieveMathKnowledgeConceptApiResponse,
+
   TProduceMathKnowledgeConceptApiRequestParams,
   TProduceMathKnowledgeConceptApiResponse,
 } from './mathApi.type';
@@ -329,6 +332,21 @@ export const retrieveMathKnowledgeConceptsApi = createApiWithNoticeMessageGroup(
     .apis
     .math
     .retrieveMathKnowledgeConcepts,
+});
+
+//
+// (GET) 수학 지식개념 조회
+//
+export const retrieveMathKnowledgeConceptApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathKnowledgeConceptApiRequestParams) => {
+    return api.get<TRetrieveMathKnowledgeConceptApiResponse>(
+      mathApiUrlFactory.retrieveMathKnowledgeConceptPath(params)
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .retrieveMathKnowledgeConcept,
 });
 
 //

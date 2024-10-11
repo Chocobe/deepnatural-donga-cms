@@ -126,9 +126,19 @@
       }
     }
 
-    .table-row-selector {
-      width: 66px !important;
-      min-width: 66px !important;
+    .curriculum {
+      width: 90px;
+      min-width: 90px;
+    }
+
+    .classtype {
+      width: 120px;
+      min-width: 120px;
+    }
+
+    .cluster {
+      width: 120px;
+      min-width: 120px;
     }
 
     .achievement1_no,
@@ -158,21 +168,6 @@
       width: 180px;
       min-width: 180px;
     }
-
-    .achievement1_curriculum {
-      width: 90px;
-      min-width: 90px;
-    }
-
-    .achievement1_classtype {
-      width: 120px;
-      min-width: 120px;
-    }
-
-    .achievement1_grade_cluster {
-      width: 120px;
-      min-width: 120px;
-    }
   }
 
   .row {
@@ -193,18 +188,6 @@
       }
     }
 
-    .no {
-      text-align: center;
-    }
-
-    .title {
-      /*  */
-    }
-
-    .code {
-      /*  */
-    }
-
     .curriculum {
       /*  */
     }
@@ -214,6 +197,22 @@
     }
 
     .cluster {
+      /*  */
+    }
+
+    .achievement1_no,
+    .achievement2_no,
+    .achievement3_no {
+      text-align: center;
+    }
+
+    .achievement1_title,
+    .achievement2_title,
+    .achievement3_title {
+      /*  */
+    }
+
+    .code {
       /*  */
     }
   }

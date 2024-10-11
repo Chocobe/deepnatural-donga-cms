@@ -1,9 +1,11 @@
 // type
 import { 
+  TRetrieveMathKnowledgeConceptApiResponse,
   TRetrieveMathKnowledgeConceptsApiRequestParams,
   TRetrieveMathKnowledgeConceptsApiResponse,
 } from '@/apis/math/mathApi.type';
 import { 
+  TMathAchievementFlattenModel,
   TMathKnowledgeConcept1Model,
   TMathKnowledgeConcept2Model,
   TMathKnowledgeConceptFlattenModel,
@@ -26,8 +28,11 @@ export type TMathKnowledgeConceptPageStoreState = {
 
   mathKnowledgeConceptsData?: TRetrieveMathKnowledgeConceptsApiResponse;
 
-  detailTargetMathKnowledgeConcept?: TMathKnowledgeConcept1Model;
+  detailTargetMathKnowledgeConcept?: TRetrieveMathKnowledgeConceptApiResponse;
   detailFormState: TMathKnowledgeConceptPageStoreDetailKC1;
+  detailFormStateReference: {
+    achievement?: TMathAchievementFlattenModel;
+  };
 
   selectedMathKnowledgeConcepts?: TMathKnowledgeConceptFlattenModel[];
 };
@@ -74,6 +79,9 @@ export const initialMathKnowledgeConceptPageStoreState: TMathKnowledgeConceptPag
       },
     ],
   },
+  detailFormStateReference: {
+    achievement: undefined,
+  },
 
   selectedMathKnowledgeConcepts: undefined,
 } as const;
@@ -92,11 +100,16 @@ export type TMathKnowledgeConceptPageStoreAction = {
   setMathKnowledgeConceptsData: (mathKnowledgeConceptsData: TRetrieveMathKnowledgeConceptsApiResponse) => void;
 
   clearDetailTargetMathKnowledgeConcept: () => void;
-  setDetailTargetMathKnowledgeConcept: (detailTargetMathKnowledgeConcept: TMathKnowledgeConcept1Model) => void
+  setDetailTargetMathKnowledgeConcept: (detailTargetMathKnowledgeConcept: TRetrieveMathKnowledgeConceptApiResponse) => void
   updateDetailFormState: (
     callback: (
       detailFormState: Partial<TMathKnowledgeConceptPageStoreState['detailFormState']>
     ) => Partial<TMathKnowledgeConceptPageStoreState['detailFormState']>
+  ) => void;
+  updateDetailFormStateReference: (
+    callback: (
+      reference: TMathKnowledgeConceptPageStoreState['detailFormStateReference']
+    ) => TMathKnowledgeConceptPageStoreState['detailFormStateReference']
   ) => void;
 
   clearSelectedMathKnowledgeConcepts: () => void;

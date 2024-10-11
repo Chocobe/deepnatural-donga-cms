@@ -194,6 +194,17 @@ export type TMathKnowledgeConceptCommonModel = {
 }
 /** 수학 지식개념 2 */
 export type TMathKnowledgeConcept2Model = TMathKnowledgeConceptCommonModel & {
+  kc1: string;
+  achievement1: string;
+  achievement2: string;
+  achievement3: string;
+};
+
+/** 수학 지식개념 1 */
+export type TMathKnowledgeConcept1Model = TMathKnowledgeConceptCommonModel & {
+  kc2_set: TMathKnowledgeConcept2Model[];
+
+  achievement3_id: number;
   achievement3: {
     id: number;
     title: string;
@@ -209,11 +220,6 @@ export type TMathKnowledgeConcept2Model = TMathKnowledgeConceptCommonModel & {
       };
     };
   };
-};
-
-/** 수학 지식개념 1 */
-export type TMathKnowledgeConcept1Model = TMathKnowledgeConceptCommonModel & {
-  kc2_set: TMathKnowledgeConcept2Model[];
 };
 
 /** 수학 지식개념 평탄화 모델 */
