@@ -263,7 +263,6 @@ export type TProduceMathSeriesSourceApiResponse = any;
 export type TRetrieveMathInstructionsApiRequestParams = TApiRequestNonBodyParams<void, {
   page?: number;
 }>;
-
 /** (GET) 수학 지문 목록 조회 Response */
 export type TRetrieveMathInstructionsApiResponse = TPaginationModel<TMathInstructionModel>;
 
@@ -289,6 +288,13 @@ export type TRetrieveMathQuestionsApiRequestParams = TApiRequestNonBodyParams<vo
   inquiry?: string;
   instruction?: string;
 }>;
-
 /** (GET) 수학 문항 목록 조회 Response */
 export type TRetrieveMathQuestionsApiResponse = TPaginationModel<TMathQuestionModel>;
+
+// FIXME: 아직 API 미구현 상태
+/** (GET) 수학 문항 조회 RequestParams */
+export type TRetrieveMathQuestionApiRequestParams = TApiRequestNonBodyParams<{
+  questionId: string | number;
+}, void>;
+/** (GET) 수학 문항 조회 Response */
+export type TRetrieveMathQuestionApiResponse = TMathQuestionModel;

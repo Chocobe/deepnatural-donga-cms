@@ -69,6 +69,9 @@ import {
 import {
   TRetrieveMathQuestionsApiRequestParams,
   TRetrieveMathQuestionsApiResponse,
+
+  TRetrieveMathQuestionApiRequestParams,
+  TRetrieveMathQuestionApiResponse,
 } from './mathApi.type';
 
 // FIXME: mockup
@@ -76,6 +79,7 @@ import {
   mockHistoryModalData, 
   THistoryModalData,
 } from '@/components/shadcn-ui-custom/modals/HistoryModal/HistoryModal.type';
+import mockMathQuestion from './mockMathQuestion';
 
 //
 // (GET) 수학 교과서 목록
@@ -479,4 +483,31 @@ export const retrieveMathQuestionsApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .retrieveMathQuestions,
+});
+
+// FIXME: mockup
+//
+// (GET) 수학 문항 조회
+//
+export const retrieveMathQuestionApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathQuestionApiRequestParams) => {
+    console.group('Mockup API');
+    console.log('params: ', params);
+    console.groupEnd();
+
+    // FIXME: API 연동 후, 지우기
+    return new Promise<{ 
+      data: TRetrieveMathQuestionApiResponse;
+    }>(res => {
+      setTimeout(() => {
+        res({
+          data: mockMathQuestion,
+        });
+      }, 1_000);
+    });
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .retrieveMathQuestion,
 });

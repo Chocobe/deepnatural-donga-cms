@@ -46,6 +46,21 @@ const useMathQuestionPageStore = create(devtools<TMathQuestionPageStore>((set, _
     }), false, 'setMathQuestionsData');
   },
 
+  clearDetailTargetMathQuestion: () => {
+    set(old => ({
+      ...old,
+      detailTargetMathQuestion: initialMathQuestionPageStoreState.detailTargetMathQuestion,
+    }), false, 'clearDetailTargetMathQuestion');
+  },
+  setDetailTargetMathQuestion: mathQuestion => {
+    set(old => ({
+      ...old,
+      detailTargetMathQuestion: mathQuestion,
+      // TODO: detailFormState 초기화 추가하기
+      // TODO: detailFormStateReference 초기화 추가하기
+    }), false, 'setDetailTargetMathQuestion');
+  },
+
   clearSelectedMathQuestions: () => {
     set(old => ({
       ...old,

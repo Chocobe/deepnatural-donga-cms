@@ -1,5 +1,6 @@
 // type
 import { 
+  TRetrieveMathQuestionApiResponse,
   TRetrieveMathQuestionsApiRequestParams,
   TRetrieveMathQuestionsApiResponse,
 } from '@/apis/math/mathApi.type';
@@ -11,6 +12,14 @@ export type TMathQuestionPageStoreState = {
   searchParamsForRetrieveMathQuestionsApi: TRetrieveMathQuestionsApiRequestParams['searchParams'];
 
   mathQuestionsData?: TRetrieveMathQuestionsApiResponse;
+
+  detailTargetMathQuestion?: TRetrieveMathQuestionApiResponse;
+
+  // TODO: detailFormState 초기화 추가하기
+  // TODO: detailFormStateReference 초기화 추가하기
+
+  // FIXME: Question 데이터에 `Textbook`, `Chapter`, `KC` 정보 없는 상태
+  // FIXME: => 기존 작업도구에서는 `metadata` 속성으로 제출했음.
 
   selectedMathQuestions?: TMathQuestionModel[];
   previewMathQuestion?: TMathQuestionModel;
@@ -32,6 +41,8 @@ export const initialMathQuestionPageStoreState: TMathQuestionPageStoreState = {
 
   mathQuestionsData: undefined,
 
+  detailTargetMathQuestion: undefined,
+
   selectedMathQuestions: undefined,
   previewMathQuestion: undefined,
 } as const;
@@ -48,6 +59,9 @@ export type TMathQuestionPageStoreAction = {
 
   clearMathQuestionsData: () => void;
   setMathQuestionsData: (mathQuestionsData: TRetrieveMathQuestionsApiResponse) => void;
+
+  clearDetailTargetMathQuestion: () => void;
+  setDetailTargetMathQuestion: (mathQuestion: TRetrieveMathQuestionApiResponse) => void;
 
   clearSelectedMathQuestions: () => void;
   setSelectedMathQuestions: (selectedMathQuestions: TMathQuestionModel[]) => void;

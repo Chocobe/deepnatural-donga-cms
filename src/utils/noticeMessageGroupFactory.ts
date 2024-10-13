@@ -69,6 +69,7 @@ const noticeMessageGroupFactory: {
 
       // 문항
       retrieveMathQuestions: TNoticeMessageGroup;
+      retrieveMathQuestion: TNoticeMessageGroup;
     };
     mathOCR: {
       retrieveMathPixAppKey: TNoticeMessageGroup;
@@ -523,6 +524,19 @@ const noticeMessageGroupFactory: {
 
       // (GET) 수학 문항 목록
       retrieveMathQuestions: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 문항 정보를 조회 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 문항 정보 조회 중'),
+        }),
+        successMessage: undefined,
+        successSonner: undefined,
+      },
+
+      // (GET) 수학 문항 조회
+      retrieveMathQuestion: {
         loadingMessage: () => ({
           title: '',
           message: '수학 문항 정보를 조회 중입니다.',
