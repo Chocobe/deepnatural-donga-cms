@@ -1,0 +1,46 @@
+.MathQuestionDetailSectionItemTemplate {
+  @apply flex items-start gap-1;
+
+  &-label {
+    @apply flex items-center;
+
+    width: 140px;
+    height: 40px;
+
+    color: #09090B;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+  }
+
+  &-editorsWrapper {
+    @apply flex flex-col gap-2.5;
+
+    width: 100%;
+
+    .editorWrapper {
+      @apply flex items-start gap-2.5;
+
+      &.fluid {
+        @apply flex-col;
+
+        .editor {
+          width: 100%;
+        }
+      }
+
+      .editor {
+        width: 424px;
+        max-width: 100%;
+      }
+
+      .actionsWrapper {
+        @apply flex items-center gap-2.5;
+
+        .action {
+          /*  */
+        }
+      }
+    }
+  }
+}
