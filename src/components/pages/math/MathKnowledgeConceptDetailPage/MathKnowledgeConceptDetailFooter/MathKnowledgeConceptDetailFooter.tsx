@@ -19,7 +19,6 @@ import {
   Button,
   ButtonProps,
 } from '@/components/shadcn-ui/ui/button';
-import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
 import { 
   LuSave,
@@ -234,7 +233,6 @@ function _MathKnowledgeConceptDetailFooter(props: TMathKnowledgeConceptDetailFoo
           variant: 'default',
           onClick: onClickAdd,
           IconComponent: LuSave,
-          isTBU: true,
         },
       ];
   }, [
@@ -254,41 +252,21 @@ function _MathKnowledgeConceptDetailFooter(props: TMathKnowledgeConceptDetailFoo
             variant,
             onClick,
             IconComponent,
-
-            isTBU,
           } = item;
 
-          return isTBU
-            ? (
-              <TBUTooltip
-                key={index}
-                className="w-full">
-                <Button
-                  key={index}
-                  className="button"
-                  variant={variant as ButtonProps['variant']}
-                  onClick={onClick}
-                  disabled={isTBU}>
-                  {IconComponent && (
-                    <IconComponent className="icon" />
-                  )}
+          return (
+            <Button
+              key={index}
+              className="button"
+              variant={variant as ButtonProps['variant']}
+              onClick={onClick}>
+              {IconComponent && (
+                <IconComponent className="icon" />
+              )}
 
-                  {text}
-                </Button>
-              </TBUTooltip>
-            ): (
-              <Button
-                key={index}
-                className="button"
-                variant={variant as ButtonProps['variant']}
-                onClick={onClick}>
-                {IconComponent && (
-                  <IconComponent className="icon" />
-                )}
-
-                {text}
-              </Button>
-            );
+              {text}
+            </Button>
+          );
         })}
       </div>
     </div>
