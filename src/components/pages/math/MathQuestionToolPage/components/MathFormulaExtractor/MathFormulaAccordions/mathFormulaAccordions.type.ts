@@ -736,6 +736,6 @@ export const questionTypeTemplateMapper = {
   [questionTypeOptionsMapper['주관식-선택형-유순']]: questionSetShortChoiceTemplateFactory,
   [questionTypeOptionsMapper['주관식-서술형']]: questionSetLongAnswerTemplateFactory,
 
-  [questionTypeOptionsMapper['주관식-그리기']]: questionSetDrawingAnswerTemplateFactory,
-  [questionTypeOptionsMapper['주관식-선긋기']]: questionSetDrawingAnswerTemplateFactory,
+  [questionTypeOptionsMapper['주관식-그리기형']]: questionSetDrawingAnswerTemplateFactory,
+  [questionTypeOptionsMapper['주관식-선긋기형']]: questionSetDrawingAnswerTemplateFactory,
 } as const;

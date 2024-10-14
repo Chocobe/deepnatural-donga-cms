@@ -109,8 +109,8 @@ function _QuestionSetAccordionItem(props: TQuestionSetAccordionItemProps) {
       case questionTypeOptionsMapper['주관식-서술형']: {
         return templateFactory();
       }
-      case questionTypeOptionsMapper['주관식-그리기']:
-      case questionTypeOptionsMapper['주관식-선긋기']: {
+      case questionTypeOptionsMapper['주관식-그리기형']:
+      case questionTypeOptionsMapper['주관식-선긋기형']: {
         return templateFactory();
       }
       default: {
