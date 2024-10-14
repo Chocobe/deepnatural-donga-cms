@@ -352,11 +352,6 @@ export type TMathQuestionModel = {
   /** 과목 */
   subject: TCMSSubject;
 
-  /** 지식개념1 */
-  kc1_title: string;
-  /** 지식개념2 */
-  kc2_title: string;
-
   /** 키워드 */
   keyword: string;
   /** 행동 영역 */
@@ -467,4 +462,13 @@ export type TMathQuestionModel = {
 
   /** 검수 여부 */
   is_reviewed: boolean;
+
+  // (2024.10.14) 이하 새로 추가된 속성
+  textbook: TMathTextbookModel,
+  chapter1: Array<Omit<TMathChapterCommonModel, 'textbook_id'>>;
+  chapter2: Array<Omit<TMathChapterCommonModel, 'textbook_id'>>;
+  chapter3: Array<Omit<TMathChapterCommonModel, 'textbook_id'>>;
+  kc2: TMathKnowledgeConceptCommonModel & {
+    kc1: TMathKnowledgeConceptCommonModel | null;
+  };
 };

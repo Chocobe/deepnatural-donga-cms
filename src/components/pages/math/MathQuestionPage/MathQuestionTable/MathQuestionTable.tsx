@@ -148,11 +148,11 @@ function _MathQuestionTable() {
         return cmsTermTemplate[term];
       },
     }),
-    columnHelper.accessor('kc1_title', {
+    columnHelper.display({
       id: 'kc1_title',
       header: 'KC1',
       cell: props => {
-        const kc1_title = props.getValue();
+        const kc1_title = props.row.original.kc2.kc1?.title ?? '';
 
         return (
           <TableEllipsisCell maxRows={2}>
@@ -161,11 +161,11 @@ function _MathQuestionTable() {
         );
       },
     }),
-    columnHelper.accessor('kc2_title', {
+    columnHelper.display({
       id: 'kc2_title',
       header: 'KC2',
       cell: props => {
-        const kc2_title = props.getValue();
+        const kc2_title = props.row.original.kc2.title ?? '';
 
         return (
           <TableEllipsisCell maxRows={2}>
