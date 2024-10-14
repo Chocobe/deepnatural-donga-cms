@@ -152,7 +152,27 @@ export type TRetrieveMathAchievementsApiRequestParams = TApiRequestNonBodyParams
 /** (GET) 수학 성취기준 목록 조회 Response */
 export type TRetrieveMathAchievementsApiResponse = TPaginationModel<TMathAchievement1Model>;
 
-/** (POST) 수학 성취 기준 생성 RequestParams */
+/** (GET) 수학 성취기준 조회 RequestParams */
+export type TRetrieveMathAchievementApiRequestParams = TApiRequestNonBodyParams<{
+  achievementId: string | number;
+}, void>;
+export type TRetrieveMathAchievementApiResponse = TMathAchievement1Model;
+
+/** (PUT) 수학 성취기준 수정 RequestParams */
+export type TPutMathAchievementApiRequestParams = TApiRequestBodyParams<{
+  achievementId: string | number;
+}, void, Omit<TMathAchievement1Model, 'achievement2_set'> & {
+  achievement2_set: Array<Omit<TMathAchievement2Model, 'id' | 'achievement3_set'> & {
+    id?: string | number;
+    achievement3_set: Array<Omit<TMathAchievement3Model, 'id'>> & {
+      id?: string | number;
+    };
+  }>;
+}>;
+/** (PUT) 수학 성취기준 수정 Response */
+export type TPutMathAchievementApiResponse = TMathAchievement1Model;
+
+/** (POST) 수학 성취기준 생성 RequestParams */
 export type TProduceMathAchievementApiRequestParams = TApiRequestBodyParams<
   void,
   void,
@@ -162,7 +182,7 @@ export type TProduceMathAchievementApiRequestParams = TApiRequestBodyParams<
     }>;
   }
 >;
-/** (POST) 수학 성취 기준 생성 Response */
+/** (POST) 수학 성취기준 생성 Response */
 // TODO: 차후 응답 scheme 변경 가능성 있음
 export type TProduceMathAchievementApiResponse = TPaginationModel<TMathAchievement1Model>;
 

@@ -7,6 +7,8 @@ import {
   TPutMathChapterApiRequestParams,
   TRetrieveMathKnowledgeConceptApiRequestParams,
   TPutMathKnowledgeConceptApiRequestParams,
+  TRetrieveMathAchievementApiRequestParams,
+  TPutMathAchievementApiRequestParams,
 } from './mathApi.type';
 
 const mathApiUrlFactory = (() => {
@@ -92,6 +94,22 @@ const mathApiUrlFactory = (() => {
     /** (GET) 수학 성취기준 목록 */
     retrieveMathAchievementsPath() {
       return `${BASE_PATH}achievements/`;
+    },
+
+    /** (GET) 수학 성취기준 조회 */
+    retrieveMathAchievementPath(params: TRetrieveMathAchievementApiRequestParams) {
+      const {
+        pathParams: {
+          achievementId,
+        },
+      } = params;
+
+      return `${this.retrieveMathAchievementsPath()}${achievementId}/`;
+    },
+
+    /** (PUT) 수학 성취기준 수정 */
+    putMathAchievementPath(params: TPutMathAchievementApiRequestParams) {
+      return `${this.retrieveMathAchievementPath(params)}`;
     },
 
     /** (POST) 수학 성취기준 생성 */

@@ -42,6 +42,12 @@ import {
   TRetrieveMathAchievementsApiRequestParams,
   TRetrieveMathAchievementsApiResponse,
 
+  TRetrieveMathAchievementApiRequestParams,
+  TRetrieveMathAchievementApiResponse,
+
+  TPutMathAchievementApiRequestParams,
+  TPutMathAchievementApiResponse,
+
   TProduceMathAchievementApiRequestParams,
   TProduceMathAchievementApiResponse,
 } from './mathApi.type';
@@ -294,6 +300,41 @@ export const retrieveMathAchievementsApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .retrieveMathAchievements,
+});
+
+//
+// (GET) 수학 성취기준 조회
+//
+export const retrieveMathAchievementApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathAchievementApiRequestParams) => {
+    const _params = excludeNullOrUndefinedProperties(params);
+
+    return api.get<TRetrieveMathAchievementApiResponse>(
+      mathApiUrlFactory.retrieveMathAchievementPath(_params)
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .retrieveMathAchievements,
+});
+
+//
+// (PUT) 수학 성취기준 수정
+//
+export const putMathAchievementApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TPutMathAchievementApiRequestParams) => {
+    const _params = excludeNullOrUndefinedProperties(params);
+
+    return api.put<TPutMathAchievementApiResponse>(
+      mathApiUrlFactory.putMathAchievementPath(_params),
+      _params.payload
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .putMathAchievement,
 });
 
 //

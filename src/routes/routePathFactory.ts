@@ -51,6 +51,9 @@ const routePathFactory = {
     getAchievementAddPath() {
       return `${this.getAchievementPath()}/add` as const;
     },
+    getAchievementDetailPath(achievementId: string | number) {
+      return `${this.getAchievementPath()}/${achievementId}` as const;
+    },
 
     // 지식개념
     getKnowledgeConceptPath() {

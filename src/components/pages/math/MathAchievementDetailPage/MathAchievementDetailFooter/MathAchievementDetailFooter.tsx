@@ -29,17 +29,27 @@ import {
 } from '@/store/mathStores/mathAchievementPageStore/mathAchievementPageStore.type';
 import { 
   TProduceMathAchievementApiRequestParams,
+  TPutMathAchievementApiRequestParams,
 } from '@/apis/math/mathApi.type';
 // style
 import './MathAchievementDetailFooter.css';
 
-function _MathAchievementDetailFooter() {
+type TMathAchievementDetailFooterProps = {
+  isDetailMode: boolean;
+};
+
+function _MathAchievementDetailFooter(props: TMathAchievementDetailFooterProps) {
+  const {
+    isDetailMode,
+  } = props;
+
   //
   // mathAchievementPage store
   //
   const detailFormState = useMathAchievementPageStore(state => state.detailFormState);
 
   const updateDetailFormState = useMathAchievementPageStore(state => state.updateDetailFormState);
+  const clearDetailTargetMathAchievement = useMathAchievementPageStore(state => state.clearDetailTargetMathAchievement);
 
   //
   // hook
@@ -60,18 +70,6 @@ function _MathAchievementDetailFooter() {
       ],
     }));
   }, [updateDetailFormState]);
-
-  const onClickSaveAndAdd = useCallback(() => {
-    console.log('저장후 추가하기');
-  }, []);
-
-  const onClickSaveAndRemain = useCallback(() => {
-    console.log('저장후 계속해서 수정하기');
-  }, []);
-
-  const onClickSave = useCallback(() => {
-    console.log('저장하기');
-  }, []);
 
   const produceMathAchievement = useCallback(async () => {
     const {
@@ -102,6 +100,42 @@ function _MathAchievementDetailFooter() {
     return response?.data;
   }, [detailFormState]);
 
+  const putMathAchievement = useCallback(async () => {
+    const {
+      id,
+      no,
+      title,
+      classtype,
+      curriculum,
+      grade_cluster,
+      achievement2_set,
+    } = detailFormState;
+
+    if (!id) {
+      return;
+    }
+
+    const params: TPutMathAchievementApiRequestParams = {
+      pathParams: {
+        achievementId: id,
+      },
+      payload: {
+        id,
+        no,
+        title,
+        classtype,
+        curriculum,
+        grade_cluster,
+        achievement2_set,
+      },
+    };
+
+    return ApiManager
+      .math
+      .putMathAchievementApi
+      .callWithNoticeMessageGroup(params);
+  }, [detailFormState]);
+
   const onClickAdd = useCallback(async () => {
     const mathAchievement = await produceMathAchievement();
 
@@ -115,22 +149,41 @@ function _MathAchievementDetailFooter() {
     );
   }, [produceMathAchievement, navigate]);
 
-  // FIXME: props 로 받아오기
-  const isAdditionMode = true;
+
+  const onClickSaveAndAdd = useCallback(async () => {
+    await putMathAchievement();
+
+    clearDetailTargetMathAchievement();
+
+    navigate(routePathFactory
+      .math
+      .getAchievementAddPath()
+    );
+  }, [
+    putMathAchievement,
+    clearDetailTargetMathAchievement,
+    navigate,
+  ]);
+
+  const onClickSaveAndRemain = useCallback(async () => {
+    await putMathAchievement();
+  }, [putMathAchievement]);
+
+  const onClickSave = useCallback(async () => {
+    await putMathAchievement();
+
+    navigate(routePathFactory
+      .math
+      .getAchievementPath()
+    );
+  }, [putMathAchievement, navigate]);
 
   //
   // cache
   //
   const buttonItems = useMemo(() => {
-    return isAdditionMode
+    return isDetailMode
       ? [
-        {
-          text: '추가하기',
-          variant: 'default',
-          onClick: onClickAdd,
-          IconComponent: LuSave,
-        },
-      ]: [
         {
           text: '저장후 추가하기',
           variant: 'secondary',
@@ -149,9 +202,16 @@ function _MathAchievementDetailFooter() {
           onClick: onClickSave,
           IconComponent: LuSave,
         },
+      ]: [
+        {
+          text: '추가하기',
+          variant: 'default',
+          onClick: onClickAdd,
+          IconComponent: LuSave,
+        },
       ];
   }, [
-    isAdditionMode,
+    isDetailMode,
     onClickAdd,
     onClickSaveAndAdd,
     onClickSaveAndRemain,

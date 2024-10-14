@@ -158,6 +158,12 @@ const routes = createBrowserRouter([
           {
             path: routePathFactory
               .math
+              .getAchievementDetailPath(':achievementId'),
+            element: <MathAchievementDetailPage />
+          },
+          {
+            path: routePathFactory
+              .math
               .getAchievementAddPath(),
             element: <MathAchievementDetailPage />
           },

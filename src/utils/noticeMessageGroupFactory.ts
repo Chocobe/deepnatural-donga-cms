@@ -52,6 +52,8 @@ const noticeMessageGroupFactory: {
 
       // 성취기준
       retrieveMathAchievements: TNoticeMessageGroup;
+      retrieveMathAchievement: TNoticeMessageGroup;
+      putMathAchievement: TNoticeMessageGroup;
       produceMathAchievement: TNoticeMessageGroup;
 
       // 지식개념
@@ -393,6 +395,35 @@ const noticeMessageGroupFactory: {
         }),
         successMessage: undefined,
         successSonner: undefined,
+      },
+
+      // (GET) 수학 성취기준 조회
+      retrieveMathAchievement: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 성취기준 정보를 수정 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 성취기준 정보를 수정 중'),
+        }),
+        successMessage: undefined,
+        successSonner: undefined,
+      },
+
+      // (PUT) 수학 단원 수정
+      putMathAchievement: {
+        loadingMessage: () => ({
+          title: '',
+          message: '단원 정보를 수정 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('단원 정보 수정 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '입력하신 단원 정보를 성공적으로 수정 완료하였습니다.',
+        }),
       },
 
       // (POST) 수학 성취기준 생성
