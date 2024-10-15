@@ -91,7 +91,6 @@ import {
   mockHistoryModalData, 
   THistoryModalData,
 } from '@/components/shadcn-ui-custom/modals/HistoryModal/HistoryModal.type';
-import mockMathQuestion from './mockMathQuestion';
 
 //
 // (GET) 수학 교과서 목록
@@ -571,20 +570,9 @@ export const retrieveMathQuestionsApi = createApiWithNoticeMessageGroup({
 //
 export const retrieveMathQuestionApi = createApiWithNoticeMessageGroup({
   apiFunction: (params: TRetrieveMathQuestionApiRequestParams) => {
-    console.group('Mockup API');
-    console.log('params: ', params);
-    console.groupEnd();
-
-    // FIXME: API 연동 후, 지우기
-    return new Promise<{ 
-      data: TRetrieveMathQuestionApiResponse;
-    }>(res => {
-      setTimeout(() => {
-        res({
-          data: mockMathQuestion,
-        });
-      }, 1_000);
-    });
+    return api.get<TRetrieveMathQuestionApiResponse>(
+      mathApiUrlFactory.retrieveMathQuestion(params)
+    );
   },
   noticeMessageGroup: noticeMessageGroupFactory
     .apis

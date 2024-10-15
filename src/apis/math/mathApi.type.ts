@@ -325,10 +325,10 @@ export type TRetrieveMathQuestionsApiRequestParams = TApiRequestNonBodyParams<vo
 /** (GET) 수학 문항 목록 조회 Response */
 export type TRetrieveMathQuestionsApiResponse = TPaginationModel<TMathQuestionModel>;
 
-// FIXME: 아직 API 미구현 상태
 /** (GET) 수학 문항 조회 RequestParams */
 export type TRetrieveMathQuestionApiRequestParams = TApiRequestNonBodyParams<{
   questionId: string | number;
 }, void>;
+// FIXME: 실제 응답 확인하기
 /** (GET) 수학 문항 조회 Response */
 export type TRetrieveMathQuestionApiResponse = TMathQuestionModel;

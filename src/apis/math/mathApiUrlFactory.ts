@@ -11,6 +11,7 @@ import {
   TPutMathAchievementApiRequestParams,
   TRetrieveMathSeriesSourceApiRequestParams,
   TPutMathSeriesSourceApiRequestParams,
+  TRetrieveMathQuestionApiRequestParams,
 } from './mathApi.type';
 
 const mathApiUrlFactory = (() => {
@@ -199,6 +200,17 @@ const mathApiUrlFactory = (() => {
     /** (GET) 수학 문항 목록 */
     retrieveMathQuestions() {
       return `${BASE_PATH}questions/`;
+    },
+
+    /** (GET) 수학 문항 조회 */
+    retrieveMathQuestion(params: TRetrieveMathQuestionApiRequestParams) {
+      const {
+        pathParams: {
+          questionId,
+        },
+      } = params;
+
+      return `${BASE_PATH}questions/${questionId}`;
     },
   };
 
