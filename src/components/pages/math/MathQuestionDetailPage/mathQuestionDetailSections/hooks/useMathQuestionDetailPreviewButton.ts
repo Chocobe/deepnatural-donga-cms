@@ -8,7 +8,7 @@ const useMathQuestionDetailPreviewButton = () => {
   //
   // state
   //
-  const [isShowPreview, setIsShowPreview] = useState(true);
+  const [isShowPreview, setIsShowPreview] = useState(false);
 
   //
   // callback
