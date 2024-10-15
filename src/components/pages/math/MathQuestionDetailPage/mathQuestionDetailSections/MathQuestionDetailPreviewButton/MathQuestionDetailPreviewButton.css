@@ -1,0 +1,14 @@
+.MathQuestionDetailPreviewButton {
+  @apply items-center gap-2;
+
+  > .icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  > .text {
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 500;
+  }
+}
