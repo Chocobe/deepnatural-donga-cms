@@ -23,7 +23,7 @@ type TMathQuestionMathJaxEditorProps = {
   isShowPreview?: boolean;
   placeholder?: string;
   value: string;
-  onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 function _MathQuestionMathJaxEditor(props: TMathQuestionMathJaxEditorProps) {

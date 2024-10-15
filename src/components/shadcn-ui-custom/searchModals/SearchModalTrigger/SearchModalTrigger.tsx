@@ -49,10 +49,12 @@ function _SearchModalTrigger(props: TSearchModalTriggerProps) {
       tabIndex={tabIndex}
       onClick={onOpen}>
       <div className={cn(
-        'value',
+        'valueWrapper',
         !value ? 'placeholder' : ''
       )}>
-        {value || placeholder}
+        <span className="value">
+          {value || placeholder}
+        </span>
 
         {isShowSearchIcon && (
           <LuSearch className="icon" />

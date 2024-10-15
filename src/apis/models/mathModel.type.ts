@@ -293,7 +293,7 @@ export type TMathInstructionModel = {
 /**
  * Math Question (수학 문항)
  */
-/** 수학 행동 영역 */
+/** 수학 행동영역 */
 export const mathBehaviorDomainMapper = {
   '계산': '계산',
   '이해': '이해',
@@ -302,6 +302,13 @@ export const mathBehaviorDomainMapper = {
   '외적문제해결': '외적문제해결',
 } as const;
 export type TMathBehaviorDomain = typeof mathBehaviorDomainMapper[keyof typeof mathBehaviorDomainMapper];
+
+export const mathBehaviorDomainOptions: TCommonSelectOptionItem[] = Object
+  .values(mathBehaviorDomainMapper)
+  .map(mathBehaviorDomain => ({
+    text: mathBehaviorDomain,
+    value: mathBehaviorDomain,
+  }));
 
 /** 문제 유형 */
 export const mathQuestionTypeMapper = {

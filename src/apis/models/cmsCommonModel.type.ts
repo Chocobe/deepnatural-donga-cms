@@ -394,3 +394,10 @@ export const cmsDifficultyTemplate = {
   [cmsDifficultyMapper[4]]: '상',
   [cmsDifficultyMapper[5]]: '최상',
 } as const;
+
+export const cmsDifficultyOptions: TCommonSelectOptionItem[] = Object
+  .entries(cmsDifficultyTemplate)
+  .map(([value, text]) => ({
+    text,
+    value,
+  }));
