@@ -354,7 +354,7 @@ export type TMathQuestionModel = {
 
   /** 키워드 */
   keyword: string;
-  /** 행동 영역 */
+  /** 행동영역 */
   behavior_domain: TMathBehaviorDomain;
   /** 발문 */
   inquiry: string;

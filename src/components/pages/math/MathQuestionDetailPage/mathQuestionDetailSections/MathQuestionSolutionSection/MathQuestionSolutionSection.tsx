@@ -1,13 +1,12 @@
 // react
 import {
   useMemo,
-  useCallback,
   memo,
-  ChangeEvent,
 } from 'react';
 // store
 import useMathQuestionPageStore from '@/store/mathStores/mathQuestionPageStore/mathQuestionPageStore';
 // hook
+import useHandleMathQuestionDetailEditors from '../hooks/useHandleMathQuestionDetailEditors';
 import useMathQuestionDetailPreviewButton from '../hooks/useMathQuestionDetailPreviewButton';
 // ui
 import MathQuestionDetailSectionTemplate from '../../MathQuestionDetailSectionTemplate/MathQuestionDetailSectionTemplate';
@@ -23,30 +22,17 @@ function _MathQuestionSolutionSection() {
   //
   const solution = useMathQuestionPageStore(state => state.detailFormState.solution);
 
-  const updateDetailFormState = useMathQuestionPageStore(state => state.updateDetailFormState);
-
   //
   // hook
   //
   const {
+    onChangeInput,
+  } = useHandleMathQuestionDetailEditors();
+
+  const {
     isShowPreview: isShowSolutionPreview,
     togglePreview: toggleSolutionPreview,
   } = useMathQuestionDetailPreviewButton();
-
-  //
-  // callback
-  //
-  const onChangeInput = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
-    const {
-      id,
-      value,
-    } = e.target;
-
-    updateDetailFormState(old => ({
-      ...old,
-      [id]: value,
-    }));
-  }, [updateDetailFormState]);
 
   //
   // cache

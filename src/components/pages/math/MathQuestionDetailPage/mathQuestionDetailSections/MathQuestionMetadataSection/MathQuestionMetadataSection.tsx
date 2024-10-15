@@ -3,11 +3,11 @@ import {
   useMemo,
   useCallback,
   memo,
-  ChangeEvent,
 } from 'react';
 // store
 import useMathQuestionPageStore from '@/store/mathStores/mathQuestionPageStore/mathQuestionPageStore';
 // hook
+import useHandleMathQuestionDetailEditors from '../hooks/useHandleMathQuestionDetailEditors';
 import useSearchModal from '@/components/shadcn-ui-custom/modals/SearchModal/hook/useSearchModal';
 // ui
 import MathQuestionDetailSectionTemplate from '../../MathQuestionDetailSectionTemplate/MathQuestionDetailSectionTemplate';
@@ -59,6 +59,10 @@ function _MathQuestionMetadataSection() {
   // hook
   //
   const {
+    onChangeInput,
+  } = useHandleMathQuestionDetailEditors();
+
+  const {
     isOpenSearchModal: isOpenSourceSearchModal,
     closeSearchModal: closeSourceSearchModal,
     openSearchModal: openSourceSearchModal,
@@ -68,18 +72,6 @@ function _MathQuestionMetadataSection() {
   //
   // callback
   //
-  const onChangeInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const {
-      id,
-      value,
-    } = e.target;
-
-    updateDetailFormState(old => ({
-      ...old,
-      [id]: value,
-    }));
-  }, [updateDetailFormState]);
-
   const onSelectSource = useCallback((mathSeriesSourceFlattenModel: TMathSeriesSourceFlattenModel) => {
     updateDetailFormState(old => ({
       ...old,

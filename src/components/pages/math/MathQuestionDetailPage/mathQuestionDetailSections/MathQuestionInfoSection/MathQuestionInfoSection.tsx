@@ -8,6 +8,7 @@ import {
 // store
 import useMathQuestionPageStore from '@/store/mathStores/mathQuestionPageStore/mathQuestionPageStore';
 // hook
+import useHandleMathQuestionDetailEditors from '../hooks/useHandleMathQuestionDetailEditors';
 import useMathQuestionDetailPreviewButton from '../hooks/useMathQuestionDetailPreviewButton';
 // ui
 import MathQuestionDetailSectionTemplate from '../../MathQuestionDetailSectionTemplate/MathQuestionDetailSectionTemplate';
@@ -36,6 +37,11 @@ function _MathQuestionInfoSection() {
   // hook
   //
   const {
+    onChangeInput,
+    onChangeSelect,
+  } = useHandleMathQuestionDetailEditors();
+
+  const {
     isShowPreview: isShowInquiryPreview,
     togglePreview: toggleInquiryPreview,
   } = useMathQuestionDetailPreviewButton();
@@ -48,32 +54,6 @@ function _MathQuestionInfoSection() {
   //
   // callback
   //
-  const onChangeInput = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
-    const {
-      id,
-      value,
-    } = e.target;
-
-    updateDetailFormState(old => ({
-      ...old,
-      [id]: value,
-    }));
-  }, [updateDetailFormState]);
-
-  const onChangeSelect = useCallback((
-    value: string,
-    id?: string
-  ) => {
-    if (!id) {
-      return;
-    }
-
-    updateDetailFormState(old => ({
-      ...old,
-      [id]: value,
-    }));
-  }, [updateDetailFormState]);
-
   const onChangeInstruction = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
     const {
       value,
