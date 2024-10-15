@@ -9,6 +9,8 @@ import {
   TPutMathKnowledgeConceptApiRequestParams,
   TRetrieveMathAchievementApiRequestParams,
   TPutMathAchievementApiRequestParams,
+  TRetrieveMathSeriesSourceApiRequestParams,
+  TPutMathSeriesSourceApiRequestParams,
 } from './mathApi.type';
 
 const mathApiUrlFactory = (() => {
@@ -156,6 +158,22 @@ const mathApiUrlFactory = (() => {
     /** (GET) 수학 시리즈-출처 목록 */
     retrieveMathSeriesSourcesPath() {
       return `${BASE_PATH}series/`;
+    },
+
+    /** (GET) 수학 시리즈-출처 조회 */
+    retrieveMathSeriesSourcePath(params: TRetrieveMathSeriesSourceApiRequestParams) {
+      const {
+        pathParams: {
+          seriesId,
+        },
+      } = params;
+
+      return `${BASE_PATH}series/${seriesId}/`;
+    },
+
+    /** (PUT) 수학 시리즈-출처 수정 */
+    putMathSeriesSourcePath(params: TPutMathSeriesSourceApiRequestParams) {
+      return `${this.retrieveMathSeriesSourcePath(params)}`;
     },
 
     /** (POST) 수학 시리즈-출처 생성 */

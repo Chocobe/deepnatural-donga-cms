@@ -18,7 +18,6 @@ import {
   Button,
   ButtonProps,
 } from '@/components/shadcn-ui/ui/button';
-import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
 import { 
   LuSave,
@@ -28,15 +27,26 @@ import dayjs from 'dayjs';
 // type
 import { 
   TProduceMathSeriesSourceApiRequestParams,
+  TPutMathSeriesSourceApiRequestParams,
 } from '@/apis/math/mathApi.type';
 // style
 import './MathSeriesSourceDetailFooter.css';
 
-function _MathSeriesSourceDetailFooter() {
+type TMathSeriesSourceDetailFooterProps = {
+  isDetailMode: boolean;
+};
+
+function _MathSeriesSourceDetailFooter(props: TMathSeriesSourceDetailFooterProps) {
+  const {
+    isDetailMode,
+  } = props;
+
   //
   // mathSeriesSourcePage store
   //
   const detailFormState = useMathSeriesSourcePageStore(state => state.detailFormState);
+
+  const clearDetailTargetMathSeries = useMathSeriesSourcePageStore(state => state.clearDetailTargetMathSeries);
 
   //
   // hook
@@ -46,18 +56,6 @@ function _MathSeriesSourceDetailFooter() {
   //
   // callback
   //
-  const onClickSaveAndAdd = useCallback(() => {
-    console.log('저장후 추가하기');
-  }, []);
-
-  const onClickSaveAndRemain = useCallback(() => {
-    console.log('저장후 계속해서 수정하기');
-  }, []);
-
-  const onClickSave = useCallback(() => {
-    console.log('저장하기');
-  }, []);
-
   const produceMathSeriesSource = useCallback(async () => {
     const {
       title,
@@ -89,6 +87,43 @@ function _MathSeriesSourceDetailFooter() {
     return response?.data;
   }, [detailFormState]);
 
+  const putMathSeriesSource = useCallback(async () => {
+    const {
+      id,
+      title,
+      source_set,
+    } = detailFormState;
+
+    if (!id) {
+      return;
+    }
+
+    const params: TPutMathSeriesSourceApiRequestParams = {
+      pathParams: {
+        seriesId: id,
+      },
+      payload: {
+        title,
+        source_set: source_set.map(source => {
+          const {
+            id: _id,
+            ...sourceData
+          } = source;
+
+          return {
+            ...sourceData,
+            expiration_date: dayjs(source.expiration_date).format('YYYY-MM-DD'),
+          };
+        }),
+      },
+    };
+
+    return ApiManager
+      .math
+      .putMathSeriesSourceApi
+      .callWithNoticeMessageGroup(params);
+  }, [detailFormState]);
+
   const onClickAdd = useCallback(async () => {
     const mathSeriesSource = await produceMathSeriesSource();
 
@@ -105,47 +140,71 @@ function _MathSeriesSourceDetailFooter() {
     navigate,
   ]);
 
-  // FIXME: props 로 받아오기
-  const isAdditionMode = true;
+  const onClickSaveAndAdd = useCallback(async () => {
+    await putMathSeriesSource();
+
+    clearDetailTargetMathSeries();
+
+    navigate(routePathFactory
+      .math
+      .getSeriesSourceAddPage()
+    );
+  }, [
+    putMathSeriesSource,
+    clearDetailTargetMathSeries,
+    navigate,
+  ]);
+
+  const onClickSaveAndRemain = useCallback(async () => {
+    await putMathSeriesSource();
+  }, [putMathSeriesSource]);
+
+  const onClickSave = useCallback(async () => {
+    await putMathSeriesSource();
+
+    navigate(routePathFactory
+      .math
+      .getSeriesSourcePath()
+    );
+  }, [
+    putMathSeriesSource,
+    navigate,
+  ]);
 
   //
   // cache
   //
   const buttonItems = useMemo(() => {
-    return isAdditionMode
+    return isDetailMode
       ? [
-        {
-          text: '추가하기',
-          variant: 'default',
-          onClick: onClickAdd,
-          IconComponent: LuSave,
-          isTBU: false,
-        },
-      ]: [
         {
           text: '저장후 추가하기',
           variant: 'secondary',
           onClick: onClickSaveAndAdd,
           IconComponent: undefined,
-          isTBU: true,
         },
         {
           text: '저장후 계속해서 수정하기',
           variant: 'secondary',
           onClick: onClickSaveAndRemain,
           IconComponent: undefined,
-          isTBU: true,
         },
         {
           text: '저장하기',
           variant: 'default',
           onClick: onClickSave,
           IconComponent: LuSave,
-          isTBU: true,
+        },
+      ]: [
+        {
+          text: '추가하기',
+          variant: 'default',
+          onClick: onClickAdd,
+          IconComponent: LuSave,
         },
       ];
   }, [
-    isAdditionMode,
+    isDetailMode,
     onClickAdd,
     onClickSaveAndAdd,
     onClickSaveAndRemain,
@@ -161,41 +220,21 @@ function _MathSeriesSourceDetailFooter() {
             variant,
             onClick,
             IconComponent,
-
-            isTBU,
           } = item;
 
-          return isTBU
-            ? (
-              <TBUTooltip
-                key={index}
-                className="w-full">
-                <Button
-                  key={index}
-                  className="button"
-                  variant={variant as ButtonProps['variant']}
-                  onClick={onClick}
-                  disabled={isTBU}>
-                  {IconComponent && (
-                    <IconComponent className="icon" />
-                  )}
+          return (
+            <Button
+              key={index}
+              className="button"
+              variant={variant as ButtonProps['variant']}
+              onClick={onClick}>
+              {IconComponent && (
+                <IconComponent className="icon" />
+              )}
 
-                  {text}
-                </Button>
-              </TBUTooltip>
-            ): (
-              <Button
-                key={index}
-                className="button"
-                variant={variant as ButtonProps['variant']}
-                onClick={onClick}>
-                {IconComponent && (
-                  <IconComponent className="icon" />
-                )}
-
-                {text}
-              </Button>
-            );
+              {text}
+            </Button>
+          );
         })}
       </div>
     </div>

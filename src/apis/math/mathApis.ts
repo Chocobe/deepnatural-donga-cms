@@ -65,6 +65,12 @@ import {
   TRetrieveMathSeriesSourcesApiRequestParams,
   TRetrieveMathSeriesSourcesApiResponse,
 
+  TRetrieveMathSeriesSourceApiRequestParams,
+  TRetrieveMathSeriesSourceApiResponse,
+
+  TPutMathSeriesSourceApiRequestParams,
+  TPutMathSeriesSourceApiResponse,
+
   TProduceMathSeriesSourceApiRequestParams,
   TProduceMathSeriesSourceApiResponse,
 } from './mathApi.type';
@@ -456,6 +462,39 @@ export const retrieveMathSeriesSourcesApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .retrieveMathSeriesSources,
+});
+
+//
+// (GET) 수학 시리즈-출처 조회
+//
+export const retrieveMathSeriesSourceApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathSeriesSourceApiRequestParams) => {
+    return api.get<TRetrieveMathSeriesSourceApiResponse>(
+      mathApiUrlFactory.retrieveMathSeriesSourcePath(params)
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .retrieveMathSeriesSource,
+});
+
+//
+// (PUT) 수학 시리즈-출처 수정
+//
+export const putMathSeriesSourceApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TPutMathSeriesSourceApiRequestParams) => {
+    const _params = excludeNullOrUndefinedProperties(params);
+
+    return api.put<TPutMathSeriesSourceApiResponse>(
+      mathApiUrlFactory.putMathSeriesSourcePath(_params),
+      _params.payload
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .putMathSeriesSource,
 });
 
 //

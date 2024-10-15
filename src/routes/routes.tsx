@@ -198,6 +198,12 @@ const routes = createBrowserRouter([
           {
             path: routePathFactory
               .math
+              .getSeriesSourceDetailPage(':seriesId'),
+            element: <MathSeriesSourceDetailPage />,
+          },
+          {
+            path: routePathFactory
+              .math
               .getSeriesSourceAddPage(),
             element: <MathSeriesSourceDetailPage />,
           },

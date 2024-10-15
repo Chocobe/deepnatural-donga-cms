@@ -70,6 +70,9 @@ const routePathFactory = {
     getSeriesSourcePath() {
       return `${this.getMathRootPath()}/series-source` as const;
     },
+    getSeriesSourceDetailPage(seriesId: string | number) {
+      return `${this.getSeriesSourcePath()}/${seriesId}` as const;
+    },
     getSeriesSourceAddPage() {
       return `${this.getSeriesSourcePath()}/add` as const;
     },

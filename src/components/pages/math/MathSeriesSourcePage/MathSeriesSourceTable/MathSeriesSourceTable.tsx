@@ -3,8 +3,15 @@ import {
   useRef,
   useState,
   useMemo,
+  useCallback,
+  useEffect,
   memo,
 } from 'react';
+// router
+import { 
+  useNavigate,
+} from 'react-router-dom';
+import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathSeriesSourcePageStore from '@/store/mathStores/mathSeriesSourcePageStore/mathSeriesSourcePageStore';
 // ui
@@ -58,6 +65,7 @@ function _MathSeriesSourceTable() {
   const mathSeriesSourcesData = useMathSeriesSourcePageStore(state => state.mathSeriesSourcesData);
 
   const setSelectedMathSeriesSources = useMathSeriesSourcePageStore(state => state.setSelectedMathSeriesSources);
+  const clearSelectedMathSeriesSources = useMathSeriesSourcePageStore(state => state.clearSelectedMathSeriesSources);
 
   //
   // ref
@@ -86,7 +94,7 @@ function _MathSeriesSourceTable() {
       cell: TableRowSelectorCell,
     }),
     columnHelper.accessor('source.curriculum', {
-      header: '교육\n과정',
+      header: '교육과정',
     }),
     columnHelper.accessor('source.classtype', {
       header: '학교급',
@@ -170,6 +178,30 @@ function _MathSeriesSourceTable() {
     },
   });
 
+  const navigate = useNavigate();
+
+  //
+  // callback
+  //
+  const goToDetailPage = useCallback((mathSeries: TMathSeriesSourceFlattenModel) => {
+    const seriesId = mathSeries.series.id;
+
+    navigate(routePathFactory
+      .math
+      .getSeriesSourceDetailPage(seriesId)
+    );
+  }, [navigate]);
+
+  //
+  // effect
+  //
+  useEffect(function _cleanup() {
+    setRowSelection({});
+    clearSelectedMathSeriesSources();
+
+    // eslint-disable-next-line
+  }, [tableData]);
+
   return (
     <Table
       ref={$tableRef}
@@ -199,7 +231,7 @@ function _MathSeriesSourceTable() {
             key={row.id}
             className="row"
             data-state={row.getIsSelected() && 'selected'}
-            onClick={() => console.log('상세 페이지 이동')}>
+            onClick={() => goToDetailPage(row.original)}>
             {row.getVisibleCells().map(cell => (
               <TableCell
                 key={cell.id}

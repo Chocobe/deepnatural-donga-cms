@@ -261,6 +261,22 @@ export type TRetrieveMathSeriesSourcesApiRequestParams = TApiRequestNonBodyParam
 /** (GET) 수학 시리즈-출처 목록 조회 Response */
 export type TRetrieveMathSeriesSourcesApiResponse = TPaginationModel<TMathSeriesModel>;
 
+/** (GET) 수학 시리즈-출처 조회 RequestParams */
+export type TRetrieveMathSeriesSourceApiRequestParams = TApiRequestNonBodyParams<{
+  seriesId: string | number;
+}, void>;
+/** (GET) 수학 시리즈-출처 조회 Response */
+export type TRetrieveMathSeriesSourceApiResponse = TMathSeriesModel;
+
+/** (PUT) 수학 시리즈-출처 수정 RequestParams */
+export type TPutMathSeriesSourceApiRequestParams = TApiRequestBodyParams<{
+  seriesId: string | number;
+}, void, Omit<TMathSeriesModel, 'id' | 'source_set'> & {
+  source_set: Array<Omit<TMathSourceModel, 'id'>>;
+}>;
+/** (PUT) 수학 시리즈-출처 수정 Response */
+export type TPutMathSeriesSourceApiResponse = TMathSeriesModel;
+
 /** (POST) 시리즈-출처 생성 RequestParams */
 export type TProduceMathSeriesSourceApiRequestParams = TApiRequestBodyParams<
   void,

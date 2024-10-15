@@ -55,12 +55,12 @@
     }
 
     .title {
-      width: 10%;
-      min-width: 180px;
+      width: 50%;
+      min-width: 360px;
     }
 
     .name {
-      width: 20%;
+      width: 50%;
       min-width: 360px;
     }
 

@@ -64,6 +64,8 @@ const noticeMessageGroupFactory: {
 
       // 시리즈-출처
       retrieveMathSeriesSources: TNoticeMessageGroup;
+      retrieveMathSeriesSource: TNoticeMessageGroup;
+      putMathSeriesSource: TNoticeMessageGroup;
       produceMathSeriesSources: TNoticeMessageGroup;
 
       // 지문
@@ -517,6 +519,35 @@ const noticeMessageGroupFactory: {
         }),
         successMessage: undefined,
         successSonner: undefined,
+      },
+
+      // (GET) 수학 시리즈-출처 조회
+      retrieveMathSeriesSource: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 시리즈-출처 정보를 조회 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 시리즈-출처 정보 조회 중'),
+        }),
+        successMessage: undefined,
+        successSonner: undefined,
+      },
+
+      // (PUT) 수학 시리즈-출처 수정
+      putMathSeriesSource: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 시리즈-출처를 수정 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 시리즈-출처 수정 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '입력하신 시리즈-출처를 성공적으로 수정 완료하였습니다.',
+        }),
       },
 
       // (POST) 수학 시리즈-출처 생성
