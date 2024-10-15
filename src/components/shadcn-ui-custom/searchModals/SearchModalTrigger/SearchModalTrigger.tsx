@@ -6,6 +6,10 @@ import {
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
+// icon
+import { 
+  LuSearch,
+} from 'react-icons/lu';
 // style
 import { 
   cn,
@@ -18,6 +22,7 @@ type TSearchModalTriggerProps = {
   tabIndex?: number;
   placeholder?: string;
   value: string;
+  isShowSearchIcon?: boolean;
   onOpen: () => void;
 };
 
@@ -28,6 +33,7 @@ function _SearchModalTrigger(props: TSearchModalTriggerProps) {
     tabIndex,
     placeholder = '',
     value,
+    isShowSearchIcon,
     onOpen,
   } = props;
 
@@ -36,6 +42,7 @@ function _SearchModalTrigger(props: TSearchModalTriggerProps) {
       id={id}
       className={cn(
         'SearchModalTrigger',
+        { showSearchIcon: isShowSearchIcon },
         className
       )}
       variant="link"
@@ -46,6 +53,10 @@ function _SearchModalTrigger(props: TSearchModalTriggerProps) {
         !value ? 'placeholder' : ''
       )}>
         {value || placeholder}
+
+        {isShowSearchIcon && (
+          <LuSearch className="icon" />
+        )}
       </div>
     </Button>
   );

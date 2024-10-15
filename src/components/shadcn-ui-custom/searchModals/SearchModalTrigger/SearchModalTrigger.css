@@ -33,6 +33,14 @@
     }
   }
 
+  &.showSearchIcon {
+    /*  */
+
+    .value {
+      @apply flex justify-between gap-2;
+    }
+  }
+
   .icon {
     width: 20px;
     height: 20px;
