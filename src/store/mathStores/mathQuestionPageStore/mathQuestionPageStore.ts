@@ -50,15 +50,26 @@ const useMathQuestionPageStore = create(devtools<TMathQuestionPageStore>((set, _
     set(old => ({
       ...old,
       detailTargetMathQuestion: initialMathQuestionPageStoreState.detailTargetMathQuestion,
+      detailFormState: initialMathQuestionPageStoreState.detailFormState,
     }), false, 'clearDetailTargetMathQuestion');
   },
   setDetailTargetMathQuestion: mathQuestion => {
     set(old => ({
       ...old,
       detailTargetMathQuestion: mathQuestion,
-      // TODO: detailFormState 초기화 추가하기
-      // TODO: detailFormStateReference 초기화 추가하기
+      detailFormState: {
+        ...mathQuestion,
+      },
     }), false, 'setDetailTargetMathQuestion');
+  },
+  updateDetailFormState: callback => {
+    set(old => ({
+      ...old,
+      detailFormState: {
+        ...old.detailFormState,
+        ...callback(old.detailFormState),
+      },
+    }), false, 'updateDetailFormState');
   },
 
   clearSelectedMathQuestions: () => {

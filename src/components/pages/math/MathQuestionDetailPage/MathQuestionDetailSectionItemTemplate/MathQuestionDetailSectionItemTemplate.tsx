@@ -9,7 +9,7 @@ import {
 } from '@/lib/shadcn-ui-utils';
 import './MathQuestionDetailSectionItemTemplate.css';
 
-type TMathQuestionDetailSectionItemTemplateProps = {
+export type TMathQuestionDetailSectionItemTemplateProps = {
   id?: string;
   label: string;
   fluid?: boolean;

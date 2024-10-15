@@ -463,12 +463,17 @@ export type TMathQuestionModel = {
   /** 검수 여부 */
   is_reviewed: boolean;
 
-  // (2024.10.14) 이하 새로 추가된 속성
+  /** 교과서 */
   textbook: TMathTextbookModel,
+  /** 대단원 */
   chapter1: Array<Omit<TMathChapterCommonModel, 'textbook_id'>>;
+  /** 중단원 */
   chapter2: Array<Omit<TMathChapterCommonModel, 'textbook_id'>>;
+  /** 소단원 */
   chapter3: Array<Omit<TMathChapterCommonModel, 'textbook_id'>>;
+  /** 지식개념2 */
   kc2: TMathKnowledgeConceptCommonModel & {
+    /** 지식개념1 */
     kc1: TMathKnowledgeConceptCommonModel | null;
   };
 };
