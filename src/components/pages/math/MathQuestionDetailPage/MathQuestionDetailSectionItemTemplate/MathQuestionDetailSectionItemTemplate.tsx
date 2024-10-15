@@ -13,6 +13,7 @@ export type TMathQuestionDetailSectionItemTemplateProps = {
   id?: string;
   label: string;
   fluid?: boolean;
+  isHide?: boolean;
   components: Array<{
     Editor: ReactNode;
     Actions?: ReactNode[];
@@ -24,8 +25,13 @@ function _MathQuestionDetailSectionItemTemplate(props: TMathQuestionDetailSectio
     id,
     label,
     fluid,
+    isHide,
     components,
   } = props;
+
+  if (isHide) {
+    return null;
+  }
 
   return (
     <div className="MathQuestionDetailSectionItemTemplate">
