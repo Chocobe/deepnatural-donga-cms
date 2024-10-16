@@ -1,5 +1,6 @@
 // react
 import {
+  useRef,
   useMemo,
   useCallback,
   memo,
@@ -30,6 +31,10 @@ import {
   Button,
 } from '@/components/shadcn-ui/ui/button';
 import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
+// icon
+import { 
+  LuPlus,
+} from 'react-icons/lu';
 // util
 import { 
   flatMathAchievementModel,
@@ -71,6 +76,11 @@ function _MathQuestionAttributesSection() {
   const updateDetailFormState = useMathQuestionPageStore(state => state.updateDetailFormState);
 
   //
+  // ref
+  //
+  const indexOfAchievementRef = useRef<number | null>(null);
+
+  //
   // hook
   //
   const {
@@ -91,6 +101,65 @@ function _MathQuestionAttributesSection() {
     openSearchModal: openKCSearchModal,
     onChangeIsOpenSearchModal: onChangeIsOpenKCSearchModal,
   } = useSearchModal();
+
+  //
+  // callback
+  //
+  const _openAchievementSearchModal = useCallback((
+    indexOfAchievement: number
+  ) => {
+    indexOfAchievementRef.current = indexOfAchievement;
+    openAchievementSearchModal();
+  }, [openAchievementSearchModal]);
+
+  const _closeAchievementSearchModal = useCallback(() => {
+    indexOfAchievementRef.current = null;
+    closeAchievementSearchModal();
+  }, [closeAchievementSearchModal]);
+
+  const addAchievement = useCallback(() => {
+    updateDetailFormState(old => {
+      const achievement = old.achievement ?? [];
+
+      const lastAchievement = achievement[achievement.length - 1] ?? null;
+      const isInvalid = lastAchievement === null;
+
+      const newDetailFormState = {
+        ...old,
+        achievement: isInvalid
+          ? old.achievement
+          : [
+            ...(old.achievement ?? []),
+            null
+          ],
+      };
+
+      if (!isInvalid) {
+        _openAchievementSearchModal(newDetailFormState.achievement!.length - 1);
+      }
+
+      return newDetailFormState;
+    });
+  }, [
+    updateDetailFormState,
+    _openAchievementSearchModal,
+  ]);
+
+  const deleteAchievement = useCallback((indexOfAchievement: number) => {
+    updateDetailFormState(old => {
+      const achievement = [...(old.achievement ?? [])];
+      achievement.splice(indexOfAchievement, 1);
+
+      if (!achievement.length) {
+        achievement.push(null);
+      }
+
+      return {
+        ...old,
+        achievement,
+      };
+    });
+  }, [updateDetailFormState]);
 
   //
   // cache
@@ -172,26 +241,36 @@ function _MathQuestionAttributesSection() {
     {
       label: '성취기준',
       id: 'achievement',
-      components: [
-        {
-          Editor: (
-            <SearchModalTrigger
-              id="achievement"
-              onOpen={openAchievementSearchModal}
-              value={achievement?.[0]?.title ?? ''}
-              isShowSearchIcon />
-          ),
-          Actions: [
-            (
-              <TBUTooltip>
-                <Button disabled>
+      components: Array.from(
+        { length: Math.max(achievement.length, 1) },
+        (_, indexOfAchievement) => {
+          return {
+            Editor: (
+              <SearchModalTrigger
+                id="achievement"
+                onOpen={() => _openAchievementSearchModal(indexOfAchievement)}
+                value={achievement?.[indexOfAchievement]?.title ?? ''}
+                isShowSearchIcon />
+            ),
+            Actions: [
+              (
+                <Button onClick={() => deleteAchievement(indexOfAchievement)}>
                   삭제
                 </Button>
-              </TBUTooltip>
-            ),
-          ],
-        },
-      ],
+              ),
+              indexOfAchievement === (achievement.length - 1)
+                ? (
+                  <TBUTooltip>
+                    <Button onClick={addAchievement}>
+                      <LuPlus className="ml-1 w-4 h-4" />
+                      성취기준 추가하기
+                    </Button>
+                  </TBUTooltip>
+                ): null
+            ],
+          };
+        }
+      ),
     },
     {
       label: '지식개념',
@@ -205,15 +284,6 @@ function _MathQuestionAttributesSection() {
               value={kc2?.title ?? ''}
               isShowSearchIcon />
           ),
-          Actions: [
-            (
-              <TBUTooltip>
-                <Button disabled>
-                  삭제
-                </Button>
-              </TBUTooltip>
-            ),
-          ],
         },
       ],
     },
@@ -255,7 +325,9 @@ function _MathQuestionAttributesSection() {
     kc2,
     onChangeInput,
     onChangeSelect,
-    openAchievementSearchModal,
+    _openAchievementSearchModal,
+    addAchievement,
+    deleteAchievement,
     openKCSearchModal,
   ]);
 
@@ -403,19 +475,32 @@ function _MathQuestionAttributesSection() {
   // callback
   //
   const onSelectAchievement3 = useCallback((
-    achievement: TMathAchievementFlattenModel
+    newAchievement: TMathAchievementFlattenModel
   ) => {
-    updateDetailFormState(old => ({
-      ...old,
-      achievement: [
-        achievement.achievement3
-      ],
-    }));
+    const indexOfAchievement = indexOfAchievementRef.current;
 
-    closeAchievementSearchModal();
+    if (indexOfAchievement === null) {
+      return;
+    }
+
+    updateDetailFormState(old => {
+      const achievement = [...(old.achievement ?? [])];
+      achievement.splice(
+        indexOfAchievement,
+        1,
+        newAchievement.achievement3
+      );
+
+      return {
+        ...old,
+        achievement,
+      };
+    });
+
+    _closeAchievementSearchModal();
   }, [
     updateDetailFormState,
-    closeAchievementSearchModal,
+    _closeAchievementSearchModal,
   ]);
 
   const onSelectKC = useCallback((

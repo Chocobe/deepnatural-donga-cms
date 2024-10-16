@@ -9,6 +9,7 @@ import {
   mathBehaviorDomainMapper,
   mathCurriculumMapper,
   mathQuestionTypeMapper,
+  TMathAchievement3Model,
   TMathQuestionModel,
 } from '@/apis/models/mathModel.type';
 
@@ -18,8 +19,11 @@ export type TMathQuestionPageStoreState = {
   mathQuestionsData?: TRetrieveMathQuestionsApiResponse;
 
   detailTargetMathQuestion?: TRetrieveMathQuestionApiResponse;
-  detailFormState: Omit<TMathQuestionModel, 'id' | 'source' | 'textbook' | 'kc2'> 
-    & Partial<Pick<TMathQuestionModel, 'id' | 'source' | 'textbook' | 'kc2'>>;
+  detailFormState: Omit<TMathQuestionModel, 'id' | 'source' | 'textbook' | 'kc2' | 'achievement'> 
+    & Partial<Pick<TMathQuestionModel, 'id' | 'source' | 'textbook' | 'kc2'>>
+    & {
+      achievement: Array<TMathAchievement3Model | null>;
+    };
 
   selectedMathQuestions?: TMathQuestionModel[];
   previewMathQuestion?: TMathQuestionModel;
@@ -49,7 +53,9 @@ export const initialMathQuestionPageStoreState: TMathQuestionPageStoreState = {
     source: undefined,
     instruction: null,
 
-    achievement: [],
+    achievement: [
+      null,
+    ],
     curriculum: mathCurriculumMapper[2015],
     subject: cmsSubjectMapper.MATH,
 
