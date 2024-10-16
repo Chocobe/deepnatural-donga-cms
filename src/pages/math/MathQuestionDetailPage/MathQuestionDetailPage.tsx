@@ -12,6 +12,7 @@ import useMathQuestionPageStore from '@/store/mathStores/mathQuestionPageStore/m
 // ui
 import MathQuestionDetailHeader from '@/components/pages/math/MathQuestionDetailPage/MathQuestionDetailHeader/MathQuestionDetailHeader';
 import MathQuestionDetailMain from '@/components/pages/math/MathQuestionDetailPage/MathQuestionDetailMain/MathQuestionDetailMain';
+import MathQuestionDetailFooter from '@/components/pages/math/MathQuestionDetailPage/MathQuestionDetailFooter/MathQuestionDetailFooter';
 // api
 import ApiManager from '@/apis/ApiManager';
 // type
@@ -89,7 +90,7 @@ function MathQuestionDetailPage() {
       </div>
 
       <div className="MathQuestionDetailPage-footer">
-        Footer
+        <MathQuestionDetailFooter />
       </div>
     </div>
   );
