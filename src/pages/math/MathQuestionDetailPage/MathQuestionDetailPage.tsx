@@ -11,6 +11,7 @@ import {
 import useMathQuestionPageStore from '@/store/mathStores/mathQuestionPageStore/mathQuestionPageStore';
 // ui
 import MathQuestionDetailHeader from '@/components/pages/math/MathQuestionDetailPage/MathQuestionDetailHeader/MathQuestionDetailHeader';
+import MathQuestionDetailMain from '@/components/pages/math/MathQuestionDetailPage/MathQuestionDetailMain/MathQuestionDetailMain';
 // api
 import ApiManager from '@/apis/ApiManager';
 // type
@@ -26,13 +27,6 @@ function MathQuestionDetailPage() {
   //
   const setDetailTargetMathQuestion = useMathQuestionPageStore(state => state.setDetailTargetMathQuestion);
   const clearDetailTargetMathQuestion = useMathQuestionPageStore(state => state.clearDetailTargetMathQuestion);
-
-  //
-  // mathQuestionToolPage store
-  //
-  // FIXME: 여기까지 작업함
-  // FIXME: 기존 작업도구와 store 호환이 안되는 상황
-  // FIXME: => 기존 작업도구의 `metadata` 속성이 현재는 없기 때문
 
   //
   // hook
@@ -91,7 +85,7 @@ function MathQuestionDetailPage() {
       </div>
 
       <div className="MathQuestionDetailPage-main">
-        Main
+        <MathQuestionDetailMain />
       </div>
 
       <div className="MathQuestionDetailPage-footer">
