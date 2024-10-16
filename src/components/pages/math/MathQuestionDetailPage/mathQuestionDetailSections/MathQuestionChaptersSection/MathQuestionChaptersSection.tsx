@@ -24,7 +24,6 @@ import {
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
-import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
 import { 
   LuPlus,
@@ -77,6 +76,7 @@ function _MathQuestionChaptersSection() {
   // ref
   //
   const chapterKeyRef = useRef<TMathQuestionChaptersSectionChapterKey>('');
+  const chapterIndexRef = useRef<number | null>(null);
 
   //
   // hook
@@ -98,6 +98,75 @@ function _MathQuestionChaptersSection() {
   //
   // callback
   //
+  const _openChapterSearchModal = useCallback((
+    chapterKey: string,
+    chapterIndex: number
+  ) => {
+    chapterKeyRef.current = chapterKey as TMathQuestionChaptersSectionChapterKey;
+    chapterIndexRef.current = chapterIndex;
+
+    openChapterSearchModal();
+  }, [openChapterSearchModal]);
+
+  const _closeChapterSearchModal = useCallback(() => {
+    chapterKeyRef.current = mathQuestionChaptersSectionChapterKeyMapper.NONE;
+    chapterIndexRef.current = null;
+
+    closeChapterSearchModal();
+  }, [closeChapterSearchModal]);
+
+  const addChapter = useCallback((
+    chapterKey: string
+  ) => {
+    updateDetailFormState(old => {
+      const chapter = old[chapterKey] ?? [];
+
+      const lastChapter = chapter[chapter?.length - 1] ?? null;
+      const isInvalid = lastChapter === null;
+
+      const newDetailFormState = {
+        ...old,
+        [chapterKey]: isInvalid
+          ? old[chapterKey]
+          : [
+            ...(old[chapterKey] ?? []),
+            null,
+          ],
+      };
+
+      if (!isInvalid) {
+        _openChapterSearchModal(chapterKey, newDetailFormState[chapterKey]!.length - 1);
+      }
+
+      return newDetailFormState;
+    });
+  }, [
+    updateDetailFormState,
+    _openChapterSearchModal,
+  ]);
+
+  const deleteChapter = useCallback((
+    chapterKey: string,
+    chapterIndex: number
+  ) => {
+    updateDetailFormState(old => {
+      const chapter = [...(old[chapterKey] ?? [])];
+      chapter.splice(chapterIndex, 1);
+
+      if (!chapter.length) {
+        chapter.push(null);
+      }
+
+      return {
+        ...old,
+        [chapterKey]: chapter,
+      };
+    });
+  }, [updateDetailFormState]);
+
+  //
+  // callback
+  //
   const onSelectTextbook = useCallback((textbook: TMathTextbookModel) => {
     updateDetailFormState(old => ({
       ...old,
@@ -110,30 +179,27 @@ function _MathQuestionChaptersSection() {
     closeTextbookSearchModal,
   ]);
 
-  const _openChapterSearchModal = useCallback((
-    chapterKey: string
-  ) => {
-    chapterKeyRef.current = chapterKey as TMathQuestionChaptersSectionChapterKey;
-    openChapterSearchModal();
-  }, [openChapterSearchModal]);
-
-  const _closeChapterSearchModal = useCallback(() => {
-    chapterKeyRef.current = mathQuestionChaptersSectionChapterKeyMapper.NONE;
-    closeChapterSearchModal();
-  }, [closeChapterSearchModal]);
-
   const onSelectChapter = useCallback((chapter: TMathChapterFlattenModel) => {
     const chapterKey = chapterKeyRef.current;
+    const chapterIndex = chapterIndexRef.current;
 
-    const newTargetChapter = chapter[chapterKey];
+    if (!chapterKey || chapterIndex === null) {
+      return;
+    }
 
-    updateDetailFormState(old => ({
-      ...old,
-      [chapterKey]: newTargetChapter
-        ? [
-          newTargetChapter,
-        ]: [],
-    }));
+    updateDetailFormState(old => {
+      const newChapters = [...(old[chapterKey] ?? [])];
+      newChapters.splice(
+        chapterIndex,
+        1,
+        chapter[chapterKey]!
+      );
+
+      return {
+        ...old,
+        [chapterKey]: newChapters,
+      };
+    });
 
     _closeChapterSearchModal();
   }, [
@@ -157,119 +223,128 @@ function _MathQuestionChaptersSection() {
               value={textbook?.title ?? ''}
               isShowSearchIcon />
           ),
-          Actions: [
-            (
-              <TBUTooltip>
-                <Button disabled>
-                  삭제
-                </Button>
-              </TBUTooltip>
-            ),
-          ],
         },
       ],
     },
     {
       label: '대단원',
       id: mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_1,
-      components: [
-        {
-          Editor: (
-            <SearchModalTrigger
-              id={mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_1}
-              onOpen={_openChapterSearchModal}
-              value={chapter1?.[0]?.title ?? ''}
-              isShowSearchIcon />
-          ),
-          Actions: [
-            (
-              <TBUTooltip>
-                <Button disabled>
+      components: Array.from(
+        { length: Math.max(chapter1.length, 1) },
+        (_, indexOfChapter1) => {
+          return {
+            Editor: (
+              <SearchModalTrigger
+                id={mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_1}
+                onOpen={() => _openChapterSearchModal(
+                  mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_1,
+                  indexOfChapter1
+                )}
+                value={chapter1?.[indexOfChapter1]?.title ?? ''}
+                isShowSearchIcon />
+            ),
+            Actions: [
+              (
+                <Button onClick={() => deleteChapter(
+                  mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_1,
+                  indexOfChapter1
+                )}>
                   삭제
                 </Button>
-              </TBUTooltip>
-            ),
-            (
-              <TBUTooltip>
-                <Button 
-                  className="gap-1"
-                  disabled>
-                  <LuPlus className="w-4 h-4" />
-                  대단원 추가하기
-                </Button>
-              </TBUTooltip>
-            ),
-          ],
-        },
-      ],
+              ),
+              indexOfChapter1 === (chapter1.length - 1)
+                ? (
+                  <Button onClick={() => addChapter(
+                    mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_1
+                  )}>
+                    <LuPlus className="ml-1 w-4 h-4" />
+                    대단원 추가하기
+                  </Button>
+                ): null
+            ],
+          };
+        }
+      ),
     },
     {
       label: '중단원',
       id: mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_2,
-      components: [
-        {
-          Editor: (
-            <SearchModalTrigger
-              id={mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_2}
-              onOpen={_openChapterSearchModal}
-              value={chapter2?.[0]?.title ?? ''}
-              isShowSearchIcon />
-          ),
-          Actions: [
-            (
-              <TBUTooltip>
-                <Button disabled>
+      components: Array.from(
+        { length: Math.max(chapter2.length, 1) },
+        (_, indexOfChapter2) => {
+          return {
+            Editor: (
+              <SearchModalTrigger
+                id={mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_2}
+                onOpen={() => _openChapterSearchModal(
+                  mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_2,
+                  indexOfChapter2
+                )}
+                value={chapter2?.[indexOfChapter2]?.title ?? ''}
+                isShowSearchIcon />
+            ),
+            Actions: [
+              (
+                <Button onClick={() => deleteChapter(
+                  mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_2,
+                  indexOfChapter2
+                )}>
                   삭제
                 </Button>
-              </TBUTooltip>
-            ),
-            (
-              <TBUTooltip>
-                <Button 
-                  className="gap-1"
-                  disabled>
-                  <LuPlus className="w-4 h-4" />
-                  중단원 추가하기
-                </Button>
-              </TBUTooltip>
-            ),
-          ],
-        },
-      ],
+              ),
+              indexOfChapter2 === (chapter2.length - 1)
+                ? (
+                  <Button onClick={() => addChapter(
+                    mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_2
+                  )}>
+                    <LuPlus className="ml-1 w-4 h-4" />
+                    중단원 추가하기
+                  </Button>
+                ): null
+            ],
+          };
+        }
+      ),
     },
     {
       label: '소단원',
       id: mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_3,
-      components: [
-        {
-          Editor: (
-            <SearchModalTrigger
-              id={mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_3}
-              onOpen={_openChapterSearchModal}
-              value={chapter3?.[0]?.title ?? ''}
-              isShowSearchIcon />
-          ),
-          Actions: [
-            (
-              <TBUTooltip>
-                <Button disabled>
+      components: Array.from(
+        { length: Math.max(chapter3.length, 1) },
+        (_, indexOfChapter3) => {
+          return {
+            Editor: (
+              <SearchModalTrigger
+                id={mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_3}
+                onOpen={() => _openChapterSearchModal(
+                  mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_3,
+                  indexOfChapter3
+                )}
+                value={chapter3?.[indexOfChapter3]?.title ?? ''}
+                isShowSearchIcon />
+            ),
+            Actions: [
+              (
+                <Button onClick={() => deleteChapter(
+                  mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_3,
+                  indexOfChapter3
+                )}>
                   삭제
                 </Button>
-              </TBUTooltip>
-            ),
-            (
-              <TBUTooltip>
-                <Button 
-                  className="gap-1"
-                  disabled>
-                  <LuPlus className="w-4 h-4" />
-                  소단원 추가하기
-                </Button>
-              </TBUTooltip>
-            ),
-          ],
-        },
-      ],
+              ),
+              indexOfChapter3 === (chapter3.length - 1)
+                ? (
+                  <Button onClick={() => addChapter(
+                    mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_3
+                  )}>
+                    <LuPlus className="ml-1 w-4 h-4" />
+                    소단원 추가하기
+                  </Button>
+                ): null
+            ],
+          };
+        }
+      ),
     },
   ], [
     textbook,
@@ -278,6 +353,8 @@ function _MathQuestionChaptersSection() {
     chapter3,
     openTextbookSearchModal,
     _openChapterSearchModal,
+    addChapter,
+    deleteChapter,
   ]);
 
   const textbookColumns = useMemo(() => [

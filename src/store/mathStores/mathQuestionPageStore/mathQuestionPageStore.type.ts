@@ -10,6 +10,7 @@ import {
   mathCurriculumMapper,
   mathQuestionTypeMapper,
   TMathAchievement3Model,
+  TMathChapterCommonModel,
   TMathQuestionModel,
 } from '@/apis/models/mathModel.type';
 
@@ -19,10 +20,13 @@ export type TMathQuestionPageStoreState = {
   mathQuestionsData?: TRetrieveMathQuestionsApiResponse;
 
   detailTargetMathQuestion?: TRetrieveMathQuestionApiResponse;
-  detailFormState: Omit<TMathQuestionModel, 'id' | 'source' | 'textbook' | 'kc2' | 'achievement'> 
+  detailFormState: Omit<TMathQuestionModel, 'id' | 'source' | 'textbook' | 'kc2' | 'achievement' | 'chapter1' | 'chapter2' | 'chapter3'>
     & Partial<Pick<TMathQuestionModel, 'id' | 'source' | 'textbook' | 'kc2'>>
     & {
       achievement: Array<TMathAchievement3Model | null>;
+      chapter1: Array<Omit<TMathChapterCommonModel, 'textbook_id'> | null>;
+      chapter2: Array<Omit<TMathChapterCommonModel, 'textbook_id'> | null>;
+      chapter3: Array<Omit<TMathChapterCommonModel, 'textbook_id'> | null>;
     };
 
   selectedMathQuestions?: TMathQuestionModel[];
@@ -120,9 +124,15 @@ export const initialMathQuestionPageStoreState: TMathQuestionPageStoreState = {
     is_reviewed: false,
 
     textbook: undefined,
-    chapter1: [],
-    chapter2: [],
-    chapter3: [],
+    chapter1: [
+      null,
+    ],
+    chapter2: [
+      null,
+    ],
+    chapter3: [
+      null,
+    ],
     kc2: undefined,
   },
 
