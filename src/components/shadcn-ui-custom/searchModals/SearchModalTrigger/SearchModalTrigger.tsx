@@ -1,6 +1,7 @@
 // react
 import {
   memo,
+  useCallback,
 } from 'react';
 // ui
 import { 
@@ -23,7 +24,7 @@ type TSearchModalTriggerProps = {
   placeholder?: string;
   value: string;
   isShowSearchIcon?: boolean;
-  onOpen: () => void;
+  onOpen: (id: string) => void;
 };
 
 function _SearchModalTrigger(props: TSearchModalTriggerProps) {
@@ -37,6 +38,13 @@ function _SearchModalTrigger(props: TSearchModalTriggerProps) {
     onOpen,
   } = props;
 
+  //
+  // callback
+  //
+  const onClick = useCallback(() => {
+    onOpen(id);
+  }, [id, onOpen]);
+
   return (
     <Button
       id={id}
@@ -47,7 +55,7 @@ function _SearchModalTrigger(props: TSearchModalTriggerProps) {
       )}
       variant="link"
       tabIndex={tabIndex}
-      onClick={onOpen}>
+      onClick={onClick}>
       <div className={cn(
         'valueWrapper',
         !value ? 'placeholder' : ''
