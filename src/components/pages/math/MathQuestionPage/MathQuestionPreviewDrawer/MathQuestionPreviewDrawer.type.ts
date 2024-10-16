@@ -116,10 +116,10 @@ export const mathQuestionPreviewDrawerContentTemplates = [
   },
 
   //
-  // `문제 유형` (렌더링 분기점)
+  // `문제유형` (렌더링 분기점)
   //
   {
-    label: '문제 유형',
+    label: '문제유형',
     type: 'string',
     getIsShow: () => {
       return true;

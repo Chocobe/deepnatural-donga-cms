@@ -342,6 +342,13 @@ export const mathChoiceType = {
 } as const;
 export type TMathChoiceType = typeof mathChoiceType[keyof typeof mathChoiceType];
 
+export const mathChoiceTypeOptions: TCommonSelectOptionItem[] = Object
+  .entries(mathChoiceType)
+  .map(([text, value]) => ({
+    text,
+    value: value ?? SELECT_OPTION_ITEM_ALL.value,
+  }));
+
 /** 수학 문항 */
 export type TMathQuestionModel = {
   id: number;
