@@ -1,5 +1,6 @@
 // react
 import {
+  forwardRef,
   memo,
   useCallback,
 } from 'react';
@@ -27,7 +28,10 @@ type TSearchModalTriggerProps = {
   onOpen: (id: string) => void;
 };
 
-function _SearchModalTrigger(props: TSearchModalTriggerProps) {
+const _SearchModalTrigger = forwardRef((
+  props: TSearchModalTriggerProps, 
+  _ref
+) => {
   const {
     className,
     id,
@@ -70,7 +74,7 @@ function _SearchModalTrigger(props: TSearchModalTriggerProps) {
       </div>
     </Button>
   );
-}
+});
 
 const SearchModalTrigger = memo(_SearchModalTrigger) as typeof _SearchModalTrigger;
 export default SearchModalTrigger;
