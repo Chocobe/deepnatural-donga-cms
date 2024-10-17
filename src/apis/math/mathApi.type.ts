@@ -25,6 +25,7 @@ import {
   TMathAchievement3Model,
   TMathKnowledgeConcept2Model,
   TMathSourceModel,
+  TMathQuestionHistoryModel,
 } from '../models/mathModel.type';
 
 /**
@@ -332,3 +333,11 @@ export type TRetrieveMathQuestionApiRequestParams = TApiRequestNonBodyParams<{
 // FIXME: 실제 응답 확인하기
 /** (GET) 수학 문항 조회 Response */
 export type TRetrieveMathQuestionApiResponse = TMathQuestionModel;
+
+/** (GET) 수학 문항 히스토리 목록 RequestParams */
+export type TRetrieveMathQuestionHistoriesApiRequestParams = TApiRequestNonBodyParams<{
+  questionId: string | number;
+}, void>;
+// FIXME: 실제 응답 확인하기
+/** (GET) 수학 문항 히스토리 목록 Response */
+export type TRetrieveMathQuestionHistoriesApiResponse = TPaginationModel<TMathQuestionHistoryModel>;

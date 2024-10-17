@@ -12,6 +12,7 @@ import {
   TRetrieveMathSeriesSourceApiRequestParams,
   TPutMathSeriesSourceApiRequestParams,
   TRetrieveMathQuestionApiRequestParams,
+  TRetrieveMathQuestionHistoriesApiRequestParams,
 } from './mathApi.type';
 
 const mathApiUrlFactory = (() => {
@@ -211,6 +212,21 @@ const mathApiUrlFactory = (() => {
       } = params;
 
       return `${BASE_PATH}questions/${questionId}`;
+    },
+
+    /** (GET) 수학 문항 히스토리 목록 */
+    retrieveMathQuestionHistories(params: TRetrieveMathQuestionHistoriesApiRequestParams) {
+      const {
+        pathParams: {
+          questionId,
+        },
+      } = params;
+
+      // FIXME: API 추가되면 주석해제
+      return `${this.retrieveMathQuestions()}histories/${questionId}/`;
+
+      // FIXME: API 추가되면 지우기
+      // return `${this.retrieveMathQuestions()}histories/`;
     },
   };
 

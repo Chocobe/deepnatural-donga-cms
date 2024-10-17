@@ -17,10 +17,14 @@ import {
   TCmsSourceType,
   TCMSSubject,
   TCMSTerm,
+  TCMSHistoryType,
 } from './cmsCommonModel.type';
 import { 
   TCommonSelectOptionItem,
 } from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect.type';
+import { 
+  TUserModel,
+} from './authModel.type';
 
 /** 수학 커리큘럼 */
 export const mathCurriculumMapper = {
@@ -490,4 +494,14 @@ export type TMathQuestionModel = {
     /** 지식개념1 */
     kc1: TMathKnowledgeConceptCommonModel | null;
   };
+};
+
+/** 수학 문항 히스토리 */
+export type TMathQuestionHistoryModel = {
+  id: number;
+  internal_id: string;
+  history_date: string;
+  history_change_reason: string;
+  history_type: TCMSHistoryType;
+  history_user?: TUserModel;
 };

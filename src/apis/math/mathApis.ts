@@ -84,6 +84,9 @@ import {
 
   TRetrieveMathQuestionApiRequestParams,
   TRetrieveMathQuestionApiResponse,
+
+  TRetrieveMathQuestionHistoriesApiRequestParams,
+  TRetrieveMathQuestionHistoriesApiResponse,
 } from './mathApi.type';
 
 // FIXME: mockup
@@ -578,4 +581,19 @@ export const retrieveMathQuestionApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .retrieveMathQuestion,
+});
+
+//
+// (GET) 수학 문항 히스토리 목록
+//
+export const retrieveMathQuestionHistoriesApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathQuestionHistoriesApiRequestParams) => {
+    return api.get<TRetrieveMathQuestionHistoriesApiResponse>(
+      mathApiUrlFactory.retrieveMathQuestionHistories(params)
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .retrieveMathQuestionHistories
 });
