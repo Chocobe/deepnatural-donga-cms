@@ -85,6 +85,9 @@ import {
   TRetrieveMathQuestionApiRequestParams,
   TRetrieveMathQuestionApiResponse,
 
+  TPutMathQuestionApiRequestParams,
+  TPutMathQuestionApiResponse,
+
   TRetrieveMathQuestionHistoriesApiRequestParams,
   TRetrieveMathQuestionHistoriesApiResponse,
 } from './mathApi.type';
@@ -567,7 +570,6 @@ export const retrieveMathQuestionsApi = createApiWithNoticeMessageGroup({
     .retrieveMathQuestions,
 });
 
-// FIXME: mockup
 //
 // (GET) 수학 문항 조회
 //
@@ -581,6 +583,22 @@ export const retrieveMathQuestionApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .retrieveMathQuestion,
+});
+
+//
+// (PUT) 수학 문항 수정
+//
+export const putMathQuestionApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TPutMathQuestionApiRequestParams) => {
+    return api.put<TPutMathQuestionApiResponse>(
+      mathApiUrlFactory.putMathQuestion(params),
+      params.payload
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .putMathQuestion,
 });
 
 //

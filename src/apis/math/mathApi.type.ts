@@ -330,9 +330,23 @@ export type TRetrieveMathQuestionsApiResponse = TPaginationModel<TMathQuestionMo
 export type TRetrieveMathQuestionApiRequestParams = TApiRequestNonBodyParams<{
   questionId: string | number;
 }, void>;
-// FIXME: 실제 응답 확인하기
 /** (GET) 수학 문항 조회 Response */
 export type TRetrieveMathQuestionApiResponse = TMathQuestionModel;
+
+/** (PUT) 수학 문항 수정 RequestParams */
+export type TPutMathQuestionApiRequestParams = TApiRequestBodyParams<{
+  questionId: string | number,
+}, void, Omit<TMathQuestionModel, 'textbook' | 'source' | 'instruction' | 'achievement' | 'kc2' | 'chapter1' | 'chapter2' | 'chapter3'> & {
+  source_id: number;
+  instruction_id: number | null;
+  achievement_ids: string[];
+  kc2_id: number;
+  chapter1_ids: string[];
+  chapter2_ids: string[];
+  chapter3_ids: string[];
+}>;
+// FIXME: 실제 응답 확인하기
+export type TPutMathQuestionApiResponse = TMathQuestionModel;
 
 /** (GET) 수학 문항 히스토리 목록 RequestParams */
 export type TRetrieveMathQuestionHistoriesApiRequestParams = TApiRequestNonBodyParams<{

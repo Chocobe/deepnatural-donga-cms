@@ -151,7 +151,7 @@ function _MathQuestionDataSection() {
             Editor: (
               <MathQuestionMathJaxEditor
                 id="short_answer_count"
-                value={String(detailFormState.short_answer_count ?? '')}
+                value={String(short_answer_count ?? '')}
                 onChange={onChangeInput}
               />
             ),

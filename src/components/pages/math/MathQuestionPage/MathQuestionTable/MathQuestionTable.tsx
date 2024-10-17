@@ -175,7 +175,7 @@ function _MathQuestionTable() {
       },
     }),
     columnHelper.display({
-      id: 'instruction_inquery',
+      id: 'instruction_inquiry',
       header: '지문 / 발문',
       cell: props => {
         const {

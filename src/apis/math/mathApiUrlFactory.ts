@@ -13,6 +13,7 @@ import {
   TPutMathSeriesSourceApiRequestParams,
   TRetrieveMathQuestionApiRequestParams,
   TRetrieveMathQuestionHistoriesApiRequestParams,
+  TPutMathQuestionApiRequestParams,
 } from './mathApi.type';
 
 const mathApiUrlFactory = (() => {
@@ -212,6 +213,11 @@ const mathApiUrlFactory = (() => {
       } = params;
 
       return `${BASE_PATH}questions/${questionId}`;
+    },
+
+    /** (PUT) 수학 문항 수정 */
+    putMathQuestion(params: TPutMathQuestionApiRequestParams) {
+      return this.retrieveMathQuestion(params);
     },
 
     /** (GET) 수학 문항 히스토리 목록 */

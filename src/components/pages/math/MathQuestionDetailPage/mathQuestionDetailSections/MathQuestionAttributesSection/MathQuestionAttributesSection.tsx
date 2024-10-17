@@ -27,14 +27,14 @@ import SearchModal from '@/components/shadcn-ui-custom/modals/SearchModal/Search
 import { 
   createColumnHelper,
 } from '@tanstack/react-table';
-import { 
-  Button,
-} from '@/components/shadcn-ui/ui/button';
-import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
+// import { 
+//   Button,
+// } from '@/components/shadcn-ui/ui/button';
+// import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
-import { 
-  LuPlus,
-} from 'react-icons/lu';
+// import { 
+//   LuPlus,
+// } from 'react-icons/lu';
 // util
 import { 
   flatMathAchievementModel,
@@ -117,49 +117,51 @@ function _MathQuestionAttributesSection() {
     closeAchievementSearchModal();
   }, [closeAchievementSearchModal]);
 
-  const addAchievement = useCallback(() => {
-    updateDetailFormState(old => {
-      const achievement = old.achievement ?? [];
+  // FIXME: 미사용 처리 - 성취기준은 Array 타입이지만, 1개만 사용하는 것으로 논의됨
+  // const addAchievement = useCallback(() => {
+  //   updateDetailFormState(old => {
+  //     const achievement = old.achievement ?? [];
 
-      const lastAchievement = achievement[achievement.length - 1] ?? null;
-      const isInvalid = lastAchievement === null;
+  //     const lastAchievement = achievement[achievement.length - 1] ?? null;
+  //     const isInvalid = lastAchievement === null;
 
-      const newDetailFormState = {
-        ...old,
-        achievement: isInvalid
-          ? old.achievement
-          : [
-            ...(old.achievement ?? []),
-            null
-          ],
-      };
+  //     const newDetailFormState = {
+  //       ...old,
+  //       achievement: isInvalid
+  //         ? old.achievement
+  //         : [
+  //           ...(old.achievement ?? []),
+  //           null
+  //         ],
+  //     };
 
-      if (!isInvalid) {
-        _openAchievementSearchModal(newDetailFormState.achievement!.length - 1);
-      }
+  //     if (!isInvalid) {
+  //       _openAchievementSearchModal(newDetailFormState.achievement!.length - 1);
+  //     }
 
-      return newDetailFormState;
-    });
-  }, [
-    updateDetailFormState,
-    _openAchievementSearchModal,
-  ]);
+  //     return newDetailFormState;
+  //   });
+  // }, [
+  //   updateDetailFormState,
+  //   _openAchievementSearchModal,
+  // ]);
 
-  const deleteAchievement = useCallback((indexOfAchievement: number) => {
-    updateDetailFormState(old => {
-      const achievement = [...(old.achievement ?? [])];
-      achievement.splice(indexOfAchievement, 1);
+  // FIXME: 미사용 처리 - 성취기준은 Array 타입이지만, 1개만 사용하는 것으로 논의됨
+  // const deleteAchievement = useCallback((indexOfAchievement: number) => {
+  //   updateDetailFormState(old => {
+  //     const achievement = [...(old.achievement ?? [])];
+  //     achievement.splice(indexOfAchievement, 1);
 
-      if (!achievement.length) {
-        achievement.push(null);
-      }
+  //     if (!achievement.length) {
+  //       achievement.push(null);
+  //     }
 
-      return {
-        ...old,
-        achievement,
-      };
-    });
-  }, [updateDetailFormState]);
+  //     return {
+  //       ...old,
+  //       achievement,
+  //     };
+  //   });
+  // }, [updateDetailFormState]);
 
   //
   // cache
@@ -252,22 +254,23 @@ function _MathQuestionAttributesSection() {
                 value={achievement?.[indexOfAchievement]?.title ?? ''}
                 isShowSearchIcon />
             ),
-            Actions: [
-              (
-                <Button onClick={() => deleteAchievement(indexOfAchievement)}>
-                  삭제
-                </Button>
-              ),
-              indexOfAchievement === (achievement.length - 1)
-                ? (
-                  <TBUTooltip>
-                    <Button onClick={addAchievement}>
-                      <LuPlus className="ml-1 w-4 h-4" />
-                      성취기준 추가하기
-                    </Button>
-                  </TBUTooltip>
-                ): null
-            ],
+            // FIXME: 미사용 처리 - 성취기준은 Array 타입이지만, 1개만 사용하는 것으로 논의됨
+            // Actions: [
+            //   (
+            //     <Button onClick={() => deleteAchievement(indexOfAchievement)}>
+            //       삭제
+            //     </Button>
+            //   ),
+            //   indexOfAchievement === (achievement.length - 1)
+            //     ? (
+            //       <TBUTooltip>
+            //         <Button onClick={addAchievement}>
+            //           <LuPlus className="ml-1 w-4 h-4" />
+            //           성취기준 추가하기
+            //         </Button>
+            //       </TBUTooltip>
+            //     ): null
+            // ],
           };
         }
       ),
@@ -326,9 +329,10 @@ function _MathQuestionAttributesSection() {
     onChangeInput,
     onChangeSelect,
     _openAchievementSearchModal,
-    addAchievement,
-    deleteAchievement,
     openKCSearchModal,
+    // FIXME: 미사용 처리 - 성취기준은 Array 타입이지만, 1개만 사용하는 것으로 논의됨
+    // addAchievement,
+    // deleteAchievement,
   ]);
 
   const achievementColumns = useMemo(() => [

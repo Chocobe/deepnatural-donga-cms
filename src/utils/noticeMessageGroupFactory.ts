@@ -74,6 +74,7 @@ const noticeMessageGroupFactory: {
       // 문항
       retrieveMathQuestions: TNoticeMessageGroup;
       retrieveMathQuestion: TNoticeMessageGroup;
+      putMathQuestion: TNoticeMessageGroup;
       retrieveMathQuestionHistories: TNoticeMessageGroup;
     };
     mathOCR: {
@@ -609,6 +610,22 @@ const noticeMessageGroupFactory: {
         }),
         successMessage: undefined,
         successSonner: undefined,
+      },
+
+      // (PUT) 수학 문항 수정
+      putMathQuestion: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 문항을 수정 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 문항을수정 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '입력하신 문항을 성공적으로 수정 완료하였습니다.',
+        }),
       },
 
       // (GET) 수학 문항 히스토리 목록
