@@ -15,6 +15,7 @@ import useMathQuestionPageStore from '@/store/mathStores/mathQuestionPageStore/m
 // api
 // FIXME: KC 검색 모달 구현하기
 // import ApiManager from '@/apis/ApiManager';
+import MathKCFilterModalSet from '../../MathQuestionDetailPage/MathKCFilterModalSet/MathKCFilterModalSet';
 // ui
 import {
   Accordion,
@@ -29,7 +30,6 @@ import {
   Label,
 } from '@/components/shadcn-ui/ui/label';
 import CommonSelect from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect';
-import SearchModalTrigger from '@/components/shadcn-ui-custom/searchModals/SearchModalTrigger/SearchModalTrigger';
 // FIXME: KC 검색 모달 구현하기
 // import SearchModal from '@/components/shadcn-ui-custom/modals/SearchModal/SearchModal';
 // import { 
@@ -251,13 +251,8 @@ function _MathQuestionHeader(props: TMathQuestionHeaderProps) {
       id: 'kc',
       label: 'KC',
       Component: (
-        <TBUTooltip className="w-full">
-          <SearchModalTrigger
-            id="kc"
-            className=""
-            onOpen={() => console.log('open KC Modal')}
-            value="" />
-        </TBUTooltip>
+        // FIXME: onChangeKCFilter 구현 후, 적용하기
+        <MathKCFilterModalSet />
       ),
     },
   ], [
@@ -439,6 +434,9 @@ function _MathQuestionHeader(props: TMathQuestionHeaderProps) {
             신규문항 등록도구
           </Button>
         </TBUTooltip>
+
+        {/* FIXME: ComboBox 테스트 */}
+        {/* <ComboBox options={[]} /> */}
       </div>
     </div>
 
