@@ -7,14 +7,14 @@ import {
 import useMathQuestionPageStore from '@/store/mathStores/mathQuestionPageStore/mathQuestionPageStore';
 // hook
 import useHandleMathQuestionDetailEditors from '../hooks/useHandleMathQuestionDetailEditors';
-import useMathQuestionDetailPreviewButton from '../hooks/useMathQuestionDetailPreviewButton';
+import useMathQuestionDetailCollapseButton from '../hooks/useMathQuestionDetailCollapseButton';
 // ui
 import MathQuestionDetailSectionTemplate from '../../MathQuestionDetailSectionTemplate/MathQuestionDetailSectionTemplate';
 import MathQuestionDetailSectionItemTemplate, { 
   TMathQuestionDetailSectionItemTemplateProps,
 } from '../../MathQuestionDetailSectionItemTemplate/MathQuestionDetailSectionItemTemplate';
 import MathQuestionMathJaxEditor from '../MathQuestionMathJaxEditor/MathQuestionMathJaxEditor';
-import MathQuestionDetailPreviewButton from '../MathQuestionDetailPreviewButton/MathQuestionDetailPreviewButton';
+import MathQuestionDetailCollapseButton from '../MathQuestionDetailPreviewButton/MathQuestionDetailPreviewButton';
 
 function _MathQuestionSolutionSection() {
   //
@@ -30,9 +30,9 @@ function _MathQuestionSolutionSection() {
   } = useHandleMathQuestionDetailEditors();
 
   const {
-    isShowPreview: isShowSolutionPreview,
-    togglePreview: toggleSolutionPreview,
-  } = useMathQuestionDetailPreviewButton();
+    isShow: isShowSolutionEditor,
+    toggleCollapse: toggleSolutionEditor,
+  } = useMathQuestionDetailCollapseButton();
 
   //
   // cache
@@ -47,15 +47,15 @@ function _MathQuestionSolutionSection() {
           Editor: (
             <MathQuestionMathJaxEditor
               id="solution"
-              isShowPreview={isShowSolutionPreview}
+              isShowEditor={isShowSolutionEditor}
               value={solution}
               onChange={onChangeInput} />
           ),
           LeftSideActions: [
             (
-              <MathQuestionDetailPreviewButton
-                isShowPreview={isShowSolutionPreview}
-                onClick={toggleSolutionPreview} />
+              <MathQuestionDetailCollapseButton
+                isShow={isShowSolutionEditor}
+                onClick={toggleSolutionEditor} />
             ),
           ],
         },
@@ -63,9 +63,9 @@ function _MathQuestionSolutionSection() {
     },
   ], [
     solution,
-    isShowSolutionPreview,
+    isShowSolutionEditor,
     onChangeInput,
-    toggleSolutionPreview,
+    toggleSolutionEditor,
   ]);
 
   return (

@@ -13,14 +13,14 @@ import {
 // style
 import './MathQuestionDetailPreviewButton.css';
 
-type TMathQuestionDetailPreviewButtonProps = {
-  isShowPreview: boolean;
+type TMathQuestionDetailCollapseButtonProps = {
+  isShow: boolean;
   onClick: () => void;
 };
 
-function _MathQuestionDetailPreviewButton(props: TMathQuestionDetailPreviewButtonProps) {
+function _MathQuestionDetailCollapseButton(props: TMathQuestionDetailCollapseButtonProps) {
   const {
-    isShowPreview,
+    isShow: isShow,
     onClick,
   } = props;
 
@@ -31,11 +31,14 @@ function _MathQuestionDetailPreviewButton(props: TMathQuestionDetailPreviewButto
       onClick={onClick}>
       <LuMonitor className="icon" />
       <span className="text">
-        미리보기 {isShowPreview && '닫기'}
+        {isShow
+          ? '원문 닫기'
+          : '원문 보기'
+        }
       </span>
     </Button>
   );
 }
 
-const MathQuestionDetailPreviewButton = memo(_MathQuestionDetailPreviewButton);
-export default MathQuestionDetailPreviewButton;
+const MathQuestionDetailCollapseButton = memo(_MathQuestionDetailCollapseButton);
+export default MathQuestionDetailCollapseButton;

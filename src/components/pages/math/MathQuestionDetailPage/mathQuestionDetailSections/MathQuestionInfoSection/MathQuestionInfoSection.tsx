@@ -9,14 +9,14 @@ import {
 import useMathQuestionPageStore from '@/store/mathStores/mathQuestionPageStore/mathQuestionPageStore';
 // hook
 import useHandleMathQuestionDetailEditors from '../hooks/useHandleMathQuestionDetailEditors';
-import useMathQuestionDetailPreviewButton from '../hooks/useMathQuestionDetailPreviewButton';
+import useMathQuestionDetailCollapseButton from '../hooks/useMathQuestionDetailCollapseButton';
 // ui
 import MathQuestionDetailSectionTemplate from '../../MathQuestionDetailSectionTemplate/MathQuestionDetailSectionTemplate';
 import MathQuestionDetailSectionItemTemplate, { 
   TMathQuestionDetailSectionItemTemplateProps,
 } from '../../MathQuestionDetailSectionItemTemplate/MathQuestionDetailSectionItemTemplate';
 import MathQuestionMathJaxEditor from '../MathQuestionMathJaxEditor/MathQuestionMathJaxEditor';
-import MathQuestionDetailPreviewButton from '../MathQuestionDetailPreviewButton/MathQuestionDetailPreviewButton';
+import MathQuestionDetailCollapseButton from '../MathQuestionDetailPreviewButton/MathQuestionDetailPreviewButton';
 import CommonSelect from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect';
 // type
 import { 
@@ -42,14 +42,14 @@ function _MathQuestionInfoSection() {
   } = useHandleMathQuestionDetailEditors();
 
   const {
-    isShowPreview: isShowInquiryPreview,
-    togglePreview: toggleInquiryPreview,
-  } = useMathQuestionDetailPreviewButton();
+    isShow: isShowInquiryEditor,
+    toggleCollapse: toggleInquiryEditor,
+  } = useMathQuestionDetailCollapseButton();
 
   const {
-    isShowPreview: isShowInstructionPreview,
-    togglePreview: toggleInstructionPreview,
-  } = useMathQuestionDetailPreviewButton();
+    isShow: isShowInstructionEditor,
+    toggleCollapse: toggleInstructionEditor,
+  } = useMathQuestionDetailCollapseButton();
 
   //
   // callback
@@ -83,15 +83,15 @@ function _MathQuestionInfoSection() {
           Editor: (
             <MathQuestionMathJaxEditor
               id="instruction"
-              isShowPreview={isShowInstructionPreview}
+              isShowEditor={isShowInstructionEditor}
               value={instruction?.content ?? ''}
               onChange={onChangeInstruction} />
           ),
           LeftSideActions: [
             (
-              <MathQuestionDetailPreviewButton
-                isShowPreview={isShowInstructionPreview}
-                onClick={toggleInstructionPreview} />
+              <MathQuestionDetailCollapseButton
+                isShow={isShowInstructionEditor}
+                onClick={toggleInstructionEditor} />
             ),
           ],
         },
@@ -106,16 +106,16 @@ function _MathQuestionInfoSection() {
           Editor: (
             <MathQuestionMathJaxEditor
               id="inquiry"
-              isShowPreview={isShowInquiryPreview}
+              isShowEditor={isShowInquiryEditor}
               value={inquiry}
               onChange={onChangeInput}
             />
           ),
           LeftSideActions: [
             (
-              <MathQuestionDetailPreviewButton
-                isShowPreview={isShowInquiryPreview}
-                onClick={toggleInquiryPreview} />
+              <MathQuestionDetailCollapseButton
+                isShow={isShowInquiryEditor}
+                onClick={toggleInquiryEditor} />
             ),
           ],
         },
@@ -140,13 +140,13 @@ function _MathQuestionInfoSection() {
     instruction,
     inquiry,
     question_type,
-    isShowInquiryPreview,
-    isShowInstructionPreview,
+    isShowInquiryEditor,
+    isShowInstructionEditor,
     onChangeInstruction,
     onChangeInput,
     onChangeSelect,
-    toggleInquiryPreview,
-    toggleInstructionPreview,
+    toggleInquiryEditor,
+    toggleInstructionEditor,
   ]);
 
   return (

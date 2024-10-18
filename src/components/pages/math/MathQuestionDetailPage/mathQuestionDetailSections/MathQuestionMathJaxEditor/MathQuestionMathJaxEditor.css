@@ -6,10 +6,10 @@
     /*  */
 
     > .textarea {
-      padding: 8px 16px;
+      padding: 0 16px;
 
       width: 100%;
-      height: 38px;
+      height: 0;
       min-height: auto;
 
       color: #000;
@@ -17,7 +17,7 @@
       line-height: 24px;
       font-weight: 400;
 
-      border: 1px solid hsl(var(--border));
+      border: 0 solid hsl(var(--border));
       border-radius: 6px;
       overflow: hidden;
 
@@ -27,10 +27,8 @@
 
   > .previewWrapper {
     width: 100%;
-    height: 0;
 
     overflow: hidden;
-    transition: height 0.28s ease-in-out;
 
     > .scrollHeightWrapper {
       /*  */
@@ -38,11 +36,14 @@
       > .MathEditor-preview {
         padding: 8px 16px;
         width: 100%;
+        min-height: 42px;
 
         border-radius: 6px;
         border: 1px solid hsl(var(--border));
         overflow-x: auto;
         overflow-y: hidden;
+
+        color: #476D87;
 
         table{
           appearance: initial;

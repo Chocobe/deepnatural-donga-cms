@@ -15,7 +15,7 @@ import MathQuestionDetailSectionItemTemplate, {
   TMathQuestionDetailSectionItemTemplateProps,
 } from '../../MathQuestionDetailSectionItemTemplate/MathQuestionDetailSectionItemTemplate';
 import MathQuestionMathJaxEditor from '../MathQuestionMathJaxEditor/MathQuestionMathJaxEditor';
-import MathQuestionDetailPreviewButton from '../MathQuestionDetailPreviewButton/MathQuestionDetailPreviewButton';
+import MathQuestionDetailCollapseButton from '../MathQuestionDetailPreviewButton/MathQuestionDetailPreviewButton';
 import CommonSelect from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect';
 import { 
   Input,
@@ -112,14 +112,14 @@ function _MathQuestionDataSection() {
               Editor: (
                 <MathQuestionMathJaxEditor
                   id={choiceId}
-                  isShowPreview={previewState[choiceId]}
+                  isShowEditor={previewState[choiceId]}
                   value={detailFormState[choiceId]}
                   onChange={onChangeInput} />
               ),
-              Actions: [
+              LeftSideActions: [
                 (
-                  <MathQuestionDetailPreviewButton
-                    isShowPreview={previewState[choiceId]}
+                  <MathQuestionDetailCollapseButton
+                    isShow={previewState[choiceId]}
                     onClick={() => togglePreviewState(choiceId)} />
                 ),
               ],
@@ -149,7 +149,7 @@ function _MathQuestionDataSection() {
         components: [
           {
             Editor: (
-              <MathQuestionMathJaxEditor
+              <Input
                 id="short_answer_count"
                 value={String(short_answer_count ?? '')}
                 onChange={onChangeInput}
@@ -176,13 +176,13 @@ function _MathQuestionDataSection() {
                   <MathQuestionMathJaxEditor
                     id={shortAnswerId}
                     value={detailFormState[shortAnswerId]}
-                    isShowPreview={previewState[shortAnswerId]}
+                    isShowEditor={previewState[shortAnswerId]}
                     onChange={onChangeInput} />
                 ),
-                Actions: [
+                LeftSideActions: [
                   (
-                    <MathQuestionDetailPreviewButton
-                      isShowPreview={previewState[shortAnswerId]}
+                    <MathQuestionDetailCollapseButton
+                      isShow={previewState[shortAnswerId]}
                       onClick={() => togglePreviewState(shortAnswerId)} />
                   ),
                 ],
@@ -253,13 +253,13 @@ function _MathQuestionDataSection() {
             <MathQuestionMathJaxEditor
               id='short_answer1'
               value={detailFormState.short_answer1}
-              isShowPreview={previewState['short_answer1']}
+              isShowEditor={previewState['short_answer1']}
               onChange={onChangeInput} />
           ),
           LeftSideActions: [
             (
-              <MathQuestionDetailPreviewButton
-                isShowPreview={previewState['short_answer1']}
+              <MathQuestionDetailCollapseButton
+                isShow={previewState['short_answer1']}
                 onClick={() => togglePreviewState('short_answer1')} />
             ),
           ],
@@ -294,13 +294,13 @@ function _MathQuestionDataSection() {
                   <MathQuestionMathJaxEditor
                     id={criteriaId}
                     value={detailFormState[criteriaId]}
-                    isShowPreview={previewState[criteriaId]}
+                    isShowEditor={previewState[criteriaId]}
                     onChange={onChangeInput} />
                 ),
-                Actions: [
+                LeftSideActions: [
                   (
-                    <MathQuestionDetailPreviewButton
-                      isShowPreview={previewState[criteriaId]}
+                    <MathQuestionDetailCollapseButton
+                      isShow={previewState[criteriaId]}
                       onClick={() => togglePreviewState(criteriaId)} />
                   ),
                 ],

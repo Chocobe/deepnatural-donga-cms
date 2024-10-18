@@ -1,7 +1,6 @@
 // react
 import {
   useRef,
-  useState,
   useCallback,
   useEffect,
   memo,
@@ -20,7 +19,7 @@ import './MathQuestionMathJaxEditor.css';
 
 type TMathQuestionMathJaxEditorProps = {
   id?: string;
-  isShowPreview?: boolean;
+  isShowEditor?: boolean;
   placeholder?: string;
   value: string;
   onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
@@ -29,7 +28,7 @@ type TMathQuestionMathJaxEditorProps = {
 function _MathQuestionMathJaxEditor(props: TMathQuestionMathJaxEditorProps) {
   const {
     id,
-    isShowPreview,
+    isShowEditor,
     placeholder = '',
     value,
     onChange,
@@ -39,12 +38,6 @@ function _MathQuestionMathJaxEditor(props: TMathQuestionMathJaxEditorProps) {
   // ref
   //
   const $textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const $scrollHeightWrapperRef = useRef<HTMLDivElement | null>(null);
-
-  //
-  // state
-  //
-  const [previewWrapperHeight, setPreviewWrapperHeight] = useState('0');
 
   //
   // callback
@@ -56,11 +49,26 @@ function _MathQuestionMathJaxEditor(props: TMathQuestionMathJaxEditorProps) {
       return;
     }
 
+    if (!isShowEditor) {
+      $textarea.style.marginTop = '0';
+      $textarea.style.paddingTop = '0';
+      $textarea.style.paddingBottom = '0';
+      $textarea.style.marginTop = '0';
+      $textarea.style.height = '0';
+      $textarea.style.borderWidth = '0';
+      return;
+    }
+
+    $textarea.style.marginTop = '10px';
+    $textarea.style.paddingTop = '8px';
+    $textarea.style.paddingBottom = '8px';
     $textarea.style.height = '0';
+    $textarea.style.borderWidth = '1px';
+
     const scrollHeight = $textarea.scrollHeight;
 
     $textarea.style.height = `${scrollHeight}px`;
-  }, []);
+  }, [isShowEditor]);
 
   //
   // effect
@@ -71,34 +79,34 @@ function _MathQuestionMathJaxEditor(props: TMathQuestionMathJaxEditorProps) {
     }, 250);
   }, [value, adjustTextarea]);
 
-  useEffect(function adjustScrollHeightWrapper() {
-    if (!isShowPreview) {
-      setPreviewWrapperHeight('0');
+  useEffect(() => {
+    const $textarea = $textareaRef.current;
+    if (!$textarea) {
       return;
     }
 
-    setTimeout(() => {
-      const $scrollHeightWrapper = $scrollHeightWrapperRef.current;
-
-      if (!value || !$scrollHeightWrapper) {
-        setPreviewWrapperHeight('0');
-
-        if ($scrollHeightWrapper) {
-          $scrollHeightWrapper.style.marginTop = '0';
-        }
-
-        return;
-      }
-
-      $scrollHeightWrapper.style.marginTop = '10px';
-
-      const scrollHeight = $scrollHeightWrapper.clientHeight + 10;
-      setPreviewWrapperHeight(`${scrollHeight}px`);
-    }, 250);
-  }, [value, isShowPreview]);
+    if (isShowEditor) {
+      $textareaRef.current!.style.marginTop = '10px';
+    } else {
+      $textareaRef.current!.style.marginTop = '0';
+    }
+  }, [isShowEditor]);
 
   return (
     <div className="MathQuestionMathJaxEditor">
+      <div className="previewWrapper">
+        <div 
+          className="scrollHeightWrapper">
+          <div className="MathEditor-preview">
+            <MathJax
+              dynamic
+              dangerouslySetInnerHTML={{
+                __html: value,
+              }} />
+          </div>
+        </div>
+      </div>
+
       <div className="textareaWrapper">
         <Textarea 
           ref={$textareaRef}
@@ -108,26 +116,6 @@ function _MathQuestionMathJaxEditor(props: TMathQuestionMathJaxEditorProps) {
           value={value}
           onChange={onChange} />
       </div>
-
-      {value && (
-        <div 
-          className="previewWrapper"
-          style={{
-            height: previewWrapperHeight,
-          }}>
-          <div 
-            ref={$scrollHeightWrapperRef}
-            className="scrollHeightWrapper">
-            <div className="MathEditor-preview">
-              <MathJax
-                dynamic
-                dangerouslySetInnerHTML={{
-                  __html: value,
-                }} />
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

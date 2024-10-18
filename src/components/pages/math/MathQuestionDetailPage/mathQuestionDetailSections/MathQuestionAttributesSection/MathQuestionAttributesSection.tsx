@@ -255,7 +255,7 @@ function _MathQuestionAttributesSection() {
                 isShowSearchIcon />
             ),
             // FIXME: 미사용 처리 - 성취기준은 Array 타입이지만, 1개만 사용하는 것으로 논의됨
-            // Actions: [
+            // LeftSideActions: [
             //   (
             //     <Button onClick={() => deleteAchievement(indexOfAchievement)}>
             //       삭제
