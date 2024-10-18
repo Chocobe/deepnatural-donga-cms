@@ -30,6 +30,7 @@ import MathSeriesSourcePage from '@/pages/math/MathSeriesSourcePage/MathSeriesSo
 import MathSeriesSourceDetailPage from '@/pages/math/MathSeriesSourceDetailPage/MathSeriesSourceDetailPage';
 // import MathInstructionPage from '@/pages/math/MathInstructionPage/MathInstructionPage';
 import MathQuestionPage from '@/pages/math/MathQuestionPage/MathQuestionPage';
+import MathQuestionDetailPage from '@/pages/math/MathQuestionDetailPage/MathQuestionDetailPage';
 import MathQuestionToolPage from '@/pages/math/MathQuestionToolPage/MathQuestionToolPage';
 // pages - english
 import EnglishTextbookPage from '@/pages/english/EnglishTextbookPage/EnglishTextbookPage';
@@ -157,6 +158,12 @@ const routes = createBrowserRouter([
           {
             path: routePathFactory
               .math
+              .getAchievementDetailPath(':achievementId'),
+            element: <MathAchievementDetailPage />
+          },
+          {
+            path: routePathFactory
+              .math
               .getAchievementAddPath(),
             element: <MathAchievementDetailPage />
           },
@@ -191,6 +198,12 @@ const routes = createBrowserRouter([
           {
             path: routePathFactory
               .math
+              .getSeriesSourceDetailPage(':seriesId'),
+            element: <MathSeriesSourceDetailPage />,
+          },
+          {
+            path: routePathFactory
+              .math
               .getSeriesSourceAddPage(),
             element: <MathSeriesSourceDetailPage />,
           },
@@ -213,12 +226,8 @@ const routes = createBrowserRouter([
           {
             path: routePathFactory
               .math
-              .getQuestionPath() + '/:id',
-            element: (
-              <div className="w-full h-full justify-center items-center">
-                Question Detail Page
-              </div>
-            ),
+              .getQuestionDetailPage(':questionId'),
+            element: <MathQuestionDetailPage />,
           },
         ],
       }, // Math CMS

@@ -1,0 +1,14 @@
+.MathQuestionDetailFooter {
+  @apply flex justify-end items-center gap-2.5;
+
+  margin-top: 20px;
+
+  .button {
+    @apply flex items-center gap-2;
+
+    .icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}

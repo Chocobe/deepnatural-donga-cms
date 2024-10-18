@@ -1,0 +1,105 @@
+.MathQuestionMetadataSection-sourceSearchModal {
+  /*  */
+
+  .headerRow {
+    /*  */
+
+    .sourceSearchModal_title {
+      width: 10%;
+      min-width: 180px;
+    }
+
+    .sourceSearchModal_name {
+      width: 20%;
+      min-width: 360px;
+    }
+
+    .sourceSearchModal_curriculum {
+      padding: 0;
+
+      width: 70px;
+      min-width: 70px;
+
+      font-size: 14px;
+      line-height: 20px;
+      text-align: center;
+      white-space: pre-line;
+    }
+
+    .sourceSearchModal_classtype {
+      width: 90px;
+      min-width: 90px;
+    }
+
+    .sourceSearchModal_grade,
+    .sourceSearchModal_term,
+    .sourceSearchModal_serviceyear {
+      width: 80px;
+      min-width: 80px;
+    }
+
+    .sourceSearchModal_publisher {
+      width: 130px;
+      min-width: 130px;
+    }
+
+    .sourceSearchModal_date {
+      width: 140px;
+      min-width: 140px;
+    }
+
+    .sourceSearchModal_type {
+      width: 140px;
+      min-width: 140px;
+    }
+
+    .sourceSearchModal_isview {
+      width: 90px;
+      min-width: 90px;
+
+      text-align: center;
+    }
+  }
+
+  .row {
+    /*  */
+
+    .sourceSearchModal_title {
+      /*  */
+    }
+
+    .sourceSearchModal_name {
+      /*  */
+    }
+
+    .sourceSearchModal_curriculum {
+      text-align: center;
+    }
+
+    .sourceSearchModal_classtype {
+      /*  */
+    }
+
+    .sourceSearchModal_grade,
+    .sourceSearchModal_term,
+    .sourceSearchModal_serviceyear {
+      /*  */
+    }
+
+    .sourceSearchModal_publisher {
+      /*  */
+    }
+
+    .sourceSearchModal_date {
+      /*  */
+    }
+
+    .sourceSearchModal_type {
+      /*  */
+    }
+
+    .sourceSearchModal_isview {
+      text-align: center;
+    }
+  }
+}

@@ -35,6 +35,22 @@ export type TPaginationModel<TListItemModel> = {
 };
 
 /**
+ * 히스토리 유형
+ */
+export const cmsHistoryTypeMapper = {
+  CREATED: '+',
+  CHANGED: '~',
+  DELETED: '-',
+} as const;
+export type TCMSHistoryType = typeof cmsHistoryTypeMapper[keyof typeof cmsHistoryTypeMapper];
+
+export const cmsHistoryTypeTemplate = {
+  [cmsHistoryTypeMapper.CREATED]: '생성됨',
+  [cmsHistoryTypeMapper.CHANGED]: '수정됨',
+  [cmsHistoryTypeMapper.DELETED]: '삭제됨',
+} as const;
+
+/**
  * 과목
  */
 export const cmsSubjectMapper = {
@@ -394,3 +410,10 @@ export const cmsDifficultyTemplate = {
   [cmsDifficultyMapper[4]]: '상',
   [cmsDifficultyMapper[5]]: '최상',
 } as const;
+
+export const cmsDifficultyOptions: TCommonSelectOptionItem[] = Object
+  .entries(cmsDifficultyTemplate)
+  .map(([value, text]) => ({
+    text,
+    value,
+  }));

@@ -17,10 +17,14 @@ import {
   TCmsSourceType,
   TCMSSubject,
   TCMSTerm,
+  TCMSHistoryType,
 } from './cmsCommonModel.type';
 import { 
   TCommonSelectOptionItem,
 } from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect.type';
+import { 
+  TUserModel,
+} from './authModel.type';
 
 /** 수학 커리큘럼 */
 export const mathCurriculumMapper = {
@@ -132,6 +136,18 @@ export type TMathChapter1Model = TMathChapterCommonModel & {
   textbook_term?: TCMSTerm
   /** 중단원 목록 */
   chapter2_set: TMathChapter2Model[];
+};
+
+/** (관계 적용된) 중단원 정보 */
+export type TMathChapter2InfoModel = Omit<TMathChapterCommonModel, 'textbook_id'> & {
+  chapter1: Omit<TMathChapterCommonModel, 'textbook_id'> & {
+    textbook: TMathTextbookModel;
+  };
+};
+
+/** (관계 적용된) 소단원 정보 */
+export type TMathChapter3InfoModel = Omit<TMathChapterCommonModel, 'textbook_id'> & {
+  chapter2: TMathChapter2InfoModel;
 };
 
 /** 수학 교과서 평탄화 모델 */
@@ -293,7 +309,7 @@ export type TMathInstructionModel = {
 /**
  * Math Question (수학 문항)
  */
-/** 수학 행동 영역 */
+/** 수학 행동영역 */
 export const mathBehaviorDomainMapper = {
   '계산': '계산',
   '이해': '이해',
@@ -302,6 +318,13 @@ export const mathBehaviorDomainMapper = {
   '외적문제해결': '외적문제해결',
 } as const;
 export type TMathBehaviorDomain = typeof mathBehaviorDomainMapper[keyof typeof mathBehaviorDomainMapper];
+
+export const mathBehaviorDomainOptions: TCommonSelectOptionItem[] = Object
+  .values(mathBehaviorDomainMapper)
+  .map(mathBehaviorDomain => ({
+    text: mathBehaviorDomain,
+    value: mathBehaviorDomain,
+  }));
 
 /** 문제 유형 */
 export const mathQuestionTypeMapper = {
@@ -335,6 +358,13 @@ export const mathChoiceType = {
 } as const;
 export type TMathChoiceType = typeof mathChoiceType[keyof typeof mathChoiceType];
 
+export const mathChoiceTypeOptions: TCommonSelectOptionItem[] = Object
+  .entries(mathChoiceType)
+  .map(([text, value]) => ({
+    text,
+    value: value ?? SELECT_OPTION_ITEM_ALL.value,
+  }));
+
 /** 수학 문항 */
 export type TMathQuestionModel = {
   id: number;
@@ -344,6 +374,8 @@ export type TMathQuestionModel = {
   source: TMathSourceModel;
   /** 지문 */
   instruction: TMathInstructionModel | null;
+  /** 지문 ID */
+  instruction_id: number | null;
 
   /** 성취기준 */
   achievement: TMathAchievement3Model[];
@@ -352,14 +384,9 @@ export type TMathQuestionModel = {
   /** 과목 */
   subject: TCMSSubject;
 
-  /** 지식개념1 */
-  kc1_title: string;
-  /** 지식개념2 */
-  kc2_title: string;
-
   /** 키워드 */
   keyword: string;
-  /** 행동 영역 */
+  /** 행동영역 */
   behavior_domain: TMathBehaviorDomain;
   /** 발문 */
   inquiry: string;
@@ -467,4 +494,30 @@ export type TMathQuestionModel = {
 
   /** 검수 여부 */
   is_reviewed: boolean;
+
+  /** 교과서 */
+  textbook: TMathTextbookModel,
+  /** 대단원 */
+  chapter1: Array<Omit<TMathChapterCommonModel, 'textbook_id'>>;
+  /** 중단원 */
+  chapter2: Array<Omit<TMathChapterCommonModel, 'textbook_id'>>;
+  /** 소단원 */
+  chapter3: Array<Omit<TMathChapterCommonModel, 'textbook_id'>>;
+  /** (관계 적용된) 단원 정보 */
+  chapters_info: Array<TMathChapter2InfoModel | TMathChapter3InfoModel>;
+  /** 지식개념2 */
+  kc2: TMathKnowledgeConceptCommonModel & {
+    /** 지식개념1 */
+    kc1: TMathKnowledgeConceptCommonModel | null;
+  };
+};
+
+/** 수학 문항 히스토리 */
+export type TMathQuestionHistoryModel = {
+  id: number;
+  internal_id: string;
+  history_date: string;
+  history_change_reason: string;
+  history_type: TCMSHistoryType;
+  history_user?: TUserModel;
 };

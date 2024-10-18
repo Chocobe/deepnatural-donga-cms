@@ -7,6 +7,13 @@ import {
   TPutMathChapterApiRequestParams,
   TRetrieveMathKnowledgeConceptApiRequestParams,
   TPutMathKnowledgeConceptApiRequestParams,
+  TRetrieveMathAchievementApiRequestParams,
+  TPutMathAchievementApiRequestParams,
+  TRetrieveMathSeriesSourceApiRequestParams,
+  TPutMathSeriesSourceApiRequestParams,
+  TRetrieveMathQuestionApiRequestParams,
+  TRetrieveMathQuestionHistoriesApiRequestParams,
+  TPutMathQuestionApiRequestParams,
 } from './mathApi.type';
 
 const mathApiUrlFactory = (() => {
@@ -94,6 +101,22 @@ const mathApiUrlFactory = (() => {
       return `${BASE_PATH}achievements/`;
     },
 
+    /** (GET) 수학 성취기준 조회 */
+    retrieveMathAchievementPath(params: TRetrieveMathAchievementApiRequestParams) {
+      const {
+        pathParams: {
+          achievementId,
+        },
+      } = params;
+
+      return `${this.retrieveMathAchievementsPath()}${achievementId}/`;
+    },
+
+    /** (PUT) 수학 성취기준 수정 */
+    putMathAchievementPath(params: TPutMathAchievementApiRequestParams) {
+      return `${this.retrieveMathAchievementPath(params)}`;
+    },
+
     /** (POST) 수학 성취기준 생성 */
     produceMathAchievementPath() {
       return this.retrieveMathAchievementsPath();
@@ -140,6 +163,22 @@ const mathApiUrlFactory = (() => {
       return `${BASE_PATH}series/`;
     },
 
+    /** (GET) 수학 시리즈-출처 조회 */
+    retrieveMathSeriesSourcePath(params: TRetrieveMathSeriesSourceApiRequestParams) {
+      const {
+        pathParams: {
+          seriesId,
+        },
+      } = params;
+
+      return `${BASE_PATH}series/${seriesId}/`;
+    },
+
+    /** (PUT) 수학 시리즈-출처 수정 */
+    putMathSeriesSourcePath(params: TPutMathSeriesSourceApiRequestParams) {
+      return `${this.retrieveMathSeriesSourcePath(params)}`;
+    },
+
     /** (POST) 수학 시리즈-출처 생성 */
     produceMathSeriesSourcePath() {
       return this.retrieveMathSeriesSourcesPath();
@@ -163,6 +202,37 @@ const mathApiUrlFactory = (() => {
     /** (GET) 수학 문항 목록 */
     retrieveMathQuestions() {
       return `${BASE_PATH}questions/`;
+    },
+
+    /** (GET) 수학 문항 조회 */
+    retrieveMathQuestion(params: TRetrieveMathQuestionApiRequestParams) {
+      const {
+        pathParams: {
+          questionId,
+        },
+      } = params;
+
+      return `${BASE_PATH}questions/${questionId}`;
+    },
+
+    /** (PUT) 수학 문항 수정 */
+    putMathQuestion(params: TPutMathQuestionApiRequestParams) {
+      return this.retrieveMathQuestion(params);
+    },
+
+    /** (GET) 수학 문항 히스토리 목록 */
+    retrieveMathQuestionHistories(params: TRetrieveMathQuestionHistoriesApiRequestParams) {
+      const {
+        pathParams: {
+          questionId,
+        },
+      } = params;
+
+      // FIXME: API 추가되면 주석해제
+      return `${this.retrieveMathQuestions()}${questionId}/histories/`;
+
+      // FIXME: API 추가되면 지우기
+      // return `${this.retrieveMathQuestions()}histories/`;
     },
   };
 

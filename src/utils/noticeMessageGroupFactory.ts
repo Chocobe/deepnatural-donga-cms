@@ -52,6 +52,8 @@ const noticeMessageGroupFactory: {
 
       // 성취기준
       retrieveMathAchievements: TNoticeMessageGroup;
+      retrieveMathAchievement: TNoticeMessageGroup;
+      putMathAchievement: TNoticeMessageGroup;
       produceMathAchievement: TNoticeMessageGroup;
 
       // 지식개념
@@ -62,6 +64,8 @@ const noticeMessageGroupFactory: {
 
       // 시리즈-출처
       retrieveMathSeriesSources: TNoticeMessageGroup;
+      retrieveMathSeriesSource: TNoticeMessageGroup;
+      putMathSeriesSource: TNoticeMessageGroup;
       produceMathSeriesSources: TNoticeMessageGroup;
 
       // 지문
@@ -69,6 +73,9 @@ const noticeMessageGroupFactory: {
 
       // 문항
       retrieveMathQuestions: TNoticeMessageGroup;
+      retrieveMathQuestion: TNoticeMessageGroup;
+      putMathQuestion: TNoticeMessageGroup;
+      retrieveMathQuestionHistories: TNoticeMessageGroup;
     };
     mathOCR: {
       retrieveMathPixAppKey: TNoticeMessageGroup;
@@ -394,6 +401,35 @@ const noticeMessageGroupFactory: {
         successSonner: undefined,
       },
 
+      // (GET) 수학 성취기준 조회
+      retrieveMathAchievement: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 성취기준 정보를 수정 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 성취기준 정보를 수정 중'),
+        }),
+        successMessage: undefined,
+        successSonner: undefined,
+      },
+
+      // (PUT) 수학 단원 수정
+      putMathAchievement: {
+        loadingMessage: () => ({
+          title: '',
+          message: '단원 정보를 수정 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('단원 정보 수정 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '입력하신 단원 정보를 성공적으로 수정 완료하였습니다.',
+        }),
+      },
+
       // (POST) 수학 성취기준 생성
       produceMathAchievement: {
         loadingMessage: () => ({
@@ -487,6 +523,35 @@ const noticeMessageGroupFactory: {
         successSonner: undefined,
       },
 
+      // (GET) 수학 시리즈-출처 조회
+      retrieveMathSeriesSource: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 시리즈-출처 정보를 조회 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 시리즈-출처 정보 조회 중'),
+        }),
+        successMessage: undefined,
+        successSonner: undefined,
+      },
+
+      // (PUT) 수학 시리즈-출처 수정
+      putMathSeriesSource: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 시리즈-출처를 수정 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 시리즈-출처 수정 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '입력하신 시리즈-출처를 성공적으로 수정 완료하였습니다.',
+        }),
+      },
+
       // (POST) 수학 시리즈-출처 생성
       produceMathSeriesSources: {
         loadingMessage: () => ({
@@ -529,6 +594,48 @@ const noticeMessageGroupFactory: {
         }),
         errorMessage: () => ({
           ...createNetworkErrorMessage('수학 문항 정보 조회 중'),
+        }),
+        successMessage: undefined,
+        successSonner: undefined,
+      },
+
+      // (GET) 수학 문항 조회
+      retrieveMathQuestion: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 문항 정보를 조회 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 문항 정보 조회 중'),
+        }),
+        successMessage: undefined,
+        successSonner: undefined,
+      },
+
+      // (PUT) 수학 문항 수정
+      putMathQuestion: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 문항을 수정 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 문항을수정 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '입력하신 문항을 성공적으로 수정 완료하였습니다.',
+        }),
+      },
+
+      // (GET) 수학 문항 히스토리 목록
+      retrieveMathQuestionHistories: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 문항 히스토리 정보를 조회 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 문항 히스토리 정보 조회 중'),
         }),
         successMessage: undefined,
         successSonner: undefined,

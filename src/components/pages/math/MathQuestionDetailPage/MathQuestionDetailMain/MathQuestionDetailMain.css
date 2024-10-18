@@ -1,0 +1,24 @@
+.MathQuestionDetailMain {
+  padding: 20px 0;
+
+  border: 1px solid #001A33;
+  border-left: none;
+  border-right: none;
+
+  &-title {
+    padding-bottom: 20px;
+
+    color: #09090B;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+  }
+
+  &-sectionsWrapper {
+    @apply flex flex-col gap-[100px];
+  }
+
+  &-section {
+    @apply mt-5;
+  }
+}

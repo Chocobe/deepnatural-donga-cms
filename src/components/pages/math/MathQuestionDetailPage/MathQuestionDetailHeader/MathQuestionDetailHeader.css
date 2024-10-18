@@ -1,0 +1,36 @@
+.MathQuestionDetailHeader {
+  @apply flex justify-between items-end gap-5;
+
+  padding-bottom: 20px;
+
+  &-titleWrapper {
+    @apply flex flex-col gap-1.5;
+
+    .title {
+      color: #09090B;
+      font-size: 20px;
+      line-height: 24px;
+      font-weight: 600;
+    }
+
+    .description {
+      color: #71717A;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+    }
+  }
+
+  &-actionsWrapper {
+    @apply flex items-center gap-2.5;
+
+    .button {
+      gap: 8px;
+
+      .icon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}

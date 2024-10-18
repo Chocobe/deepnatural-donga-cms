@@ -20,7 +20,7 @@
     text-decoration: none !important;
   }
 
-  .value {
+  .valueWrapper {
     flex: 1 1 0;
     width: 100%;
 
@@ -31,10 +31,30 @@
     &.placeholder {
       color: #989898;
     }
+
+    .value {
+      flex-shrink: 1;
+
+      width: 100%;
+
+      text-wrap: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .icon {
+      flex-shrink: 0;
+
+      width: 20px;
+      height: 20px;
+    }
   }
 
-  .icon {
-    width: 20px;
-    height: 20px;
+  &.showSearchIcon {
+    /*  */
+
+    .valueWrapper {
+      @apply flex justify-between items-center gap-2;
+    }
   }
 }

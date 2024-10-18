@@ -6,6 +6,11 @@ import {
   useCallback,
   memo,
 } from 'react';
+// router
+import { 
+  useNavigate,
+} from 'react-router-dom';
+import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathQuestionPageStore from '@/store/mathStores/mathQuestionPageStore/mathQuestionPageStore';
 // ui
@@ -76,6 +81,11 @@ function _MathQuestionTable() {
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
   //
+  // hook
+  //
+  const navigate = useNavigate();
+
+  //
   // callback
   //
   const onClickPreview = useCallback((
@@ -85,6 +95,15 @@ function _MathQuestionTable() {
 
     setPreviewMathQuestion(mathQuestion);
   }, [setPreviewMathQuestion]);
+
+  const goToDetailPage = useCallback((mathQuestion: TMathQuestionModel) => {
+    const questionId = mathQuestion.id;
+
+    navigate(routePathFactory
+      .math
+      .getQuestionDetailPage(questionId)
+    );
+  }, [navigate]);
 
   //
   // cache
@@ -129,11 +148,11 @@ function _MathQuestionTable() {
         return cmsTermTemplate[term];
       },
     }),
-    columnHelper.accessor('kc1_title', {
+    columnHelper.display({
       id: 'kc1_title',
       header: 'KC1',
       cell: props => {
-        const kc1_title = props.getValue();
+        const kc1_title = props.row.original.kc2.kc1?.title ?? '';
 
         return (
           <TableEllipsisCell maxRows={2}>
@@ -142,11 +161,11 @@ function _MathQuestionTable() {
         );
       },
     }),
-    columnHelper.accessor('kc2_title', {
+    columnHelper.display({
       id: 'kc2_title',
       header: 'KC2',
       cell: props => {
-        const kc2_title = props.getValue();
+        const kc2_title = props.row.original.kc2.title ?? '';
 
         return (
           <TableEllipsisCell maxRows={2}>
@@ -156,7 +175,7 @@ function _MathQuestionTable() {
       },
     }),
     columnHelper.display({
-      id: 'instruction_inquery',
+      id: 'instruction_inquiry',
       header: '지문 / 발문',
       cell: props => {
         const {
@@ -267,7 +286,7 @@ function _MathQuestionTable() {
             key={row.id}
             className="row"
             data-state={row.getIsSelected() && 'selected'}
-            onClick={() => console.log('상세 페이지 이동')}>
+            onClick={() => goToDetailPage(row.original)}>
             {row.getVisibleCells().map(cell => (
               <TableCell
                 key={cell.id}

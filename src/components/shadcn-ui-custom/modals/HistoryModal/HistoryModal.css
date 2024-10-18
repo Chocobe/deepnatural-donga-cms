@@ -1,11 +1,10 @@
 .HistoryModal {
   width: 80% !important;
-  height: 100% !important;
+  height: fit-content !important;
   max-width: none !important;
   max-height: 80% !important;
 
-  grid-template-rows: max-content 1fr max-content;
-  gap: 24px !important;
+  @apply !flex flex-col gap-6;
 
   overflow: hidden !important;
 
@@ -25,7 +24,7 @@
 
     border: 1px solid hsl(var(--border));
 
-    overflow: hidden;
+    overflow: auto;
 
     & > * {
       height: 100%;

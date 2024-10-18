@@ -1,11 +1,17 @@
 // react
 import {
+  forwardRef,
   memo,
+  useCallback,
 } from 'react';
 // ui
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
+// icon
+import { 
+  LuSearch,
+} from 'react-icons/lu';
 // style
 import { 
   cn,
@@ -18,38 +24,57 @@ type TSearchModalTriggerProps = {
   tabIndex?: number;
   placeholder?: string;
   value: string;
-  onOpen: () => void;
+  isShowSearchIcon?: boolean;
+  onOpen: (id: string) => void;
 };
 
-function _SearchModalTrigger(props: TSearchModalTriggerProps) {
+const _SearchModalTrigger = forwardRef((
+  props: TSearchModalTriggerProps, 
+  _ref
+) => {
   const {
     className,
     id,
     tabIndex,
     placeholder = '',
     value,
+    isShowSearchIcon,
     onOpen,
   } = props;
+
+  //
+  // callback
+  //
+  const onClick = useCallback(() => {
+    onOpen(id);
+  }, [id, onOpen]);
 
   return (
     <Button
       id={id}
       className={cn(
         'SearchModalTrigger',
+        { showSearchIcon: isShowSearchIcon },
         className
       )}
       variant="link"
       tabIndex={tabIndex}
-      onClick={onOpen}>
+      onClick={onClick}>
       <div className={cn(
-        'value',
+        'valueWrapper',
         !value ? 'placeholder' : ''
       )}>
-        {value || placeholder}
+        <span className="value">
+          {value || placeholder}
+        </span>
+
+        {isShowSearchIcon && (
+          <LuSearch className="icon" />
+        )}
       </div>
     </Button>
   );
-}
+});
 
 const SearchModalTrigger = memo(_SearchModalTrigger) as typeof _SearchModalTrigger;
 export default SearchModalTrigger;

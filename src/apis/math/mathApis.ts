@@ -42,6 +42,12 @@ import {
   TRetrieveMathAchievementsApiRequestParams,
   TRetrieveMathAchievementsApiResponse,
 
+  TRetrieveMathAchievementApiRequestParams,
+  TRetrieveMathAchievementApiResponse,
+
+  TPutMathAchievementApiRequestParams,
+  TPutMathAchievementApiResponse,
+
   TProduceMathAchievementApiRequestParams,
   TProduceMathAchievementApiResponse,
 } from './mathApi.type';
@@ -59,6 +65,12 @@ import {
   TRetrieveMathSeriesSourcesApiRequestParams,
   TRetrieveMathSeriesSourcesApiResponse,
 
+  TRetrieveMathSeriesSourceApiRequestParams,
+  TRetrieveMathSeriesSourceApiResponse,
+
+  TPutMathSeriesSourceApiRequestParams,
+  TPutMathSeriesSourceApiResponse,
+
   TProduceMathSeriesSourceApiRequestParams,
   TProduceMathSeriesSourceApiResponse,
 } from './mathApi.type';
@@ -69,6 +81,15 @@ import {
 import {
   TRetrieveMathQuestionsApiRequestParams,
   TRetrieveMathQuestionsApiResponse,
+
+  TRetrieveMathQuestionApiRequestParams,
+  TRetrieveMathQuestionApiResponse,
+
+  TPutMathQuestionApiRequestParams,
+  TPutMathQuestionApiResponse,
+
+  TRetrieveMathQuestionHistoriesApiRequestParams,
+  TRetrieveMathQuestionHistoriesApiResponse,
 } from './mathApi.type';
 
 // FIXME: mockup
@@ -293,6 +314,41 @@ export const retrieveMathAchievementsApi = createApiWithNoticeMessageGroup({
 });
 
 //
+// (GET) 수학 성취기준 조회
+//
+export const retrieveMathAchievementApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathAchievementApiRequestParams) => {
+    const _params = excludeNullOrUndefinedProperties(params);
+
+    return api.get<TRetrieveMathAchievementApiResponse>(
+      mathApiUrlFactory.retrieveMathAchievementPath(_params)
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .retrieveMathAchievements,
+});
+
+//
+// (PUT) 수학 성취기준 수정
+//
+export const putMathAchievementApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TPutMathAchievementApiRequestParams) => {
+    const _params = excludeNullOrUndefinedProperties(params);
+
+    return api.put<TPutMathAchievementApiResponse>(
+      mathApiUrlFactory.putMathAchievementPath(_params),
+      _params.payload
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .putMathAchievement,
+});
+
+//
 // (POST) 수학 성취기준 생성
 //
 export const produceMathAchievementApi = createApiWithNoticeMessageGroup({
@@ -414,6 +470,39 @@ export const retrieveMathSeriesSourcesApi = createApiWithNoticeMessageGroup({
 });
 
 //
+// (GET) 수학 시리즈-출처 조회
+//
+export const retrieveMathSeriesSourceApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathSeriesSourceApiRequestParams) => {
+    return api.get<TRetrieveMathSeriesSourceApiResponse>(
+      mathApiUrlFactory.retrieveMathSeriesSourcePath(params)
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .retrieveMathSeriesSource,
+});
+
+//
+// (PUT) 수학 시리즈-출처 수정
+//
+export const putMathSeriesSourceApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TPutMathSeriesSourceApiRequestParams) => {
+    const _params = excludeNullOrUndefinedProperties(params);
+
+    return api.put<TPutMathSeriesSourceApiResponse>(
+      mathApiUrlFactory.putMathSeriesSourcePath(_params),
+      _params.payload
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .putMathSeriesSource,
+});
+
+//
 // (POST) 시리즈-출처 생성
 //
 export const produceMathSeriesSourceApi = createApiWithNoticeMessageGroup({
@@ -479,4 +568,50 @@ export const retrieveMathQuestionsApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .retrieveMathQuestions,
+});
+
+//
+// (GET) 수학 문항 조회
+//
+export const retrieveMathQuestionApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathQuestionApiRequestParams) => {
+    return api.get<TRetrieveMathQuestionApiResponse>(
+      mathApiUrlFactory.retrieveMathQuestion(params)
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .retrieveMathQuestion,
+});
+
+//
+// (PUT) 수학 문항 수정
+//
+export const putMathQuestionApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TPutMathQuestionApiRequestParams) => {
+    return api.put<TPutMathQuestionApiResponse>(
+      mathApiUrlFactory.putMathQuestion(params),
+      params.payload
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .putMathQuestion,
+});
+
+//
+// (GET) 수학 문항 히스토리 목록
+//
+export const retrieveMathQuestionHistoriesApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathQuestionHistoriesApiRequestParams) => {
+    return api.get<TRetrieveMathQuestionHistoriesApiResponse>(
+      mathApiUrlFactory.retrieveMathQuestionHistories(params)
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .retrieveMathQuestionHistories
 });

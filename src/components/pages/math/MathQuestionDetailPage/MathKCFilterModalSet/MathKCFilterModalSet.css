@@ -1,0 +1,59 @@
+.MathKCFilterModalSet {
+  @apply !flex flex-col;
+
+  width: 90% !important;
+  height: 70% !important;
+  max-width: 800px !important;
+
+  overflow: hidden;
+
+  &-header {
+    /*  */
+
+    .title {
+      color: #09090B;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 600;
+    }
+
+    .description {
+      color: #71717A;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+    }
+  }
+
+  &-main {
+    height: 100%;
+
+    /* FIXME: section 구현 후, 주석해제 */
+    /* overflow: hidden; */
+    overflow: auto;
+
+    .filtersWrapper {
+      /*  */
+    }
+
+    .innerWrapper {
+      /*  */
+
+      .selectionSection {
+        /*  */
+      }
+
+      .actionSection {
+        /*  */
+      }
+
+      .resultSection {
+        /*  */
+      }
+    }
+  }
+
+  &-footer {
+    /*  */
+  }
+}

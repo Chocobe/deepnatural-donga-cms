@@ -3,9 +3,15 @@ import {
   useRef,
   useState,
   useMemo,
+  useCallback,
   useEffect,
   memo,
 } from 'react';
+// router
+import { 
+  useNavigate,
+} from 'react-router-dom';
+import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathAchievementPageStore from '@/store/mathStores/mathAchievementPageStore/mathAchievementPageStore';
 // hook
@@ -144,6 +150,20 @@ function _MathAchievementTable() {
     effectDef: tableData,
   });
 
+  const navigate = useNavigate();
+
+  //
+  // callback
+  //
+  const goToDetailPage = useCallback((mathAchievement: TMathAchievementFlattenModel) => {
+    const achievementId = mathAchievement.achievement1.id;
+
+    navigate(routePathFactory
+      .math
+      .getAchievementDetailPath(achievementId)
+    );
+  }, [navigate]);
+
   //
   // effect
   //
@@ -183,7 +203,7 @@ function _MathAchievementTable() {
             key={row.id}
             className="row"
             data-state={row.getIsSelected() && 'selected'}
-            onClick={() => console.log('상세 페이지 이동')}>
+            onClick={() => goToDetailPage(row.original)}>
             {row.getVisibleCells().map(cell => (
               <TableCell
                 key={cell.id}

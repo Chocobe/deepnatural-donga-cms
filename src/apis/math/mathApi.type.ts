@@ -25,6 +25,7 @@ import {
   TMathAchievement3Model,
   TMathKnowledgeConcept2Model,
   TMathSourceModel,
+  TMathQuestionHistoryModel,
 } from '../models/mathModel.type';
 
 /**
@@ -152,7 +153,27 @@ export type TRetrieveMathAchievementsApiRequestParams = TApiRequestNonBodyParams
 /** (GET) 수학 성취기준 목록 조회 Response */
 export type TRetrieveMathAchievementsApiResponse = TPaginationModel<TMathAchievement1Model>;
 
-/** (POST) 수학 성취 기준 생성 RequestParams */
+/** (GET) 수학 성취기준 조회 RequestParams */
+export type TRetrieveMathAchievementApiRequestParams = TApiRequestNonBodyParams<{
+  achievementId: string | number;
+}, void>;
+export type TRetrieveMathAchievementApiResponse = TMathAchievement1Model;
+
+/** (PUT) 수학 성취기준 수정 RequestParams */
+export type TPutMathAchievementApiRequestParams = TApiRequestBodyParams<{
+  achievementId: string | number;
+}, void, Omit<TMathAchievement1Model, 'achievement2_set'> & {
+  achievement2_set: Array<Omit<TMathAchievement2Model, 'id' | 'achievement3_set'> & {
+    id?: string | number;
+    achievement3_set: Array<Omit<TMathAchievement3Model, 'id'>> & {
+      id?: string | number;
+    };
+  }>;
+}>;
+/** (PUT) 수학 성취기준 수정 Response */
+export type TPutMathAchievementApiResponse = TMathAchievement1Model;
+
+/** (POST) 수학 성취기준 생성 RequestParams */
 export type TProduceMathAchievementApiRequestParams = TApiRequestBodyParams<
   void,
   void,
@@ -162,7 +183,7 @@ export type TProduceMathAchievementApiRequestParams = TApiRequestBodyParams<
     }>;
   }
 >;
-/** (POST) 수학 성취 기준 생성 Response */
+/** (POST) 수학 성취기준 생성 Response */
 // TODO: 차후 응답 scheme 변경 가능성 있음
 export type TProduceMathAchievementApiResponse = TPaginationModel<TMathAchievement1Model>;
 
@@ -201,13 +222,11 @@ export type TProduceMathKnowledgeConceptApiRequestParams = TApiRequestBodyParams
   void,
   void,
   Pick<TMathKnowledgeConcept1Model, 'title' | 'comment' | 'achievement3_id'> & {
-    // TODO: 신규 `kc1` 값은 아직 존재하지 않음 - 확인필요
-    // kc2_set: Array<Pick<TMathKnowledgeConcept2Model, 'title' | 'comment' | 'kc1' | 'achievement3'>>;
     kc2_set: Array<Pick<TMathKnowledgeConcept2Model, 'title' | 'comment' | 'achievement3'>>;
   }
 >;
-// FIXME: 실제 응답 확인하기
-export type TProduceMathKnowledgeConceptApiResponse = any;
+/** (POST) 수학 지식개념 생성 Response */
+export type TProduceMathKnowledgeConceptApiResponse = TMathKnowledgeConcept1Model;
 
 /** (PUT) 수학 지식개념 수정 RequestParams */
 export type TPutMathKnowledgeConceptApiRequestParams = TApiRequestBodyParams<{
@@ -243,6 +262,22 @@ export type TRetrieveMathSeriesSourcesApiRequestParams = TApiRequestNonBodyParam
 /** (GET) 수학 시리즈-출처 목록 조회 Response */
 export type TRetrieveMathSeriesSourcesApiResponse = TPaginationModel<TMathSeriesModel>;
 
+/** (GET) 수학 시리즈-출처 조회 RequestParams */
+export type TRetrieveMathSeriesSourceApiRequestParams = TApiRequestNonBodyParams<{
+  seriesId: string | number;
+}, void>;
+/** (GET) 수학 시리즈-출처 조회 Response */
+export type TRetrieveMathSeriesSourceApiResponse = TMathSeriesModel;
+
+/** (PUT) 수학 시리즈-출처 수정 RequestParams */
+export type TPutMathSeriesSourceApiRequestParams = TApiRequestBodyParams<{
+  seriesId: string | number;
+}, void, Omit<TMathSeriesModel, 'id' | 'source_set'> & {
+  source_set: Array<Omit<TMathSourceModel, 'id'>>;
+}>;
+/** (PUT) 수학 시리즈-출처 수정 Response */
+export type TPutMathSeriesSourceApiResponse = TMathSeriesModel;
+
 /** (POST) 시리즈-출처 생성 RequestParams */
 export type TProduceMathSeriesSourceApiRequestParams = TApiRequestBodyParams<
   void,
@@ -263,7 +298,6 @@ export type TProduceMathSeriesSourceApiResponse = any;
 export type TRetrieveMathInstructionsApiRequestParams = TApiRequestNonBodyParams<void, {
   page?: number;
 }>;
-
 /** (GET) 수학 지문 목록 조회 Response */
 export type TRetrieveMathInstructionsApiResponse = TPaginationModel<TMathInstructionModel>;
 
@@ -289,6 +323,48 @@ export type TRetrieveMathQuestionsApiRequestParams = TApiRequestNonBodyParams<vo
   inquiry?: string;
   instruction?: string;
 }>;
-
 /** (GET) 수학 문항 목록 조회 Response */
 export type TRetrieveMathQuestionsApiResponse = TPaginationModel<TMathQuestionModel>;
+
+/** (GET) 수학 문항 조회 RequestParams */
+export type TRetrieveMathQuestionApiRequestParams = TApiRequestNonBodyParams<{
+  questionId: string | number;
+}, void>;
+/** (GET) 수학 문항 조회 Response */
+export type TRetrieveMathQuestionApiResponse = TMathQuestionModel;
+
+/** (PUT) 수학 문항 수정 RequestParams */
+export type TPutMathQuestionApiRequestParams = TApiRequestBodyParams<{
+  questionId: string | number,
+}, void, Omit<TMathQuestionModel, 'textbook' | 'source' | 'instruction' | 'instruction_id' | 'achievement' | 'kc2' | 'chapter1' | 'chapter2' | 'chapter3' | 'chapters_info'> & {
+  source_id?: number;
+  instruction?: {
+    /** 지문 ID */
+    id: string | number;
+    /** 지문 내용 */
+    content: string;
+  };
+  /** 
+   * 성취기준(소) ID 목록 
+   * 
+   * * 배열이지만 1개만 가능
+   */
+  achievement_ids?: string[];
+  /** 지식개념2 ID */
+  kc2_id?: number;
+  /** 대단원 ID 목록 */
+  chapter1_ids?: string[];
+  /** 중단원 ID 목록 */
+  chapter2_ids?: string[];
+  /** 소단원 ID 목록 */
+  chapter3_ids?: string[];
+}>;
+/** (PUT) 수학 문항 수정 Response */
+export type TPutMathQuestionApiResponse = TMathQuestionModel;
+
+/** (GET) 수학 문항 히스토리 목록 RequestParams */
+export type TRetrieveMathQuestionHistoriesApiRequestParams = TApiRequestNonBodyParams<{
+  questionId: string | number;
+}, void>;
+/** (GET) 수학 문항 히스토리 목록 Response */
+export type TRetrieveMathQuestionHistoriesApiResponse = TPaginationModel<TMathQuestionHistoryModel>;

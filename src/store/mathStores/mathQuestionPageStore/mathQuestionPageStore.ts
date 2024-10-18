@@ -46,6 +46,32 @@ const useMathQuestionPageStore = create(devtools<TMathQuestionPageStore>((set, _
     }), false, 'setMathQuestionsData');
   },
 
+  clearDetailTargetMathQuestion: () => {
+    set(old => ({
+      ...old,
+      detailTargetMathQuestion: initialMathQuestionPageStoreState.detailTargetMathQuestion,
+      detailFormState: initialMathQuestionPageStoreState.detailFormState,
+    }), false, 'clearDetailTargetMathQuestion');
+  },
+  setDetailTargetMathQuestion: mathQuestion => {
+    set(old => ({
+      ...old,
+      detailTargetMathQuestion: mathQuestion,
+      detailFormState: {
+        ...mathQuestion,
+      },
+    }), false, 'setDetailTargetMathQuestion');
+  },
+  updateDetailFormState: callback => {
+    set(old => ({
+      ...old,
+      detailFormState: {
+        ...old.detailFormState,
+        ...callback(old.detailFormState),
+      },
+    }), false, 'updateDetailFormState');
+  },
+
   clearSelectedMathQuestions: () => {
     set(old => ({
       ...old,

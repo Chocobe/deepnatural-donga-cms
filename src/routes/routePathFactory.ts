@@ -51,6 +51,9 @@ const routePathFactory = {
     getAchievementAddPath() {
       return `${this.getAchievementPath()}/add` as const;
     },
+    getAchievementDetailPath(achievementId: string | number) {
+      return `${this.getAchievementPath()}/${achievementId}` as const;
+    },
 
     // 지식개념
     getKnowledgeConceptPath() {
@@ -67,6 +70,9 @@ const routePathFactory = {
     getSeriesSourcePath() {
       return `${this.getMathRootPath()}/series-source` as const;
     },
+    getSeriesSourceDetailPage(seriesId: string | number) {
+      return `${this.getSeriesSourcePath()}/${seriesId}` as const;
+    },
     getSeriesSourceAddPage() {
       return `${this.getSeriesSourcePath()}/add` as const;
     },
@@ -79,6 +85,9 @@ const routePathFactory = {
     // 문항
     getQuestionPath() {
       return `${this.getMathRootPath()}/question` as const;
+    },
+    getQuestionDetailPage(questionId: string | number) {
+      return `${this.getQuestionPath()}/${questionId}` as const;
     },
     getQuestionToolPath() {
       return `${this.getQuestionPath()}/tool` as const;
