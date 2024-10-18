@@ -16,7 +16,8 @@ export type TMathQuestionDetailSectionItemTemplateProps = {
   isHide?: boolean;
   components: Array<{
     Editor: ReactNode;
-    Actions?: ReactNode[];
+    LeftSideActions?: ReactNode[];
+    RightSideActions?: ReactNode[];
   }>;
 };
 
@@ -45,7 +46,8 @@ function _MathQuestionDetailSectionItemTemplate(props: TMathQuestionDetailSectio
         {components.map((component, index) => {
           const {
             Editor,
-            Actions,
+            LeftSideActions,
+            RightSideActions,
           } = component;
 
           return (
@@ -61,17 +63,31 @@ function _MathQuestionDetailSectionItemTemplate(props: TMathQuestionDetailSectio
                 {Editor}
               </div>
 
-              {Actions && (
-                <div className="actionsWrapper">
-                  {Actions.map((Action, indexOfAction) => (
-                    <div
-                      key={indexOfAction}
-                      className="action">
-                      {Action}
-                    </div>
-                  ))}
-                </div>
-              )}
+              <div className="actionsWrapper">
+                {LeftSideActions && (
+                  <div className="leftSide">
+                    {LeftSideActions.map((Action, indexOfAction) => (
+                      <div
+                        key={indexOfAction}
+                        className="action">
+                        {Action}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {RightSideActions && (
+                  <div className="rightSide">
+                    {RightSideActions.map((Action, indexOfAction) => (
+                      <div
+                        key={indexOfAction}
+                        className="action">
+                        {Action}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           );
         })}

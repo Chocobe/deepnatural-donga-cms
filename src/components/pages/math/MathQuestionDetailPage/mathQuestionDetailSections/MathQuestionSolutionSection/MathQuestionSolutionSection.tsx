@@ -51,7 +51,7 @@ function _MathQuestionSolutionSection() {
               value={solution}
               onChange={onChangeInput} />
           ),
-          Actions: [
+          LeftSideActions: [
             (
               <MathQuestionDetailPreviewButton
                 isShowPreview={isShowSolutionPreview}

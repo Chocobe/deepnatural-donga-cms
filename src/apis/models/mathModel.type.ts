@@ -138,6 +138,18 @@ export type TMathChapter1Model = TMathChapterCommonModel & {
   chapter2_set: TMathChapter2Model[];
 };
 
+/** (관계 적용된) 중단원 정보 */
+export type TMathChapter2InfoModel = Omit<TMathChapterCommonModel, 'textbook_id'> & {
+  chapter1: Omit<TMathChapterCommonModel, 'textbook_id'> & {
+    textbook: TMathTextbookModel;
+  };
+};
+
+/** (관계 적용된) 소단원 정보 */
+export type TMathChapter3InfoModel = Omit<TMathChapterCommonModel, 'textbook_id'> & {
+  chapter2: TMathChapter2InfoModel;
+};
+
 /** 수학 교과서 평탄화 모델 */
 export type TMathChapterFlattenModel = {
   /** 대단원 정보 */
@@ -362,6 +374,8 @@ export type TMathQuestionModel = {
   source: TMathSourceModel;
   /** 지문 */
   instruction: TMathInstructionModel | null;
+  /** 지문 ID */
+  instruction_id: number | null;
 
   /** 성취기준 */
   achievement: TMathAchievement3Model[];
@@ -489,6 +503,8 @@ export type TMathQuestionModel = {
   chapter2: Array<Omit<TMathChapterCommonModel, 'textbook_id'>>;
   /** 소단원 */
   chapter3: Array<Omit<TMathChapterCommonModel, 'textbook_id'>>;
+  /** (관계 적용된) 단원 정보 */
+  chapters_info: Array<TMathChapter2InfoModel | TMathChapter3InfoModel>;
   /** 지식개념2 */
   kc2: TMathKnowledgeConceptCommonModel & {
     /** 지식개념1 */

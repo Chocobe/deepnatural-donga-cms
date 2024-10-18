@@ -87,7 +87,7 @@ function _MathQuestionInfoSection() {
               value={instruction?.content ?? ''}
               onChange={onChangeInstruction} />
           ),
-          Actions: [
+          LeftSideActions: [
             (
               <MathQuestionDetailPreviewButton
                 isShowPreview={isShowInstructionPreview}
@@ -111,7 +111,7 @@ function _MathQuestionInfoSection() {
               onChange={onChangeInput}
             />
           ),
-          Actions: [
+          LeftSideActions: [
             (
               <MathQuestionDetailPreviewButton
                 isShowPreview={isShowInquiryPreview}

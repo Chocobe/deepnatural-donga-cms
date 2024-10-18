@@ -12,17 +12,22 @@ import './MathQuestionDetailSectionTemplate.css';
 type TMathQuestionDetailSectionTemplateProps = PropsWithChildren<{
   title?: string;
   variant?: '' | 'chapters'
+  className?: string;
 }>;
 
 function _MathQuestionDetailSectionTemplate(props: TMathQuestionDetailSectionTemplateProps) {
   const {
     title,
     variant = '',
+    className,
     children,
   } = props;
 
   return (
-    <div className="MathQuestionDetailSectionTemplate">
+    <div className={cn(
+      'MathQuestionDetailSectionTemplate',
+      className
+    )}>
       {title && (
         <div className="MathQuestionDetailSectionTemplate-title">
           {title}

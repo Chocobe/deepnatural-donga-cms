@@ -229,7 +229,7 @@ const mathApiUrlFactory = (() => {
       } = params;
 
       // FIXME: API 추가되면 주석해제
-      return `${this.retrieveMathQuestions()}histories/${questionId}/`;
+      return `${this.retrieveMathQuestions()}${questionId}/histories/`;
 
       // FIXME: API 추가되면 지우기
       // return `${this.retrieveMathQuestions()}histories/`;

@@ -336,22 +336,35 @@ export type TRetrieveMathQuestionApiResponse = TMathQuestionModel;
 /** (PUT) 수학 문항 수정 RequestParams */
 export type TPutMathQuestionApiRequestParams = TApiRequestBodyParams<{
   questionId: string | number,
-}, void, Omit<TMathQuestionModel, 'textbook' | 'source' | 'instruction' | 'achievement' | 'kc2' | 'chapter1' | 'chapter2' | 'chapter3'> & {
-  source_id: number;
-  instruction_id: number | null;
-  achievement_ids: string[];
-  kc2_id: number;
-  chapter1_ids: string[];
-  chapter2_ids: string[];
-  chapter3_ids: string[];
+}, void, Omit<TMathQuestionModel, 'textbook' | 'source' | 'instruction' | 'instruction_id' | 'achievement' | 'kc2' | 'chapter1' | 'chapter2' | 'chapter3' | 'chapters_info'> & {
+  source_id?: number;
+  instruction?: {
+    /** 지문 ID */
+    id: string | number;
+    /** 지문 내용 */
+    content: string;
+  };
+  /** 
+   * 성취기준(소) ID 목록 
+   * 
+   * * 배열이지만 1개만 가능
+   */
+  achievement_ids?: string[];
+  /** 지식개념2 ID */
+  kc2_id?: number;
+  /** 대단원 ID 목록 */
+  chapter1_ids?: string[];
+  /** 중단원 ID 목록 */
+  chapter2_ids?: string[];
+  /** 소단원 ID 목록 */
+  chapter3_ids?: string[];
 }>;
-// FIXME: 실제 응답 확인하기
+/** (PUT) 수학 문항 수정 Response */
 export type TPutMathQuestionApiResponse = TMathQuestionModel;
 
 /** (GET) 수학 문항 히스토리 목록 RequestParams */
 export type TRetrieveMathQuestionHistoriesApiRequestParams = TApiRequestNonBodyParams<{
   questionId: string | number;
 }, void>;
-// FIXME: 실제 응답 확인하기
 /** (GET) 수학 문항 히스토리 목록 Response */
 export type TRetrieveMathQuestionHistoriesApiResponse = TPaginationModel<TMathQuestionHistoryModel>;

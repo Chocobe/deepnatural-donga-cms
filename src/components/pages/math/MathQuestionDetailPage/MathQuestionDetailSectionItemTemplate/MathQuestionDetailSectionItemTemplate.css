@@ -35,10 +35,13 @@
       }
 
       .actionsWrapper {
-        @apply flex items-center gap-2.5;
+        @apply flex justify-between items-center gap-2.5;
 
-        .action {
-          /*  */
+        width: 100%;
+
+        .leftSide,
+        .rightSide {
+          @apply flex items-center gap-2.5;
         }
       }
     }

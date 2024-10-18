@@ -24,32 +24,34 @@ import {
 import { 
   Button,
 } from '@/components/shadcn-ui/ui/button';
+import { 
+  Input,
+} from '@/components/shadcn-ui/ui/input';
 // icon
 import { 
   LuPlus,
 } from 'react-icons/lu';
 // type
 import { 
+  TMathChapter2InfoModel,
+  TMathChapter3InfoModel,
   TMathChapterFlattenModel,
-  TMathTextbookModel,
 } from '@/apis/models/mathModel.type';
 import { 
-  cmsClassTypeMapper,
   cmsClassTypeOptions,
   cmsGradeOptions,
+  cmsTermMapper,
   cmsTermOptions,
 } from '@/apis/models/cmsCommonModel.type';
-import { 
-  mathTextbookSearchTypeOptions,
-} from '../../../MathTextbookPage/MathTextbookTableActions/MathTextbookTableActions.type';
 import { 
   mathChapterSearchTypeOptions,
 } from '../../../MathChapterPage/MathChapterTableActions/MathChapterTableActions.type';
 import { 
   mathQuestionChaptersSectionChapterKeyMapper,
-  mathQuestionChaptersSectionChapterNameMapper,
-  TMathQuestionChaptersSectionChapterKey,
 } from './MathQuestionChaptersSection.type';
+import { 
+  initialMathQuestionPageStoreState,
+} from '@/store/mathStores/mathQuestionPageStore/mathQuestionPageStore.type';
 // util
 import { 
   flatMathChapterModel,
@@ -57,37 +59,26 @@ import {
 // style
 import './MathQuestionChaptersSection.css';
 
-const textbookColumnHelper = createColumnHelper<TMathTextbookModel>();
 const chapterColumnHelper = createColumnHelper<TMathChapterFlattenModel>();
+
+const CHAPTER_NAME_PREFIX = 'chapterInfo-';
 
 function _MathQuestionChaptersSection() {
   //
   // mathQuestionPage store
   //
-  const textbook = useMathQuestionPageStore(state => state.detailFormState.textbook);
-
-  const chapter1 = useMathQuestionPageStore(state => state.detailFormState.chapter1);
-  const chapter2 = useMathQuestionPageStore(state => state.detailFormState.chapter2);
-  const chapter3 = useMathQuestionPageStore(state => state.detailFormState.chapter3);
+  const chapters_info = useMathQuestionPageStore(state => state.detailFormState.chapters_info);
 
   const updateDetailFormState = useMathQuestionPageStore(state => state.updateDetailFormState);
 
   //
   // ref
   //
-  const chapterKeyRef = useRef<TMathQuestionChaptersSectionChapterKey>('');
-  const chapterIndexRef = useRef<number | null>(null);
+  const indexOfChapterInfoRef = useRef<number | null>(null);
 
   //
   // hook
   //
-  const {
-    isOpenSearchModal: isOpenTextbookSearchModal,
-    closeSearchModal: closeTextbookSearchModal,
-    openSearchModal: openTextbookSearchModal,
-    onChangeIsOpenSearchModal: onChangeIsOpenTextbookSearchModal,
-  } = useSearchModal();
-
   const {
     isOpenSearchModal: isOpenChapterSearchModal,
     closeSearchModal: closeChapterSearchModal,
@@ -98,68 +89,42 @@ function _MathQuestionChaptersSection() {
   //
   // callback
   //
-  const _openChapterSearchModal = useCallback((
-    chapterKey: string,
-    chapterIndex: number
-  ) => {
-    chapterKeyRef.current = chapterKey as TMathQuestionChaptersSectionChapterKey;
-    chapterIndexRef.current = chapterIndex;
+  const _openChapterSearchModal = useCallback((indexOfChapterInfo: number) => {
+    indexOfChapterInfoRef.current = indexOfChapterInfo;
 
     openChapterSearchModal();
   }, [openChapterSearchModal]);
 
   const _closeChapterSearchModal = useCallback(() => {
-    chapterKeyRef.current = mathQuestionChaptersSectionChapterKeyMapper.NONE;
-    chapterIndexRef.current = null;
+    indexOfChapterInfoRef.current = null;
 
     closeChapterSearchModal();
   }, [closeChapterSearchModal]);
 
-  const addChapter = useCallback((
-    chapterKey: string
-  ) => {
-    updateDetailFormState(old => {
-      const chapter = old[chapterKey] ?? [];
-
-      const lastChapter = chapter[chapter?.length - 1] ?? null;
-      const isInvalid = lastChapter === null;
-
-      const newDetailFormState = {
-        ...old,
-        [chapterKey]: isInvalid
-          ? old[chapterKey]
-          : [
-            ...(old[chapterKey] ?? []),
-            null,
-          ],
-      };
-
-      if (!isInvalid) {
-        _openChapterSearchModal(chapterKey, newDetailFormState[chapterKey]!.length - 1);
-      }
-
-      return newDetailFormState;
-    });
-  }, [
-    updateDetailFormState,
-    _openChapterSearchModal,
-  ]);
+  const addChapter = useCallback(() => {
+    updateDetailFormState(old => ({
+      ...old,
+      chapters_info: [
+        ...(old.chapters_info ?? []),
+        null,
+      ],
+    }));
+  }, [updateDetailFormState]);
 
   const deleteChapter = useCallback((
-    chapterKey: string,
-    chapterIndex: number
+    indexOfChapterInfo: number
   ) => {
     updateDetailFormState(old => {
-      const chapter = [...(old[chapterKey] ?? [])];
-      chapter.splice(chapterIndex, 1);
+      const newChaptersInfo = [...(old.chapters_info ?? [])];
+      newChaptersInfo.splice(indexOfChapterInfo, 1);
 
-      if (!chapter.length) {
-        chapter.push(null);
+      if (!newChaptersInfo.length) {
+        newChaptersInfo.push(null);
       }
 
       return {
         ...old,
-        [chapterKey]: chapter,
+        chapters_info: newChaptersInfo,
       };
     });
   }, [updateDetailFormState]);
@@ -167,37 +132,49 @@ function _MathQuestionChaptersSection() {
   //
   // callback
   //
-  const onSelectTextbook = useCallback((textbook: TMathTextbookModel) => {
-    updateDetailFormState(old => ({
-      ...old,
-      textbook,
-    }));
-
-    closeTextbookSearchModal();
-  }, [
-    updateDetailFormState,
-    closeTextbookSearchModal,
-  ]);
-
   const onSelectChapter = useCallback((chapter: TMathChapterFlattenModel) => {
-    const chapterKey = chapterKeyRef.current;
-    const chapterIndex = chapterIndexRef.current;
+    const indexOfChapterInfo = indexOfChapterInfoRef.current;
 
-    if (!chapterKey || chapterIndex === null) {
+    if (indexOfChapterInfo === null) {
       return;
     }
 
+    const chapter2Info: TMathChapter2InfoModel = {
+      id: chapter.chapter2.id,
+      title: chapter.chapter2.title,
+      no: chapter.chapter2.no,
+      chapter1: {
+        id: chapter.chapter1.id,
+        title: chapter.chapter1.title,
+        no: chapter.chapter1.no,
+        textbook: {
+          id: chapter.chapter1.textbook_id,
+          title: chapter.chapter1.textbook_title!,
+          classtype: chapter.chapter1.textbook_classtype! as any,
+          curriculum: chapter.chapter1.textbook_curriculum!,
+          grade: chapter.chapter1.textbook_grade!,
+          term: chapter.chapter1.textbook_term ?? cmsTermMapper.COMMON,
+          author: '',
+        },
+      },
+    };
+
+    const newChapterInfo = chapter.chapter3
+      ? {
+        id: chapter.chapter3.id,
+        title: chapter.chapter3.title,
+        no: chapter.chapter3.no,
+        chapter2: chapter2Info,
+      } as TMathChapter3InfoModel
+      : chapter2Info;
+
     updateDetailFormState(old => {
-      const newChapters = [...(old[chapterKey] ?? [])];
-      newChapters.splice(
-        chapterIndex,
-        1,
-        chapter[chapterKey]!
-      );
+      const newChaptersInfo = [...(old.chapters_info ?? [])];
+      newChaptersInfo.splice(indexOfChapterInfo, 1, newChapterInfo);
 
       return {
         ...old,
-        [chapterKey]: newChapters,
+        chapters_info: newChaptersInfo,
       };
     });
 
@@ -207,211 +184,158 @@ function _MathQuestionChaptersSection() {
     _closeChapterSearchModal,
   ]);
 
+  const extractChapterTitleInfo = useCallback((
+    chapterInfo: typeof initialMathQuestionPageStoreState.detailFormState.chapters_info[0]
+  ) => {
+    let chapterTitleInfo = {
+      textbookTitle: '',
+      chapter1Title: '',
+      chapter2Title: '',
+      chapter3Title: '',
+    };
+
+    switch (true) {
+      case !!(chapterInfo as TMathChapter3InfoModel)?.chapter2: {
+        const chapter3Info = chapterInfo as TMathChapter3InfoModel;
+
+        chapterTitleInfo = {
+          textbookTitle: chapter3Info.chapter2.chapter1.textbook.title,
+          chapter1Title: chapter3Info.chapter2.chapter1.title,
+          chapter2Title: chapter3Info.chapter2.title,
+          chapter3Title: chapter3Info.title,
+        };
+
+        break;
+      }
+
+      case !!(chapterInfo as TMathChapter2InfoModel)?.chapter1: {
+        const chapter2Info = chapterInfo as TMathChapter2InfoModel;
+
+        chapterTitleInfo = {
+          textbookTitle: chapter2Info.chapter1.textbook.title,
+          chapter1Title: chapter2Info.chapter1.title,
+          chapter2Title: chapter2Info.title,
+          chapter3Title: '',
+        };
+
+        break;
+      }
+    }
+
+    return chapterTitleInfo;
+  }, []);
+
   //
   // cache
   //
-  const sectionItems = useMemo<TMathQuestionDetailSectionItemTemplateProps[]>(() => [
-    {
-      label: '교과서',
-      id: 'textbook',
-      components: [
-        {
-          Editor: (
-            <SearchModalTrigger
-              id="textbook"
-              onOpen={openTextbookSearchModal}
-              value={textbook?.title ?? ''}
-              isShowSearchIcon />
-          ),
-        },
-      ],
-    },
-    {
-      label: '대단원',
-      id: mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_1,
-      components: Array.from(
-        { length: Math.max(chapter1.length, 1) },
-        (_, indexOfChapter1) => {
-          return {
-            Editor: (
-              <SearchModalTrigger
-                id={mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_1}
-                onOpen={() => _openChapterSearchModal(
-                  mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_1,
-                  indexOfChapter1
-                )}
-                value={chapter1?.[indexOfChapter1]?.title ?? ''}
-                isShowSearchIcon />
-            ),
-            Actions: [
+  const sectionItems = useMemo<TMathQuestionDetailSectionItemTemplateProps[]>(() => {
+    const items = chapters_info.map((info, index) => {
+      const chapterNumber = index + 1;
+      const chapterName = `단원정보 ${chapterNumber}`;
+      const chapterId = `${CHAPTER_NAME_PREFIX}${index}`;
+
+      const chapterTitleInfo = extractChapterTitleInfo(info);
+
+      return {
+        label: chapterName,
+        id: chapterId,
+        fluid: true,
+        components: [
+          {
+            Editor: [
               (
-                <Button onClick={() => deleteChapter(
-                  mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_1,
-                  indexOfChapter1
-                )}>
+                <div 
+                  key={`${chapterId}-textbook`}
+                  className="chapterSectionItem">
+                  <label className="chapterSectionItem-label">
+                    교과서
+                  </label>
+
+                  <SearchModalTrigger
+                    id={mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_1}
+                    onOpen={() => _openChapterSearchModal(index)}
+                    value={chapterTitleInfo.textbookTitle}
+                    isShowSearchIcon />
+                </div>
+              ),
+              (
+                <div 
+                  key={`${chapterId}-chapter1`}
+                  className="chapterSectionItem">
+                  <label className="chapterSectionItem-label">
+                    대단원
+                  </label>
+
+                  <Input
+                    isReadOnly
+                    value={chapterTitleInfo.chapter1Title} />
+                </div>
+              ),
+              (
+                <div 
+                  key={`${chapterId}-chapter2`}
+                  className="chapterSectionItem">
+                  <label className="chapterSectionItem-label">
+                    중단원
+                  </label>
+
+                  <Input
+                    isReadOnly
+                    value={chapterTitleInfo.chapter2Title} />
+                </div>
+              ),
+              (
+                <div 
+                  key={`${chapterId}-chapter3`}
+                  className="chapterSectionItem">
+                  <label className="chapterSectionItem-label">
+                    소단원
+                  </label>
+
+                  <Input
+                    isReadOnly
+                    value={chapterTitleInfo.chapter3Title} />
+                </div>
+              ),
+            ],
+            LeftSideActions: [
+              index === (chapters_info?.length ?? 1) - 1
+                ? (
+                  <Button 
+                    key={`${chapterId}-addButton`}
+                    className="rightSide"
+                    variant="default"
+                    disabled={!chapters_info[chapters_info.length - 1]}
+                    onClick={addChapter}>
+                    <LuPlus className="w-4 h-4" />
+                    단원정보 추가하기
+                  </Button>
+                ): null,
+            ],
+            RightSideActions: [
+              (
+                <Button
+                  key={`${chapterId}-deleteButton`}
+                  variant="default"
+                  disabled={chapters_info.length < 2}
+                  onClick={() => deleteChapter(index)}>
                   삭제
                 </Button>
               ),
-              indexOfChapter1 === (chapter1.length - 1)
-                ? (
-                  <Button onClick={() => addChapter(
-                    mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_1
-                  )}>
-                    <LuPlus className="ml-1 w-4 h-4" />
-                    대단원 추가하기
-                  </Button>
-                ): null
             ],
-          };
-        }
-      ),
-    },
-    {
-      label: '중단원',
-      id: mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_2,
-      components: Array.from(
-        { length: Math.max(chapter2.length, 1) },
-        (_, indexOfChapter2) => {
-          return {
-            Editor: (
-              <SearchModalTrigger
-                id={mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_2}
-                onOpen={() => _openChapterSearchModal(
-                  mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_2,
-                  indexOfChapter2
-                )}
-                value={chapter2?.[indexOfChapter2]?.title ?? ''}
-                isShowSearchIcon />
-            ),
-            Actions: [
-              (
-                <Button onClick={() => deleteChapter(
-                  mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_2,
-                  indexOfChapter2
-                )}>
-                  삭제
-                </Button>
-              ),
-              indexOfChapter2 === (chapter2.length - 1)
-                ? (
-                  <Button onClick={() => addChapter(
-                    mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_2
-                  )}>
-                    <LuPlus className="ml-1 w-4 h-4" />
-                    중단원 추가하기
-                  </Button>
-                ): null
-            ],
-          };
-        }
-      ),
-    },
-    {
-      label: '소단원',
-      id: mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_3,
-      components: Array.from(
-        { length: Math.max(chapter3.length, 1) },
-        (_, indexOfChapter3) => {
-          return {
-            Editor: (
-              <SearchModalTrigger
-                id={mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_3}
-                onOpen={() => _openChapterSearchModal(
-                  mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_3,
-                  indexOfChapter3
-                )}
-                value={chapter3?.[indexOfChapter3]?.title ?? ''}
-                isShowSearchIcon />
-            ),
-            Actions: [
-              (
-                <Button onClick={() => deleteChapter(
-                  mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_3,
-                  indexOfChapter3
-                )}>
-                  삭제
-                </Button>
-              ),
-              indexOfChapter3 === (chapter3.length - 1)
-                ? (
-                  <Button onClick={() => addChapter(
-                    mathQuestionChaptersSectionChapterKeyMapper.CHAPTER_3
-                  )}>
-                    <LuPlus className="ml-1 w-4 h-4" />
-                    소단원 추가하기
-                  </Button>
-                ): null
-            ],
-          };
-        }
-      ),
-    },
-  ], [
-    textbook,
-    chapter1,
-    chapter2,
-    chapter3,
-    openTextbookSearchModal,
+          },
+        ],
+      } as TMathQuestionDetailSectionItemTemplateProps;
+    });
+
+    return items;
+  }, [
+    chapters_info,
+    extractChapterTitleInfo,
     _openChapterSearchModal,
     addChapter,
     deleteChapter,
   ]);
-
-  const textbookColumns = useMemo(() => [
-    textbookColumnHelper.accessor('curriculum', {
-      id: 'textbookSearchModal_curriculum',
-      header: '교육과정',
-    }),
-    textbookColumnHelper.accessor('classtype', {
-      id: 'textbookSearchModal_classtype',
-      header: '학교급',
-      cell: props => {
-        const {
-          cell,
-        } = props;
-
-        const valueItem = cmsClassTypeOptions.find(({ value }) => value === cell.getValue());
-        return valueItem?.text ?? ' ';
-      },
-    }),
-    textbookColumnHelper.accessor('grade', {
-      id: 'textbookSearchModal_grade',
-      header: '학년',
-      cell: props => {
-        const {
-          cell,
-        } = props;
-
-        const valueItem = cmsGradeOptions[
-          cmsClassTypeMapper.ELEMENTARY
-        ].find(({ value }) => value === String(cell.getValue()));
-
-        return valueItem?.text ?? ' ';
-      },
-    }),
-    textbookColumnHelper.accessor('term', {
-      id: 'textbookSearchModal_term',
-      header: '학기',
-      cell: props => {
-        const {
-          cell,
-        } = props;
-
-        const valueItem = cmsTermOptions
-          .find(({ value }) => value === String(cell.getValue()));
-
-        return valueItem?.text ?? ' ';
-      },
-    }),
-    textbookColumnHelper.accessor('title', {
-      id: 'textbookSearchModal_title',
-      header: '교과서명',
-    }),
-    textbookColumnHelper.accessor('author', {
-      id: 'textbookSearchModal_author',
-      header: '저자',
-    }),
-  ], []);
 
   const chapterColumns = useMemo(() => [
     chapterColumnHelper.display({
@@ -498,12 +422,9 @@ function _MathQuestionChaptersSection() {
     })
   ], []);
 
-  const chapterSearchModalName = mathQuestionChaptersSectionChapterNameMapper[
-    chapterKeyRef.current
-  ];
-
   return (<>
-    <MathQuestionDetailSectionTemplate 
+    <MathQuestionDetailSectionTemplate
+      className="MathQuestionChaptersSection" 
       title="단원"
       variant='chapters'>
       {sectionItems.map((item, index) => {
@@ -526,24 +447,9 @@ function _MathQuestionChaptersSection() {
     </MathQuestionDetailSectionTemplate>
 
     <SearchModal
-      className="MathQuestionChaptersSection-textbookSearchModal"
-      title="교과서"
-      description="적용할 교과서를 선택해 주세요."
-      isOpen={isOpenTextbookSearchModal}
-      onChangeIsOpen={onChangeIsOpenTextbookSearchModal}
-      retrieveData={ApiManager
-        .math
-        .retrieveMathTextbooksApi
-        .callWithNoticeMessageGroup
-      }
-      searchTypeOptions={mathTextbookSearchTypeOptions}
-      tableColumns={textbookColumns}
-      onClickRow={onSelectTextbook} />
-
-    <SearchModal
       className="MathQuestionChaptersSection-chapterSearchModal"
-      title={chapterSearchModalName}
-      description={`적용할 ${chapterSearchModalName}을 선택해 주세요.`}
+      title="단원정보"
+      description="적용할 단원정보를 선택해 주세요."
       isOpen={isOpenChapterSearchModal}
       onChangeIsOpen={onChangeIsOpenChapterSearchModal}
       retrieveData={ApiManager

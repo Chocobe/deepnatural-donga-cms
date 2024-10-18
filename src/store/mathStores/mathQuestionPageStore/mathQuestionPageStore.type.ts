@@ -4,12 +4,17 @@ import {
   TRetrieveMathQuestionsApiRequestParams,
   TRetrieveMathQuestionsApiResponse,
 } from '@/apis/math/mathApi.type';
-import { cmsDifficultyMapper, cmsSubjectMapper } from '@/apis/models/cmsCommonModel.type';
+import { 
+  cmsDifficultyMapper, 
+  cmsSubjectMapper,
+} from '@/apis/models/cmsCommonModel.type';
 import { 
   mathBehaviorDomainMapper,
   mathCurriculumMapper,
   mathQuestionTypeMapper,
   TMathAchievement3Model,
+  TMathChapter2InfoModel,
+  TMathChapter3InfoModel,
   TMathChapterCommonModel,
   TMathQuestionModel,
 } from '@/apis/models/mathModel.type';
@@ -20,13 +25,14 @@ export type TMathQuestionPageStoreState = {
   mathQuestionsData?: TRetrieveMathQuestionsApiResponse;
 
   detailTargetMathQuestion?: TRetrieveMathQuestionApiResponse;
-  detailFormState: Omit<TMathQuestionModel, 'id' | 'source' | 'textbook' | 'kc2' | 'achievement' | 'chapter1' | 'chapter2' | 'chapter3'>
-    & Partial<Pick<TMathQuestionModel, 'id' | 'source' | 'textbook' | 'kc2'>>
+  detailFormState: Omit<TMathQuestionModel, 'id' | 'instruction_id' | 'source' | 'textbook' | 'kc2' | 'achievement' | 'chapter1' | 'chapter2' | 'chapter3' | 'chapters_info'>
+    & Partial<Pick<TMathQuestionModel, 'id' | 'instruction_id' | 'source' | 'textbook' | 'kc2'>>
     & {
       achievement: Array<TMathAchievement3Model | null>;
       chapter1: Array<Omit<TMathChapterCommonModel, 'textbook_id'> | null>;
       chapter2: Array<Omit<TMathChapterCommonModel, 'textbook_id'> | null>;
       chapter3: Array<Omit<TMathChapterCommonModel, 'textbook_id'> | null>;
+      chapters_info: Array<TMathChapter2InfoModel | TMathChapter3InfoModel | null>;
     };
 
   selectedMathQuestions?: TMathQuestionModel[];
@@ -42,7 +48,13 @@ export const initialMathQuestionPageStoreState: TMathQuestionPageStoreState = {
     internal_id: undefined,
     instruction_inquiry: undefined,
     page: undefined,
+
     content: undefined,
+    // FIXME: mockup 지문있는 문항
+    // content: '743145',
+    // FIXME: mockup 단원 많은 문항
+    // content: '741589',
+
     inquiry: undefined,
     instruction: undefined,
   },
@@ -56,6 +68,7 @@ export const initialMathQuestionPageStoreState: TMathQuestionPageStoreState = {
 
     source: undefined,
     instruction: null,
+    instruction_id: null,
 
     achievement: [
       null,
@@ -131,6 +144,9 @@ export const initialMathQuestionPageStoreState: TMathQuestionPageStoreState = {
       null,
     ],
     chapter3: [
+      null,
+    ],
+    chapters_info: [
       null,
     ],
     kc2: undefined,

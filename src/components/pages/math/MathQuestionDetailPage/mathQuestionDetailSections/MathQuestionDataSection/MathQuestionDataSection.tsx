@@ -256,7 +256,7 @@ function _MathQuestionDataSection() {
               isShowPreview={previewState['short_answer1']}
               onChange={onChangeInput} />
           ),
-          Actions: [
+          LeftSideActions: [
             (
               <MathQuestionDetailPreviewButton
                 isShowPreview={previewState['short_answer1']}

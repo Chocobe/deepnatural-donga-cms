@@ -32,7 +32,17 @@ import {
 } from '@/store/mathStores/mathQuestionPageStore/mathQuestionPageStore.type';
 import { 
   mathQuestionTypeMapper,
+  TMathChapter2InfoModel,
+  TMathChapter3InfoModel,
 } from '@/apis/models/mathModel.type';
+// util
+import { 
+  checkChangedAchievement,
+  checkChangedChapter,
+  checkChangedInstruction,
+  checkChangedKC2,
+  checkChangedSource,
+} from './MathQuestionDetailFooter.util';
 // style
 import './MathQuestionDetailFooter.css';
 
@@ -41,6 +51,7 @@ function _MathQuestionDetailFooter() {
   // mathQuestionPage store
   //
   const detailFormState = useMathQuestionPageStore(state => state.detailFormState);
+  const originMathQuestion = useMathQuestionPageStore(state => state.detailTargetMathQuestion);
 
   //
   // resultNoticeModal store
@@ -59,11 +70,13 @@ function _MathQuestionDetailFooter() {
     const {
       source: _source,
       instruction: _instruction,
+      instruction_id: _instruction_id,
       achievement: _achievement,
       kc2: _kc2,
       chapter1: _chapter1,
       chapter2: _chapter2,
       chapter3: _chapter3,
+      chapters_info: _chapters_info,
 
       ...payloadTemplate
     } = initialMathQuestionPageStoreState.detailFormState;
@@ -79,11 +92,13 @@ function _MathQuestionDetailFooter() {
       instruction,
       achievement,
       kc2,
-      chapter1,
-      chapter2,
-      chapter3,
+      chapters_info,
 
+      instruction_id: _instruction_id,
       textbook: _textbook,
+      chapter1: _chapter1,
+      chapter2: _chapter2,
+      chapter3: _chapter3,
 
       ...filteredProps
     } = detailFormState;
@@ -285,31 +300,108 @@ function _MathQuestionDetailFooter() {
       }
     }
 
+    // Object 또는 Array 타입 속성은 변경 여부 파악
+    // => 변경되지 않은 속성은 Key 자체를 제거
+    // => 변경된 속성은 그 속성값 전체를 적용
     const payload: TPutMathQuestionApiRequestParams['payload'] = {
-      id,
       ...payloadTemplate,
-
-      // FIXME: mockup
-      source_id: source.id,
-      instruction_id: instruction?.id ?? null,
-      achievement_ids: achievement
-        .filter(achievement => achievement)
-        .map(achievement => String(achievement!.id)),
-      kc2_id: kc2.id,
-      chapter1_ids: chapter1
-        .filter(chapter1 => chapter1)
-        .map(chapter1 => String(chapter1!.id)),
-      chapter2_ids: chapter2
-        .filter(chapter2 => chapter2)
-        .map(chapter2 => String(chapter2!.id)),
-      chapter3_ids: chapter3
-        .filter(chapter3 => chapter3)
-        .map(chapter3 => String(chapter3!.id)),
+      id,
     };
+
+    // 1. 출처(`source`) 변경사항 있을 경우, payload 추가
+    if (checkChangedSource(
+      originMathQuestion?.source,
+      source
+    )) {
+      payload.source_id = source!.id;
+    }
+
+    // 2. 성취기준(`achievement`) 변경사항 있을 경우, payload 추가
+    if (checkChangedAchievement(
+      originMathQuestion?.achievement,
+      achievement
+    )) {
+      payload.achievement_ids = achievement.map(achievement => String(achievement!.id));
+    }
+
+    // 3. 지문(`instruction`) 변경사항 있을 경우, payload 추가
+    if (checkChangedInstruction(
+      originMathQuestion?.instruction,
+      instruction
+    )) {
+      payload.instruction = {
+        id: instruction!.id,
+        content: instruction!.content,
+      };
+    }
+
+    // 4. 지식개념(kc2) 변경사항 있을 경우, payload 추가
+    if (checkChangedKC2(
+      originMathQuestion?.kc2,
+      kc2
+    )) {
+      payload.kc2_id = kc2.id;
+    }
+
+    // 5. 단원(chapter1, 2, 3) 변경사항 있을 경우, payload 추가
+    let chapter1_ids: string[] = [];
+    let chapter2_ids: string[] = [];
+    let chapter3_ids: string[] = [];
+
+    chapters_info
+      .filter(info => !!info)
+      .forEach(info => {
+        switch (true) {
+          case !!(info as TMathChapter3InfoModel)?.chapter2: {
+            const typedInfo = info as TMathChapter3InfoModel;
+
+            chapter3_ids.push(String(typedInfo.id));
+            chapter2_ids.push(String(typedInfo.chapter2.id));
+            chapter1_ids.push(String(typedInfo.chapter2.chapter1.id));
+
+            break;
+          }
+
+          case !!(info as TMathChapter2InfoModel)?.chapter1: {
+            const typedInfo = info as TMathChapter2InfoModel;
+
+            chapter2_ids.push(String(typedInfo.id));
+            chapter1_ids.push(String(typedInfo.chapter1.id));
+
+            break;
+          }
+        }
+      });
+
+    chapter1_ids = Array.from(new Set(chapter1_ids));
+    chapter2_ids = Array.from(new Set(chapter2_ids));
+    chapter3_ids = Array.from(new Set(chapter3_ids));
+
+    if (checkChangedChapter(
+      originMathQuestion?.chapter1,
+      chapter1_ids
+    )) {
+      payload.chapter1_ids = chapter1_ids;
+    }
+
+    if (checkChangedChapter(
+      originMathQuestion?.chapter2,
+      chapter2_ids
+    )) {
+      payload.chapter2_ids = chapter2_ids;
+    }
+
+    if (checkChangedChapter(
+      originMathQuestion?.chapter3,
+      chapter3_ids
+    )) {
+      payload.chapter3_ids = chapter3_ids;
+    }
 
     return payload;
   }, [
     detailFormState,
+    originMathQuestion,
     createPayloadTemplate,
     openNoticeModal,
   ]);
@@ -317,7 +409,7 @@ function _MathQuestionDetailFooter() {
   const putMathQuestion = useCallback(() => {
     const payload = createPayload();
 
-    if (!payload) {
+    if (!payload || !payload.id) {
       return;
     }
 
