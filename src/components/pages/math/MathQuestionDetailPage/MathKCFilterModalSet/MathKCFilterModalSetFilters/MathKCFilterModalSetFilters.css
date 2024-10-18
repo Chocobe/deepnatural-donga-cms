@@ -1,0 +1,22 @@
+.MathKCFilterModalSetFilters {
+  @apply grid grid-cols-3 gap-1.5;
+
+  &-filter {
+    @apply flex flex-col gap-1.5;
+
+    width: 100%;
+
+    .label {
+      color: #09090B;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 500;
+      text-wrap: nowrap;
+      text-overflow: ellipsis;
+
+      overflow: hidden;
+
+      width: 100%;
+    }
+  }
+}
