@@ -1,6 +1,8 @@
 // api
 import api from '../api';
 import mathApiUrlFactory from './mathApiUrlFactory';
+// qs
+import qs from 'qs';
 // util
 import createApiWithNoticeMessageGroup from '../../utils/createApiWithNoticeMessageGroup';
 import noticeMessageGroupFactory from '@/utils/noticeMessageGroupFactory';
@@ -22,8 +24,6 @@ import {
 
   TDeleteMathTextbookApiRequestParams,
   TDeleteMathTextbookApiResponse,
-  TPutMathKnowledgeConceptApiRequestParams,
-  TPutMathKnowledgeConceptApiResponse,
 } from './mathApi.type';
 import {
   TRetrieveMathChaptersApiRequestParams,
@@ -54,12 +54,16 @@ import {
 import {
   TRetrieveMathKnowledgeConceptsApiRequestParams,
   TRetrieveMathKnowledgeConceptsApiResponse,
+  TRetrieveMathKnowledgeConceptsNonPaginationApiResponse,
 
   TRetrieveMathKnowledgeConceptApiRequestParams,
   TRetrieveMathKnowledgeConceptApiResponse,
 
   TProduceMathKnowledgeConceptApiRequestParams,
   TProduceMathKnowledgeConceptApiResponse,
+
+  TPutMathKnowledgeConceptApiRequestParams,
+  TPutMathKnowledgeConceptApiResponse,
 } from './mathApi.type';
 import {
   TRetrieveMathSeriesSourcesApiRequestParams,
@@ -391,6 +395,24 @@ export const retrieveMathKnowledgeConceptsApi = createApiWithNoticeMessageGroup(
     .math
     .retrieveMathKnowledgeConcepts,
 });
+export const retrieveMathKnowledgeConceptsNonPaginationApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathKnowledgeConceptsApiRequestParams) => {
+    const {
+      searchParams,
+    } = excludeNullOrUndefinedProperties(params);
+
+    return api.get<TRetrieveMathKnowledgeConceptsNonPaginationApiResponse>(
+      mathApiUrlFactory.retrieveMathKnowledgeConceptsPath(),
+      {
+        params: searchParams,
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .retrieveMathKnowledgeConcepts,
+});
 
 //
 // (GET) 수학 지식개념 조회
@@ -561,6 +583,9 @@ export const retrieveMathQuestionsApi = createApiWithNoticeMessageGroup({
       mathApiUrlFactory.retrieveMathQuestions(),
       {
         params: searchParams,
+        paramsSerializer: params => {
+          return qs.stringify(params, { arrayFormat: 'repeat' });
+        },
       }
     );
   },

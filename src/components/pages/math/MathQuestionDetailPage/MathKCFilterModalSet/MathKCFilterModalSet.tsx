@@ -1,9 +1,13 @@
 // react
 import {
   useState,
+  useMemo,
   useCallback,
+  useEffect,
   memo,
 } from 'react';
+// api
+import ApiManager from '@/apis/ApiManager';
 // ui
 import { 
   Dialog,
@@ -19,29 +23,60 @@ import {
 } from '@/components/shadcn-ui/ui/button';
 import SearchModalTrigger from '@/components/shadcn-ui-custom/searchModals/SearchModalTrigger/SearchModalTrigger';
 import MathKCFilterModalSetFilters from './MathKCFilterModalSetFilters/MathKCFilterModalSetFilters';
+import MathKCSelectionSection from './MathKCSelectionSection/MathKCSelectionSection';
+import MathKCSelectionConfirmSection from './MathKCSelectionConfirmSection/MathKCSelectionConfirmSection';
+// icon
+import { 
+  LuChevronRight,
+} from 'react-icons/lu';
 // type
 import { 
   TMathAchievement3Model, 
-  TMathKnowledgeConcept1Model,
+  TMathKnowledgeConcept1Model, 
 } from '@/apis/models/mathModel.type';
+import { 
+  TRetrieveMathKnowledgeConceptsApiRequestParams,
+} from '@/apis/math/mathApi.type';
+import { 
+  TKC1Selection, 
+  TKC1SelectionMapper,
+} from './MathKCSelectionSection/MathKCSelectionSection.type';
 // style
 import { 
   cn,
 } from '@/lib/shadcn-ui-utils';
 import './MathKCFilterModalSet.css';
 
-// FIXME: mockup
-import mockKC1List from './MathKCFilterModalSetFilters/mockKCList';
+type TMathKCFilterModalSetProps = {
+  onChangeKC2: (kc1SelectionConfirmMapper: TKC1SelectionMapper) => void;
+};
 
-function _MathKCFilterModalSet() {
+function _MathKCFilterModalSet(props: TMathKCFilterModalSetProps) {
+  const {
+    onChangeKC2,
+  } = props;
+
   //
   // state
   //
   const [isOpenKCFilterModal, setIsOpenKCFilterModal] = useState(false);
-  const [_mathKCList, setMathKCList] = useState<TMathKnowledgeConcept1Model[]>([]);
+  const [kc1List, setKC1List] = useState<TMathKnowledgeConcept1Model[]>([]);
+  const [kc1SelectionMapper, setKC1SelectionMapper] = useState<TKC1SelectionMapper>({});
+  const [kc1SelectionConfirmMapper, setKC1SelectionConfirmMapper] = useState<TKC1SelectionMapper>({});
 
-  // FIXME: mockup - props로 받아오기
-  const [value, _setValue] = useState('');
+  //
+  // cache
+  //
+  const displayValue = useMemo(() => {
+    return Object
+      .values(kc1SelectionConfirmMapper)
+      .flatMap(kc1Selection => {
+        return Object
+          .values(kc1Selection.kc2SelectionMapper)
+          .map(kc2Selection => kc2Selection.kc2.title);
+      })
+      .join(', ');
+  }, [kc1SelectionConfirmMapper]);
 
   //
   // callback
@@ -51,32 +86,156 @@ function _MathKCFilterModalSet() {
   }, []);
 
   const closeKCFilterModal = useCallback(() => {
+    setKC1List([]);
+    setKC1SelectionMapper({});
     setIsOpenKCFilterModal(false);
   }, []);
 
-  // FIXME: mockup - API 연동하기
+  const clearKCList = useCallback(() => {
+    setKC1List([]);
+  }, []);
+
   const retrieveKCList = useCallback(async (
-    _achievement3: TMathAchievement3Model | null
+    achievement3: TMathAchievement3Model | null
   ) => {
-    const response = await new Promise<{ data: typeof mockKC1List }>(res => {
-      setTimeout(() => {
-        res({
-          data: mockKC1List,
-        });
-      }, 1_000);
+    if (!achievement3) {
+      setKC1List([]);
+
+      return;
+    }
+
+    const params: TRetrieveMathKnowledgeConceptsApiRequestParams = {
+      searchParams: {
+        achievement3_id: achievement3.id,
+        pagination: false,
+      },
+    };
+
+    const response = await ApiManager
+      .math
+      .retrieveMathKnowledgeConceptsNonPaginationApi
+      .callWithNoticeMessageGroup(params);
+
+    const kc1List = response?.data ?? [];
+    setKC1List(kc1List);
+  }, []);
+
+  const resetKC1SelectionMapper = useCallback(() => {
+    if (!kc1List?.length) {
+      setKC1SelectionMapper({});
+
+      return;
+    }
+
+    const selectionMapper = kc1List.reduce((mapper, kc1) => {
+      return {
+        ...mapper,
+        [kc1.id]: {
+          checked: false,
+          kc1,
+          kc2SelectionMapper: kc1.kc2_set.reduce((kc2Mapper, kc2) => ({
+            ...kc2Mapper,
+            [kc2.id]: {
+              checked: false,
+              kc2,
+            },
+          }), {} as TKC1Selection['kc2SelectionMapper'])
+        },
+      } as {
+        [kc1Id: string]: TKC1Selection;
+      };
+    }, {} as {
+      [kc1Id: string]: TKC1Selection;
     });
 
-    const data = response.data;
-    setMathKCList(data.results);
+    setKC1SelectionMapper(selectionMapper);
+  }, [kc1List]);
 
-    return data;
+  const addKC1SelectionMapper = useCallback(() => {
+    setKC1SelectionConfirmMapper(old => {
+      const newKC1SelectionConfirmMapper = { ...old };
+
+      Object
+        .values(kc1SelectionMapper)
+        .filter(kc1Selection => kc1Selection.checked)
+        .forEach(kc1Selection => {
+          Object
+            .values(kc1Selection.kc2SelectionMapper)
+            .filter(kc2Selection => kc2Selection.checked)
+            .forEach(kc2Selection => {
+              if (!newKC1SelectionConfirmMapper[kc1Selection.kc1.id]) {
+                newKC1SelectionConfirmMapper[kc1Selection.kc1.id] = {
+                  checked: kc1Selection.checked,
+                  kc1: kc1Selection.kc1,
+                  kc2SelectionMapper: {},
+                } as TKC1Selection;
+              }
+
+              newKC1SelectionConfirmMapper[kc1Selection.kc1.id] = {
+                ...newKC1SelectionConfirmMapper[kc1Selection.kc1.id],
+                kc2SelectionMapper: {
+                  ...newKC1SelectionConfirmMapper[kc1Selection.kc1.id].kc2SelectionMapper,
+                  [kc2Selection.kc2.id]: kc2Selection,
+                },
+              };
+            });
+        });
+
+      return newKC1SelectionConfirmMapper;
+    });
+
+    resetKC1SelectionMapper();
+  }, [
+    kc1SelectionMapper,
+    resetKC1SelectionMapper,
+  ]);
+
+  const deleteKC1SelectionConfirm = useCallback((kc1Id: string) => {
+    setKC1SelectionConfirmMapper(old => {
+      const newKC1SelectionConfirmMapper = {
+        ...old,
+      };
+
+      delete newKC1SelectionConfirmMapper[kc1Id];
+
+      return newKC1SelectionConfirmMapper;
+    });
+  }, []);
+
+  const deleteKC2SelectionConfirm = useCallback((
+    kc1Id: string,
+    kc2Id: string
+  ) => {
+    setKC1SelectionConfirmMapper(old => {
+      const newKC1SelectionConfirmMapper = {
+        ...old,
+      };
+
+      delete newKC1SelectionConfirmMapper[kc1Id].kc2SelectionMapper[kc2Id];
+
+      if (!Object.values(newKC1SelectionConfirmMapper[kc1Id].kc2SelectionMapper).length) {
+        delete newKC1SelectionConfirmMapper[kc1Id];
+      }
+
+      return newKC1SelectionConfirmMapper;
+    });
   }, []);
 
   const onClickSave = useCallback(() => {
-    console.log('onClickSave()');
-
+    onChangeKC2(kc1SelectionConfirmMapper);
     closeKCFilterModal();
-  }, [closeKCFilterModal]);
+  }, [
+    kc1SelectionConfirmMapper,
+    onChangeKC2,
+    closeKCFilterModal,
+  ]);
+
+  //
+  // effect
+  //
+  useEffect(() => {
+    resetKC1SelectionMapper();
+  }, [resetKC1SelectionMapper]);
 
   return (<>
     <div className={cn(
@@ -89,14 +248,15 @@ function _MathKCFilterModalSet() {
       <DialogTrigger asChild>
         <SearchModalTrigger
           id="kcFilter"
-          value={value}
+          value={displayValue}
           isShowSearchIcon
           onOpen={openKCFilterModal} />
       </DialogTrigger>
 
       <div>
         <DialogContent 
-          className="MathKCFilterModalSet">
+          className="MathKCFilterModalSet"
+          hideCloseButton>
           <DialogHeader className="MathKCFilterModalSet-header">
             <DialogTitle className="title">
               KC 필터링
@@ -109,33 +269,40 @@ function _MathKCFilterModalSet() {
 
           <div className="MathKCFilterModalSet-main">
             <div className="filtersWrapper">
-              <MathKCFilterModalSetFilters retrieveKCList={retrieveKCList} />
+              <MathKCFilterModalSetFilters 
+                clearKCList={clearKCList}
+                retrieveKCList={retrieveKCList} />
             </div>
 
-            {/* TODO: kcList 넘겨주는 컴포넌트 만들기 */}
             <div className="innerWrapper">
               <div className="selectionSection">
-                SelectionSection
+                <MathKCSelectionSection 
+                  kc1List={kc1List}
+                  kc1SelectionMapper={kc1SelectionMapper}
+                  setKC1SelectionMapper={setKC1SelectionMapper} />
               </div>
 
               <div className="actionSection">
-                Action
+                <Button
+                  className="w-9 h-9 p-0"
+                  variant="secondary"
+                  onClick={addKC1SelectionMapper}>
+                  <LuChevronRight className="w-4 h-4" />
+                </Button>
               </div>
 
               <div className="resultSection">
-                ResultSection
+                <MathKCSelectionConfirmSection
+                  kc1SelectionConfirmMapper={kc1SelectionConfirmMapper}
+                  // setKC1SelectionConfirmMapper={setKC1SelectionConfirmMapper}
+                  deleteKC1SelectionConfirm={deleteKC1SelectionConfirm}
+                  deleteKC2SelectionConfirm={deleteKC2SelectionConfirm}
+                />
               </div>
             </div>
           </div>
 
           <DialogFooter className="MathKCFilterModalSet-footer">
-            <Button
-              className="button"
-              onClick={closeKCFilterModal}
-              variant="outline">
-              취소
-            </Button>
-
             <Button
               className="button"
               onClick={onClickSave}
