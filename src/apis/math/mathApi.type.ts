@@ -147,6 +147,8 @@ export type TRetrieveMathAchievementsApiRequestParams = TApiRequestNonBodyParams
   achievement_code?: string;
   // 페이지 속성
   page?: number;
+  // 페이지네이션 사용 여부 (false: 페이지네이션 없이 전체 조회)
+  pagination?: boolean;
   // 미사용 속성
   search?: string;
 }>;
@@ -203,11 +205,16 @@ export type TRetrieveMathKnowledgeConceptsApiRequestParams = TApiRequestNonBodyP
   kc1_title?: string;
   kc2_title?: string;
   kc_search?: string;
+  // 성취기준3 ID
+  achievement3_id?: number;
+  pagination?: boolean;
   // 페이지 속성
   page?: number;
 }>;
 /** (GET) 수학 지식개념 목록 조회 Response */
 export type TRetrieveMathKnowledgeConceptsApiResponse = TPaginationModel<TMathKnowledgeConcept1Model>;
+/** (GET) 수학 지식개념 목록 조회 Response (페이지네이션 미적용 - 전체 조회) */
+export type TRetrieveMathKnowledgeConceptsNonPaginationApiResponse = TMathKnowledgeConcept1Model[];
 
 // FIXME: searchParams 정의 추가하기
 /** (GET) 수학 지식개념 조회 RequestParams */
@@ -313,12 +320,15 @@ export type TRetrieveMathQuestionsApiRequestParams = TApiRequestNonBodyParams<vo
   source_classtype?: TCMSClassType;
   source_grade?: TCMSElementaryGrade;
   source_term?: TCMSTerm;
+  kc2?: string[];
   // 검색 속성
   content?: string;
   internal_id?: string;
   instruction_inquiry?: string;
   // 페이지 속성
   page?: number;
+  // 페이지네이션 사용 여부 (false: 페이지네이션 없이 전체 조회)
+  pagination?: boolean;
   // 미사용 속성
   inquiry?: string;
   instruction?: string;

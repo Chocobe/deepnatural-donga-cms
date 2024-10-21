@@ -65,24 +65,18 @@ import {
   cmsTermFilterOptions,
   SELECT_OPTION_ITEM_ALL,
   TCMSClassType,
-  // FIXME: KC 검색 모달 구현하기
-  // cmsClassTypeMapper,
-  // cmsClassTypeOptions,
-  // cmsGradeOptions,
-  // cmsTermOptions,
 } from '@/apis/models/cmsCommonModel.type';
 import { 
   TRetrieveMathQuestionsApiRequestParams,
 } from '@/apis/math/mathApi.type';
+import { 
+  TKC1SelectionMapper,
+} from '../../MathQuestionDetailPage/MathKCFilterModalSet/MathKCSelectionSection/MathKCSelectionSection.type';
 // style
 import { 
   cn,
 } from '@/lib/shadcn-ui-utils';
 import './MathQuestionHeader.css';
-
-// FIXME: KC 검색 모달 구현하기
-// const seriesColumnHelper = createColumnHelper<TMathSeriesSourceFlattenModel>();
-// const textbookColumnHelper = createColumnHelper<TMathTextbookModel>();
 
 type TMathQuestionHeaderProps = {
   retrieveMathQuestions: (params: TRetrieveMathQuestionsApiRequestParams) => Promise<void>;
@@ -110,17 +104,6 @@ function _MathQuestionHeader(props: TMathQuestionHeaderProps) {
   // state
   //
   const [accordionValue, setAccordionValue] = useState('filters');
-
-  //
-  // hook
-  //
-  // FIXME: KC 검색 모달 구현하기
-  // const {
-  //   isOpenSearchModal: isOpenSeriesSearchModal,
-  //   onChangeIsOpenSearchModal: onChangeIsOpenSeriesSearchModal,
-  //   openSearchModal: openSeriesSearchModal,
-  //   closeSearchModal: closeSeriesSearchModal,
-  // } = useSearchModal();
 
   //
   // callback
@@ -184,13 +167,33 @@ function _MathQuestionHeader(props: TMathQuestionHeaderProps) {
     updateSearchParamsForRetrieveMathQuestionsApi,
   ]);
 
-  // FIXME: KC 검색 모달 구현하기
-  // const {
-  //   isOpenSearchModal: isOpenTextbookSearchModal,
-  //   onChangeIsOpenSearchModal: onChangeIsOpenTextbookSearchModal,
-  //   openSearchModal: openTextbookSearchModal,
-  //   closeSearchModal: closeTextbookSearchModal,
-  // } = useSearchModal();
+  const onChangeKC2 = useCallback((kc1SelectionConfirmMapper: TKC1SelectionMapper) => {
+    const kc2Ids = Object
+      .values(kc1SelectionConfirmMapper)
+      .flatMap(kc1Selection => {
+        const kc2Ids = Object
+          .values(kc1Selection.kc2SelectionMapper)
+          .map(({ kc2 }) => String(kc2.id));
+
+        return kc2Ids;
+      });
+
+    updateSearchParamsForRetrieveMathQuestionsApi(old => {
+      const params: TRetrieveMathQuestionsApiRequestParams = {
+        searchParams: {
+          ...old,
+          kc2: kc2Ids,
+        },
+      };
+
+      retrieveMathQuestions(params);
+
+      return params.searchParams;
+    });
+  }, [
+    retrieveMathQuestions,
+    updateSearchParamsForRetrieveMathQuestionsApi,
+  ]);
 
   //
   // cache
@@ -251,8 +254,7 @@ function _MathQuestionHeader(props: TMathQuestionHeaderProps) {
       id: 'kc',
       label: 'KC',
       Component: (
-        // FIXME: onChangeKCFilter 구현 후, 적용하기
-        <MathKCFilterModalSet />
+        <MathKCFilterModalSet onChangeKC2={onChangeKC2} />
       ),
     },
   ], [
@@ -262,112 +264,8 @@ function _MathQuestionHeader(props: TMathQuestionHeaderProps) {
     source_term,
     onChangeSelect,
     onChangeClassType,
-    // FIXME: KC 검색 모달 구현하기
-    // openSeriesSearchModal,
-    // openTextbookSearchModal,
+    onChangeKC2,
   ]);
-
-  // FIXME: KC 검색 모달 구현하기
-  // const seriesTableColumns = useMemo(() => [
-  //   seriesColumnHelper.accessor('series.title', {
-  //     id: 'title',
-  //     header: '시리즈 제목',
-  //   }),
-  //   seriesColumnHelper.accessor('source.name', {
-  //     id: 'name',
-  //     header: '제품명',
-  //   }),
-  //   seriesColumnHelper.accessor('source.curriculum', {
-  //     id: 'curriculum',
-  //     header: '교육\n과정',
-  //   }),
-  //   seriesColumnHelper.accessor('source.classtype', {
-  //     id: 'classtype',
-  //     header: '학교급',
-  //     cell: props => {
-  //       const classtype = props.cell.getValue();
-
-  //       return cmsClassTypeOptions.find(({ value }) => classtype === value)?.text 
-  //         ?? '';
-  //     },
-  //   }),
-  //   seriesColumnHelper.accessor('source.grade', {
-  //     id: 'grade',
-  //     header: '학년',
-  //     cell: props => {
-  //       const classtype = props.row.original.source.classtype;
-  //       const grade = props.cell.getValue();
-
-  //       if (!classtype || !grade) {
-  //         return '';
-  //       }
-
-  //       return cmsGradeOptions[classtype].find(({ value }) => Number(value) === grade)?.text
-  //         ?? '';
-  //     },
-  //   }),
-  //   seriesColumnHelper.accessor('source.term', {
-  //     id: 'term',
-  //     header: '학기',
-  //     cell: props => {
-  //       const term = props.cell.getValue();
-
-  //       return cmsTermOptions.find(({ value }) => Number(value) === term)?.text
-  //         ?? '';
-  //     },
-  //   }),
-  // ], []);
-
-  // FIXME: KC 검색 모달 구현하기
-  // const textbookColumns = useMemo(() => [
-  //   textbookColumnHelper.accessor('curriculum', {
-  //     header: '교육과정',
-  //   }),
-  //   textbookColumnHelper.accessor('title', {
-  //     header: '교과서명',
-  //   }),
-  //   textbookColumnHelper.accessor('author', {
-  //     header: '저자',
-  //   }),
-  //   textbookColumnHelper.accessor('classtype', {
-  //     header: '학교급',
-  //     cell: props => {
-  //       const {
-  //         cell,
-  //       } = props;
-
-  //       const valueItem = cmsClassTypeOptions.find(({ value }) => value === cell.getValue());
-  //       return valueItem?.text ?? ' ';
-  //     },
-  //   }),
-  //   textbookColumnHelper.accessor('grade', {
-  //     header: '학년',
-  //     cell: props => {
-  //       const {
-  //         cell,
-  //       } = props;
-
-  //       const valueItem = cmsGradeOptions[
-  //         cmsClassTypeMapper.ELEMENTARY
-  //       ].find(({ value }) => value === String(cell.getValue()));
-
-  //       return valueItem?.text ?? ' ';
-  //     },
-  //   }),
-  //   textbookColumnHelper.accessor('term', {
-  //     header: '학기',
-  //     cell: props => {
-  //       const {
-  //         cell,
-  //       } = props;
-
-  //       const valueItem = cmsTermOptions
-  //         .find(({ value }) => value === String(cell.getValue()));
-
-  //       return valueItem?.text ?? ' ';
-  //     },
-  //   }),
-  // ], []);
 
   return (<>
     <div className="MathQuestionHeader">
@@ -434,50 +332,8 @@ function _MathQuestionHeader(props: TMathQuestionHeaderProps) {
             신규문항 등록도구
           </Button>
         </TBUTooltip>
-
-        {/* FIXME: ComboBox 테스트 */}
-        {/* <ComboBox options={[]} /> */}
       </div>
     </div>
-
-    {/* FIXME: KC 검색 모달 구현하기 */}
-    {/* <SearchModal
-      className="MathQuestionHeader-seriesSearchModal"
-      isOpen={isOpenSeriesSearchModal}
-      onChangeIsOpen={onChangeIsOpenSeriesSearchModal}
-      title="시리즈-출처 검색"
-      description="적용할 시리즈-출처를 선택해 주세요."
-      searchTypeOptions={mathQuestionHeaderSeriesSearchTypeOptions}
-      retrieveData={ApiManager
-        .math
-        .retrieveMathSeriesSourcesApi
-        .callWithNoticeMessageGroup
-      }
-      flatData={flatMathSeriesModel}
-      tableColumns={seriesTableColumns}
-      onClickRow={series => {
-        console.log('onClickRow() - series: ', series);
-        closeSeriesSearchModal();
-      }} /> */}
-
-    {/* FIXME: KC 검색 모달 구현하기 */}
-    {/* <SearchModal
-      className="MathQuestionHeader-textbookSearchModal"
-      isOpen={isOpenTextbookSearchModal}
-      onChangeIsOpen={onChangeIsOpenTextbookSearchModal}
-      title="교과서 검색"
-      description="적용할 교과서를 선택해 주세요."
-      searchTypeOptions={mathQuestionHeaderTextbookSearchTypeOptions}
-      retrieveData={ApiManager
-        .math
-        .retrieveMathTextbooksApi
-        .callWithNoticeMessageGroup
-      }
-      tableColumns={textbookColumns}
-      onClickRow={textbook => {
-        console.log('onClickRow() - textbook: ', textbook);
-        closeTextbookSearchModal();
-      }} /> */}
   </>);
 }
 

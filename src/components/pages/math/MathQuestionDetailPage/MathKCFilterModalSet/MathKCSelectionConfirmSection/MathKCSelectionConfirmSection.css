@@ -1,0 +1,78 @@
+.MathKCSelectionConfirmSection {
+  /*  */
+
+  &-description {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+
+    color: #71717A;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  &-groupList {
+    @apply flex flex-col gap-5;
+
+    .group {
+      padding-bottom: 20px;
+
+      border-bottom: 1px solid #e2e8f0;
+
+      &:last-child {
+        padding-bottom: 0;
+
+        border-bottom: none;
+      }
+
+      .kc1Wrapper {
+        @apply flex justify-between items-center gap-2;
+
+        .kc1Title {
+          color: #09090B;
+          font-size: 14px;
+          line-height: 24px;
+          font-weight: 700;
+        }
+
+        .deleteButton {
+          padding: 0 !important;
+          width: 24px !important;
+          height: 24px !important;
+
+          border-radius: 50%;
+          border-width: 2px;
+        }
+      }
+
+      .kc2List {
+        @apply flex flex-col gap-2;
+
+        margin-top: 8px;
+        margin-left: 24px;
+
+        .kc2Wrapper {
+          @apply flex justify-between items-center gap-2;
+
+          .kc2Title {
+            color: #09090B;
+            font-size: 14px;
+            line-height: 24px;
+            font-weight: 500;
+          }
+
+          .deleteButton {
+            padding: 0 !important;
+            width: 24px !important;
+            height: 24px !important;
+
+            border-radius: 50%;
+            border-width: 2px;
+          }
+        }
+      }
+    }
+  }
+}

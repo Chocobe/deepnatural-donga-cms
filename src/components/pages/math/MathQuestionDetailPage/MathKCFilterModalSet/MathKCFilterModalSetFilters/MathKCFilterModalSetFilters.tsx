@@ -25,18 +25,17 @@ import {
 } from '@/apis/math/mathApi.type';
 // style
 import './MathKCFilterModalSetFilters.css';
-import { 
-  TRetrieveMathKnowledgeConceptsApiResponse,
-} from '@/apis/math/mathApi.type';
 
 type TMathKCFilterModalSetFiltersProps = {
+  clearKCList: () => void;
   retrieveKCList: (
     achievement3: TMathAchievement3Model | null
-  ) => Promise<TRetrieveMathKnowledgeConceptsApiResponse>
+  ) => Promise<void>;
 };
 
 function _MathKCFilterModalSetFilters(props: TMathKCFilterModalSetFiltersProps) {
   const {
+    clearKCList,
     retrieveKCList,
   } = props;
 
@@ -70,7 +69,7 @@ function _MathKCFilterModalSetFilters(props: TMathKCFilterModalSetFiltersProps) 
   const retrieveMathAchievement1List = useCallback(async() => {
     const params: TRetrieveMathAchievementsApiRequestParams = {
       searchParams: {
-        // 
+        pagination: false,
       },
     };
 
@@ -114,13 +113,14 @@ function _MathKCFilterModalSetFilters(props: TMathKCFilterModalSetFiltersProps) 
     setAchievement2(null);
     setAchievement3(null);
 
+    clearKCList();
     setAchievement2Options(achievement2Options);
     setAchievement3Options([]);
 
     setTimeout(() => {
       $achievement2Ref.current?.click();
     });
-  }, []);
+  }, [clearKCList]);
 
   const onChangeAchievement2 = useCallback((
     item: TComboBoxOptionItem<TMathAchievement2Model> | null
@@ -138,12 +138,13 @@ function _MathKCFilterModalSetFilters(props: TMathKCFilterModalSetFiltersProps) 
     setAchievement2(achievement2);
     setAchievement3(null);
 
+    clearKCList();
     setAchievement3Options(achievement3Options);
 
     setTimeout(() => {
       $achievement3Ref.current?.click();
     });
-  }, []);
+  }, [clearKCList]);
 
   const onChangeAchievement3 = useCallback(async (
     item: TComboBoxOptionItem<TMathAchievement3Model> | null

@@ -1,9 +1,8 @@
 .MathKCFilterModalSet {
   @apply !flex flex-col;
 
-  width: 90% !important;
-  height: 70% !important;
-  max-width: 800px !important;
+  height: 90% !important;
+  max-width: 90% !important;
 
   overflow: hidden;
 
@@ -26,29 +25,55 @@
   }
 
   &-main {
+    @apply flex flex-col gap-5;
+
     height: 100%;
 
-    /* FIXME: section 구현 후, 주석해제 */
-    /* overflow: hidden; */
-    overflow: auto;
+    overflow: hidden;
 
     .filtersWrapper {
-      /*  */
+      padding-bottom: 20px;
+
+      border-bottom: 1px solid #000;
     }
 
     .innerWrapper {
-      /*  */
+      @apply flex gap-10;
+
+      width: 100%;
+      height: 100%;
+
+      overflow: hidden;
 
       .selectionSection {
-        /*  */
+        padding: 20px;
+        width: 100%;
+        height: 100%;
+
+        border: 1px solid #e2e8f0;
+        border-top-left-radius: 8px;;
+        border-bottom-left-radius: 8px;;
+
+        overflow: auto;
       }
 
       .actionSection {
-        /*  */
+        flex-shrink: 0;
+        margin: auto;
+
+        width: 35px;
+        height: 35px;
       }
 
       .resultSection {
-        /*  */
+        padding: 20px;
+        width: 100%;
+
+        border: 1px solid #e2e8f0;
+        border-top-right-radius: 8px;;
+        border-bottom-right-radius: 8px;;
+
+        overflow: auto;
       }
     }
   }
