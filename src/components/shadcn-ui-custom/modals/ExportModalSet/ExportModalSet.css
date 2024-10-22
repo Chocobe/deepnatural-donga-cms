@@ -1,0 +1,33 @@
+.ExportModalSet {
+  gap: 20px !important;
+
+  &-header {
+    /*  */
+
+    .title {
+      color: #09090B;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 600;
+    }
+
+    .description {
+      color: #71717A;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+    }
+  }
+
+  &-main {
+    /*  */
+  }
+
+  &-footer {
+    /*  */
+
+    .button {
+      /*  */
+    }
+  }
+}
