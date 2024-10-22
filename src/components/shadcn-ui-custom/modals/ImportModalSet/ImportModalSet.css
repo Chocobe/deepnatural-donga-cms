@@ -1,5 +1,5 @@
 .ImportModalSet {
-  gap: 20px !important;
+  gap: 32px !important;
 
   &-header {
     /*  */
@@ -41,6 +41,17 @@
 
   &-main {
     @apply flex flex-col gap-3;
+
+    .item {
+      @apply flex flex-col gap-1;
+
+      .label {
+        color: #09090B;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 500;
+      }
+    }
   }
 
   &-footer {

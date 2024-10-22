@@ -24,6 +24,7 @@ import {
 import { 
   Input,
 } from '@/components/shadcn-ui/ui/input';
+import CommonSelect from '../../CommonSelect/CommonSelect';
 // icon
 import { 
   LuFileDown,
@@ -31,8 +32,12 @@ import {
 } from 'react-icons/lu';
 // type
 import { 
+  TImportModalSetApiFunctionData,
   TImportModalSetTemplateFile,
 } from './ImportModalSet.type';
+import { 
+  TCommonSelectOptionItem,
+} from '../../CommonSelect/CommonSelect.type';
 // style
 import './ImportModalSet.css';
 
@@ -40,11 +45,10 @@ type TImportModalSetProps = {
   isOpen: boolean;
   description?: string;
   templateFiles?: TImportModalSetTemplateFile[];
+  importApiFunctions: TImportModalSetApiFunctionData[];
 
   openImportModal: () => void;
   closeImportModal: () => void;
-
-  importApiFunction: (file: File) => Promise<any>;
 };
 
 function _ImportModalSet(props: TImportModalSetProps) {
@@ -52,10 +56,10 @@ function _ImportModalSet(props: TImportModalSetProps) {
     isOpen,
     description,
     templateFiles,
+    importApiFunctions,
 
     openImportModal,
     closeImportModal,
-    importApiFunction,
   } = props;
 
   //
@@ -67,6 +71,9 @@ function _ImportModalSet(props: TImportModalSetProps) {
   // state
   //
   const [file, setFile] = useState<File | null>(null);
+  const [importApiLabel, setImportApiLabel] = useState<string>(
+    importApiFunctions[0]?.label ?? ''
+  );
 
   //
   // callback
@@ -80,6 +87,10 @@ function _ImportModalSet(props: TImportModalSetProps) {
     closeImportModal,
   ]);
 
+  const onChangeImportApiLabel = useCallback((importApiLabel: string) => {
+    setImportApiLabel(importApiLabel);
+  }, []);
+
   const onChangeFileInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] as File;
 
@@ -91,10 +102,15 @@ function _ImportModalSet(props: TImportModalSetProps) {
       return;
     }
 
-    importApiFunction(file);
+    const importApiFunctionData = importApiFunctions.find(({ label }) => {
+      return label === importApiLabel;
+    });
+
+    importApiFunctionData?.apiFunction?.(file);
   }, [
     file,
-    importApiFunction,
+    importApiLabel,
+    importApiFunctions,
   ]);
 
   const onClickDownloadTemplate = useCallback(async (
@@ -142,6 +158,13 @@ function _ImportModalSet(props: TImportModalSetProps) {
     templateFiles,
     onClickDownloadTemplate,
   ]);
+
+  const importApiFunctionOptions = useMemo<TCommonSelectOptionItem[]>(() => {
+    return importApiFunctions.map(data => ({
+      text: data.label,
+      value: data.label,
+    }));
+  }, [importApiFunctions]);
 
   //
   // effect
@@ -198,13 +221,30 @@ function _ImportModalSet(props: TImportModalSetProps) {
         </DialogHeader>
 
         <div className="ImportModalSet-main">
-          <Input
-            ref={$inputRef}
-            className=""
-            type="file"
-            accept=".csv, .xls, .xlsx"
-            multiple={false}
-            onChange={onChangeFileInput} />
+          <div className="item">
+            <div className="label">
+              업로드 유형
+            </div>
+
+            <CommonSelect
+              value={importApiLabel}
+              onChange={onChangeImportApiLabel}
+              options={importApiFunctionOptions} />
+          </div>
+
+          <div className="item">
+            <div className="label">
+              파일
+            </div>
+
+            <Input
+              ref={$inputRef}
+              className=""
+              type="file"
+              accept=".csv, .xls, .xlsx"
+              multiple={false}
+              onChange={onChangeFileInput} />
+          </div>
         </div>
 
         <DialogFooter className="ImportModalSet-footer">
@@ -220,7 +260,7 @@ function _ImportModalSet(props: TImportModalSetProps) {
             variant="default"
             disabled={!file}
             onClick={onClickImportButton}>
-            확인
+            업로드
           </Button>
         </DialogFooter>
       </DialogContent>

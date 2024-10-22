@@ -53,6 +53,7 @@ import {
   TKC1SelectionMapper,
 } from '../../MathQuestionDetailPage/MathKCFilterModalSet/MathKCSelectionSection/MathKCSelectionSection.type';
 import { 
+  TImportModalSetApiFunctionData,
   TImportModalSetTemplateFile,
 } from '@/components/shadcn-ui-custom/modals/ImportModalSet/ImportModalSet.type';
 // style
@@ -184,28 +185,6 @@ function _MathQuestionHeader(props: TMathQuestionHeaderProps) {
     updateSearchParamsForRetrieveMathQuestionsApi,
   ]);
 
-  const produceMathQuestionImport = useCallback(async (file: File) => {
-    if (!file) {
-      return;
-    }
-
-    const params: TProduceMathQuestionImportApiRequestParams = {
-      payload: {
-        file,
-      },
-    };
-
-    // FIXME: 현재 500 응답 받는 상태
-    const response = await ApiManager
-      .math
-      .produceMathQuestionImportApi
-      .callWithNoticeMessageGroup(params);
-
-    console.log('response.data: ', response?.data);
-
-    closeImportModal();
-  }, [closeImportModal]);
-
   //
   // cache
   //
@@ -280,14 +259,45 @@ function _MathQuestionHeader(props: TMathQuestionHeaderProps) {
 
   const importModalSetTemplateFiles = useMemo<TImportModalSetTemplateFile[]>(() => [
     {
+      // FIXME: mockup
+      // FIXME: 실제 템플릿 파일 적용하기
       text: '문항 .xlsx 템플릿 다운로드',
       fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
     },
     {
+      // FIXME: mockup
+      // FIXME: 실제 템플릿 파일 적용하기
       text: '문항 .csv 템플릿 다운로드',
       fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
     },
   ], []);
+
+  const importApiFunctions = useMemo<TImportModalSetApiFunctionData[]>(() => [
+    {
+      label: '수학 문항',
+      apiFunction: async (file: File) => {
+        if (!file) {
+          return;
+        }
+
+        const params: TProduceMathQuestionImportApiRequestParams = {
+          payload: {
+            file,
+          },
+        };
+
+        // FIXME: 현재 500 응답 받는 상태
+        const response = await ApiManager
+          .math
+          .produceMathQuestionImportApi
+          .callWithNoticeMessageGroup(params);
+
+        console.log('response.data: ', response?.data);
+
+        closeImportModal();
+      },
+    },
+  ], [closeImportModal]);
 
   return (<>
     <div className="MathQuestionHeader">
@@ -344,7 +354,7 @@ function _MathQuestionHeader(props: TMathQuestionHeaderProps) {
           templateFiles={importModalSetTemplateFiles}
           openImportModal={openImportModal}
           closeImportModal={closeImportModal}
-          importApiFunction={produceMathQuestionImport} />
+          importApiFunctions={importApiFunctions} />
 
         <TBUTooltip>
           <Button
