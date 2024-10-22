@@ -24,6 +24,7 @@ import {
 } from 'react-icons/lu';
 // type
 import { 
+  exportModalSetFileExtensionMapper,
   exportModalSetFileFormatMapper,
   exportModalSetFileFormatOptions,
   TExportModalSetFileFormat,
@@ -39,7 +40,9 @@ type TExportModalSetProps = {
   openExportModal: () => void;
   closeExportModal: () => void;
 
-  exportApiFunction: (fileFormat: TExportModalSetFileFormat) => Promise<TProduceMathQuestionsExportApiResponse>;
+  exportApiFunction: (
+    fileFormat: TExportModalSetFileFormat
+  ) => Promise<TProduceMathQuestionsExportApiResponse | undefined>;
 };
 
 function _ExportModalSet(props: TExportModalSetProps) {
@@ -54,7 +57,7 @@ function _ExportModalSet(props: TExportModalSetProps) {
   // state
   //
   const [fileFormat, setFileFormat] = useState<TExportModalSetFileFormat>(
-    exportModalSetFileFormatMapper.XLSX
+    exportModalSetFileFormatMapper.CSV
   );
 
   //
@@ -73,8 +76,24 @@ function _ExportModalSet(props: TExportModalSetProps) {
     closeExportModal,
   ]);
 
-  const onClickExportButton = useCallback(() => {
-    exportApiFunction(fileFormat);
+  const onClickExportButton = useCallback(async () => {
+    const fileData = await exportApiFunction(fileFormat);
+
+    console.log('fileData: ', fileData);
+
+    if (!fileData) {
+      return;
+    }
+
+    const blob = new Blob([fileData]);
+    const url = URL.createObjectURL(blob);
+
+    const anchor = document.createElement('a') as HTMLAnchorElement;
+    anchor.href = url;
+    anchor.download = `문항_데이터.${exportModalSetFileExtensionMapper[fileFormat]}`;
+    anchor.click();
+
+    URL.revokeObjectURL(url);
   }, [
     fileFormat,
     exportApiFunction,

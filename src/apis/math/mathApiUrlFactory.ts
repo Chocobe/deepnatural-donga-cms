@@ -228,11 +228,12 @@ const mathApiUrlFactory = (() => {
         },
       } = params;
 
-      // FIXME: API 추가되면 주석해제
       return `${this.retrieveMathQuestions()}${questionId}/histories/`;
+    },
 
-      // FIXME: API 추가되면 지우기
-      // return `${this.retrieveMathQuestions()}histories/`;
+    /** (POST) 수학 문항 다운로드 */
+    produceMathQuestionsExport() {
+      return `${BASE_PATH}question/export/`;
     },
   };
 

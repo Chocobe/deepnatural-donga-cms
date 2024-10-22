@@ -94,6 +94,9 @@ import {
 
   TRetrieveMathQuestionHistoriesApiRequestParams,
   TRetrieveMathQuestionHistoriesApiResponse,
+
+  TProduceMathQuestionsExportApiRequestParams,
+  TProduceMathQuestionsExportApiResponse,
 } from './mathApi.type';
 
 // FIXME: mockup
@@ -639,4 +642,27 @@ export const retrieveMathQuestionHistoriesApi = createApiWithNoticeMessageGroup(
     .apis
     .math
     .retrieveMathQuestionHistories
+});
+
+//
+// (POST) 수학 문항 다운로드
+//
+export const produceMathQuestionsExportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathQuestionsExportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    return api.post<TProduceMathQuestionsExportApiResponse>(
+      mathApiUrlFactory.produceMathQuestionsExport(),
+      payload,
+      {
+        responseType: 'blob',
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathQuestionsExport,
 });

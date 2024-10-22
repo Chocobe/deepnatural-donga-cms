@@ -17,3 +17,10 @@ export const exportModalSetFileFormatOptions: TCommonSelectOptionItem[] = Object
     text: value,
     value,
   }));
+
+export const exportModalSetFileExtensionMapper = {
+  [exportModalSetFileFormatMapper.CSV]: 'csv',
+  [exportModalSetFileFormatMapper.XLSX]: 'xlsx',
+  [exportModalSetFileFormatMapper.XLSX_MATH_ML]: 'xlsx',
+  [exportModalSetFileFormatMapper.MATH_ML_HTML]: 'html',
+} as const;

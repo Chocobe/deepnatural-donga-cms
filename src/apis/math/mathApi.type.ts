@@ -27,6 +27,9 @@ import {
   TMathSourceModel,
   TMathQuestionHistoryModel,
 } from '../models/mathModel.type';
+import { 
+  TExportModalSetFileFormat,
+} from '@/components/shadcn-ui-custom/modals/ExportModalSet/ExportModalSet.type';
 
 /**
  * 수학 교과서 API
@@ -378,3 +381,12 @@ export type TRetrieveMathQuestionHistoriesApiRequestParams = TApiRequestNonBodyP
 }, void>;
 /** (GET) 수학 문항 히스토리 목록 Response */
 export type TRetrieveMathQuestionHistoriesApiResponse = TPaginationModel<TMathQuestionHistoryModel>;
+
+/** (POST) 수학 문항 다운로드 RequestParams */
+export type TProduceMathQuestionsExportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file_format: TExportModalSetFileFormat;
+  export_ids: number[];
+}>;
+// FIXME: 실제 응답 확인하기
+/** (POST) 수학 문항 다운로드 Response */
+export type TProduceMathQuestionsExportApiResponse = Blob;
