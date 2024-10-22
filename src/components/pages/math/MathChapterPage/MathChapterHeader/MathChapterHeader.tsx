@@ -12,6 +12,10 @@ import {
 import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathChapterPageStore from '@/store/mathStores/mathChapterPageStore/mathChapterPageStore';
+// hook
+import useImportModalSet from '@/components/shadcn-ui-custom/modals/ImportModalSet/hook/useImportModalSet';
+// api
+import ApiManager from '@/apis/ApiManager';
 // ui
 import {
   Accordion,
@@ -26,11 +30,10 @@ import {
   Label,
 } from '@/components/shadcn-ui/ui/label';
 import CommonSelect from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect';
-import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
+import ImportModalSet from '@/components/shadcn-ui-custom/modals/ImportModalSet/ImportModalSet';
 // icon
 import {
   LuChevronDown,
-  LuFileOutput,
   LuPlus,
 } from 'react-icons/lu';
 // type
@@ -46,7 +49,14 @@ import {
 } from '@/apis/models/mathModel.type';
 import { 
   TRetrieveMathChaptersApiRequestParams,
+  TProduceMathChapter1ImportApiRequestParams,
+  TProduceMathChapter2ImportApiRequestParams,
+  TProduceMathChapter3ImportApiRequestParams,
 } from '@/apis/math/mathApi.type';
+import { 
+  TImportModalSetTemplateFile,
+  TImportModalSetApiFunctionData,
+} from '@/components/shadcn-ui-custom/modals/ImportModalSet/ImportModalSet.type';
 // style
 import { 
   cn,
@@ -84,6 +94,12 @@ function _MathChapterHeader(props: TMathChapterHeaderProps) {
   // hook
   //
   const navigate = useNavigate();
+
+  const {
+    isOpenImportModal,
+    openImportModal,
+    closeImportModal,
+  } = useImportModalSet();
 
   //
   // callbakc
@@ -213,6 +229,93 @@ function _MathChapterHeader(props: TMathChapterHeaderProps) {
     onChangeFilter,
   ]);
 
+  const importModalSetTemplateFiles = useMemo<TImportModalSetTemplateFile[]>(() => [
+    {
+      // FIXME: mockup
+      // FIXME: 실제 템플릿 파일 적용하기
+      text: '(mockup) 대단원 .csv 템플릿 다운로드',
+      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
+    },
+    {
+      // FIXME: mockup
+      // FIXME: 실제 템플릿 파일 적용하기
+      text: '(mockup) 중단원 .csv 템플릿 다운로드',
+      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
+    },
+    {
+      // FIXME: mockup
+      // FIXME: 실제 템플릿 파일 적용하기
+      text: '(mockup) 소단원 .csv 템플릿 다운로드',
+      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
+    },
+  ], []);
+
+  const importApiFunctions = useMemo<TImportModalSetApiFunctionData[]>(() => [
+    {
+      label: '대단원',
+      apiFunction: async (file: File) => {
+        if (!file) {
+          return null;
+        }
+
+        const params: TProduceMathChapter1ImportApiRequestParams = {
+          payload: {
+            file,
+          },
+        };
+
+        await ApiManager
+          .math
+          .produceMathChapter1ImportApi
+          .callWithNoticeMessageGroup(params);
+
+        closeImportModal();
+      },
+    },
+    {
+      label: '중단원',
+      apiFunction: async (file: File) => {
+        if (!file) {
+          return null;
+        }
+
+        const params: TProduceMathChapter2ImportApiRequestParams = {
+          payload: {
+            file,
+          },
+        };
+
+        await ApiManager
+          .math
+          .produceMathChapter2ImportApi
+          .callWithNoticeMessageGroup(params);
+
+        closeImportModal();
+      },
+    },
+    {
+      label: '소단원',
+      apiFunction: async (file: File) => {
+        if (!file) {
+          return null;
+        }
+
+        const params: TProduceMathChapter3ImportApiRequestParams = {
+          payload: {
+            file,
+          },
+        };
+
+        await ApiManager
+          .math
+          .produceMathChapter3ImportApi
+          .callWithNoticeMessageGroup(params);
+
+        closeImportModal();
+      },
+    },
+  ], [closeImportModal]);
+
   //
   // callback
   //
@@ -273,14 +376,12 @@ function _MathChapterHeader(props: TMathChapterHeaderProps) {
       </Accordion>
 
       <div className="MathChapterHeader-actions">
-        <TBUTooltip>
-          <Button
-            className="actionButton"
-            disabled>
-            <LuFileOutput className="icon" />
-            업로드
-          </Button>
-        </TBUTooltip>
+        <ImportModalSet
+          isOpen={isOpenImportModal}
+          openImportModal={openImportModal}
+          closeImportModal={closeImportModal}
+          templateFiles={importModalSetTemplateFiles}
+          importApiFunctions={importApiFunctions} />
 
         <Button
           className="actionButton"

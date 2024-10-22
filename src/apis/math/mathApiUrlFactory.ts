@@ -95,6 +95,21 @@ const mathApiUrlFactory = (() => {
     produceMathChapterPath() {
       return this.retrieveMathChaptersPath();
     },
+
+    /** (POST) 수학 대단원 업로드 */
+    produceMathChapter1Importpath() {
+      return `${BASE_PATH}chapter1/import/`;
+    },
+
+    /** (POST) 수학 중단원 업로드 */
+    produceMathChapter2Importpath() {
+      return `${BASE_PATH}chapter2/import/`;
+    },
+
+    /** (POST) 수학 소단원 업로드 */
+    produceMathChapter3Importpath() {
+      return `${BASE_PATH}chapter3/import/`;
+    },
   };
 
   //

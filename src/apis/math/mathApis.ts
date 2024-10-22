@@ -40,6 +40,15 @@ import {
 
   TProduceMathChapterApiRequestParams,
   TProduceMathChapterApiResponse,
+
+  TProduceMathChapter1ImportApiRequestParams,
+  TProduceMathChapter1ImportApiResponse,
+
+  TProduceMathChapter2ImportApiRequestParams,
+  TProduceMathChapter2ImportApiResponse,
+
+  TProduceMathChapter3ImportApiRequestParams,
+  TProduceMathChapter3ImportApiResponse,
 } from './mathApi.type';
 import {
   TRetrieveMathAchievementsApiRequestParams,
@@ -328,6 +337,90 @@ export const produceMathChapterApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .produceMathChapter,
+});
+
+//
+// (POST) 수학 대단원 업로드
+//
+export const produceMathChapter1ImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathChapter1ImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathChapter1ImportApiResponse>(
+      mathApiUrlFactory.produceMathChapter1Importpath(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathQuestionImport
+});
+
+//
+// (POST) 수학 중단원 업로드
+//
+export const produceMathChapter2ImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathChapter2ImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathChapter2ImportApiResponse>(
+      mathApiUrlFactory.produceMathChapter2Importpath(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathQuestionImport
+});
+
+//
+// (POST) 수학 소단원 업로드
+//
+export const produceMathChapter3ImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathChapter3ImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathChapter3ImportApiResponse>(
+      mathApiUrlFactory.produceMathChapter3Importpath(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathQuestionImport
 });
 
 // --- --- --- --- --- --- --- --- --- ---

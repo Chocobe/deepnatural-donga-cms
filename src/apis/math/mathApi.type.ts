@@ -80,7 +80,6 @@ export type TDeleteMathTextbookApiResponse = void;
 export type TProduceMathTextbookImportApiRequestParams = TApiRequestBodyParams<void, void, {
   file: File;
 }>;
-// FIXME: 실제 응답 확인하기
 /** (POST) 수학 문항 업로드 Response */
 export type TProduceMathTextbookImportApiResponse = any;
 
@@ -138,6 +137,27 @@ export type TProduceMathChapterApiRequestParams = TApiRequestBodyParams<
 >;
 /** (POST) 수학 단원 생성 Response */
 export type TProduceMathChapterApiResponse = TMathChapter1Model;
+
+/** (POST) 수학 대단원 업로드 RequestParams */
+export type TProduceMathChapter1ImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 대단원 업로드 Response */
+export type TProduceMathChapter1ImportApiResponse = any;
+
+/** (POST) 수학 중단원 업로드 RequestParams */
+export type TProduceMathChapter2ImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 중단원 업로드 Response */
+export type TProduceMathChapter2ImportApiResponse = any;
+
+/** (POST) 수학 소단원 업로드 RequestParams */
+export type TProduceMathChapter3ImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 소단원 업로드 Response */
+export type TProduceMathChapter3ImportApiResponse = any;
 
 // --- --- --- --- --- --- --- --- --- ---
 
