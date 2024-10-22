@@ -62,6 +62,15 @@ import {
 
   TProduceMathAchievementApiRequestParams,
   TProduceMathAchievementApiResponse,
+
+  TProduceMathAchievement1ImportApiRequestParams,
+  TProduceMathAchievement1ImportApiResponse,
+
+  TProduceMathAchievement2ImportApiRequestParams,
+  TProduceMathAchievement2ImportApiResponse,
+
+  TProduceMathAchievement3ImportApiRequestParams,
+  TProduceMathAchievement3ImportApiResponse,
 } from './mathApi.type';
 import {
   TRetrieveMathKnowledgeConceptsApiRequestParams,
@@ -500,6 +509,90 @@ export const produceMathAchievementApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .produceMathAchievement,
+});
+
+//
+// (POST) 수학 성취기준(대) 업로드
+//
+export const produceMathAchievement1ImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathAchievement1ImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathAchievement1ImportApiResponse>(
+      mathApiUrlFactory.produceMathAchievement1Importpath(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathAchievement1Import
+});
+
+//
+// (POST) 수학 성취기준(중) 업로드
+//
+export const produceMathAchievement2ImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathAchievement2ImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathAchievement2ImportApiResponse>(
+      mathApiUrlFactory.produceMathAchievement2Importpath(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathAchievement2Import
+});
+
+//
+// (POST) 수학 성취기준 업로드
+//
+export const produceMathAchievement3ImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathAchievement3ImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathAchievement3ImportApiResponse>(
+      mathApiUrlFactory.produceMathAchievement3Importpath(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathAchievement3Import
 });
 
 // --- --- --- --- --- --- --- --- --- ---

@@ -59,6 +59,9 @@ const noticeMessageGroupFactory: {
       retrieveMathAchievement: TNoticeMessageGroup;
       putMathAchievement: TNoticeMessageGroup;
       produceMathAchievement: TNoticeMessageGroup;
+      produceMathAchievement1Import: TNoticeMessageGroup;
+      produceMathAchievement2Import: TNoticeMessageGroup;
+      produceMathAchievement3Import: TNoticeMessageGroup;
 
       // 지식개념
       retrieveMathKnowledgeConcepts: TNoticeMessageGroup;
@@ -420,7 +423,7 @@ const noticeMessageGroupFactory: {
         successMessage: undefined,
         successSonner: () => ({
           title: '',
-          message: '선택하신 대단원를 성공적으로 업로드 완료하였습니다.',
+          message: '선택하신 대단원을 성공적으로 업로드 완료하였습니다.',
         }),
       },
 
@@ -436,7 +439,7 @@ const noticeMessageGroupFactory: {
         successMessage: undefined,
         successSonner: () => ({
           title: '',
-          message: '선택하신 중단원를 성공적으로 업로드 완료하였습니다.',
+          message: '선택하신 중단원을 성공적으로 업로드 완료하였습니다.',
         }),
       },
 
@@ -514,6 +517,54 @@ const noticeMessageGroupFactory: {
         successSonner: () => ({
           title: '추가하기 완료',
           message: '입력하신 내용이 성공적으로 추가되었습니다.',
+        }),
+      },
+
+      // (POST) 수학 성취기준(대) 업로드
+      produceMathAchievement1Import: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 성취기준(대)를 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 성취기준(대) 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 성취기준(대)를 성공적으로 업로드 완료하였습니다.',
+        }),
+      },
+
+      // (POST) 수학 성취기준(중) 업로드
+      produceMathAchievement2Import: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 성취기준(중)을 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 성취기준(중) 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 성취기준(중)을 성공적으로 업로드 완료하였습니다.',
+        }),
+      },
+
+      // (POST) 수학 성취기준 업로드
+      produceMathAchievement3Import: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 성취기준을 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 성취기준 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 성취기준을 성공적으로 업로드 완료하였습니다.',
         }),
       },
 

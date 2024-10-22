@@ -12,6 +12,10 @@ import {
 import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathAchievementPageStore from '@/store/mathStores/mathAchievementPageStore/mathAchievementPageStore';
+// hook
+import useImportModalSet from '@/components/shadcn-ui-custom/modals/ImportModalSet/hook/useImportModalSet';
+// api
+import ApiManager from '@/apis/ApiManager';
 // ui
 import {
   Accordion,
@@ -26,16 +30,18 @@ import {
   Label,
 } from '@/components/shadcn-ui/ui/label';
 import CommonSelect from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect';
-import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
+import ImportModalSet from '@/components/shadcn-ui-custom/modals/ImportModalSet/ImportModalSet';
 // icon
 import {
   LuChevronDown,
-  LuFileOutput,
   LuPlus,
 } from 'react-icons/lu';
 // type
 import { 
   TRetrieveMathAchievementsApiRequestParams,
+  TProduceMathAchievement1ImportApiRequestParams,
+  TProduceMathAchievement2ImportApiRequestParams,
+  TProduceMathAchievement3ImportApiRequestParams,
 } from '@/apis/math/mathApi.type';
 import { 
   mathCurriculumFilterOptions,
@@ -46,6 +52,10 @@ import {
   SELECT_OPTION_ITEM_ALL,
   TCMSClassType,
 } from '@/apis/models/cmsCommonModel.type';
+import { 
+  TImportModalSetTemplateFile,
+  TImportModalSetApiFunctionData,
+} from '@/components/shadcn-ui-custom/modals/ImportModalSet/ImportModalSet.type';
 // style
 import { 
   cn,
@@ -82,6 +92,12 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
   // hook
   //
   const navigate = useNavigate();
+
+  const {
+    isOpenImportModal,
+    openImportModal,
+    closeImportModal,
+  } = useImportModalSet();
 
   //
   // callback
@@ -197,6 +213,93 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
     onChangeClassType,
   ]);
 
+  const importModalSetTemplateFiles = useMemo<TImportModalSetTemplateFile[]>(() => [
+    {
+      // FIXME: mockup
+      // FIXME: 실제 템플릿 파일 적용하기
+      text: '(mockup) 성취기준(대) .csv 템플릿 다운로드',
+      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
+    },
+    {
+      // FIXME: mockup
+      // FIXME: 실제 템플릿 파일 적용하기
+      text: '(mockup) 성취기준(중) .csv 템플릿 다운로드',
+      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
+    },
+    {
+      // FIXME: mockup
+      // FIXME: 실제 템플릿 파일 적용하기
+      text: '(mockup) 성취기준 .csv 템플릿 다운로드',
+      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
+    },
+  ], []);
+
+  const importApiFunctions = useMemo<TImportModalSetApiFunctionData[]>(() => [
+    {
+      label: '성취기준(대)',
+      apiFunction: async (file: File) => {
+        if (!file) {
+          return null;
+        }
+
+        const params: TProduceMathAchievement1ImportApiRequestParams = {
+          payload: {
+            file,
+          },
+        };
+
+        await ApiManager
+          .math
+          .produceMathAchievement1ImportApi
+          .callWithNoticeMessageGroup(params);
+
+        closeImportModal();
+      },
+    },
+    {
+      label: '성취기준(중)',
+      apiFunction: async (file: File) => {
+        if (!file) {
+          return null;
+        }
+
+        const params: TProduceMathAchievement2ImportApiRequestParams = {
+          payload: {
+            file,
+          },
+        };
+
+        await ApiManager
+          .math
+          .produceMathAchievement2ImportApi
+          .callWithNoticeMessageGroup(params);
+
+        closeImportModal();
+      },
+    },
+    {
+      label: '성취기준',
+      apiFunction: async (file: File) => {
+        if (!file) {
+          return null;
+        }
+
+        const params: TProduceMathAchievement3ImportApiRequestParams = {
+          payload: {
+            file,
+          },
+        };
+
+        await ApiManager
+          .math
+          .produceMathAchievement3ImportApi
+          .callWithNoticeMessageGroup(params);
+
+        closeImportModal();
+      },
+    },
+  ], [closeImportModal]);
+
   return (
     <div className="MathAchievementHeader">
       <Accordion
@@ -247,14 +350,12 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
       </Accordion>
 
       <div className="MathAchievementHeader-actions">
-        <TBUTooltip>
-          <Button
-            className="actionButton"
-            disabled>
-            <LuFileOutput className="icon" />
-            업로드
-          </Button>
-        </TBUTooltip>
+        <ImportModalSet
+          isOpen={isOpenImportModal}
+          openImportModal={openImportModal}
+          closeImportModal={closeImportModal}
+          templateFiles={importModalSetTemplateFiles}
+          importApiFunctions={importApiFunctions} />
 
         <Button
           className="actionButton"

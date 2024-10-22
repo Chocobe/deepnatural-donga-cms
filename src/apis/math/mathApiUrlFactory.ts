@@ -141,6 +141,21 @@ const mathApiUrlFactory = (() => {
     produceMathAchievementPath() {
       return this.retrieveMathAchievementsPath();
     },
+
+    /** (POST) 수학 성취기준(대) 업로드 */
+    produceMathAchievement1Importpath() {
+      return `${BASE_PATH}achievement1/import/`;
+    },
+
+    /** (POST) 수학 성취기준(중) 업로드 */
+    produceMathAchievement2Importpath() {
+      return `${BASE_PATH}achievement2/import/`;
+    },
+
+    /** (POST) 수학 성취기준 업로드 */
+    produceMathAchievement3Importpath() {
+      return `${BASE_PATH}achievement3/import/`;
+    },
   };
 
   //

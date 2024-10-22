@@ -217,8 +217,28 @@ export type TProduceMathAchievementApiRequestParams = TApiRequestBodyParams<
   }
 >;
 /** (POST) 수학 성취기준 생성 Response */
-// TODO: 차후 응답 scheme 변경 가능성 있음
 export type TProduceMathAchievementApiResponse = TPaginationModel<TMathAchievement1Model>;
+
+/** (POST) 수학 성취기준1 업로드 RequestParams */
+export type TProduceMathAchievement1ImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 성취기준1 업로드 Response */
+export type TProduceMathAchievement1ImportApiResponse = any;
+
+/** (POST) 수학 성취기준2 업로드 RequestParams */
+export type TProduceMathAchievement2ImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 성취기준2 업로드 Response */
+export type TProduceMathAchievement2ImportApiResponse = any;
+
+/** (POST) 수학 성취기준3 업로드 RequestParams */
+export type TProduceMathAchievement3ImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 성취기준3 업로드 Response */
+export type TProduceMathAchievement3ImportApiResponse = any;
 
 // --- --- --- --- --- --- --- --- --- ---
 
