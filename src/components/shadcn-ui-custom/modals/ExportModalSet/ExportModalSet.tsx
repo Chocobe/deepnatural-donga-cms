@@ -79,8 +79,6 @@ function _ExportModalSet(props: TExportModalSetProps) {
   const onClickExportButton = useCallback(async () => {
     const fileData = await exportApiFunction(fileFormat);
 
-    console.log('fileData: ', fileData);
-
     if (!fileData) {
       return;
     }
