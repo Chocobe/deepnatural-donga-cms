@@ -4,6 +4,7 @@ import {
   useState,
   useMemo,
   useCallback,
+  useEffect,
   memo,
 } from 'react';
 // router
@@ -67,6 +68,7 @@ function _MathQuestionTable() {
   const mathQuestionsData = useMathQuestionPageStore(state => state.mathQuestionsData);
 
   const setSelectedMathQuestions = useMathQuestionPageStore(state => state.setSelectedMathQuestions);
+  const clearSelectedMathQuestions = useMathQuestionPageStore(state => state.clearSelectedMathQuestions);
 
   const setPreviewMathQuestion = useMathQuestionPageStore(state => state.setPreviewMathQuestion);
 
@@ -256,6 +258,16 @@ function _MathQuestionTable() {
       });
     },
   });
+
+  //
+  // effect
+  //
+  useEffect(() => {
+    clearSelectedMathQuestions();
+    setRowSelection({});
+
+    // eslint-disable-next-line
+  }, [tableData]);
 
   return (
     <Table
