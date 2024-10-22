@@ -28,22 +28,31 @@ import {
   exportModalSetFileFormatOptions,
   TExportModalSetFileFormat,
 } from './ExportModalSet.type';
+import { 
+  TProduceMathQuestionsExportApiResponse,
+} from '@/apis/math/mathApi.type';
 // style
 import './ExportModalSet.css';
 
 type TExportModalSetProps = {
-  exportApiFunction: (fileFormat: TExportModalSetFileFormat) => Promise<void>;
+  isOpen: boolean;
+  openExportModal: () => void;
+  closeExportModal: () => void;
+
+  exportApiFunction: (fileFormat: TExportModalSetFileFormat) => Promise<TProduceMathQuestionsExportApiResponse>;
 };
 
 function _ExportModalSet(props: TExportModalSetProps) {
   const {
+    isOpen,
+    openExportModal,
+    closeExportModal,
     exportApiFunction,
   } = props;
 
   //
   // state
   //
-  const [isOpen, setIsOpen] = useState(false);
   const [fileFormat, setFileFormat] = useState<TExportModalSetFileFormat>(
     exportModalSetFileFormatMapper.XLSX
   );
@@ -55,13 +64,14 @@ function _ExportModalSet(props: TExportModalSetProps) {
     setFileFormat(fileFormat);
   }, []);
 
-  const openExportModal = useCallback(() => {
-    setIsOpen(true);
-  }, []);
-
-  const closeExportModal = useCallback(() => {
-    setIsOpen(false);
-  }, []);
+  const onOpenChange = useCallback((isOpen: boolean) => {
+    isOpen
+      ? openExportModal()
+      : closeExportModal();
+  }, [
+    openExportModal,
+    closeExportModal,
+  ]);
 
   const onClickExportButton = useCallback(() => {
     exportApiFunction(fileFormat);
@@ -73,7 +83,7 @@ function _ExportModalSet(props: TExportModalSetProps) {
   return (
     <Dialog
       open={isOpen}
-      onOpenChange={setIsOpen}>
+      onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
         <Button
           className=""
