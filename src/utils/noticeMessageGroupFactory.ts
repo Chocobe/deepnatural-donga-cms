@@ -68,6 +68,8 @@ const noticeMessageGroupFactory: {
       retrieveMathKnowledgeConcept: TNoticeMessageGroup;
       produceMathKnowledgeConcept: TNoticeMessageGroup;
       putMathKnowledgeConcept: TNoticeMessageGroup;
+      produceMathKnowledgeConcept1Import: TNoticeMessageGroup;
+      produceMathKnowledgeConcept2Import: TNoticeMessageGroup;
 
       // 시리즈-출처
       retrieveMathSeriesSources: TNoticeMessageGroup;
@@ -626,6 +628,38 @@ const noticeMessageGroupFactory: {
         successSonner: () => ({
           title: '',
           message: '입력하신 지식개념을 성공적으로 수정 완료하였습니다.',
+        }),
+      },
+
+      // (POST) 수학 지식개념1 업로드
+      produceMathKnowledgeConcept1Import: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 지식개념1을 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 지식개념1 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 지식개념1을 성공적으로 업로드 완료하였습니다.',
+        }),
+      },
+
+      // (POST) 수학 지식개념2 업로드
+      produceMathKnowledgeConcept2Import: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 지식개념2를 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 지식개념2 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 지식개념2를 성공적으로 업로드 완료하였습니다.',
         }),
       },
 

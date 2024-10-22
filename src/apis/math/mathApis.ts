@@ -85,6 +85,12 @@ import {
 
   TPutMathKnowledgeConceptApiRequestParams,
   TPutMathKnowledgeConceptApiResponse,
+
+  TProduceMathKnowledgeConcept1ImportApiRequestParams,
+  TProduceMathKnowledgeConcept1ImportApiResponse,
+
+  TProduceMathKnowledgeConcept2ImportApiRequestParams,
+  TProduceMathKnowledgeConcept2ImportApiResponse,
 } from './mathApi.type';
 import {
   TRetrieveMathSeriesSourcesApiRequestParams,
@@ -688,6 +694,62 @@ export const putMathKnowledgeConceptApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .putMathKnowledgeConcept,
+});
+
+//
+// (POST) 수학 지식개념1 업로드
+//
+export const produceMathKnowledgeConcept1ImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathKnowledgeConcept1ImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathKnowledgeConcept1ImportApiResponse>(
+      mathApiUrlFactory.produceMathKnowledgeConcept1Importpath(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathKnowledgeConcept1Import
+});
+
+//
+// (POST) 수학 지식개념2 업로드
+//
+export const produceMathKnowledgeConcept2ImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathKnowledgeConcept2ImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathKnowledgeConcept2ImportApiResponse>(
+      mathApiUrlFactory.produceMathKnowledgeConcept2Importpath(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathKnowledgeConcept2Import
 });
 
 // --- --- --- --- --- --- --- --- --- ---

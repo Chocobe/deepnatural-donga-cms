@@ -294,9 +294,22 @@ export type TPutMathKnowledgeConceptApiRequestParams = TApiRequestBodyParams<{
     Pick<TMathKnowledgeConcept2Model, 'title' | 'comment' | 'kc1' | 'achievement3'>
   >;
 }>;
-// FIXME: 실제 응답 확인하기
 /** (PUT) 수학 지식개념 수정 Response */
 export type TPutMathKnowledgeConceptApiResponse = any;
+
+/** (POST) 수학 지식개념1 업로드 RequestParams */
+export type TProduceMathKnowledgeConcept1ImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 지식개념1 업로드 Response */
+export type TProduceMathKnowledgeConcept1ImportApiResponse = any;
+
+/** (POST) 수학 지식개념2 업로드 RequestParams */
+export type TProduceMathKnowledgeConcept2ImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 지식개념2 업로드 Response */
+export type TProduceMathKnowledgeConcept2ImportApiResponse = any;
 
 // --- --- --- --- --- --- --- --- --- ---
 

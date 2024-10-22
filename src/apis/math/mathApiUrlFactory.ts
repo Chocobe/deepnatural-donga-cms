@@ -187,6 +187,16 @@ const mathApiUrlFactory = (() => {
     putMathKnowledgeConceptPath(params: TPutMathKnowledgeConceptApiRequestParams) {
       return this.retrieveMathKnowledgeConceptPath(params);
     },
+
+    /** (POST) 수학 지식개념1 업로드 */
+    produceMathKnowledgeConcept1Importpath() {
+      return `${BASE_PATH}kc1/import/`;
+    },
+
+    /** (POST) 수학 지식개념2 업로드 */
+    produceMathKnowledgeConcept2Importpath() {
+      return `${BASE_PATH}kc2/import/`;
+    },
   };
 
   //
