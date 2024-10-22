@@ -258,7 +258,7 @@ export const produceMathTextbookImportApi = createApiWithNoticeMessageGroup({
   noticeMessageGroup: noticeMessageGroupFactory
     .apis
     .math
-    .produceMathQuestionImport
+    .produceMathTextbookImport
 });
 
 //
@@ -385,7 +385,7 @@ export const produceMathChapter1ImportApi = createApiWithNoticeMessageGroup({
   noticeMessageGroup: noticeMessageGroupFactory
     .apis
     .math
-    .produceMathQuestionImport
+    .produceMathChapter1Import
 });
 
 //
@@ -413,7 +413,7 @@ export const produceMathChapter2ImportApi = createApiWithNoticeMessageGroup({
   noticeMessageGroup: noticeMessageGroupFactory
     .apis
     .math
-    .produceMathQuestionImport
+    .produceMathChapter2Import
 });
 
 //
@@ -441,7 +441,7 @@ export const produceMathChapter3ImportApi = createApiWithNoticeMessageGroup({
   noticeMessageGroup: noticeMessageGroupFactory
     .apis
     .math
-    .produceMathQuestionImport
+    .produceMathChapter3Import
 });
 
 // --- --- --- --- --- --- --- --- --- ---
