@@ -76,6 +76,8 @@ const noticeMessageGroupFactory: {
       retrieveMathSeriesSource: TNoticeMessageGroup;
       putMathSeriesSource: TNoticeMessageGroup;
       produceMathSeriesSources: TNoticeMessageGroup;
+      produceMathSeriesImport: TNoticeMessageGroup;
+      produceMathSourceImport: TNoticeMessageGroup;
 
       // 지문
       retrieveMathInstructions: TNoticeMessageGroup;
@@ -721,6 +723,38 @@ const noticeMessageGroupFactory: {
         successSonner: () => ({
           title: '추가하기 완료',
           message: '입력하신 내용이 성공적으로 추가되었습니다.',
+        }),
+      },
+
+      // (POST) 수학 시리즈 업로드
+      produceMathSeriesImport: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 시리즈를 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 시리즈 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 시리즈를 성공적으로 업로드 완료하였습니다.',
+        }),
+      },
+
+      // (POST) 수학 출처 업로드
+      produceMathSourceImport: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 출처를 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 출처 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 출처를 성공적으로 업로드 완료하였습니다.',
         }),
       },
 

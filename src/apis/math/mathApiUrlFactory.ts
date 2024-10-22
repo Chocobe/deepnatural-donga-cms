@@ -97,17 +97,17 @@ const mathApiUrlFactory = (() => {
     },
 
     /** (POST) 수학 대단원 업로드 */
-    produceMathChapter1Importpath() {
+    produceMathChapter1ImportPath() {
       return `${BASE_PATH}chapter1/import/`;
     },
 
     /** (POST) 수학 중단원 업로드 */
-    produceMathChapter2Importpath() {
+    produceMathChapter2ImportPath() {
       return `${BASE_PATH}chapter2/import/`;
     },
 
     /** (POST) 수학 소단원 업로드 */
-    produceMathChapter3Importpath() {
+    produceMathChapter3ImportPath() {
       return `${BASE_PATH}chapter3/import/`;
     },
   };
@@ -143,17 +143,17 @@ const mathApiUrlFactory = (() => {
     },
 
     /** (POST) 수학 성취기준(대) 업로드 */
-    produceMathAchievement1Importpath() {
+    produceMathAchievement1ImportPath() {
       return `${BASE_PATH}achievement1/import/`;
     },
 
     /** (POST) 수학 성취기준(중) 업로드 */
-    produceMathAchievement2Importpath() {
+    produceMathAchievement2ImportPath() {
       return `${BASE_PATH}achievement2/import/`;
     },
 
     /** (POST) 수학 성취기준 업로드 */
-    produceMathAchievement3Importpath() {
+    produceMathAchievement3ImportPath() {
       return `${BASE_PATH}achievement3/import/`;
     },
   };
@@ -189,12 +189,12 @@ const mathApiUrlFactory = (() => {
     },
 
     /** (POST) 수학 지식개념1 업로드 */
-    produceMathKnowledgeConcept1Importpath() {
+    produceMathKnowledgeConcept1ImportPath() {
       return `${BASE_PATH}kc1/import/`;
     },
 
     /** (POST) 수학 지식개념2 업로드 */
-    produceMathKnowledgeConcept2Importpath() {
+    produceMathKnowledgeConcept2ImportPath() {
       return `${BASE_PATH}kc2/import/`;
     },
   };
@@ -227,6 +227,16 @@ const mathApiUrlFactory = (() => {
     /** (POST) 수학 시리즈-출처 생성 */
     produceMathSeriesSourcePath() {
       return this.retrieveMathSeriesSourcesPath();
+    },
+
+    /** (POST) 수학 시리즈 업로드 */
+    produceMathSeriesImportPath() {
+      return `${BASE_PATH}series/import/`;
+    },
+
+    /** (POST) 수학 출처 업로드 */
+    produceMathSourceImportPath() {
+      return `${BASE_PATH}source/import/`;
     },
   };
 

@@ -104,6 +104,12 @@ import {
 
   TProduceMathSeriesSourceApiRequestParams,
   TProduceMathSeriesSourceApiResponse,
+
+  TProduceMathSeriesImportApiRequestParams,
+  TProduceMathSeriesImportApiResponse,
+
+  TProduceMathSourceImportApiRequestParams,
+  TProduceMathSourceImportApiResponse,
 } from './mathApi.type';
 import {
   TRetrieveMathInstructionsApiRequestParams,
@@ -367,7 +373,7 @@ export const produceMathChapter1ImportApi = createApiWithNoticeMessageGroup({
     formData.append('file', payload.file);
 
     return api.post<TProduceMathChapter1ImportApiResponse>(
-      mathApiUrlFactory.produceMathChapter1Importpath(),
+      mathApiUrlFactory.produceMathChapter1ImportPath(),
       formData,
       {
         headers: {
@@ -395,7 +401,7 @@ export const produceMathChapter2ImportApi = createApiWithNoticeMessageGroup({
     formData.append('file', payload.file);
 
     return api.post<TProduceMathChapter2ImportApiResponse>(
-      mathApiUrlFactory.produceMathChapter2Importpath(),
+      mathApiUrlFactory.produceMathChapter2ImportPath(),
       formData,
       {
         headers: {
@@ -423,7 +429,7 @@ export const produceMathChapter3ImportApi = createApiWithNoticeMessageGroup({
     formData.append('file', payload.file);
 
     return api.post<TProduceMathChapter3ImportApiResponse>(
-      mathApiUrlFactory.produceMathChapter3Importpath(),
+      mathApiUrlFactory.produceMathChapter3ImportPath(),
       formData,
       {
         headers: {
@@ -530,7 +536,7 @@ export const produceMathAchievement1ImportApi = createApiWithNoticeMessageGroup(
     formData.append('file', payload.file);
 
     return api.post<TProduceMathAchievement1ImportApiResponse>(
-      mathApiUrlFactory.produceMathAchievement1Importpath(),
+      mathApiUrlFactory.produceMathAchievement1ImportPath(),
       formData,
       {
         headers: {
@@ -558,7 +564,7 @@ export const produceMathAchievement2ImportApi = createApiWithNoticeMessageGroup(
     formData.append('file', payload.file);
 
     return api.post<TProduceMathAchievement2ImportApiResponse>(
-      mathApiUrlFactory.produceMathAchievement2Importpath(),
+      mathApiUrlFactory.produceMathAchievement2ImportPath(),
       formData,
       {
         headers: {
@@ -586,7 +592,7 @@ export const produceMathAchievement3ImportApi = createApiWithNoticeMessageGroup(
     formData.append('file', payload.file);
 
     return api.post<TProduceMathAchievement3ImportApiResponse>(
-      mathApiUrlFactory.produceMathAchievement3Importpath(),
+      mathApiUrlFactory.produceMathAchievement3ImportPath(),
       formData,
       {
         headers: {
@@ -709,7 +715,7 @@ export const produceMathKnowledgeConcept1ImportApi = createApiWithNoticeMessageG
     formData.append('file', payload.file);
 
     return api.post<TProduceMathKnowledgeConcept1ImportApiResponse>(
-      mathApiUrlFactory.produceMathKnowledgeConcept1Importpath(),
+      mathApiUrlFactory.produceMathKnowledgeConcept1ImportPath(),
       formData,
       {
         headers: {
@@ -737,7 +743,7 @@ export const produceMathKnowledgeConcept2ImportApi = createApiWithNoticeMessageG
     formData.append('file', payload.file);
 
     return api.post<TProduceMathKnowledgeConcept2ImportApiResponse>(
-      mathApiUrlFactory.produceMathKnowledgeConcept2Importpath(),
+      mathApiUrlFactory.produceMathKnowledgeConcept2ImportPath(),
       formData,
       {
         headers: {
@@ -827,6 +833,62 @@ export const produceMathSeriesSourceApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .produceMathSeriesSources,
+});
+
+//
+// (POST) 수학 시리즈 업로드
+//
+export const produceMathSeriesImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathSeriesImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathSeriesImportApiResponse>(
+      mathApiUrlFactory.produceMathSeriesImportPath(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathSeriesImport
+});
+
+//
+// (POST) 수학 출처 업로드
+//
+export const produceMathSourceImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathSourceImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathSourceImportApiResponse>(
+      mathApiUrlFactory.produceMathSourceImportPath(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathSourceImport
 });
 
 // --- --- --- --- --- --- --- --- --- ---

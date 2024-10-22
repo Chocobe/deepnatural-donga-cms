@@ -360,6 +360,20 @@ export type TProduceMathSeriesSourceApiRequestParams = TApiRequestBodyParams<
 // FIXME: 실제 응답 확인하기
 export type TProduceMathSeriesSourceApiResponse = any;
 
+/** (POST) 수학 시리즈 업로드 RequestParams */
+export type TProduceMathSeriesImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 시리즈 업로드 Response */
+export type TProduceMathSeriesImportApiResponse = any;
+
+/** (POST) 수학 출처 업로드 RequestParams */
+export type TProduceMathSourceImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 출처 업로드 Response */
+export type TProduceMathSourceImportApiResponse = any;
+
 // --- --- --- --- --- --- --- --- --- ---
 
 /**
