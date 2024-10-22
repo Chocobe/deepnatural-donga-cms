@@ -78,15 +78,15 @@ const _ComboBox = <T = any,>(
   }, [selectedOption, placeholder]);
 
   useImperativeHandle(ref, () => {
-    const rr = $triggerButtonRef.current;
+    const $triggerButton = $triggerButtonRef.current;
 
     const { 
       width = 0,
-    } = rr?.getBoundingClientRect() ?? {};
+    } = $triggerButton?.getBoundingClientRect() ?? {};
 
     setCommandWidth(width);
 
-    return rr;
+    return $triggerButton;
   });
 
   return (
@@ -114,16 +114,16 @@ const _ComboBox = <T = any,>(
           'w-full p-0',
           className
         )}>
-        <Command className="">
+        <Command style={{ 
+          width: `${commandWidth}px`,
+        }}>
           <CommandInput placeholder="Search framework..." />
           <CommandList>
             <CommandEmpty>
               {optionsEmptyMessage}
             </CommandEmpty>
 
-            <CommandGroup style={{
-              width: `${commandWidth}px`,
-            }}>
+            <CommandGroup>
               {options.map((option) => (
                 <CommandItem
                   key={option.id}

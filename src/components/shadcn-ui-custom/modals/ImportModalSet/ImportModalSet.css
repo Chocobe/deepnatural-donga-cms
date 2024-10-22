@@ -1,0 +1,64 @@
+.ImportModalSet {
+  gap: 32px !important;
+
+  &-header {
+    /*  */
+
+    .title {
+      color: #09090B;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 600;
+    }
+
+    .description {
+      color: #71717A;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+
+      .templateWrapper {
+        @apply flex flex-col items-start gap-2;
+
+        margin-top: 8px;
+        padding: 8px 16px;
+
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+
+        .downloadLink {
+          padding: 0;
+
+          height: fit-content;
+
+          justify-content: flex-start;
+
+          color: #71717A;
+        }
+      }
+    }
+  }
+
+  &-main {
+    @apply flex flex-col gap-3;
+
+    .item {
+      @apply flex flex-col gap-1;
+
+      .label {
+        color: #09090B;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  &-footer {
+    /*  */
+
+    .button {
+      /*  */
+    }
+  }
+}

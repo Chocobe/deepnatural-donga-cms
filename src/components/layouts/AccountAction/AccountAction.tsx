@@ -36,6 +36,12 @@ function _AccountAction() {
   //
   // authApi store
   //
+  const userInfo = useAuthApiStore(state => state.userInfo.state.data);
+  const {
+    email,
+    username,
+  } = userInfo ?? {};
+
   const removeLoginState = useAuthApiStore(state => state.login.action.removeLoginState);
   const clearUserInfoState = useAuthApiStore(state => state.userInfo.action.clearUserInfoState);
   const clearGroupsState = useAuthApiStore(state => state.groups.action.clearGroupsState);
@@ -82,8 +88,7 @@ function _AccountAction() {
               alt="계정 메뉴" />
 
             <div className="AccountAction-dropdown-trigger-email">
-              {/* FIXME: 사용자 email 적용하기 */}
-              michelle@bookdonga.com
+              {email || username || ''}
             </div>
           </Button>
         </DropdownMenuTrigger>

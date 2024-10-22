@@ -7,9 +7,11 @@ import {
 } from 'react';
 // store
 import useMathTextbookPageStore from '@/store/mathStores/mathTextbookPageStore/mathTextbookPageStore';
-import useResultNoticeModalStore from '@/store/modalStores/resultNoticeModalStore/resultNoticeModalStore';
+{/* FIXME: 미사용 처리 */}
+// import useResultNoticeModalStore from '@/store/modalStores/resultNoticeModalStore/resultNoticeModalStore';
 // api
-import ApiManager from '@/apis/ApiManager';
+{/* FIXME: 미사용 처리 */}
+// import ApiManager from '@/apis/ApiManager';
 // hook
 import useOnKeyDownEnterOrESC from '@/components/hooks/useOnKeyDownEnterOrESC';
 import useAutoFocus from '@/components/hooks/useAutoFocus';
@@ -21,27 +23,30 @@ import {
   SelectContent,
   SelectItem,
 } from '@/components/shadcn-ui/ui/select';
-import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 import { 
   InputWithAddon,
   SearchButtonForInputWithAddon,
 } from '@/components/shadcn-ui-custom/InputWithAddon';
-import { 
-  Button,
-} from '@/components/shadcn-ui/ui/button';
+{/* FIXME: 미사용 처리 */}
+// import { 
+//   Button,
+// } from '@/components/shadcn-ui/ui/button';
+// import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
-import {
-  LuFileInput,
-} from 'react-icons/lu';
+{/* FIXME: 미사용 처리 */}
+// import {
+//   LuFileInput,
+// } from 'react-icons/lu';
 // type
 import { 
   mathTextbookSearchTypeOptions,
 } from './MathTextbookTableActions.type';
+{/* FIXME: 미사용 처리 */}
 import { 
-  TDeleteMathTextbookApiRequestParams,
   TRetrieveMathTextbooksApiRequestParams,
+  // TDeleteMathTextbookApiRequestParams,
 } from '@/apis/math/mathApi.type';
-import noticeMessageGroupFactory from '@/utils/noticeMessageGroupFactory';
+// import noticeMessageGroupFactory from '@/utils/noticeMessageGroupFactory';
 // style
 import './MathTextbookTableActions.css';
 
@@ -63,13 +68,15 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
 
   const updateSearchParamsForRetrieveMathTextbooksApi = useMathTextbookPageStore(state => state.updateSearchParamsForRetrieveMathTextbooksApi);
 
-  const selectedMathTextbooks = useMathTextbookPageStore(state => state.selectedMathTextbooks);
+  {/* FIXME: 미사용 처리 */}
+  // const selectedMathTextbooks = useMathTextbookPageStore(state => state.selectedMathTextbooks);
 
   //
   // resultNoticeModal store
   //
-  const openSuccessNoticeModal = useResultNoticeModalStore(state => state.openSuccessNoticeModal);
-  const openErrorNoticeModal = useResultNoticeModalStore(state => state.openErrorNoticeModal);
+  {/* FIXME: 미사용 처리 */}
+  // const openSuccessNoticeModal = useResultNoticeModalStore(state => state.openSuccessNoticeModal);
+  // const openErrorNoticeModal = useResultNoticeModalStore(state => state.openErrorNoticeModal);
 
   //
   // state
@@ -138,84 +145,86 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
     }));
   }, [updateSearchParamsForRetrieveMathTextbooksApi]);
 
-  const onConfirmDelete = useCallback(async () => {
-    if (!selectedMathTextbooks?.length) {
-      return;
-    }
+  {/* FIXME: 미사용 처리 */}
+  // const onConfirmDelete = useCallback(async () => {
+  //   if (!selectedMathTextbooks?.length) {
+  //     return;
+  //   }
 
-    try {
-      const promises = selectedMathTextbooks.map(({ id }) => {
-        const params: TDeleteMathTextbookApiRequestParams = {
-          pathParams: {
-            textbookId: id,
-          },
-        };
+  //   try {
+  //     const promises = selectedMathTextbooks.map(({ id }) => {
+  //       const params: TDeleteMathTextbookApiRequestParams = {
+  //         pathParams: {
+  //           textbookId: id,
+  //         },
+  //       };
 
-        return ApiManager
-          .math
-          .deleteMathTextbookApi(params);
-      });
+  //       return ApiManager
+  //         .math
+  //         .deleteMathTextbookApi(params);
+  //     });
 
-      await Promise.all(promises);
+  //     await Promise.all(promises);
 
-      openSuccessNoticeModal({
-        ...noticeMessageGroupFactory
-          .apis
-          .math
-          .deleteMathTextbook
-          .successMessage!(),
-        firstButton: {
-          text: '확인',
-          variant: 'outline',
-        }
-      });
+  //     openSuccessNoticeModal({
+  //       ...noticeMessageGroupFactory
+  //         .apis
+  //         .math
+  //         .deleteMathTextbook
+  //         .successMessage!(),
+  //       firstButton: {
+  //         text: '확인',
+  //         variant: 'outline',
+  //       }
+  //     });
 
-    } catch(_error: any) {
-      openErrorNoticeModal({
-        ...noticeMessageGroupFactory
-          .apis
-          .math
-          .deleteMathTextbook
-          .errorMessage(),
-        firstButton: {
-          text: '확인',
-          variant: 'outline',
-        },
-      });
-    } finally {
-      retrieveMathTextbooks({
-        searchParams: searchParamsForRetrieveMathTextbooksApi,
-      });
-    }
-  }, [
-    selectedMathTextbooks,
-    searchParamsForRetrieveMathTextbooksApi,
-    openSuccessNoticeModal,
-    openErrorNoticeModal,
-    retrieveMathTextbooks,
-  ]);
+  //   } catch(_error: any) {
+  //     openErrorNoticeModal({
+  //       ...noticeMessageGroupFactory
+  //         .apis
+  //         .math
+  //         .deleteMathTextbook
+  //         .errorMessage(),
+  //       firstButton: {
+  //         text: '확인',
+  //         variant: 'outline',
+  //       },
+  //     });
+  //   } finally {
+  //     retrieveMathTextbooks({
+  //       searchParams: searchParamsForRetrieveMathTextbooksApi,
+  //     });
+  //   }
+  // }, [
+  //   selectedMathTextbooks,
+  //   searchParamsForRetrieveMathTextbooksApi,
+  //   openSuccessNoticeModal,
+  //   openErrorNoticeModal,
+  //   retrieveMathTextbooks,
+  // ]);
 
-  const onClickDelete = useCallback(async () => {
-    if (!selectedMathTextbooks?.length) {
-      return;
-    }
+  {/* FIXME: 미사용 처리 */}
+  // const onClickDelete = useCallback(async () => {
+  //   if (!selectedMathTextbooks?.length) {
+  //     return;
+  //   }
 
-    openSuccessNoticeModal({
-      ...noticeMessageGroupFactory.uis.math.confirmDeleteMathTextbooks(),
-      firstButton: {
-        text: '취소',
-        variant: 'outline',
-      },
-      secondButton: {
-        text: '삭제',
-        variant: 'destructive',
-        onClick: onConfirmDelete,
-      },
-    });
-  }, [
-    selectedMathTextbooks, 
-    openSuccessNoticeModal, onConfirmDelete,
-  ]);
+  //   openSuccessNoticeModal({
+  //     ...noticeMessageGroupFactory.uis.math.confirmDeleteMathTextbooks(),
+  //     firstButton: {
+  //       text: '취소',
+  //       variant: 'outline',
+  //     },
+  //     secondButton: {
+  //       text: '삭제',
+  //       variant: 'destructive',
+  //       onClick: onConfirmDelete,
+  //     },
+  //   });
+  // }, [
+  //   selectedMathTextbooks, 
+  //   openSuccessNoticeModal, onConfirmDelete,
+  // ]);
 
   const SearchButtonAddon = useCallback((props: any) => {
     return (
@@ -283,7 +292,8 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
       </div>
 
       <div className="MathTextbookTableActions-rightSide">
-        <TBUTooltip>
+        {/* FIXME: 미사용 처리 */}
+        {/* <TBUTooltip>
           <Button
             className="actionButton"
             // 삭제 기능 비활성
@@ -292,16 +302,17 @@ function _MathTextbookTableActions(props: TMathTextbookTableActionsProps) {
             onClick={onClickDelete}>
             삭제
           </Button>
-        </TBUTooltip>
+        </TBUTooltip> */}
 
-        <TBUTooltip>
+        {/* FIXME: 미사용 처리 */}
+        {/* <TBUTooltip>
           <Button
             className="actionButton"
             disabled>
             <LuFileInput className="icon" />
             다운로드
           </Button>
-        </TBUTooltip>
+        </TBUTooltip> */}
       </div>
     </div>
   );

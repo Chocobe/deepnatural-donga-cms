@@ -27,6 +27,9 @@ import {
   TMathSourceModel,
   TMathQuestionHistoryModel,
 } from '../models/mathModel.type';
+import { 
+  TExportModalSetFileFormat,
+} from '@/components/shadcn-ui-custom/modals/ExportModalSet/ExportModalSet.type';
 
 /**
  * 수학 교과서 API
@@ -72,6 +75,13 @@ export type TDeleteMathTextbookApiRequestParams = TApiRequestNonBodyParams<{
 }, void>;
 /** (DELETE) 수학 교과서 삭제 Response */
 export type TDeleteMathTextbookApiResponse = void;
+
+/** (POST) 수학 문항 업로드 RequestParams */
+export type TProduceMathTextbookImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 문항 업로드 Response */
+export type TProduceMathTextbookImportApiResponse = any;
 
 // --- --- --- --- --- --- --- --- --- ---
 
@@ -127,6 +137,27 @@ export type TProduceMathChapterApiRequestParams = TApiRequestBodyParams<
 >;
 /** (POST) 수학 단원 생성 Response */
 export type TProduceMathChapterApiResponse = TMathChapter1Model;
+
+/** (POST) 수학 대단원 업로드 RequestParams */
+export type TProduceMathChapter1ImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 대단원 업로드 Response */
+export type TProduceMathChapter1ImportApiResponse = any;
+
+/** (POST) 수학 중단원 업로드 RequestParams */
+export type TProduceMathChapter2ImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 중단원 업로드 Response */
+export type TProduceMathChapter2ImportApiResponse = any;
+
+/** (POST) 수학 소단원 업로드 RequestParams */
+export type TProduceMathChapter3ImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 소단원 업로드 Response */
+export type TProduceMathChapter3ImportApiResponse = any;
 
 // --- --- --- --- --- --- --- --- --- ---
 
@@ -186,8 +217,28 @@ export type TProduceMathAchievementApiRequestParams = TApiRequestBodyParams<
   }
 >;
 /** (POST) 수학 성취기준 생성 Response */
-// TODO: 차후 응답 scheme 변경 가능성 있음
 export type TProduceMathAchievementApiResponse = TPaginationModel<TMathAchievement1Model>;
+
+/** (POST) 수학 성취기준1 업로드 RequestParams */
+export type TProduceMathAchievement1ImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 성취기준1 업로드 Response */
+export type TProduceMathAchievement1ImportApiResponse = any;
+
+/** (POST) 수학 성취기준2 업로드 RequestParams */
+export type TProduceMathAchievement2ImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 성취기준2 업로드 Response */
+export type TProduceMathAchievement2ImportApiResponse = any;
+
+/** (POST) 수학 성취기준3 업로드 RequestParams */
+export type TProduceMathAchievement3ImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 성취기준3 업로드 Response */
+export type TProduceMathAchievement3ImportApiResponse = any;
 
 // --- --- --- --- --- --- --- --- --- ---
 
@@ -243,9 +294,22 @@ export type TPutMathKnowledgeConceptApiRequestParams = TApiRequestBodyParams<{
     Pick<TMathKnowledgeConcept2Model, 'title' | 'comment' | 'kc1' | 'achievement3'>
   >;
 }>;
-// FIXME: 실제 응답 확인하기
 /** (PUT) 수학 지식개념 수정 Response */
 export type TPutMathKnowledgeConceptApiResponse = any;
+
+/** (POST) 수학 지식개념1 업로드 RequestParams */
+export type TProduceMathKnowledgeConcept1ImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 지식개념1 업로드 Response */
+export type TProduceMathKnowledgeConcept1ImportApiResponse = any;
+
+/** (POST) 수학 지식개념2 업로드 RequestParams */
+export type TProduceMathKnowledgeConcept2ImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 지식개념2 업로드 Response */
+export type TProduceMathKnowledgeConcept2ImportApiResponse = any;
 
 // --- --- --- --- --- --- --- --- --- ---
 
@@ -295,6 +359,20 @@ export type TProduceMathSeriesSourceApiRequestParams = TApiRequestBodyParams<
 >;
 // FIXME: 실제 응답 확인하기
 export type TProduceMathSeriesSourceApiResponse = any;
+
+/** (POST) 수학 시리즈 업로드 RequestParams */
+export type TProduceMathSeriesImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 시리즈 업로드 Response */
+export type TProduceMathSeriesImportApiResponse = any;
+
+/** (POST) 수학 출처 업로드 RequestParams */
+export type TProduceMathSourceImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+/** (POST) 수학 출처 업로드 Response */
+export type TProduceMathSourceImportApiResponse = any;
 
 // --- --- --- --- --- --- --- --- --- ---
 
@@ -378,3 +456,20 @@ export type TRetrieveMathQuestionHistoriesApiRequestParams = TApiRequestNonBodyP
 }, void>;
 /** (GET) 수학 문항 히스토리 목록 Response */
 export type TRetrieveMathQuestionHistoriesApiResponse = TPaginationModel<TMathQuestionHistoryModel>;
+
+/** (POST) 수학 문항 다운로드 RequestParams */
+export type TProduceMathQuestionsExportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file_format: TExportModalSetFileFormat;
+  export_ids: number[];
+}>;
+// FIXME: 실제 응답 확인하기
+/** (POST) 수학 문항 다운로드 Response */
+export type TProduceMathQuestionsExportApiResponse = Blob;
+
+/** (POST) 수학 문항 업로드 RequestParams */
+export type TProduceMathQuestionImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+// FIXME: 실제 응답 확인하기
+/** (POST) 수학 문항 업로드 Response */
+export type TProduceMathQuestionImportApiResponse = any;

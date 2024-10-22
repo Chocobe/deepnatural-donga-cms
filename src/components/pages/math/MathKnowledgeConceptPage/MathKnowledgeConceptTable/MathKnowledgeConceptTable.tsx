@@ -14,6 +14,8 @@ import {
 import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathKnowledgeConceptPageStore from '@/store/mathStores/mathKnowledgeConceptPageStore/mathKnowledgeConceptPageStore';
+// hook
+import useTableWrapperInitScrollEffect from '@/components/hooks/useTableWrapperInitScrollEffect';
 // ui
 import {
   flexRender,
@@ -194,6 +196,11 @@ function _MathKnowledgeConceptTable() {
         setSelectedMathKnowledgeConcepts(selectedMathKnowledgConcepts);
       });
     },
+  });
+
+  useTableWrapperInitScrollEffect({
+    $tableRef,
+    effectDef: tableData,
   });
 
   const navigate = useNavigate();

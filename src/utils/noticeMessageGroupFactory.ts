@@ -43,30 +43,41 @@ const noticeMessageGroupFactory: {
       produceMathTextbook: TNoticeMessageGroup;
       deleteMathTextbook: TNoticeMessageGroup;
       retrieveMathTextbookHistories: TNoticeMessageGroup;
+      produceMathTextbookImport: TNoticeMessageGroup;
 
       // 단원정보
       retrieveMathChapters: TNoticeMessageGroup;
       retrieveMathChapter: TNoticeMessageGroup;
       putMathChapter: TNoticeMessageGroup;
       produceMathChapter: TNoticeMessageGroup;
+      produceMathChapter1Import: TNoticeMessageGroup;
+      produceMathChapter2Import: TNoticeMessageGroup;
+      produceMathChapter3Import: TNoticeMessageGroup;
 
       // 성취기준
       retrieveMathAchievements: TNoticeMessageGroup;
       retrieveMathAchievement: TNoticeMessageGroup;
       putMathAchievement: TNoticeMessageGroup;
       produceMathAchievement: TNoticeMessageGroup;
+      produceMathAchievement1Import: TNoticeMessageGroup;
+      produceMathAchievement2Import: TNoticeMessageGroup;
+      produceMathAchievement3Import: TNoticeMessageGroup;
 
       // 지식개념
       retrieveMathKnowledgeConcepts: TNoticeMessageGroup;
       retrieveMathKnowledgeConcept: TNoticeMessageGroup;
       produceMathKnowledgeConcept: TNoticeMessageGroup;
       putMathKnowledgeConcept: TNoticeMessageGroup;
+      produceMathKnowledgeConcept1Import: TNoticeMessageGroup;
+      produceMathKnowledgeConcept2Import: TNoticeMessageGroup;
 
       // 시리즈-출처
       retrieveMathSeriesSources: TNoticeMessageGroup;
       retrieveMathSeriesSource: TNoticeMessageGroup;
       putMathSeriesSource: TNoticeMessageGroup;
       produceMathSeriesSources: TNoticeMessageGroup;
+      produceMathSeriesImport: TNoticeMessageGroup;
+      produceMathSourceImport: TNoticeMessageGroup;
 
       // 지문
       retrieveMathInstructions: TNoticeMessageGroup;
@@ -76,6 +87,8 @@ const noticeMessageGroupFactory: {
       retrieveMathQuestion: TNoticeMessageGroup;
       putMathQuestion: TNoticeMessageGroup;
       retrieveMathQuestionHistories: TNoticeMessageGroup;
+      produceMathQuestionsExport: TNoticeMessageGroup;
+      produceMathQuestionImport: TNoticeMessageGroup;
     };
     mathOCR: {
       retrieveMathPixAppKey: TNoticeMessageGroup;
@@ -325,6 +338,22 @@ const noticeMessageGroupFactory: {
         successSonner: undefined,
       },
 
+      // (POST) 수학 교과서 업로드
+      produceMathTextbookImport: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 교과서를 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 교과서 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 교과서를 성공적으로 업로드 완료하였습니다.',
+        }),
+      },
+
       // --- --- --- --- --- --- --- --- --- ---
 
       // (GET) 수학 단원 목록
@@ -383,6 +412,54 @@ const noticeMessageGroupFactory: {
         successSonner: () => ({
           title: '추가하기 완료',
           message: '입력하신 내용이 성공적으로 추가되었습니다.',
+        }),
+      },
+
+      // (POST) 수학 대단원 업로드
+      produceMathChapter1Import: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 대단원을 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 대단원 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 대단원을 성공적으로 업로드 완료하였습니다.',
+        }),
+      },
+
+      // (POST) 수학 중단원 업로드
+      produceMathChapter2Import: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 중단원을 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 중단원 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 중단원을 성공적으로 업로드 완료하였습니다.',
+        }),
+      },
+
+      // (POST) 수학 소단원 업로드
+      produceMathChapter3Import: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 소단원을 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 소단원 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 소단원를 성공적으로 업로드 완료하였습니다.',
         }),
       },
 
@@ -447,6 +524,54 @@ const noticeMessageGroupFactory: {
         }),
       },
 
+      // (POST) 수학 성취기준(대) 업로드
+      produceMathAchievement1Import: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 성취기준(대)를 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 성취기준(대) 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 성취기준(대)를 성공적으로 업로드 완료하였습니다.',
+        }),
+      },
+
+      // (POST) 수학 성취기준(중) 업로드
+      produceMathAchievement2Import: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 성취기준(중)을 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 성취기준(중) 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 성취기준(중)을 성공적으로 업로드 완료하였습니다.',
+        }),
+      },
+
+      // (POST) 수학 성취기준 업로드
+      produceMathAchievement3Import: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 성취기준을 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 성취기준 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 성취기준을 성공적으로 업로드 완료하였습니다.',
+        }),
+      },
+
       // --- --- --- --- --- --- --- --- --- ---
 
       // (GET) 수학 지식개념 목록
@@ -508,6 +633,38 @@ const noticeMessageGroupFactory: {
         }),
       },
 
+      // (POST) 수학 지식개념1 업로드
+      produceMathKnowledgeConcept1Import: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 지식개념1을 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 지식개념1 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 지식개념1을 성공적으로 업로드 완료하였습니다.',
+        }),
+      },
+
+      // (POST) 수학 지식개념2 업로드
+      produceMathKnowledgeConcept2Import: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 지식개념2를 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 지식개념2 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 지식개념2를 성공적으로 업로드 완료하였습니다.',
+        }),
+      },
+
       // --- --- --- --- --- --- --- --- --- ---
 
       // (GET) 수학 시리즈-출처 목록
@@ -566,6 +723,38 @@ const noticeMessageGroupFactory: {
         successSonner: () => ({
           title: '추가하기 완료',
           message: '입력하신 내용이 성공적으로 추가되었습니다.',
+        }),
+      },
+
+      // (POST) 수학 시리즈 업로드
+      produceMathSeriesImport: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 시리즈를 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 시리즈 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 시리즈를 성공적으로 업로드 완료하였습니다.',
+        }),
+      },
+
+      // (POST) 수학 출처 업로드
+      produceMathSourceImport: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 출처를 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 출처 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 출처를 성공적으로 업로드 완료하였습니다.',
         }),
       },
 
@@ -639,6 +828,38 @@ const noticeMessageGroupFactory: {
         }),
         successMessage: undefined,
         successSonner: undefined,
+      },
+
+      // (GET) 수학 문항 다운로드
+      produceMathQuestionsExport: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 문항을 다운로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 문항 다운로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 문항을 성공적으로 다운로드 완료하였습니다.',
+        }),
+      },
+
+      // (POST) 수학 문항 업로드
+      produceMathQuestionImport: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 문항을 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 문항 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 문항을 성공적으로 업로드 완료하였습니다.',
+        }),
       },
     },
 

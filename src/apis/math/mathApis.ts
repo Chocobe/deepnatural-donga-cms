@@ -24,6 +24,9 @@ import {
 
   TDeleteMathTextbookApiRequestParams,
   TDeleteMathTextbookApiResponse,
+
+  TProduceMathTextbookImportApiRequestParams,
+  TProduceMathTextbookImportApiResponse,
 } from './mathApi.type';
 import {
   TRetrieveMathChaptersApiRequestParams,
@@ -37,6 +40,15 @@ import {
 
   TProduceMathChapterApiRequestParams,
   TProduceMathChapterApiResponse,
+
+  TProduceMathChapter1ImportApiRequestParams,
+  TProduceMathChapter1ImportApiResponse,
+
+  TProduceMathChapter2ImportApiRequestParams,
+  TProduceMathChapter2ImportApiResponse,
+
+  TProduceMathChapter3ImportApiRequestParams,
+  TProduceMathChapter3ImportApiResponse,
 } from './mathApi.type';
 import {
   TRetrieveMathAchievementsApiRequestParams,
@@ -50,6 +62,15 @@ import {
 
   TProduceMathAchievementApiRequestParams,
   TProduceMathAchievementApiResponse,
+
+  TProduceMathAchievement1ImportApiRequestParams,
+  TProduceMathAchievement1ImportApiResponse,
+
+  TProduceMathAchievement2ImportApiRequestParams,
+  TProduceMathAchievement2ImportApiResponse,
+
+  TProduceMathAchievement3ImportApiRequestParams,
+  TProduceMathAchievement3ImportApiResponse,
 } from './mathApi.type';
 import {
   TRetrieveMathKnowledgeConceptsApiRequestParams,
@@ -64,6 +85,12 @@ import {
 
   TPutMathKnowledgeConceptApiRequestParams,
   TPutMathKnowledgeConceptApiResponse,
+
+  TProduceMathKnowledgeConcept1ImportApiRequestParams,
+  TProduceMathKnowledgeConcept1ImportApiResponse,
+
+  TProduceMathKnowledgeConcept2ImportApiRequestParams,
+  TProduceMathKnowledgeConcept2ImportApiResponse,
 } from './mathApi.type';
 import {
   TRetrieveMathSeriesSourcesApiRequestParams,
@@ -77,6 +104,12 @@ import {
 
   TProduceMathSeriesSourceApiRequestParams,
   TProduceMathSeriesSourceApiResponse,
+
+  TProduceMathSeriesImportApiRequestParams,
+  TProduceMathSeriesImportApiResponse,
+
+  TProduceMathSourceImportApiRequestParams,
+  TProduceMathSourceImportApiResponse,
 } from './mathApi.type';
 import {
   TRetrieveMathInstructionsApiRequestParams,
@@ -94,6 +127,12 @@ import {
 
   TRetrieveMathQuestionHistoriesApiRequestParams,
   TRetrieveMathQuestionHistoriesApiResponse,
+
+  TProduceMathQuestionsExportApiRequestParams,
+  TProduceMathQuestionsExportApiResponse,
+
+  TProduceMathQuestionImportApiRequestParams,
+  TProduceMathQuestionImportApiResponse,
 } from './mathApi.type';
 
 // FIXME: mockup
@@ -195,6 +234,34 @@ export const deleteMathTextbookApi = createApiWithNoticeMessageGroup({
 });
 
 //
+// (POST) 수학 문항 업로드
+//
+export const produceMathTextbookImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathTextbookImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathTextbookImportApiResponse>(
+      mathApiUrlFactory.produceMathTextbookImport(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathTextbookImport
+});
+
+//
 // (GET) 수학 교과서 히스토리 목록
 //
 export const retrieveMathTextbookHistoriesApi = createApiWithNoticeMessageGroup({
@@ -293,6 +360,90 @@ export const produceMathChapterApi = createApiWithNoticeMessageGroup({
     .produceMathChapter,
 });
 
+//
+// (POST) 수학 대단원 업로드
+//
+export const produceMathChapter1ImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathChapter1ImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathChapter1ImportApiResponse>(
+      mathApiUrlFactory.produceMathChapter1ImportPath(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathChapter1Import
+});
+
+//
+// (POST) 수학 중단원 업로드
+//
+export const produceMathChapter2ImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathChapter2ImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathChapter2ImportApiResponse>(
+      mathApiUrlFactory.produceMathChapter2ImportPath(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathChapter2Import
+});
+
+//
+// (POST) 수학 소단원 업로드
+//
+export const produceMathChapter3ImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathChapter3ImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathChapter3ImportApiResponse>(
+      mathApiUrlFactory.produceMathChapter3ImportPath(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathChapter3Import
+});
+
 // --- --- --- --- --- --- --- --- --- ---
 
 //
@@ -370,6 +521,90 @@ export const produceMathAchievementApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .produceMathAchievement,
+});
+
+//
+// (POST) 수학 성취기준(대) 업로드
+//
+export const produceMathAchievement1ImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathAchievement1ImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathAchievement1ImportApiResponse>(
+      mathApiUrlFactory.produceMathAchievement1ImportPath(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathAchievement1Import
+});
+
+//
+// (POST) 수학 성취기준(중) 업로드
+//
+export const produceMathAchievement2ImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathAchievement2ImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathAchievement2ImportApiResponse>(
+      mathApiUrlFactory.produceMathAchievement2ImportPath(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathAchievement2Import
+});
+
+//
+// (POST) 수학 성취기준 업로드
+//
+export const produceMathAchievement3ImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathAchievement3ImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathAchievement3ImportApiResponse>(
+      mathApiUrlFactory.produceMathAchievement3ImportPath(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathAchievement3Import
 });
 
 // --- --- --- --- --- --- --- --- --- ---
@@ -467,6 +702,62 @@ export const putMathKnowledgeConceptApi = createApiWithNoticeMessageGroup({
     .putMathKnowledgeConcept,
 });
 
+//
+// (POST) 수학 지식개념1 업로드
+//
+export const produceMathKnowledgeConcept1ImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathKnowledgeConcept1ImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathKnowledgeConcept1ImportApiResponse>(
+      mathApiUrlFactory.produceMathKnowledgeConcept1ImportPath(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathKnowledgeConcept1Import
+});
+
+//
+// (POST) 수학 지식개념2 업로드
+//
+export const produceMathKnowledgeConcept2ImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathKnowledgeConcept2ImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathKnowledgeConcept2ImportApiResponse>(
+      mathApiUrlFactory.produceMathKnowledgeConcept2ImportPath(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathKnowledgeConcept2Import
+});
+
 // --- --- --- --- --- --- --- --- --- ---
 
 //
@@ -542,6 +833,62 @@ export const produceMathSeriesSourceApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .produceMathSeriesSources,
+});
+
+//
+// (POST) 수학 시리즈 업로드
+//
+export const produceMathSeriesImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathSeriesImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathSeriesImportApiResponse>(
+      mathApiUrlFactory.produceMathSeriesImportPath(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathSeriesImport
+});
+
+//
+// (POST) 수학 출처 업로드
+//
+export const produceMathSourceImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathSourceImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathSourceImportApiResponse>(
+      mathApiUrlFactory.produceMathSourceImportPath(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathSourceImport
 });
 
 // --- --- --- --- --- --- --- --- --- ---
@@ -639,4 +986,55 @@ export const retrieveMathQuestionHistoriesApi = createApiWithNoticeMessageGroup(
     .apis
     .math
     .retrieveMathQuestionHistories
+});
+
+//
+// (POST) 수학 문항 다운로드
+//
+export const produceMathQuestionsExportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathQuestionsExportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    return api.post<TProduceMathQuestionsExportApiResponse>(
+      mathApiUrlFactory.produceMathQuestionsExport(),
+      payload,
+      {
+        responseType: 'blob',
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathQuestionsExport,
+});
+
+//
+// (POST) 수학 문항 업로드
+//
+export const produceMathQuestionImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathQuestionImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathQuestionImportApiResponse>(
+      mathApiUrlFactory.produceMathQuestionImport(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathQuestionImport
 });

@@ -22,14 +22,16 @@ import {
   InputWithAddon,
   SearchButtonForInputWithAddon,
 } from '@/components/shadcn-ui-custom/InputWithAddon';
-import { 
-  Button,
-} from '@/components/shadcn-ui/ui/button';
-import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
+{/* FIXME: 미사용 처리 */}
+// import { 
+//   Button,
+// } from '@/components/shadcn-ui/ui/button';
+// import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
-import { 
-  LuFileInput,
-} from 'react-icons/lu';
+{/* FIXME: 미사용 처리 */}
+// import { 
+//   LuFileInput,
+// } from 'react-icons/lu';
 // type
 import { 
   mathChapterSearchTypeOptions,
@@ -195,14 +197,15 @@ function _MathChapterTableActions(props: TMathChapterTableActionsProps) {
       </div>
 
       <div className="MathChapterTableActions-rightSide">
-        <TBUTooltip>
+        {/* FIXME: 미사용 처리 */}
+        {/* <TBUTooltip>
           <Button
             className="actionButton"
             disabled>
             <LuFileInput className="icon" />
             다운로드
           </Button>
-        </TBUTooltip>
+        </TBUTooltip> */}
       </div>
     </div>
   );

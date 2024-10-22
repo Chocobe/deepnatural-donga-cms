@@ -22,14 +22,17 @@ import {
   InputWithAddon,
   SearchButtonForInputWithAddon,
 } from '@/components/shadcn-ui-custom/InputWithAddon';
-import { 
-  Button,
-} from '@/components/shadcn-ui/ui/button';
-import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
+{/* FIXME: 미사용 처리 */}
+// import { 
+//   Button,
+// } from '@/components/shadcn-ui/ui/button';
+{/* FIXME: 미사용 처리 */}
+// import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
-import { 
-  LuFileInput,
-} from 'react-icons/lu';
+{/* FIXME: 미사용 처리 */}
+// import { 
+//   LuFileInput,
+// } from 'react-icons/lu';
 // type
 import { 
   mathAchievementSearchTypeOptions,
@@ -198,22 +201,24 @@ function _MathAchievementTableActions(props: TMathAchievementTableActionsProps) 
       </div>
 
       <div className="MathAchievementTableActions-rightSide">
-        <TBUTooltip>
+        {/* FIXME: 미사용 처리 */}
+        {/* <TBUTooltip>
           <Button
             className="actionButton"
             disabled>
             삭제
           </Button>
-        </TBUTooltip>
+        </TBUTooltip> */}
 
-        <TBUTooltip>
+        {/* FIXME: 미사용 처리 */}
+        {/* <TBUTooltip>
           <Button
             className="actionButton"
             disabled>
             <LuFileInput className="icon" />
             다운로드
           </Button>
-        </TBUTooltip>
+        </TBUTooltip> */}
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import {
   useState,
   useMemo,
   useCallback,
+  useEffect,
   memo,
 } from 'react';
 // router
@@ -13,6 +14,8 @@ import {
 import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathQuestionPageStore from '@/store/mathStores/mathQuestionPageStore/mathQuestionPageStore';
+// hook
+import useTableWrapperInitScrollEffect from '@/components/hooks/useTableWrapperInitScrollEffect';
 // ui
 import {
   flexRender,
@@ -67,6 +70,7 @@ function _MathQuestionTable() {
   const mathQuestionsData = useMathQuestionPageStore(state => state.mathQuestionsData);
 
   const setSelectedMathQuestions = useMathQuestionPageStore(state => state.setSelectedMathQuestions);
+  const clearSelectedMathQuestions = useMathQuestionPageStore(state => state.clearSelectedMathQuestions);
 
   const setPreviewMathQuestion = useMathQuestionPageStore(state => state.setPreviewMathQuestion);
 
@@ -256,6 +260,21 @@ function _MathQuestionTable() {
       });
     },
   });
+
+  useTableWrapperInitScrollEffect({
+    $tableRef,
+    effectDef: tableData,
+  });
+
+  //
+  // effect
+  //
+  useEffect(() => {
+    clearSelectedMathQuestions();
+    setRowSelection({});
+
+    // eslint-disable-next-line
+  }, [tableData]);
 
   return (
     <Table

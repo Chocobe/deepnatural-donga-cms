@@ -12,6 +12,10 @@ import {
 import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathTextbookPageStore from '@/store/mathStores/mathTextbookPageStore/mathTextbookPageStore';
+// hook
+import useImportModalSet from '@/components/shadcn-ui-custom/modals/ImportModalSet/hook/useImportModalSet';
+// api
+import ApiManager from '@/apis/ApiManager';
 // ui
 import {
   Accordion,
@@ -26,11 +30,10 @@ import {
   Label,
 } from '@/components/shadcn-ui/ui/label';
 import CommonSelect from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect';
-import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
+import ImportModalSet from '@/components/shadcn-ui-custom/modals/ImportModalSet/ImportModalSet';
 // icon
 import {
   LuChevronDown,
-  LuFileOutput,
   LuPlus,
 } from 'react-icons/lu';
 // type
@@ -43,12 +46,17 @@ import {
   TCMSTerm,
 } from '@/apis/models/cmsCommonModel.type';
 import { 
+  TProduceMathTextbookImportApiRequestParams,
   TRetrieveMathTextbooksApiRequestParams,
 } from '@/apis/math/mathApi.type';
 import { 
   mathCurriculumFilterOptions, 
   TMathCurriculum,
 } from '@/apis/models/mathModel.type';
+import { 
+  TImportModalSetTemplateFile,
+  TImportModalSetApiFunctionData,
+} from '@/components/shadcn-ui-custom/modals/ImportModalSet/ImportModalSet.type';
 // style
 import { 
   cn,
@@ -80,6 +88,12 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
   // hook
   //
   const navigate = useNavigate();
+
+  const {
+    isOpenImportModal,
+    openImportModal,
+    closeImportModal,
+  } = useImportModalSet();
 
   //
   // callback
@@ -256,6 +270,42 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
     onChangeTerm,
   ]);
 
+  const importModalSetTemplateFiles = useMemo<TImportModalSetTemplateFile[]>(() => [
+    {
+      // FIXME: mockup
+      // FIXME: 실제 템플릿 파일 적용하기
+      text: '(mockup) 교과서 .xlsx 템플릿 다운로드',
+      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
+    },
+  ], []);
+
+  const importApiFunctions = useMemo<TImportModalSetApiFunctionData[]>(() => [
+    {
+      label: '수학 교과서',
+      apiFunction: async file => {
+        if (!file) {
+          return null;
+        }
+
+        const params: TProduceMathTextbookImportApiRequestParams = {
+          payload: {
+            file,
+          },
+        };
+
+        // FIXME: 현재 500 응답 받는 상태 (업로드 테스트 파일 필요)
+        const response = await ApiManager
+          .math
+          .produceMathTextbookImportApi
+          .callWithNoticeMessageGroup(params);
+
+        console.log('response.data: ', response?.data);
+
+        closeImportModal();
+      },
+    },
+  ], [closeImportModal]);
+
   return (
     <div className="MathTextbookHeader">
       <Accordion
@@ -307,14 +357,12 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
       </Accordion>
 
       <div className="MathTextbookHeader-actions">
-        <TBUTooltip>
-          <Button
-            className="actionButton"
-            disabled>
-            <LuFileOutput className="icon" />
-            업로드
-          </Button>
-        </TBUTooltip>
+        <ImportModalSet
+          isOpen={isOpenImportModal}
+          templateFiles={importModalSetTemplateFiles}
+          openImportModal={openImportModal}
+          closeImportModal={closeImportModal}
+          importApiFunctions={importApiFunctions} />
 
         <Button
           className="actionButton"

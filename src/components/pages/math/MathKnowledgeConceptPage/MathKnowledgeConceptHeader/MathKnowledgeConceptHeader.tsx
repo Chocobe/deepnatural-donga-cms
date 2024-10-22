@@ -13,10 +13,9 @@ import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathKnowledgeConceptPageStore from '@/store/mathStores/mathKnowledgeConceptPageStore/mathKnowledgeConceptPageStore';
 // hook
-// FIXME: `성취기준 검색 모달` 확정 시, 주석 해제
-// import useSearchModal from '@/components/shadcn-ui-custom/modals/SearchModal/hook/useSearchModal';
+import useImportModalSet from '@/components/shadcn-ui-custom/modals/ImportModalSet/hook/useImportModalSet';
 // // api
-// import ApiManager from '@/apis/ApiManager';
+import ApiManager from '@/apis/ApiManager';
 // ui
 import {
   Accordion,
@@ -31,18 +30,10 @@ import {
   Label,
 } from '@/components/shadcn-ui/ui/label';
 import CommonSelect from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect';
-import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
-// FIXME: `성취기준 검색 모달` 확정 시, 주석 해제
-// import SearchModalTrigger from '@/components/shadcn-ui-custom/searchModals/SearchModalTrigger/SearchModalTrigger';
-// import SearchModal from '@/components/shadcn-ui-custom/modals/SearchModal/SearchModal';
-// import TableEllipsisCell from '@/components/shadcn-ui-custom/TableEllipsisCell/TableEllipsisCell';
-// import { 
-//   createColumnHelper,
-// } from '@tanstack/react-table';
+import ImportModalSet from '@/components/shadcn-ui-custom/modals/ImportModalSet/ImportModalSet';
 // icon
 import {
   LuChevronDown,
-  LuFileOutput,
   LuPlus,
 } from 'react-icons/lu';
 // type
@@ -55,30 +46,22 @@ import {
   cmsGradeClusterFilterOptions,
 } from '@/apis/models/cmsCommonModel.type';
 import { 
+  TProduceMathKnowledgeConcept1ImportApiRequestParams,
+  TProduceMathKnowledgeConcept2ImportApiRequestParams,
   TRetrieveMathKnowledgeConceptsApiRequestParams,
 } from '@/apis/math/mathApi.type';
 import { 
   mathCurriculumFilterOptions,
-
-  // FIXME: `성취기준 검색 모달` 확정 시, 주석 해제
-  // TMathAchievementFlattenModel,
 } from '@/apis/models/mathModel.type';
-// FIXME: `성취기준 검색 모달` 확정 시, 주석 해제
-// import { 
-//   mathKnowledgeConceptHeaderAchievementSearchTypeOptions,
-// } from './MathKnowledgeConceptHeader.type';
-// util
-// import { 
-//   flatMathAchievementModel,
-// } from '@/utils/flatModels/flatMathModels';
+import { 
+  TImportModalSetTemplateFile,
+  TImportModalSetApiFunctionData,
+} from '@/components/shadcn-ui-custom/modals/ImportModalSet/ImportModalSet.type';
 // style
 import { 
   cn,
 } from '@/lib/shadcn-ui-utils';
 import './MathKnowledgeConceptHeader.css';
-
-// FIXME: `성취기준 검색 모달` 확정 시, 주석 해제
-// const achievementColumnHelper = createColumnHelper<TMathAchievementFlattenModel>();
 
 type TMathKnowledgeConceptHeaderProps = {
   retrieveMathKnowledgeConcepts: (params: TRetrieveMathKnowledgeConceptsApiRequestParams) => Promise<void>;
@@ -110,6 +93,12 @@ function _MathKnowledgeConceptHeader(props: TMathKnowledgeConceptHeaderProps) {
   // hook
   //
   const navigate = useNavigate();
+
+  const {
+    isOpenImportModal,
+    openImportModal,
+    closeImportModal,
+  } = useImportModalSet();
 
   //
   // callback
@@ -176,17 +165,6 @@ function _MathKnowledgeConceptHeader(props: TMathKnowledgeConceptHeaderProps) {
   }, [navigate]);
 
   //
-  // hook
-  //
-  // FIXME: `성취기준 검색 모달` 확정 시, 주석 해제
-  // const {
-  //   isOpenSearchModal,
-  //   onChangeIsOpenSearchModal,
-  //   openSearchModal,
-  //   closeSearchModal,
-  // } = useSearchModal();
-
-  //
   // cache
   //
   const filterItems = useMemo(() => [
@@ -229,107 +207,75 @@ function _MathKnowledgeConceptHeader(props: TMathKnowledgeConceptHeaderProps) {
           onChange={onChangeSelect} />
       ),
     },
-    // FIXME: `성취기준 검색 모달` 확정 시, 주석 해제
-    // {
-    //   id: 'achievement',
-    //   label: '성취기준',
-    //   Component: (
-    //     <TBUTooltip className="w-full">
-    //       <SearchModalTrigger
-    //         id="achievement"
-    //         className="editor"
-    //         value={''}
-    //         onOpen={openSearchModal} />
-    //     </TBUTooltip>
-    //   ),
-    // },
   ], [
     achievement1_curriculum,
     achievement1_classtype,
     achievement1_grade_cluster,
     onChangeSelect,
     onChangeClassType,
-    // FIXME: `성취기준 검색 모달` 확정 시, 주석 해제
-    // openSearchModal,
   ]);
 
-  // FIXME: `성취기준 검색 모달` 확정 시, 주석 해제
-  // const achievementTableColumns = useMemo(() => [
-  //   achievementColumnHelper.accessor('achievement1.no', {
-  //     id: 'achievement1No',
-  //     header: '성취기준\n(대)순번',
-  //   }),
-  //   achievementColumnHelper.accessor('achievement1.title', {
-  //     id: 'achievement1Title',
-  //     header: '성취기준(대)',
-  //     cell: props => {
-  //       const title = props.getValue();
+  const importModalSetTemplateFiles = useMemo<TImportModalSetTemplateFile[]>(() => [
+    {
+      // FIXME: mockup
+      // FIXME: 실제 템플릿 파일 적용하기
+      text: '(mockup) 지식개념1 .csv 템플릿 다운로드',
+      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
+    },
+    {
+      // FIXME: mockup
+      // FIXME: 실제 템플릿 파일 적용하기
+      text: '(mockup) 지식개념2 .csv 템플릿 다운로드',
+      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
+    },
+  ], []);
 
-  //       return (
-  //         <TableEllipsisCell maxRows={1}>
-  //           {title}
-  //         </TableEllipsisCell>
-  //       );
-  //     },
-  //   }),
-  //   achievementColumnHelper.accessor('achievement2.no', {
-  //     id: 'achievement2No',
-  //     header: '성취기준\n(중)순번',
-  //   }),
-  //   achievementColumnHelper.accessor('achievement2.title', {
-  //     id: 'achievement2Title',
-  //     header: '성취기준(중)',
-  //     cell: props => {
-  //       const title = props.getValue();
+  const importApiFunctions = useMemo<TImportModalSetApiFunctionData[]>(() => [
+    {
+      label: '지식개념1',
+      apiFunction: async (file: File) => {
+        if (!file) {
+          return null;
+        }
 
-  //       return (
-  //         <TableEllipsisCell maxRows={1}>
-  //           {title}
-  //         </TableEllipsisCell>
-  //       );
-  //     },
-  //   }),
-  //   achievementColumnHelper.accessor('achievement3.no', {
-  //     id: 'achievement3No',
-  //     header: '성취기준명\n순번',
-  //   }),
-  //   achievementColumnHelper.accessor('achievement3.title', {
-  //     id: 'achievement3Title',
-  //     header: '성취기준명',
-  //     cell: props => {
-  //       const title = props.getValue();
+        const params: TProduceMathKnowledgeConcept1ImportApiRequestParams = {
+          payload: {
+            file,
+          },
+        };
 
-  //       return (
-  //         <TableEllipsisCell maxRows={1}>
-  //           {title}
-  //         </TableEllipsisCell>
-  //       );
-  //     },
-  //   }),
-  //   achievementColumnHelper.display({
-  //     id: 'code',
-  //     header: '표준코드',
-  //     cell: props => {
-  //       const achievement3 = props.row.original.achievement3;
+        await ApiManager
+          .math
+          .produceMathKnowledgeConcept1ImportApi
+          .callWithNoticeMessageGroup(params);
 
-  //       return achievement3?.code ?? '';
-  //     },
-  //   }),
-  //   achievementColumnHelper.accessor('achievement1.curriculum', {
-  //     id: 'curriculum',
-  //     header: '교육과정',
-  //   }),
-  //   achievementColumnHelper.accessor('achievement1.classtype', {
-  //     id: 'classtype',
-  //     header: '학교급',
-  //   }),
-  //   achievementColumnHelper.accessor('achievement1.grade_cluster', {
-  //     id: 'cluster',
-  //     header: '학년(군)',
-  //   }),
-  // ], []);
+        closeImportModal();
+      },
+    },
+    {
+      label: '지식개념2',
+      apiFunction: async (file: File) => {
+        if (!file) {
+          return null;
+        }
 
-  return (<>
+        const params: TProduceMathKnowledgeConcept2ImportApiRequestParams = {
+          payload: {
+            file,
+          },
+        };
+
+        await ApiManager
+          .math
+          .produceMathKnowledgeConcept2ImportApi
+          .callWithNoticeMessageGroup(params);
+
+        closeImportModal();
+      },
+    },
+  ], [closeImportModal]);
+
+  return (
     <div className="MathKnowledgeConceptHeader">
       <Accordion
         className="MathKnowledgeConceptHeader-accordion"
@@ -379,46 +325,22 @@ function _MathKnowledgeConceptHeader(props: TMathKnowledgeConceptHeaderProps) {
       </Accordion>
 
       <div className="MathKnowledgeConceptHeader-actions">
-        <TBUTooltip>
-          <Button
-            className="actionButton"
-            disabled>
-            <LuFileOutput className="icon" />
-            업로드
-          </Button>
-        </TBUTooltip>
+        <ImportModalSet
+          isOpen={isOpenImportModal}
+          openImportModal={openImportModal}
+          closeImportModal={closeImportModal}
+          templateFiles={importModalSetTemplateFiles}
+          importApiFunctions={importApiFunctions} />
 
-        <TBUTooltip>
-          <Button
-            className="actionButton"
-            onClick={addMathKnowledgeConcept}>
-            <LuPlus className="icon" />
-            지식개념 추가
-          </Button>
-        </TBUTooltip>
+        <Button
+          className="actionButton"
+          onClick={addMathKnowledgeConcept}>
+          <LuPlus className="icon" />
+          지식개념 추가
+        </Button>
       </div>
     </div>
-
-    {/* FIXME: `성취기준 검색 모달` 확정 시, 주석 해제 */}
-    {/* <SearchModal 
-      className="MathKnowledgeConceptHeader-achievementSearchModal"
-      isOpen={isOpenSearchModal}
-      onChangeIsOpen={onChangeIsOpenSearchModal}
-      title="성취기준"
-      description="적용할 성취기준을 선택해 주세요."
-      searchTypeOptions={mathKnowledgeConceptHeaderAchievementSearchTypeOptions}
-      retrieveData={ApiManager
-        .math
-        .retrieveMathAchievementsApi
-        .callWithNoticeMessageGroup
-      }
-      flatData={flatMathAchievementModel}
-      tableColumns={achievementTableColumns}
-      onClickRow={achievement => {
-        console.log('onClickRow() - achievement: ', achievement);
-        closeSearchModal();
-      }} /> */}
-  </>);
+  );
 }
 
 const MathKnowledgeConceptHeader = memo(_MathKnowledgeConceptHeader);

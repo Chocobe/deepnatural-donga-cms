@@ -12,6 +12,10 @@ import {
 import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathSeriesSourcePageStore from '@/store/mathStores/mathSeriesSourcePageStore/mathSeriesSourcePageStore';
+// hook
+import useImportModalSet from '@/components/shadcn-ui-custom/modals/ImportModalSet/hook/useImportModalSet';
+// api
+import ApiManager from '@/apis/ApiManager';
 // ui
 import {
   Accordion,
@@ -26,11 +30,10 @@ import {
   Label,
 } from '@/components/shadcn-ui/ui/label';
 import CommonSelect from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect';
-import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
+import ImportModalSet from '@/components/shadcn-ui-custom/modals/ImportModalSet/ImportModalSet';
 // icon
 import {
   LuChevronDown,
-  LuFileOutput,
   LuPlus,
 } from 'react-icons/lu';
 // type
@@ -45,8 +48,14 @@ import {
   mathCurriculumFilterOptions,
 } from '@/apis/models/mathModel.type';
 import { 
+  TProduceMathSeriesImportApiRequestParams,
+  TProduceMathSourceImportApiRequestParams,
   TRetrieveMathSeriesSourcesApiRequestParams,
 } from '@/apis/math/mathApi.type';
+import { 
+  TImportModalSetTemplateFile,
+  TImportModalSetApiFunctionData,
+} from '@/components/shadcn-ui-custom/modals/ImportModalSet/ImportModalSet.type';
 // style
 import { 
   cn,
@@ -79,6 +88,17 @@ function _MathSeriesSourceHeader(props: TMathSeriesSourceHeaderProps) {
   // state
   //
   const [accordionValue, setAccordionValue] = useState('filters');
+
+  //
+  // hook
+  //
+  const navigate = useNavigate();
+
+  const {
+    isOpenImportModal,
+    openImportModal,
+    closeImportModal,
+  } = useImportModalSet();
 
   //
   // callback
@@ -136,6 +156,13 @@ function _MathSeriesSourceHeader(props: TMathSeriesSourceHeaderProps) {
     retrieveMathSeriesSources,
     updateSearchParamsForRetrieveMathSeriesSourcesApi,
   ]);
+
+  const addMathSeriesSource = useCallback(() => {
+    navigate(routePathFactory
+      .math
+      .getSeriesSourceAddPage()
+    );
+  }, [navigate]);
 
   //
   // cache
@@ -208,20 +235,65 @@ function _MathSeriesSourceHeader(props: TMathSeriesSourceHeaderProps) {
     onChangeClassType,
   ]);
 
-  //
-  // hook
-  //
-  const navigate = useNavigate();
+  const importModalSetTemplateFiles = useMemo<TImportModalSetTemplateFile[]>(() => [
+    {
+      // FIXME: mockup
+      // FIXME: 실제 템플릿 파일 적용하기
+      text: '(mockup) 시리즈 .csv 템플릿 다운로드',
+      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
+    },
+    {
+      // FIXME: mockup
+      // FIXME: 실제 템플릿 파일 적용하기
+      text: '(mockup) 출처 .csv 템플릿 다운로드',
+      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
+    },
+  ], []);
 
-  //
-  // callback
-  //
-  const addMathSeriesSource = useCallback(() => {
-    navigate(routePathFactory
-      .math
-      .getSeriesSourceAddPage()
-    );
-  }, [navigate]);
+  const importApiFunctions = useMemo<TImportModalSetApiFunctionData[]>(() => [
+    {
+      label: '시리즈',
+      apiFunction: async (file: File) => {
+        if (!file) {
+          return null;
+        }
+
+        const params: TProduceMathSeriesImportApiRequestParams = {
+          payload: {
+            file,
+          },
+        };
+
+        await ApiManager
+          .math
+          .produceMathSeriesImportApi
+          .callWithNoticeMessageGroup(params);
+
+        closeImportModal();
+      },
+    },
+    {
+      label: '출처',
+      apiFunction: async (file: File) => {
+        if (!file) {
+          return null;
+        }
+
+        const params: TProduceMathSourceImportApiRequestParams = {
+          payload: {
+            file,
+          },
+        };
+
+        await ApiManager
+          .math
+          .produceMathSourceImportApi
+          .callWithNoticeMessageGroup(params);
+
+        closeImportModal();
+      },
+    },
+  ], [closeImportModal]);
 
   return (
     <div className="MathSeriesSourceHeader">
@@ -273,14 +345,12 @@ function _MathSeriesSourceHeader(props: TMathSeriesSourceHeaderProps) {
       </Accordion>
 
       <div className="MathSeriesSourceHeader-actions">
-        <TBUTooltip>
-          <Button
-            className="actionButton"
-            disabled>
-            <LuFileOutput className="icon" />
-            업로드
-          </Button>
-        </TBUTooltip>
+        <ImportModalSet
+          isOpen={isOpenImportModal}
+          openImportModal={openImportModal}
+          closeImportModal={closeImportModal}
+          templateFiles={importModalSetTemplateFiles}
+          importApiFunctions={importApiFunctions} />
 
         <Button
           className="actionButton"
