@@ -97,6 +97,9 @@ import {
 
   TProduceMathQuestionsExportApiRequestParams,
   TProduceMathQuestionsExportApiResponse,
+
+  TProduceMathQuestionImportApiRequestParams,
+  TProduceMathQuestionImportApiResponse,
 } from './mathApi.type';
 
 // FIXME: mockup
@@ -665,4 +668,32 @@ export const produceMathQuestionsExportApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .produceMathQuestionsExport,
+});
+
+//
+// (POST) 수학 문항 업로드
+//
+export const produceMathQuestionImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathQuestionImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathQuestionImportApiResponse>(
+      mathApiUrlFactory.produceMathQuestionImport(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathQuestionImport
 });

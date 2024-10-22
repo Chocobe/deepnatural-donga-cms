@@ -10,13 +10,11 @@ import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathQuestionPageStore from '@/store/mathStores/mathQuestionPageStore/mathQuestionPageStore';
 // hook
-// FIXME: KC 검색 모달 구현하기
-// import useSearchModal from '@/components/shadcn-ui-custom/modals/SearchModal/hook/useSearchModal';
+import useImportModalSet from '@/components/shadcn-ui-custom/modals/ImportModalSet/hook/useImportModalSet';
 // api
-// FIXME: KC 검색 모달 구현하기
-// import ApiManager from '@/apis/ApiManager';
-import MathKCFilterModalSet from '../../MathQuestionDetailPage/MathKCFilterModalSet/MathKCFilterModalSet';
+import ApiManager from '@/apis/ApiManager';
 // ui
+import MathKCFilterModalSet from '../../MathQuestionDetailPage/MathKCFilterModalSet/MathKCFilterModalSet';
 import {
   Accordion,
   AccordionContent,
@@ -30,34 +28,15 @@ import {
   Label,
 } from '@/components/shadcn-ui/ui/label';
 import CommonSelect from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect';
-// FIXME: KC 검색 모달 구현하기
-// import SearchModal from '@/components/shadcn-ui-custom/modals/SearchModal/SearchModal';
-// import { 
-//   createColumnHelper,
-// } from '@tanstack/react-table';
+import ImportModalSet from '@/components/shadcn-ui-custom/modals/ImportModalSet/ImportModalSet';
 import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
 import {
   LuChevronDown,
-  LuFileOutput,
   LuPencil,
 } from 'react-icons/lu';
-// util
-// FIXME: KC 검색 모달 구현하기
-// import { 
-//   flatMathSeriesModel,
-// } from '@/utils/flatModels/flatMathModels';
-// type
-// FIXME: KC 검색 모달 구현하기
-// import { 
-//   mathQuestionHeaderSeriesSearchTypeOptions,
-//   mathQuestionHeaderTextbookSearchTypeOptions,
-// } from './MathQuestionHeader.type';
 import { 
   mathCurriculumFilterOptions,
-  // FIXME: KC 검색 모달 구현하기
-  // TMathSeriesSourceFlattenModel, 
-  // TMathTextbookModel,
 } from '@/apis/models/mathModel.type';
 import { 
   cmsClassTypeFilterOptions,
@@ -67,11 +46,15 @@ import {
   TCMSClassType,
 } from '@/apis/models/cmsCommonModel.type';
 import { 
+  TProduceMathQuestionImportApiRequestParams,
   TRetrieveMathQuestionsApiRequestParams,
 } from '@/apis/math/mathApi.type';
 import { 
   TKC1SelectionMapper,
 } from '../../MathQuestionDetailPage/MathKCFilterModalSet/MathKCSelectionSection/MathKCSelectionSection.type';
+import { 
+  TImportModalSetTemplateFile,
+} from '@/components/shadcn-ui-custom/modals/ImportModalSet/ImportModalSet.type';
 // style
 import { 
   cn,
@@ -104,6 +87,12 @@ function _MathQuestionHeader(props: TMathQuestionHeaderProps) {
   // state
   //
   const [accordionValue, setAccordionValue] = useState('filters');
+
+  const {
+    isOpenImportModal,
+    openImportModal,
+    closeImportModal,
+  } = useImportModalSet();
 
   //
   // callback
@@ -195,6 +184,28 @@ function _MathQuestionHeader(props: TMathQuestionHeaderProps) {
     updateSearchParamsForRetrieveMathQuestionsApi,
   ]);
 
+  const produceMathQuestionImport = useCallback(async (file: File) => {
+    if (!file) {
+      return;
+    }
+
+    const params: TProduceMathQuestionImportApiRequestParams = {
+      payload: {
+        file,
+      },
+    };
+
+    // FIXME: 현재 500 응답 받는 상태
+    const response = await ApiManager
+      .math
+      .produceMathQuestionImportApi
+      .callWithNoticeMessageGroup(params);
+
+    console.log('response.data: ', response?.data);
+
+    closeImportModal();
+  }, [closeImportModal]);
+
   //
   // cache
   //
@@ -267,6 +278,17 @@ function _MathQuestionHeader(props: TMathQuestionHeaderProps) {
     onChangeKC2,
   ]);
 
+  const importModalSetTemplateFiles = useMemo<TImportModalSetTemplateFile[]>(() => [
+    {
+      text: '문항 .xlsx 템플릿 다운로드',
+      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
+    },
+    {
+      text: '문항 .csv 템플릿 다운로드',
+      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
+    },
+  ], []);
+
   return (<>
     <div className="MathQuestionHeader">
       <Accordion
@@ -317,12 +339,12 @@ function _MathQuestionHeader(props: TMathQuestionHeaderProps) {
       </Accordion>
 
       <div className="MathQuestionHeader-actions">
-        <Button
-          className="actionButton"
-          disabled>
-          <LuFileOutput className="icon" />
-          업로드
-        </Button>
+        <ImportModalSet
+          isOpen={isOpenImportModal}
+          templateFiles={importModalSetTemplateFiles}
+          openImportModal={openImportModal}
+          closeImportModal={closeImportModal}
+          importApiFunction={produceMathQuestionImport} />
 
         <TBUTooltip>
           <Button

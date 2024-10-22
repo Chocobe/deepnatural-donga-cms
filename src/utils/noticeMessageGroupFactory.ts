@@ -77,6 +77,7 @@ const noticeMessageGroupFactory: {
       putMathQuestion: TNoticeMessageGroup;
       retrieveMathQuestionHistories: TNoticeMessageGroup;
       produceMathQuestionsExport: TNoticeMessageGroup;
+      produceMathQuestionImport: TNoticeMessageGroup;
     };
     mathOCR: {
       retrieveMathPixAppKey: TNoticeMessageGroup;
@@ -655,6 +656,22 @@ const noticeMessageGroupFactory: {
         successSonner: () => ({
           title: '',
           message: '선택하신 문항을 성공적으로 다운로드 완료하였습니다.',
+        }),
+      },
+
+      // (GET) 수학 문항 업로드
+      produceMathQuestionImport: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 문항을 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 문항 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 문항을 성공적으로 업로드 완료하였습니다.',
         }),
       },
     },

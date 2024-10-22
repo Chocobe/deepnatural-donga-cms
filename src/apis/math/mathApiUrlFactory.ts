@@ -235,6 +235,11 @@ const mathApiUrlFactory = (() => {
     produceMathQuestionsExport() {
       return `${BASE_PATH}question/export/`;
     },
+
+    /** (POST) 수학 문항 업로드 */
+    produceMathQuestionImport() {
+      return `${BASE_PATH}question/import/`;
+    },
   };
 
   return {

@@ -390,3 +390,11 @@ export type TProduceMathQuestionsExportApiRequestParams = TApiRequestBodyParams<
 // FIXME: 실제 응답 확인하기
 /** (POST) 수학 문항 다운로드 Response */
 export type TProduceMathQuestionsExportApiResponse = Blob;
+
+/** (POST) 수학 문항 업로드 RequestParams */
+export type TProduceMathQuestionImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+// FIXME: 실제 응답 확인하기
+/** (POST) 수학 문항 업로드 Response */
+export type TProduceMathQuestionImportApiResponse = any;
