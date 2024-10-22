@@ -76,6 +76,14 @@ export type TDeleteMathTextbookApiRequestParams = TApiRequestNonBodyParams<{
 /** (DELETE) 수학 교과서 삭제 Response */
 export type TDeleteMathTextbookApiResponse = void;
 
+/** (POST) 수학 문항 업로드 RequestParams */
+export type TProduceMathTextbookImportApiRequestParams = TApiRequestBodyParams<void, void, {
+  file: File;
+}>;
+// FIXME: 실제 응답 확인하기
+/** (POST) 수학 문항 업로드 Response */
+export type TProduceMathTextbookImportApiResponse = any;
+
 // --- --- --- --- --- --- --- --- --- ---
 
 /**

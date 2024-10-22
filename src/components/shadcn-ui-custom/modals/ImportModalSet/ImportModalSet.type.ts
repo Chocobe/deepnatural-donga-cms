@@ -5,5 +5,5 @@ export type TImportModalSetTemplateFile = {
 
 export type TImportModalSetApiFunctionData = {
   label: string;
-  apiFunction: (file: File) => Promise<any>;
+  apiFunction: (file: File) => Promise<any> | null;
 };

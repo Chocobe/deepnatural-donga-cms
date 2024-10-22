@@ -24,6 +24,9 @@ import {
 
   TDeleteMathTextbookApiRequestParams,
   TDeleteMathTextbookApiResponse,
+
+  TProduceMathTextbookImportApiRequestParams,
+  TProduceMathTextbookImportApiResponse,
 } from './mathApi.type';
 import {
   TRetrieveMathChaptersApiRequestParams,
@@ -198,6 +201,34 @@ export const deleteMathTextbookApi = createApiWithNoticeMessageGroup({
     .apis
     .math
     .deleteMathTextbook,
+});
+
+//
+// (POST) 수학 문항 업로드
+//
+export const produceMathTextbookImportApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathTextbookImportApiRequestParams) => {
+    const {
+      payload,
+    } = params;
+
+    const formData = new FormData();
+    formData.append('file', payload.file);
+
+    return api.post<TProduceMathTextbookImportApiResponse>(
+      mathApiUrlFactory.produceMathTextbookImport(),
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .math
+    .produceMathQuestionImport
 });
 
 //

@@ -43,6 +43,7 @@ const noticeMessageGroupFactory: {
       produceMathTextbook: TNoticeMessageGroup;
       deleteMathTextbook: TNoticeMessageGroup;
       retrieveMathTextbookHistories: TNoticeMessageGroup;
+      produceMathTextbookImport: TNoticeMessageGroup;
 
       // 단원정보
       retrieveMathChapters: TNoticeMessageGroup;
@@ -325,6 +326,22 @@ const noticeMessageGroupFactory: {
         }),
         successMessage: undefined,
         successSonner: undefined,
+      },
+
+      // (POST) 수학 교과서 업로드
+      produceMathTextbookImport: {
+        loadingMessage: () => ({
+          title: '',
+          message: '수학 교과서를 업로드 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('수학 교과서 업로드 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '선택하신 교과서를 성공적으로 업로드 완료하였습니다.',
+        }),
       },
 
       // --- --- --- --- --- --- --- --- --- ---
@@ -659,7 +676,7 @@ const noticeMessageGroupFactory: {
         }),
       },
 
-      // (GET) 수학 문항 업로드
+      // (POST) 수학 문항 업로드
       produceMathQuestionImport: {
         loadingMessage: () => ({
           title: '',

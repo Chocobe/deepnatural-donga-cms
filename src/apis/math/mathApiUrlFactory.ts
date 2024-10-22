@@ -59,6 +59,11 @@ const mathApiUrlFactory = (() => {
 
       return `${this.retrieveMathTextbooks()}${textbookId}/`;
     },
+
+    /** (POST) 수학 교과서 업로드 */
+    produceMathTextbookImport() {
+      return `${BASE_PATH}textbooks/import/`;
+    },
   };
 
   //
