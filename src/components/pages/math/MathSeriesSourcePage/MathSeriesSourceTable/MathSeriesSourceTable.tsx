@@ -14,6 +14,8 @@ import {
 import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathSeriesSourcePageStore from '@/store/mathStores/mathSeriesSourcePageStore/mathSeriesSourcePageStore';
+// hook
+import useTableWrapperInitScrollEffect from '@/components/hooks/useTableWrapperInitScrollEffect';
 // ui
 import {
   flexRender,
@@ -179,6 +181,11 @@ function _MathSeriesSourceTable() {
   });
 
   const navigate = useNavigate();
+
+  useTableWrapperInitScrollEffect({
+    $tableRef,
+    effectDef: tableData,
+  });
 
   //
   // callback

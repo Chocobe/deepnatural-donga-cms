@@ -14,6 +14,8 @@ import {
 import routePathFactory from '@/routes/routePathFactory';
 // store
 import useMathQuestionPageStore from '@/store/mathStores/mathQuestionPageStore/mathQuestionPageStore';
+// hook
+import useTableWrapperInitScrollEffect from '@/components/hooks/useTableWrapperInitScrollEffect';
 // ui
 import {
   flexRender,
@@ -257,6 +259,11 @@ function _MathQuestionTable() {
         setSelectedMathQuestions(selectedMathQuestions);
       });
     },
+  });
+
+  useTableWrapperInitScrollEffect({
+    $tableRef,
+    effectDef: tableData,
   });
 
   //
