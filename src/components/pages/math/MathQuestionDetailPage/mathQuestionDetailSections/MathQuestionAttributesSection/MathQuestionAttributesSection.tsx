@@ -17,7 +17,6 @@ import MathQuestionDetailSectionTemplate from '../../MathQuestionDetailSectionTe
 import MathQuestionDetailSectionItemTemplate, { 
   TMathQuestionDetailSectionItemTemplateProps,
 } from '../../MathQuestionDetailSectionItemTemplate/MathQuestionDetailSectionItemTemplate';
-import MathQuestionMathJaxEditor from '../MathQuestionMathJaxEditor/MathQuestionMathJaxEditor';
 import { 
   Input,
 } from '@/components/shadcn-ui/ui/input';
@@ -27,14 +26,6 @@ import SearchModal from '@/components/shadcn-ui-custom/modals/SearchModal/Search
 import { 
   createColumnHelper,
 } from '@tanstack/react-table';
-// import { 
-//   Button,
-// } from '@/components/shadcn-ui/ui/button';
-// import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
-// icon
-// import { 
-//   LuPlus,
-// } from 'react-icons/lu';
 // util
 import { 
   flatMathAchievementModel,
@@ -232,7 +223,7 @@ function _MathQuestionAttributesSection() {
       components: [
         {
           Editor: (
-            <MathQuestionMathJaxEditor
+            <Input
               id="keyword"
               value={keyword}
               onChange={onChangeInput} />

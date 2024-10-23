@@ -4,11 +4,14 @@ import {
 } from 'react';
 // store
 import useMathQuestionToolPageStore from '@/store/mathStores/mathQuestionToolPageStore/mathQuestionToolPageStore';
-// hook
-import useMathQuestionToolErrorModal from '../../ui/MathQuestionToolErrorModal/hooks/useMathQuestionToolErrorModal';
+import useResultNoticeModalStore from '@/store/modalStores/resultNoticeModalStore/resultNoticeModalStore';
+// api
+import ApiManager from '@/apis/ApiManager';
+// type
 import { 
-  TSubmitApiPayload,
-} from '../../../network/network.type/taskApi.type';
+  TMathToolSubmitAttributes,
+  TProduceMathToolSubmitApiRequestParams,
+} from '@/apis/mathTool/mathToolApi.type';
 import { 
   TSummarizedMetadata,
   chapter1MetadataTemplate,
@@ -22,12 +25,6 @@ import {
 import { 
   TMathToolKnowledgeConceptModel,
 } from '@/apis/mathTool/mathToolApi.type';
-// api
-// FIXME: API 연동 후, 적용하기
-// import ApiManager from '../../../network/ApiManager';
-import apiFeedbackMessageFactory, {
-  createErrorMessage,
-} from '../../../network/apiFeedbackMessageFactory';
 
 class CustomError extends Error {
   detail: string;
@@ -60,17 +57,12 @@ const useOnClickSubmit = () => {
   const subjectState = useMathQuestionToolPageStore(state => state.ui.state.result.subject);
 
   const initResult_action = useMathQuestionToolPageStore(state => state.ui.action.initResult_action);
-  const setApiLoadingUiState_action = useMathQuestionToolPageStore(state => state.ui.action.setApiLoadingUiState_action);
-  const resetApiLoadingUiState_action = useMathQuestionToolPageStore(state => state.ui.action.resetApiLoadingUiState_action);
   const updateSubmissionStatistics_action = useMathQuestionToolPageStore(state => state.ui.action.updateSubmissionStatistics_action);
 
   //
-  // hook
+  // resultNoticeModal store
   //
-  // const toast = useToast();
-  const { 
-    openErrorModal,
-  } = useMathQuestionToolErrorModal();
+  const openErrorNoticeModal = useResultNoticeModalStore(state => state.openErrorNoticeModal);
 
   //
   // callback
@@ -104,7 +96,7 @@ const useOnClickSubmit = () => {
           ...payload,
           [key]: value,
         };
-      }, {} as TSubmitApiPayload['metadata']);
+      }, {} as TMathToolSubmitAttributes);
   }, [metadataState]);
 
   const _createInitialResult = useCallback((): Record<string, any> => {
@@ -354,58 +346,43 @@ const useOnClickSubmit = () => {
   ]);
 
   const onClickSubmit = useCallback(async () => {
-    setApiLoadingUiState_action({
-      isLoading: true,
-      message: apiFeedbackMessageFactory
-        .taskApi
-        .submitRequest(),
-    });
-
     try {
-      const payload: TSubmitApiPayload = {
-        metadata: createMetadataPayload(),
-        results: createResultsPayload(),
+      const params: TProduceMathToolSubmitApiRequestParams = {
+        payload: {
+          metadata: createMetadataPayload(),
+          results: createResultsPayload(),
+        },
       };
 
-      // FIXME: API 연동 후, 적용하기
-      // await ApiManager.submit(payload);
-      console.log('submit payload: ', payload);
+      const response = await ApiManager
+        .mathTool
+        .produceMathToolSubmitApi
+        .callWithNoticeMessageGroup(params);
 
-      // FIXME: toast 적용하기
-      // toast({
-      //   title: '제출 되었습니다.',
-      //   status: 'success',
-      //   position: 'top',
-      //   isClosable: true,
-      //   duration: 5000,
-      // });
+      if (!response?.data) {
+        // 제출 실패
+        return;
+      }
 
       updateSubmissionStatistics_action();
       initResult_action();
     } catch(error: any) {
-      const message = createErrorMessage({
-        error,
-        createDefaultErrorMessage: apiFeedbackMessageFactory
-          .taskApi
-          .submitFailure,
+      setTimeout(() => {
+        openErrorNoticeModal({
+          title: '',
+          message: error.detail ?? '신규 문항 제출 중 에러가 발생하였습니다.',
+          firstButton: {
+            text: '확인',
+          },
+        });
       });
-
-      openErrorModal({
-        buttonActionType: 'close',
-        message,
-      });
-    } finally {
-      resetApiLoadingUiState_action();
     }
   }, [
-    // toast,
-    createMetadataPayload, 
+    createMetadataPayload,
     createResultsPayload,
-    openErrorModal,
-    initResult_action,
-    resetApiLoadingUiState_action,
-    setApiLoadingUiState_action,
     updateSubmissionStatistics_action,
+    initResult_action,
+    openErrorNoticeModal,
   ]);
 
   return onClickSubmit;

@@ -150,6 +150,8 @@ export const initialMathQuestionPageStoreState: TMathQuestionPageStoreState = {
       null,
     ],
     kc2: undefined,
+
+    aidt_info: '',
   },
 
   selectedMathQuestions: undefined,

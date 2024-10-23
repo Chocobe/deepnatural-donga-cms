@@ -97,7 +97,6 @@ function _MathQuestionMetadataSection() {
             <Input
               id="internal_id"
               value={internal_id}
-              isReadOnly
               onChange={onChangeInput} />
           ),
         },

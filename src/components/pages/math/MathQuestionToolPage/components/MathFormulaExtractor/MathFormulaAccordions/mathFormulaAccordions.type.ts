@@ -429,12 +429,28 @@ const choiceTypeOptions = [
 // Impl - TQuestionSetTemplate
 //
 export const questionSetCommonTemplate: TQuestionSetTemplate = [
+  {
+    id: 'internal_id',
+    label: 'Internal ID',
+    type: 'text',
+    placeholder: '문항 ID를 입력해주세요',
+    required: true,
+    value: '',
+  },
   { 
     id: 'source_page_no',
     label: '출처 페이지', 
     type: 'number', 
     placeholder: '출처 페이지를 입력해주세요',
     required: true,
+    value: '',
+  },
+  { 
+    id: 'source_question_no',
+    label: '출처 문항 번호', 
+    type: 'text', 
+    placeholder: '출처 문항 번호를 입력해주세요',
+    required: false,
     value: '',
   },
   { 
@@ -540,6 +556,14 @@ const questionSetChoiceTemplateFactory = (): TQuestionSetTemplate => {
       required: false,
       value: false,
     },
+    {
+      id: 'aidt_info',
+      label: 'AIDT INFO',
+      type: 'text',
+      placeholder: 'AIDT 를 입력해주세요',
+      required: false,
+      value: '',
+    },
   ];
 };
 
@@ -583,10 +607,18 @@ const questionSetShortAnswerTemplateFactory = (
       required: false,
       value: false,
     },
+    {
+      id: 'aidt_info',
+      label: 'AIDT INFO',
+      type: 'text',
+      placeholder: 'AIDT 를 입력해주세요',
+      required: false,
+      value: '',
+    },
   ];
 };
 
-// 주관식(선택형)
+// 주관식(선택형-기본/무순/유순)
 const questionSetShortChoiceTemplateFactory = (
   shortAnswerCount = 0
 ): TQuestionSetTemplate => {
@@ -642,6 +674,14 @@ const questionSetShortChoiceTemplateFactory = (
       placeholder: '개별 출제 문항입니다.',
       required: false,
       value: false,
+    },
+    {
+      id: 'aidt_info',
+      label: 'AIDT INFO',
+      type: 'text',
+      placeholder: 'AIDT 를 입력해주세요',
+      required: false,
+      value: '',
     },
   ];
 };
@@ -699,6 +739,14 @@ const questionSetLongAnswerTemplateFactory = (): TQuestionSetTemplate => {
       required: false,
       value: false,
     },
+    {
+      id: 'aidt_info',
+      label: 'AIDT INFO',
+      type: 'text',
+      placeholder: 'AIDT 를 입력해주세요',
+      required: false,
+      value: '',
+    },
   ];
 };
 
@@ -728,6 +776,14 @@ const questionSetDrawingAnswerTemplateFactory = (): TQuestionSetTemplate => {
       placeholder: '개별 출제 문항입니다.',
       required: false,
       value: false,
+    },
+    {
+      id: 'aidt_info',
+      label: 'AIDT INFO',
+      type: 'text',
+      placeholder: 'AIDT 를 입력해주세요',
+      required: false,
+      value: '',
     },
   ];
 };

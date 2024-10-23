@@ -23,6 +23,9 @@ import {
 
   TRetrieveMathToolKnowledgeConceptsApiRequestParams,
   TRetrieveMathToolKnowledgeConceptsApiResponse,
+
+  TProduceMathToolSubmitApiRequestParams,
+  TProduceMathToolSubmitApiResponse,
 } from './mathToolApi.type';
 
 //
@@ -155,4 +158,24 @@ export const retrieveMathToolKnowledgeConceptsApi = createApiWithNoticeMessageGr
     .apis
     .mathTool
     .retrieveMathToolKnowledgeConcepts,
+});
+
+//
+// 수학 작업도구 제출
+//
+export const produceMathToolSubmitApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TProduceMathToolSubmitApiRequestParams) => {
+    console.group('produceMathToolSubmitApi()');
+    console.log('params: ', params);
+    console.groupEnd();
+
+    return api.post<TProduceMathToolSubmitApiResponse>(
+      mathToolApiUrlFactory.produceMathToolSubmitPath(),
+      params.payload
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .mathTool
+    .produceMathToolSubmit
 });

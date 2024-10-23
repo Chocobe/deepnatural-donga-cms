@@ -107,6 +107,7 @@ const noticeMessageGroupFactory: {
       retrieveMathToolChapter2: TNoticeMessageGroup;
       retrieveMathToolChapter3: TNoticeMessageGroup;
       retrieveMathToolKnowledgeConcepts: TNoticeMessageGroup;
+      produceMathToolSubmit: TNoticeMessageGroup;
     }
   };
 
@@ -1034,7 +1035,23 @@ const noticeMessageGroupFactory: {
         successMessage: undefined,
         successSonner: undefined,
       },
-    }
+
+      // (POST) 수학 작업도구 제출
+      produceMathToolSubmit: {
+        loadingMessage: () => ({
+          title: '',
+          message: '잠시만 기다려주세요.\n제출 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('문항 제출 중 네트워크 에러가 발생하였습니다.\n인터넷이 원활한 곳에서 다시 시도해 주세요.'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '제출한 문항이 성공적으로 등록되었습니다.'
+        }),
+      },
+    },
   },
 
   uis: {

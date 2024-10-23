@@ -29,7 +29,6 @@ import {
 } from '@/components/shadcn-ui/ui/label';
 import CommonSelect from '@/components/shadcn-ui-custom/CommonSelect/CommonSelect';
 import ImportModalSet from '@/components/shadcn-ui-custom/modals/ImportModalSet/ImportModalSet';
-import TBUTooltip from '@/components/shadcn-ui-custom/TBUTooltip/TBUTooltip';
 // icon
 import {
   LuChevronDown,
@@ -339,14 +338,12 @@ function _MathQuestionHeader(props: TMathQuestionHeaderProps) {
           openImportModal={openImportModal}
           closeImportModal={closeImportModal} />
 
-        <TBUTooltip>
-          <Button
-            className="actionButton"
-            onClick={addMathQuestion}>
-            <LuPencil className="icon" />
-            신규문항 등록도구
-          </Button>
-        </TBUTooltip>
+        <Button
+          className="actionButton"
+          onClick={addMathQuestion}>
+          <LuPencil className="icon" />
+          신규문항 등록도구
+        </Button>
       </div>
     </div>
   </>);

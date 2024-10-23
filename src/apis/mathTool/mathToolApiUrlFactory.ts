@@ -25,6 +25,10 @@ const mathToolApiUrlFactory = (() => {
     retrieveMathToolKnowledgeConceptsPath() {
       return `${BASE_PATH}/kc2/`;
     },
+
+    produceMathToolSubmitPath() {
+      return `${BASE_PATH}/questions/`;
+    },
   } as const;
 })();
 

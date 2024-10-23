@@ -1,5 +1,6 @@
 // type
 import { 
+  TApiRequestBodyParams,
   TApiRequestNonBodyParams,
 } from '../api.type';
 import { 
@@ -139,3 +140,18 @@ export type TRetrieveMathToolKnowledgeConceptsApiRequestParams = TApiRequestNonB
 }>;
 /** (GET) 수학 작업도구 지식개념 Response */
 export type TRetrieveMathToolKnowledgeConceptsApiResponse = TPaginationModel<TMathToolKnowledgeConceptModel>;
+
+//
+// 수학 작업도구 제출
+//
+/** 수학 작업도구 제출 속성 */
+export type TMathToolSubmitAttributes = {
+  [id: string]: string | number | boolean | null;
+};
+/** (POST) 수학 작업도구 제출 RequestParams */
+export type TProduceMathToolSubmitApiRequestParams = TApiRequestBodyParams<void, void, {
+  metadata: TMathToolSubmitAttributes;
+  results: TMathToolSubmitAttributes[];
+}>;
+/** (POST) 수학 작업도구 제출 Response */
+export type TProduceMathToolSubmitApiResponse = any;

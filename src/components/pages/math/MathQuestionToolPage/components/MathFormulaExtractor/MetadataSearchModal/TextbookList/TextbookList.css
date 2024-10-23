@@ -4,6 +4,9 @@
 
   cursor: pointer;
 
+  height: 100%;
+  overflow: auto;
+
   > .emptyMessage {
     margin-top: 120px;
 
