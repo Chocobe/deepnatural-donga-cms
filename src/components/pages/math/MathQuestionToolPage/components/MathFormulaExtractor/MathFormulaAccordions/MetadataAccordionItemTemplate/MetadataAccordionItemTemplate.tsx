@@ -29,8 +29,8 @@ import {
 } from '../mathFormulaAccordions.type';
 import { 
   TSearchApiPagination,
-  TSearchApiBaseGeneric, 
-} from '../../../../network/network.type/searchApi.type';
+  TSearchApiBaseGeneric,
+} from '@/apis/mathTool/mathToolApi.type';
 // style
 import { 
   cn,
@@ -122,8 +122,8 @@ function _MetadataAccordionItemTemplate<T extends TSearchApiBaseGeneric>(
     }
 
     const {
-      currentPage,
-      lastPage,
+      current_page,
+      last_page,
       results,
     } = data;
 
@@ -144,8 +144,8 @@ function _MetadataAccordionItemTemplate<T extends TSearchApiBaseGeneric>(
 
     setSummarizedMetadataList(summarizedMetadataList);
     setPagination({
-      currentPage,
-      lastPage,
+      current_page,
+      last_page,
     });
   }, [
     id, summaryKeys, 

@@ -88,11 +88,17 @@ export const sourceMetadataTemplate = {
   },
   summaryKeys: [
     // 제품명
-    'productName', 
+    'name', 
     // 시리즈 이름
     'series',
     // 교육 과정
-    'curriculum'
+    'curriculum',
+    // 학교급
+    'classtype',
+    // 학년
+    'grade',
+    // 학기
+    'term',
   ],
   details: [
     {
@@ -101,14 +107,16 @@ export const sourceMetadataTemplate = {
     },
     {
       key: 'curriculum',
-      label: '교육 과정',
+      label: '교육과정',
     },
     {
-      key: 'schoolLevel',
+      // key: 'schoolLevel',
+      key: 'classtype',
       label: '학교급',
     },
     {
-      key: 'productName',
+      // key: 'productName',
+      key: 'name',
       label: '제품명',
     },
     {
@@ -120,7 +128,8 @@ export const sourceMetadataTemplate = {
       label: '학년',
     },
     {
-      key: 'semester',
+      // key: 'semester',
+      key: 'term',
       label: '학기',
     },
     {
@@ -192,8 +201,9 @@ export const textbookMetadataTemplate = {
       label: '교과서',
     },
     {
+      // key: 'schoolLevel',
+      key: 'classtype',
       label: '학교급',
-      key: 'schoolLevel',
     },
     {
       label: '학년',

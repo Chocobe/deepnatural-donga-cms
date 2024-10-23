@@ -12,40 +12,6 @@ export type TSearchApiBaseGeneric = TSearchApiPagination & {
 };
 
 //
-// retrieveSourceList
-//
-// FIXME: CMS의 SourceModel과 혼용 불가
-export type TRetrieveSourceListApiPathParams = {
-    productName: string;
-    page?: number;
-};
-
-// FIXME: CMS의 SourceModel과 혼용 불가
-export type TRetrieveSourceListApiPayload = {
-    pathParams: TRetrieveSourceListApiPathParams;
-};
-
-// FIXME: CMS의 SourceModel과 혼용 불가
-export type TRetrieveSourceListApiResult = {
-    id: string;
-    series: string;
-    schoolLevel: string;
-    grade: number;
-    semester: string;
-    subject: string;
-    productName: string;
-    format: string;
-    author: string;
-    publisher: string;
-    curriculum: string;
-};
-
-// FIXME: CMS의 SourceModel과 혼용 불가
-export type TRetrieveSourceListApiResponse = TSearchApiPagination & {
-    results: TRetrieveSourceListApiResult[];
-};
-
-//
 // retrieveKnowledgeConceptList
 //
 // FIXME: CMS의 KnowledgeConceptModel과 혼용 불가

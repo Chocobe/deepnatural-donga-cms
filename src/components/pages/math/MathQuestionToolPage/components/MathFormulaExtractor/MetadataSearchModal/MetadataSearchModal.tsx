@@ -24,7 +24,7 @@ import {
 } from '../MathFormulaAccordions/mathFormulaAccordions.type';
 import { 
   TSearchApiPagination,
-} from '../../../network/network.type/searchApi.type';
+} from '@/apis/mathTool/mathToolApi.type';
 // style
 import './MetadataSearchModal.css';
 

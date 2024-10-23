@@ -1,5 +1,8 @@
 // type
 import { 
+  TMathToolSourceModel, 
+} from '@/apis/mathTool/mathToolApi.type';
+import { 
   TSummarizedMetadata, 
 
   sourceMetadataTemplate,
@@ -11,7 +14,6 @@ import {
   chapter3MetadataTemplate, 
 } from '@/components/pages/math/MathQuestionToolPage/components/MathFormulaExtractor/MathFormulaAccordions/mathFormulaAccordions.type';
 import { 
-  TRetrieveSourceListApiResult,
   TRetrieveKnowledgeConceptListApiResult,
 
   TRetrieveTextbookApiResult,
@@ -61,7 +63,7 @@ export type TTargetElementState = {
 export type TResult = {
   subject: string;
   metadata: {
-    [sourceMetadataTemplate.id]?: TSummarizedMetadata<TRetrieveSourceListApiResult>;
+    [sourceMetadataTemplate.id]?: TSummarizedMetadata<TMathToolSourceModel>;
 
     [textbookMetadataTemplate.id]?: TSummarizedMetadata<TRetrieveTextbookApiResult>;
     [chapter1MetadataTemplate.id]?: TSummarizedMetadata<TRetrieveChapter1ApiResult>;

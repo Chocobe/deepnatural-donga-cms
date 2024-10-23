@@ -24,7 +24,7 @@ import './Pagination.css';
 // type
 import { 
   TSearchApiPagination,
-} from '../../../../network/network.type/searchApi.type';
+} from '@/apis/mathTool/mathToolApi.type';
 
 type TPaginationProps = {
   className?: string;
@@ -55,15 +55,15 @@ function _Pagination(props: TPaginationProps) {
     }
 
     const {
-      currentPage,
-      lastPage,
+      current_page,
+      last_page,
     } = pagination;
 
-    let start = Math.max(1, currentPage - 4);
-    let end = Math.min(lastPage, currentPage + 4);
+    let start = Math.max(1, current_page - 4);
+    let end = Math.min(last_page, current_page + 4);
 
     end = (end - start) < 9
-      ? Math.min(lastPage, start + 8)
+      ? Math.min(last_page, start + 8)
       : end;
 
     start = (end - start) < 9
@@ -90,7 +90,7 @@ function _Pagination(props: TPaginationProps) {
       return;
     }
 
-    const prevPageNum = pagination.currentPage - 1;
+    const prevPageNum = pagination.current_page - 1;
 
     if (prevPageNum < 1) {
       return;
@@ -104,9 +104,9 @@ function _Pagination(props: TPaginationProps) {
       return;
     }
 
-    const nextPageNum = pagination.currentPage + 1;
+    const nextPageNum = pagination.current_page + 1;
 
-    if (nextPageNum > pagination.lastPage) {
+    if (nextPageNum > pagination.last_page) {
       return;
     }
 
@@ -135,7 +135,7 @@ function _Pagination(props: TPaginationProps) {
       <Button
         className="pageButton"
         variant="ghost"
-        disabled={pagination.currentPage === 1}
+        disabled={pagination.current_page === 1}
         onClick={onClickPrevPage}>
         <FaChevronLeft />
       </Button>
@@ -152,7 +152,7 @@ function _Pagination(props: TPaginationProps) {
             key={pageNum}
             className={cn(
               'pageButton',
-              { currentPage: pageNum === pagination.currentPage }
+              { currentPage: pageNum === pagination.current_page }
             )}
             variant="ghost"
             onClick={() => onClickPageNum(pageNum)}>
@@ -161,7 +161,7 @@ function _Pagination(props: TPaginationProps) {
         );
       })}
 
-      {end < pagination.lastPage && (
+      {end < pagination.last_page && (
         <div className="ellipsis">
           <AiOutlineEllipsis />
         </div>
@@ -170,7 +170,7 @@ function _Pagination(props: TPaginationProps) {
       <Button
         className="pageButton"
         variant="ghost"
-        disabled={pagination.currentPage >= pagination.lastPage}
+        disabled={pagination.current_page >= pagination.last_page}
         onClick={onClickNextPage}>
         <FaChevronRight />
       </Button>

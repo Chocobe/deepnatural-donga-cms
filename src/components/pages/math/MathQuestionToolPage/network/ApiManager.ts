@@ -5,16 +5,13 @@
 // network
 // import RestClient from './RestClient';
 import api from '@/apis/api';
-import apiUrlFactory from './apiUrlFactory';
+import apiUrlFactory from './toolApiUrlFactory';
 // type
 import { 
   TSubmitApiPayload,
   TSubmitApiResponse,
 } from './network.type/taskApi.type';
 import {
-  TRetrieveSourceListApiPayload,
-  TRetrieveSourceListApiResponse,
-
   TRetrieveKnowledgeConceptListApiPayload,
   TRetrieveKnowledgeConceptListApiResponse,
 
@@ -36,22 +33,6 @@ import {
 } from '../utils/cookieUtils';
 
 const ApiManager = {
-  /**
-   * 출처 목록을 조회합니다.
-   */
-  retrieveSourceList(payload: TRetrieveSourceListApiPayload) {
-    const {
-      pathParams: {
-        productName,
-        page = '1',
-      },
-    } = payload;
-
-    return api.get<TRetrieveSourceListApiResponse>(
-      apiUrlFactory.retrieveSourceListUrl(productName, page)
-    );
-  },
-
   /**
    * 지식개념 목록을 조회합니다.
    */

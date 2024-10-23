@@ -100,6 +100,9 @@ const noticeMessageGroupFactory: {
       produceS3PresignedUrl: TNoticeMessageGroup;
       uploadFileToS3: TNoticeMessageGroup;
     };
+    mathTool: {
+      retrieveMathToolSources: TNoticeMessageGroup;
+    }
   };
 
   uis: {
@@ -947,6 +950,20 @@ const noticeMessageGroupFactory: {
         successSonner: undefined,
       },
     },
+
+    mathTool: {
+      retrieveMathToolSources: {
+        loadingMessage: () => ({
+          title: '',
+          message: '잠시만 기다려 주세요.\n출처 검색 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('출처 검색 중 네트워크 에러가 발생하였습니다.\n인터넷이 원활한 곳에서 다시 시도해 주세요.'),
+        }),
+        successMessage: undefined,
+        successSonner: undefined,
+      },
+    }
   },
 
   uis: {

@@ -7,8 +7,8 @@ const createFailureMessage = (
   status?: string | number
 ) => {
   return status
-        ? `${message}\n(${status})`
-        : message;
+    ? `${message}\n(${status})`
+    : message;
 };
 
 const apiFeedbackMessageFactory = {
@@ -19,19 +19,6 @@ const apiFeedbackMessageFactory = {
   },
 
   searchApi: {
-    //
-    // retrieve SourceList
-    //
-    retrieveSourceListRequest() {
-      return '잠시만 기다려 주세요.\n출처 검색 중입니다.';
-    },
-    retrieveSourceListFailure(status?: string | number) {
-      return createFailureMessage(
-        '출처 검색 중 네트워크 에러가 발생하였습니다.\n인터넷이 원활한 곳에서 다시 시도해 주세요.',
-        status
-      );
-    },
-
     //
     // retrieve KnowledgeConceptList
     //
@@ -137,8 +124,8 @@ export const createErrorMessage = ((params: {
 
   if (errorMessage) {
     return status
-            ? `${errorMessage}\n(${status})`
-            : errorMessage;
+      ? `${errorMessage}\n(${status})`
+      : errorMessage;
   }
 
   return createDefaultErrorMessage(status);
