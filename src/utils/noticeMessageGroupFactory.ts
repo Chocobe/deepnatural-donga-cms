@@ -26,6 +26,7 @@ const noticeMessageGroupFactory: {
       login: TNoticeMessageGroup;
       logout: TNoticeMessageGroup;
       randomPassword: TNoticeMessageGroup;
+      changePassword: TNoticeMessageGroup;
       signup: TNoticeMessageGroup;
       findPassword: TNoticeMessageGroup;
       retrieveUserInfo: TNoticeMessageGroup;
@@ -34,7 +35,7 @@ const noticeMessageGroupFactory: {
       retrieveUsers: TNoticeMessageGroup;
       patchUser: TNoticeMessageGroup;
     };
-    // FIXME: textbook, chapter, etc. 분리하기
+
     math: {
       // 교과서
       retrieveMathTextbooks: TNoticeMessageGroup;
@@ -90,6 +91,7 @@ const noticeMessageGroupFactory: {
       produceMathQuestionsExport: TNoticeMessageGroup;
       produceMathQuestionImport: TNoticeMessageGroup;
     };
+
     mathOCR: {
       retrieveMathPixAppKey: TNoticeMessageGroup;
       produceMathPixAppToken: TNoticeMessageGroup;
@@ -146,6 +148,22 @@ const noticeMessageGroupFactory: {
         }),
         successMessage: undefined,
         successSonner: undefined,
+      },
+
+      // 비밀번호 변경
+      changePassword: {
+        loadingMessage: () => ({
+          title: '',
+          message: '비밀번호를 변경 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('비밀번호 변경 중'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '새로운 비밀번호가 성공적으로 반영되었습니다.'
+        }),
       },
 
       // 회원가입
