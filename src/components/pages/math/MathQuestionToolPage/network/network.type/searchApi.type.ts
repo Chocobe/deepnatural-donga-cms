@@ -43,35 +43,6 @@ export type TRetrieveKnowledgeConceptListApiResponse = TSearchApiPagination & {
 };
 
 //
-// retrieveTextbookList
-//
-// FIXME: CMS의 TextbookModel과 혼용 불가
-export type TRetrieveTextbookApiPathParams = {
-    title: string;
-    page?: number;
-};
-
-// FIXME: CMS의 TextbookModel과 혼용 불가
-export type TRetrieveTextbookApiPayload = {
-    pathParams: TRetrieveTextbookApiPathParams;
-};
-
-// FIXME: CMS의 TextbookModel과 혼용 불가
-export type TRetrieveTextbookApiResult = {
-    id: string;
-    semester: string;
-    grade: string;
-    schoolLevel: string;
-    title: string;
-    author: string;
-};
-
-// FIXME: CMS의 TextbookModel과 혼용 불가
-export type TRetrieveTextbookApiResponse = TSearchApiPagination & {
-    results: TRetrieveTextbookApiResult[];
-};
-
-// 
 // retrieveChapter1List
 // 
 // FIXME: CMS의 Chapter1Model과 혼용 불가

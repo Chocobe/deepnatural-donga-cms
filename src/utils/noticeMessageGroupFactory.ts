@@ -102,6 +102,7 @@ const noticeMessageGroupFactory: {
     };
     mathTool: {
       retrieveMathToolSources: TNoticeMessageGroup;
+      retrieveMathToolTextbooks: TNoticeMessageGroup;
     }
   };
 
@@ -952,6 +953,7 @@ const noticeMessageGroupFactory: {
     },
 
     mathTool: {
+      // (GET) 수학 작업도구 출처 목록
       retrieveMathToolSources: {
         loadingMessage: () => ({
           title: '',
@@ -959,6 +961,19 @@ const noticeMessageGroupFactory: {
         }),
         errorMessage: () => ({
           ...createNetworkErrorMessage('출처 검색 중 네트워크 에러가 발생하였습니다.\n인터넷이 원활한 곳에서 다시 시도해 주세요.'),
+        }),
+        successMessage: undefined,
+        successSonner: undefined,
+      },
+
+      // (GET) 수학 작업도구 교과서 목록
+      retrieveMathToolTextbooks: {
+        loadingMessage: () => ({
+          title: '',
+          message: '잠시만 기다려 주세요.\n교과서 검색 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('교과서 검색 중 네트워크 에러가 발생하였습니다.\n인터넷이 원활한 곳에서 다시 시도해 주세요.'),
         }),
         successMessage: undefined,
         successSonner: undefined,

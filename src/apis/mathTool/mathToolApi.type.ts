@@ -34,3 +34,23 @@ export type TRetrieveMathToolSourcesApiRequestParams = TApiRequestNonBodyParams<
 }>;
 /** (GET) MathToolSource 목록 Response */
 export type TRetrieveMathToolSourcesApiResponse = TPaginationModel<TMathToolSourceModel>;
+
+//
+// 수학 작업도구 교과서
+//
+/** 수학 작업도구 교과서 Model */
+export type TMathToolTextbookModel = {
+  id: string;
+  term: string;
+  grade: string;
+  classtype: string;
+  title: string;
+  author: string;
+}
+/** (GET) 수학 작업도구 교과서 목록 RequestParams */
+export type TRetrieveMathToolTextbooksApiRequestParams = TApiRequestNonBodyParams<void, {
+  title: string;
+  page?: number;
+}>;
+/** (GET) 수학 작업도구 교과서 목록 Response */
+export type TRetrieveMathToolTextbooksApiResponse = TPaginationModel<any>;

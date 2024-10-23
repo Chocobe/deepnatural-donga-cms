@@ -15,9 +15,6 @@ import {
   TRetrieveKnowledgeConceptListApiPayload,
   TRetrieveKnowledgeConceptListApiResponse,
 
-  TRetrieveTextbookApiPayload,
-  TRetrieveTextbookApiResponse,
-
   TRetrieveChapter1ApiPayload,
   TRetrieveChapter1ApiResponse,
 
@@ -46,22 +43,6 @@ const ApiManager = {
 
     return api.get<TRetrieveKnowledgeConceptListApiResponse>(
       apiUrlFactory.retrieveKnowledgeConceptListUrl(title, page)
-    );
-  },
-
-  /**
-   * 교과서 목록을 조회합니다.
-   */
-  retrieveTextbookList(payload: TRetrieveTextbookApiPayload) {
-    const {
-      pathParams: {
-        title,
-        page = '1',
-      },
-    } = payload;
-
-    return api.get<TRetrieveTextbookApiResponse>(
-      apiUrlFactory.retrieveTextbookListUrl(title, page)
     );
   },
 

@@ -1,6 +1,7 @@
 // type
 import { 
   TMathToolSourceModel, 
+  TMathToolTextbookModel,
 } from '@/apis/mathTool/mathToolApi.type';
 import { 
   TSummarizedMetadata, 
@@ -16,7 +17,6 @@ import {
 import { 
   TRetrieveKnowledgeConceptListApiResult,
 
-  TRetrieveTextbookApiResult,
   TRetrieveChapter1ApiResult,
   TRetrieveChapter2ApiResult,
   TRetrieveChapter3ApiResult,
@@ -65,7 +65,7 @@ export type TResult = {
   metadata: {
     [sourceMetadataTemplate.id]?: TSummarizedMetadata<TMathToolSourceModel>;
 
-    [textbookMetadataTemplate.id]?: TSummarizedMetadata<TRetrieveTextbookApiResult>;
+    [textbookMetadataTemplate.id]?: TSummarizedMetadata<TMathToolTextbookModel>;
     [chapter1MetadataTemplate.id]?: TSummarizedMetadata<TRetrieveChapter1ApiResult>;
     [chapter2MetadataTemplate.id]?: TSummarizedMetadata<TRetrieveChapter2ApiResult>;
     [chapter3MetadataTemplate.id]?: TSummarizedMetadata<TRetrieveChapter3ApiResult>;

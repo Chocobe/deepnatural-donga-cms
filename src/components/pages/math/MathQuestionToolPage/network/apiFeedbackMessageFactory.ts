@@ -12,12 +12,6 @@ const createFailureMessage = (
 };
 
 const apiFeedbackMessageFactory = {
-  authSearchParams: {
-    authSearchParamsFailure() {
-      return '잘못된 경로로 작업도구에 진입하였습니다.\n<a href="https://enterprise.labelr.io/">레이블러 엔터프라이즈</a>에서 실행해 주세요.';
-    },
-  },
-
   searchApi: {
     //
     // retrieve KnowledgeConceptList
@@ -28,19 +22,6 @@ const apiFeedbackMessageFactory = {
     retrieveKnowledgeConceptListFailure(status: string | number) {
       return createFailureMessage(
         '지식개념 검색 중 네트워크 에러가 발생하였습니다.\n인터넷이 원활한 곳에서 다시 시도해 주세요.',
-        status
-      );
-    },
-
-    //
-    // retrieve TextbookList
-    //
-    retrieveTextbookListRequest() {
-      return '잠시만 기다려 주세요.\n교과서 검색 중입니다.';
-    },
-    retrieveTextbookListFailure(status?: string | number) {
-      return createFailureMessage(
-        '교과서 검색 중 네트워크 에러가 발생하였습니다.\n인터넷이 원활한 곳에서 다시 시도해 주세요.',
         status
       );
     },

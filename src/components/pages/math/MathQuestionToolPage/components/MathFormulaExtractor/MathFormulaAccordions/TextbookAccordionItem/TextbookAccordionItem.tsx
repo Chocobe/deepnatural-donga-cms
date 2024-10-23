@@ -12,6 +12,11 @@ import useMathQuestionToolPageStore from '@/store/mathStores/mathQuestionToolPag
 import useMathQuestionToolErrorModal from '../../../ui/MathQuestionToolErrorModal/hooks/useMathQuestionToolErrorModal';
 import useResetMetadataConfirmModal from '../../MathFormulaExtractorHeader/hooks/useResetMetadataConfirmModal';
 import useRemoveSubTextbookConfirmModal from '../../MathFormulaExtractorHeader/hooks/useRemoveSubTextbookConfirmModal';
+// api
+import ApiManager from '@/apis/ApiManager';
+import apiFeedbackMessageFactory, {
+  createErrorMessage,
+} from '../../../../network/apiFeedbackMessageFactory';
 // ui
 import TextbookSearchTemplate from './TextbookSearchTemplate/TextbookSearchTemplate';
 import {
@@ -33,23 +38,25 @@ import {
   chapter3MetadataTemplate, 
   textbookMetadataTemplate,
 } from '../mathFormulaAccordions.type';
+
+// FIXME: 삭제 예정
 import { 
-  TRetrieveTextbookApiPayload,
   TRetrieveChapter1ApiPayload,
   TRetrieveChapter2ApiPayload,
   TRetrieveChapter3ApiPayload,
 } from '../../../../network/network.type/searchApi.type';
+
+// TODO: 추가 예정
+import { 
+  TRetrieveMathToolTextbooksApiRequestParams,
+  TRetrieveMathToolTextbooksApiResponse,
+} from '@/apis/mathTool/mathToolApi.type';
+
 // style
 import { 
   cn,
 } from '@/lib/shadcn-ui-utils';
 import './TextbookAccordionItem.css';
-// api
-// FIXME: API 연동하기
-// import ApiManager from '@/network/ApiManager';
-import apiFeedbackMessageFactory, {
-  createErrorMessage,
-} from '../../../../network/apiFeedbackMessageFactory';
 
 type TTextbookAccordionItemProps = {
   accordionValue: string;
@@ -195,47 +202,20 @@ function _TextbookAccordionItem(props: TTextbookAccordionItemProps) {
     searchValue: string,
     page?: number
   ) => {
-    try {
-      setApiLoadingUiState_action({
-        isLoading: true,
-        message: apiFeedbackMessageFactory
-          .searchApi
-          .retrieveTextbookListRequest(),
-      });
+    const params: TRetrieveMathToolTextbooksApiRequestParams = {
+      searchParams: {
+        title: searchValue,
+        page,
+      },
+    };
 
-      const payload: TRetrieveTextbookApiPayload = {
-        pathParams: {
-          title: searchValue,
-          page,
-        },
-      };
+    const response = await ApiManager
+      .mathTool
+      .retrieveMathToolTextbooksApi
+      .callWithNoticeMessageGroup(params);
 
-      // FIXME: API 연동하기
-      // const response = await ApiManager.retrieveTextbookList(payload);
-      console.log('onSearchTextbook() - payload: ', payload);
-
-      // FIXME: API 연동하기
-      // return response?.data;
-      return Promise.resolve({
-        results: [],
-      });
-    } catch(error: any) {
-      onErrorWhenSearch({
-        error,
-        createDefaultErrorMessage: apiFeedbackMessageFactory
-          .searchApi
-          .retrieveTextbookListFailure,
-      });
-
-      return null;
-    } finally {
-      resetApiLoadingUiState_action();
-    }
-  }, [
-    setApiLoadingUiState_action,
-    resetApiLoadingUiState_action,
-    onErrorWhenSearch, 
-  ]);
+    return response?.data ?? {} as TRetrieveMathToolTextbooksApiResponse;
+  }, []);
 
   const onSearchChapter1 = useCallback(async (
     searchValue: string,

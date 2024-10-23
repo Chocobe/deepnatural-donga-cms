@@ -5,6 +5,10 @@ const mathToolApiUrlFactory = (() => {
     retrieveMathToolSourcesPath() {
       return `${BASE_PATH}/source/`;
     },
+
+    retrieveMathToolTextbooksPath() {
+      return `${BASE_PATH}/textbook/`;
+    },
   } as const;
 })();
 

@@ -8,6 +8,9 @@ import mathToolApiUrlFactory from './mathToolApiUrlFactory';
 import { 
   TRetrieveMathToolSourcesApiRequestParams,
   TRetrieveMathToolSourcesApiResponse,
+
+  TRetrieveMathToolTextbooksApiRequestParams,
+  TRetrieveMathToolTextbooksApiResponse,
 } from './mathToolApi.type';
 
 //
@@ -30,4 +33,26 @@ export const retrieveMathToolSourcesApi = createApiWithNoticeMessageGroup({
     .apis
     .mathTool
     .retrieveMathToolSources,
+});
+
+//
+// 수학 작업도구 교과서 목록
+//
+export const retrieveMathToolTextbooksApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathToolTextbooksApiRequestParams) => {
+    const {
+      searchParams,
+    } = params;
+
+    return api.get<TRetrieveMathToolTextbooksApiResponse>(
+      mathToolApiUrlFactory.retrieveMathToolTextbooksPath(),
+      {
+        params: searchParams,
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .mathTool
+    .retrieveMathToolTextbooks,
 });
