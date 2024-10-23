@@ -53,7 +53,6 @@ import {
   TCMSClassType,
 } from '@/apis/models/cmsCommonModel.type';
 import { 
-  TImportModalSetTemplateFile,
   TImportModalSetApiFunctionData,
 } from '@/components/shadcn-ui-custom/modals/ImportModalSet/ImportModalSet.type';
 // style
@@ -213,27 +212,6 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
     onChangeClassType,
   ]);
 
-  const importModalSetTemplateFiles = useMemo<TImportModalSetTemplateFile[]>(() => [
-    {
-      // FIXME: mockup
-      // FIXME: 실제 템플릿 파일 적용하기
-      text: '(mockup) 성취기준(대) .csv 템플릿 다운로드',
-      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
-    },
-    {
-      // FIXME: mockup
-      // FIXME: 실제 템플릿 파일 적용하기
-      text: '(mockup) 성취기준(중) .csv 템플릿 다운로드',
-      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
-    },
-    {
-      // FIXME: mockup
-      // FIXME: 실제 템플릿 파일 적용하기
-      text: '(mockup) 성취기준 .csv 템플릿 다운로드',
-      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
-    },
-  ], []);
-
   const importApiFunctions = useMemo<TImportModalSetApiFunctionData[]>(() => [
     {
       label: '성취기준(대)',
@@ -354,7 +332,6 @@ function _MathAchievementHeader(props: TMathAchievementHeaderProps) {
           isOpen={isOpenImportModal}
           openImportModal={openImportModal}
           closeImportModal={closeImportModal}
-          templateFiles={importModalSetTemplateFiles}
           importApiFunctions={importApiFunctions} />
 
         <Button

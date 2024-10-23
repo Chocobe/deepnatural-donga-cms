@@ -53,7 +53,6 @@ import {
   TRetrieveMathSeriesSourcesApiRequestParams,
 } from '@/apis/math/mathApi.type';
 import { 
-  TImportModalSetTemplateFile,
   TImportModalSetApiFunctionData,
 } from '@/components/shadcn-ui-custom/modals/ImportModalSet/ImportModalSet.type';
 // style
@@ -235,21 +234,6 @@ function _MathSeriesSourceHeader(props: TMathSeriesSourceHeaderProps) {
     onChangeClassType,
   ]);
 
-  const importModalSetTemplateFiles = useMemo<TImportModalSetTemplateFile[]>(() => [
-    {
-      // FIXME: mockup
-      // FIXME: 실제 템플릿 파일 적용하기
-      text: '(mockup) 시리즈 .csv 템플릿 다운로드',
-      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
-    },
-    {
-      // FIXME: mockup
-      // FIXME: 실제 템플릿 파일 적용하기
-      text: '(mockup) 출처 .csv 템플릿 다운로드',
-      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
-    },
-  ], []);
-
   const importApiFunctions = useMemo<TImportModalSetApiFunctionData[]>(() => [
     {
       label: '시리즈',
@@ -349,7 +333,6 @@ function _MathSeriesSourceHeader(props: TMathSeriesSourceHeaderProps) {
           isOpen={isOpenImportModal}
           openImportModal={openImportModal}
           closeImportModal={closeImportModal}
-          templateFiles={importModalSetTemplateFiles}
           importApiFunctions={importApiFunctions} />
 
         <Button

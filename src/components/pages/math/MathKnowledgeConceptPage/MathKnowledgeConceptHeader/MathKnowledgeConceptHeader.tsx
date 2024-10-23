@@ -54,7 +54,6 @@ import {
   mathCurriculumFilterOptions,
 } from '@/apis/models/mathModel.type';
 import { 
-  TImportModalSetTemplateFile,
   TImportModalSetApiFunctionData,
 } from '@/components/shadcn-ui-custom/modals/ImportModalSet/ImportModalSet.type';
 // style
@@ -215,21 +214,6 @@ function _MathKnowledgeConceptHeader(props: TMathKnowledgeConceptHeaderProps) {
     onChangeClassType,
   ]);
 
-  const importModalSetTemplateFiles = useMemo<TImportModalSetTemplateFile[]>(() => [
-    {
-      // FIXME: mockup
-      // FIXME: 실제 템플릿 파일 적용하기
-      text: '(mockup) 지식개념1 .csv 템플릿 다운로드',
-      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
-    },
-    {
-      // FIXME: mockup
-      // FIXME: 실제 템플릿 파일 적용하기
-      text: '(mockup) 지식개념2 .csv 템플릿 다운로드',
-      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
-    },
-  ], []);
-
   const importApiFunctions = useMemo<TImportModalSetApiFunctionData[]>(() => [
     {
       label: '지식개념1',
@@ -329,7 +313,6 @@ function _MathKnowledgeConceptHeader(props: TMathKnowledgeConceptHeaderProps) {
           isOpen={isOpenImportModal}
           openImportModal={openImportModal}
           closeImportModal={closeImportModal}
-          templateFiles={importModalSetTemplateFiles}
           importApiFunctions={importApiFunctions} />
 
         <Button

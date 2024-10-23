@@ -54,7 +54,6 @@ import {
   TProduceMathChapter3ImportApiRequestParams,
 } from '@/apis/math/mathApi.type';
 import { 
-  TImportModalSetTemplateFile,
   TImportModalSetApiFunctionData,
 } from '@/components/shadcn-ui-custom/modals/ImportModalSet/ImportModalSet.type';
 // style
@@ -229,27 +228,6 @@ function _MathChapterHeader(props: TMathChapterHeaderProps) {
     onChangeFilter,
   ]);
 
-  const importModalSetTemplateFiles = useMemo<TImportModalSetTemplateFile[]>(() => [
-    {
-      // FIXME: mockup
-      // FIXME: 실제 템플릿 파일 적용하기
-      text: '(mockup) 대단원 .csv 템플릿 다운로드',
-      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
-    },
-    {
-      // FIXME: mockup
-      // FIXME: 실제 템플릿 파일 적용하기
-      text: '(mockup) 중단원 .csv 템플릿 다운로드',
-      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
-    },
-    {
-      // FIXME: mockup
-      // FIXME: 실제 템플릿 파일 적용하기
-      text: '(mockup) 소단원 .csv 템플릿 다운로드',
-      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
-    },
-  ], []);
-
   const importApiFunctions = useMemo<TImportModalSetApiFunctionData[]>(() => [
     {
       label: '대단원',
@@ -380,7 +358,6 @@ function _MathChapterHeader(props: TMathChapterHeaderProps) {
           isOpen={isOpenImportModal}
           openImportModal={openImportModal}
           closeImportModal={closeImportModal}
-          templateFiles={importModalSetTemplateFiles}
           importApiFunctions={importApiFunctions} />
 
         <Button
