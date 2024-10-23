@@ -54,7 +54,6 @@ import {
 } from '../../MathQuestionDetailPage/MathKCFilterModalSet/MathKCSelectionSection/MathKCSelectionSection.type';
 import { 
   TImportModalSetApiFunctionData,
-  TImportModalSetTemplateFile,
 } from '@/components/shadcn-ui-custom/modals/ImportModalSet/ImportModalSet.type';
 // style
 import { 
@@ -257,21 +256,6 @@ function _MathQuestionHeader(props: TMathQuestionHeaderProps) {
     onChangeKC2,
   ]);
 
-  const importModalSetTemplateFiles = useMemo<TImportModalSetTemplateFile[]>(() => [
-    {
-      // FIXME: mockup
-      // FIXME: 실제 템플릿 파일 적용하기
-      text: '(mockup) 문항 .xlsx 템플릿 다운로드',
-      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
-    },
-    {
-      // FIXME: mockup
-      // FIXME: 실제 템플릿 파일 적용하기
-      text: '(mockup) 문항 .csv 템플릿 다운로드',
-      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
-    },
-  ], []);
-
   const importApiFunctions = useMemo<TImportModalSetApiFunctionData[]>(() => [
     {
       label: '수학 문항',
@@ -351,7 +335,6 @@ function _MathQuestionHeader(props: TMathQuestionHeaderProps) {
       <div className="MathQuestionHeader-actions">
         <ImportModalSet
           isOpen={isOpenImportModal}
-          templateFiles={importModalSetTemplateFiles}
           importApiFunctions={importApiFunctions}
           openImportModal={openImportModal}
           closeImportModal={closeImportModal} />

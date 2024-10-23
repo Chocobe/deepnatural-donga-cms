@@ -54,7 +54,6 @@ import {
   TMathCurriculum,
 } from '@/apis/models/mathModel.type';
 import { 
-  TImportModalSetTemplateFile,
   TImportModalSetApiFunctionData,
 } from '@/components/shadcn-ui-custom/modals/ImportModalSet/ImportModalSet.type';
 // style
@@ -270,15 +269,6 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
     onChangeTerm,
   ]);
 
-  const importModalSetTemplateFiles = useMemo<TImportModalSetTemplateFile[]>(() => [
-    {
-      // FIXME: mockup
-      // FIXME: 실제 템플릿 파일 적용하기
-      text: '(mockup) 교과서 .xlsx 템플릿 다운로드',
-      fileUrl: `${import.meta.env.BASE_URL}src/components/shadcn-ui-custom/modals/ImportModalSet/templateFiles/문항_템플릿.csv`,
-    },
-  ], []);
-
   const importApiFunctions = useMemo<TImportModalSetApiFunctionData[]>(() => [
     {
       label: '수학 교과서',
@@ -359,7 +349,6 @@ function _MathTextbookHeader(props: TMathTextbookHeaderProps) {
       <div className="MathTextbookHeader-actions">
         <ImportModalSet
           isOpen={isOpenImportModal}
-          templateFiles={importModalSetTemplateFiles}
           openImportModal={openImportModal}
           closeImportModal={closeImportModal}
           importApiFunctions={importApiFunctions} />

@@ -128,15 +128,25 @@ function _ImportModalSet(props: TImportModalSetProps) {
   // cache
   //
   const displayDescription = useMemo(() => {
-    return description
-      ? description
-      : templateFiles?.length
-        ? '아래 템플릿에 부합하는 Excel 및 CSV 파일을 업로드합니다.'
-        : 'Excel 및 CSV 파일을 업로드합니다.';
-  }, [description, templateFiles]);
+    return description || 
+      '아래 템플릿 파일에 부합하는 Excel 및 CSV 파일을 업로드합니다.';
+  }, [description]);
+
+  const defaultTemplateFiles = useMemo<TImportModalSetTemplateFile[]>(() => [
+    {
+      text: 'Excel 템플릿 파일 다운로드',
+      fileUrl: 'https://donga-cms-files.s3.ap-northeast-2.amazonaws.com/import/template.xlsx',
+    },
+    {
+      text: 'CSV 템플릿 파일 다운로드',
+      fileUrl: 'https://donga-cms-files.s3.ap-northeast-2.amazonaws.com/import/template.csv',
+    },
+  ], []);
 
   const templateLinks = useMemo(() => {
-    return templateFiles?.map((template, index) => {
+    const templates = templateFiles ?? defaultTemplateFiles;
+
+    return templates.map((template, index) => {
       const {
         text,
         fileUrl,
@@ -156,6 +166,7 @@ function _ImportModalSet(props: TImportModalSetProps) {
     }) ?? null;
   }, [
     templateFiles,
+    defaultTemplateFiles,
     onClickDownloadTemplate,
   ]);
 
