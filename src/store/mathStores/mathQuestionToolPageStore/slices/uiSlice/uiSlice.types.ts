@@ -1,5 +1,13 @@
 // type
 import { 
+  TMathToolSourceModel, 
+  TMathToolTextbookModel,
+  TMathToolChapter1Model,
+  TMathToolChapter2Model,
+  TMathToolChapter3Model,
+  TMathToolKnowledgeConceptModel,
+} from '@/apis/mathTool/mathToolApi.type';
+import { 
   TSummarizedMetadata, 
 
   sourceMetadataTemplate,
@@ -10,15 +18,6 @@ import {
   chapter2MetadataTemplate, 
   chapter3MetadataTemplate, 
 } from '@/components/pages/math/MathQuestionToolPage/components/MathFormulaExtractor/MathFormulaAccordions/mathFormulaAccordions.type';
-import { 
-  TRetrieveSourceListApiResult,
-  TRetrieveKnowledgeConceptListApiResult,
-
-  TRetrieveTextbookApiResult,
-  TRetrieveChapter1ApiResult,
-  TRetrieveChapter2ApiResult,
-  TRetrieveChapter3ApiResult,
-} from '@/components/pages/math/MathQuestionToolPage/network/network.type/searchApi.type';
 
 export type TSubmissionStatistic = {
   numOfSubmission: number;
@@ -44,12 +43,12 @@ export type TCaptureState = {
   imageObjUrl?: string;
 };
 
-export type TResultItemPropertyValue = number | string | boolean | TSummarizedMetadata<TRetrieveKnowledgeConceptListApiResult>;
+export type TResultItemPropertyValue = number | string | boolean | TSummarizedMetadata<TMathToolKnowledgeConceptModel>;
 
 export type TResultItem = {
   [id: string]: TResultItemPropertyValue;
 } & {
-  [knowledgeConceptMetadataTemplate.id]?: TSummarizedMetadata<TRetrieveKnowledgeConceptListApiResult>;
+  [knowledgeConceptMetadataTemplate.id]?: TSummarizedMetadata<TMathToolKnowledgeConceptModel>;
 };
 
 export type TTargetElementState = {
@@ -61,12 +60,12 @@ export type TTargetElementState = {
 export type TResult = {
   subject: string;
   metadata: {
-    [sourceMetadataTemplate.id]?: TSummarizedMetadata<TRetrieveSourceListApiResult>;
+    [sourceMetadataTemplate.id]?: TSummarizedMetadata<TMathToolSourceModel>;
 
-    [textbookMetadataTemplate.id]?: TSummarizedMetadata<TRetrieveTextbookApiResult>;
-    [chapter1MetadataTemplate.id]?: TSummarizedMetadata<TRetrieveChapter1ApiResult>;
-    [chapter2MetadataTemplate.id]?: TSummarizedMetadata<TRetrieveChapter2ApiResult>;
-    [chapter3MetadataTemplate.id]?: TSummarizedMetadata<TRetrieveChapter3ApiResult>;
+    [textbookMetadataTemplate.id]?: TSummarizedMetadata<TMathToolTextbookModel>;
+    [chapter1MetadataTemplate.id]?: TSummarizedMetadata<TMathToolChapter1Model>;
+    [chapter2MetadataTemplate.id]?: TSummarizedMetadata<TMathToolChapter2Model>;
+    [chapter3MetadataTemplate.id]?: TSummarizedMetadata<TMathToolChapter3Model>;
   };
   questionSets: TResultItem[];
 };

@@ -100,6 +100,15 @@ const noticeMessageGroupFactory: {
       produceS3PresignedUrl: TNoticeMessageGroup;
       uploadFileToS3: TNoticeMessageGroup;
     };
+    mathTool: {
+      retrieveMathToolSources: TNoticeMessageGroup;
+      retrieveMathToolTextbooks: TNoticeMessageGroup;
+      retrieveMathToolChapter1: TNoticeMessageGroup;
+      retrieveMathToolChapter2: TNoticeMessageGroup;
+      retrieveMathToolChapter3: TNoticeMessageGroup;
+      retrieveMathToolKnowledgeConcepts: TNoticeMessageGroup;
+      produceMathToolSubmit: TNoticeMessageGroup;
+    }
   };
 
   uis: {
@@ -945,6 +954,102 @@ const noticeMessageGroupFactory: {
         }),
         successMessage: undefined,
         successSonner: undefined,
+      },
+    },
+
+    mathTool: {
+      // (GET) 수학 작업도구 출처 목록
+      retrieveMathToolSources: {
+        loadingMessage: () => ({
+          title: '',
+          message: '잠시만 기다려 주세요.\n출처 검색 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('출처 검색 중 네트워크 에러가 발생하였습니다.\n인터넷이 원활한 곳에서 다시 시도해 주세요.'),
+        }),
+        successMessage: undefined,
+        successSonner: undefined,
+      },
+
+      // (GET) 수학 작업도구 교과서 목록
+      retrieveMathToolTextbooks: {
+        loadingMessage: () => ({
+          title: '',
+          message: '잠시만 기다려 주세요.\n교과서 검색 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('교과서 검색 중 네트워크 에러가 발생하였습니다.\n인터넷이 원활한 곳에서 다시 시도해 주세요.'),
+        }),
+        successMessage: undefined,
+        successSonner: undefined,
+      },
+
+      // (GET) 수학 작업도구 대단원 목록
+      retrieveMathToolChapter1: {
+        loadingMessage: () => ({
+          title: '',
+          message: '잠시만 기다려 주세요.\n대단원 검색 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('대단원 검색 중 네트워크 에러가 발생하였습니다.\n인터넷이 원활한 곳에서 다시 시도해 주세요.'),
+        }),
+        successMessage: undefined,
+        successSonner: undefined,
+      },
+
+      // (GET) 수학 작업도구 중단원 목록
+      retrieveMathToolChapter2: {
+        loadingMessage: () => ({
+          title: '',
+          message: '잠시만 기다려 주세요.\n중단원 검색 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('중단원 검색 중 네트워크 에러가 발생하였습니다.\n인터넷이 원활한 곳에서 다시 시도해 주세요.'),
+        }),
+        successMessage: undefined,
+        successSonner: undefined,
+      },
+
+      // (GET) 수학 작업도구 소단원 목록
+      retrieveMathToolChapter3: {
+        loadingMessage: () => ({
+          title: '',
+          message: '잠시만 기다려 주세요.\n소단원 검색 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('소단원 검색 중 네트워크 에러가 발생하였습니다.\n인터넷이 원활한 곳에서 다시 시도해 주세요.'),
+        }),
+        successMessage: undefined,
+        successSonner: undefined,
+      },
+
+      // (GET) 수학 작업도구 지식개념 목록
+      retrieveMathToolKnowledgeConcepts: {
+        loadingMessage: () => ({
+          title: '',
+          message: '잠시만 기다려 주세요.\n지식개념 검색 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('지식개념 검색 중 네트워크 에러가 발생하였습니다.\n인터넷이 원활한 곳에서 다시 시도해 주세요.'),
+        }),
+        successMessage: undefined,
+        successSonner: undefined,
+      },
+
+      // (POST) 수학 작업도구 제출
+      produceMathToolSubmit: {
+        loadingMessage: () => ({
+          title: '',
+          message: '잠시만 기다려주세요.\n제출 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('문항 제출 중 네트워크 에러가 발생하였습니다.\n인터넷이 원활한 곳에서 다시 시도해 주세요.'),
+        }),
+        successMessage: undefined,
+        successSonner: () => ({
+          title: '',
+          message: '제출한 문항이 성공적으로 등록되었습니다.'
+        }),
       },
     },
   },

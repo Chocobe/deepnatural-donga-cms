@@ -17,7 +17,7 @@ import {
 import { 
   TSearchApiPagination,
   TSearchApiBaseGeneric,
-} from '@/components/pages/math/MathQuestionToolPage/network/network.type/searchApi.type';
+} from '@/apis/mathTool/mathToolApi.type';
 // style
 import './TextbookSearchTemplate.css';
 
@@ -85,8 +85,8 @@ function _TextbookSearchTemplate<T extends TSearchApiBaseGeneric>(props: TTextbo
     }
 
     const {
-      currentPage,
-      lastPage,
+      current_page,
+      last_page,
       results,
     } = data;
 
@@ -107,8 +107,8 @@ function _TextbookSearchTemplate<T extends TSearchApiBaseGeneric>(props: TTextbo
 
     setSummarizedMetadataList(summarizedMetadataList);
     setPagination({
-      currentPage,
-      lastPage,
+      current_page,
+      last_page,
     });
   }, [id, summaryKeys, onSearch]);
 

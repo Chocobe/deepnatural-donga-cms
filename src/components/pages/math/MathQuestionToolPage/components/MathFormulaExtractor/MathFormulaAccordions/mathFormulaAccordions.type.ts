@@ -88,11 +88,17 @@ export const sourceMetadataTemplate = {
   },
   summaryKeys: [
     // 제품명
-    'productName', 
+    'name', 
     // 시리즈 이름
     'series',
     // 교육 과정
-    'curriculum'
+    'curriculum',
+    // 학교급
+    'classtype',
+    // 학년
+    'grade',
+    // 학기
+    'term',
   ],
   details: [
     {
@@ -101,14 +107,14 @@ export const sourceMetadataTemplate = {
     },
     {
       key: 'curriculum',
-      label: '교육 과정',
+      label: '교육과정',
     },
     {
-      key: 'schoolLevel',
+      key: 'classtype',
       label: '학교급',
     },
     {
-      key: 'productName',
+      key: 'name',
       label: '제품명',
     },
     {
@@ -120,7 +126,7 @@ export const sourceMetadataTemplate = {
       label: '학년',
     },
     {
-      key: 'semester',
+      key: 'term',
       label: '학기',
     },
     {
@@ -192,16 +198,16 @@ export const textbookMetadataTemplate = {
       label: '교과서',
     },
     {
+      key: 'classtype',
       label: '학교급',
-      key: 'schoolLevel',
     },
     {
-      label: '학년',
       key: 'grade',
+      label: '학년',
     },
     {
+      key: 'term',
       label: '학기',
-      key: 'semester',
     },
     {
       key: 'author',
@@ -423,12 +429,28 @@ const choiceTypeOptions = [
 // Impl - TQuestionSetTemplate
 //
 export const questionSetCommonTemplate: TQuestionSetTemplate = [
+  {
+    id: 'internal_id',
+    label: 'Internal ID',
+    type: 'text',
+    placeholder: '문항 ID를 입력해주세요',
+    required: true,
+    value: '',
+  },
   { 
     id: 'source_page_no',
     label: '출처 페이지', 
     type: 'number', 
     placeholder: '출처 페이지를 입력해주세요',
     required: true,
+    value: '',
+  },
+  { 
+    id: 'source_question_no',
+    label: '출처 문항 번호', 
+    type: 'text', 
+    placeholder: '출처 문항 번호를 입력해주세요',
+    required: false,
     value: '',
   },
   { 
@@ -534,6 +556,14 @@ const questionSetChoiceTemplateFactory = (): TQuestionSetTemplate => {
       required: false,
       value: false,
     },
+    {
+      id: 'aidt_info',
+      label: 'AIDT INFO',
+      type: 'text',
+      placeholder: 'AIDT 를 입력해주세요',
+      required: false,
+      value: '',
+    },
   ];
 };
 
@@ -577,10 +607,18 @@ const questionSetShortAnswerTemplateFactory = (
       required: false,
       value: false,
     },
+    {
+      id: 'aidt_info',
+      label: 'AIDT INFO',
+      type: 'text',
+      placeholder: 'AIDT 를 입력해주세요',
+      required: false,
+      value: '',
+    },
   ];
 };
 
-// 주관식(선택형)
+// 주관식(선택형-기본/무순/유순)
 const questionSetShortChoiceTemplateFactory = (
   shortAnswerCount = 0
 ): TQuestionSetTemplate => {
@@ -636,6 +674,14 @@ const questionSetShortChoiceTemplateFactory = (
       placeholder: '개별 출제 문항입니다.',
       required: false,
       value: false,
+    },
+    {
+      id: 'aidt_info',
+      label: 'AIDT INFO',
+      type: 'text',
+      placeholder: 'AIDT 를 입력해주세요',
+      required: false,
+      value: '',
     },
   ];
 };
@@ -693,6 +739,14 @@ const questionSetLongAnswerTemplateFactory = (): TQuestionSetTemplate => {
       required: false,
       value: false,
     },
+    {
+      id: 'aidt_info',
+      label: 'AIDT INFO',
+      type: 'text',
+      placeholder: 'AIDT 를 입력해주세요',
+      required: false,
+      value: '',
+    },
   ];
 };
 
@@ -722,6 +776,14 @@ const questionSetDrawingAnswerTemplateFactory = (): TQuestionSetTemplate => {
       placeholder: '개별 출제 문항입니다.',
       required: false,
       value: false,
+    },
+    {
+      id: 'aidt_info',
+      label: 'AIDT INFO',
+      type: 'text',
+      placeholder: 'AIDT 를 입력해주세요',
+      required: false,
+      value: '',
     },
   ];
 };

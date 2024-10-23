@@ -69,9 +69,9 @@ export function SimpleNoticeModal(props: TSimpleNoticeModalProps) {
             {title}
           </DialogTitle>
 
-          <DialogDescription className="message">
-            {message}
-          </DialogDescription>
+          <DialogDescription
+            className="message"
+            dangerouslySetInnerHTML={{ __html: message ?? '' }} />
         </DialogHeader>
 
         <DialogFooter className="SimpleNoticeModal-footer">

@@ -6,8 +6,7 @@ import {
 // store
 import useMathQuestionToolPageStore from '@/store/mathStores/mathQuestionToolPageStore/mathQuestionToolPageStore';
 // hook
-// FIXME: API 연동 후, 적용하기
-// import useIntegratedUploadFileApi from '../../../network/hooks/useIntegratedUploadFileApi';
+import useIntegratedUploadFileApi from '../../../network/hooks/useIntegratedUploadFileApi';
 // Ui
 import ScreenCaptureConfirmModal from '../../ui/ScreenCaptureConfirmModal/ScreenCaptureConfirmModal';
 // util
@@ -15,7 +14,6 @@ import {
   createImgOuterHTML,
 } from '../../../utils/domCreateUtils';
 // api
-// FIXME: API 연동 후, 적용하기
 // import ApiManager from '@/network/ApiManager';
 import apiFeedbackMessageFactory from '../../../network/apiFeedbackMessageFactory';
 
@@ -41,10 +39,9 @@ function _ImageCaptureConfirmModal() {
   //
   // hook
   //
-  // FIXME: API 연동 후, 적용하기
-  // const { 
-  //   uploadFile,
-  // } = useIntegratedUploadFileApi();
+  const {
+    uploadFile,
+  } = useIntegratedUploadFileApi();
 
   //
   // callback
@@ -80,30 +77,27 @@ function _ImageCaptureConfirmModal() {
 
       if (
         typeof indexOfResult === 'undefined' ||
-                typeof cursorIndex === 'undefined' ||
-                !id
+        typeof cursorIndex === 'undefined' ||
+        !id
       ) {
         return;
       }
 
-      // FIXME: API 연동하기
       // // 1. 이미지 업로드
-      // const uploadedFileData = await uploadFile('', imageObjUrl);
+      const uploadedFileData = await uploadFile('', imageObjUrl);
 
-      // if (!uploadedFileData) {
-      //   console.log('파일 업로드 실패');
-      //   return;
-      // }
+      if (!uploadedFileData) {
+        console.log('파일 업로드 실패');
+        return;
+      }
 
-      // const {
-      //   fileUrl,
-      // } = uploadedFileData;
+      const {
+        fileUrl,
+      } = uploadedFileData;
 
       // // 2. `<a />` tag outerHTML 생성
       const anchorTagOuterHTML = createImgOuterHTML({
-        // FIXME: API 연동하기
-        // src: fileUrl,
-        src: '#',
+        src: fileUrl,
         alt: '이미지 설명',
       });
 
@@ -113,11 +107,11 @@ function _ImageCaptureConfirmModal() {
         anchorTagOuterHTML +
         latex.substring(cursorIndex);
 
+      // FIXME: (미사용 처리)
       // 4. LaTeX => MathML 변환
       // const response = await ApiManager.produceMathMLFromLatex({
       //     latex,
       // });
-
       // const mathML = response?.data?.mathml;
 
       setQuestionSetsValue_action({
@@ -139,8 +133,7 @@ function _ImageCaptureConfirmModal() {
     imageObjUrl, 
     targetElementState, 
     resultState,
-    // FIXME: API 연동하기
-    // uploadFile, 
+    uploadFile, 
     setApiLoadingUiState_action,
     setQuestionSetsValue_action,
     resetApiLoadingUiState_action,

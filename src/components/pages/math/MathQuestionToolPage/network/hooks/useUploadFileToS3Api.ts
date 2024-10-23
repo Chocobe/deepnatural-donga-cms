@@ -18,9 +18,8 @@ const useUploadFileToS3Api = () => {
   ) => {
     return ApiManager
       .mathOCR
-      .uploadFileToS3({
-        payload: params.payload
-      });
+      .uploadFileToS3
+      .callWithNoticeMessageGroup(params);
   }, []);
 
   return {

@@ -24,7 +24,7 @@ import {
 } from '../MathFormulaAccordions/mathFormulaAccordions.type';
 import { 
   TSearchApiPagination,
-} from '../../../network/network.type/searchApi.type';
+} from '@/apis/mathTool/mathToolApi.type';
 // style
 import './MetadataSearchModal.css';
 
@@ -119,20 +119,22 @@ function _MetadataSearchModal<T extends TSummarizedMetadata>(props: TMetadataSea
         </DialogHeader>
 
         <div className="MetadataSearchModal-body">
-          {variant === 'textbook'
-            ? (
-              <TextbookList<T>
-                searchValue={searchValue}
-                summarizedMetadataList={summarizedMetadataList}
-                textbookItemTemplate={textbookItemTemplate}
-                onClickItem={onClickMetadata} />
-            ): (
-              <MetadataList<T>
-                searchValue={searchValue}
-                summarizedMetadataList={summarizedMetadataList}
-                onClickItem={onClickMetadata} />
-            )
-          }
+          <div className="listWrapper">
+            {variant === 'textbook'
+              ? (
+                <TextbookList<T>
+                  searchValue={searchValue}
+                  summarizedMetadataList={summarizedMetadataList}
+                  textbookItemTemplate={textbookItemTemplate}
+                  onClickItem={onClickMetadata} />
+              ): (
+                <MetadataList<T>
+                  searchValue={searchValue}
+                  summarizedMetadataList={summarizedMetadataList}
+                  onClickItem={onClickMetadata} />
+              )
+            }
+          </div>
 
           {!!summarizedMetadataList?.length && (
             <Pagination 

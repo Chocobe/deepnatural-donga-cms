@@ -510,6 +510,9 @@ export type TMathQuestionModel = {
     /** 지식개념1 */
     kc1: TMathKnowledgeConceptCommonModel | null;
   };
+
+  /** aidt_info */
+  aidt_info: string;
 };
 
 /** 수학 문항 히스토리 */

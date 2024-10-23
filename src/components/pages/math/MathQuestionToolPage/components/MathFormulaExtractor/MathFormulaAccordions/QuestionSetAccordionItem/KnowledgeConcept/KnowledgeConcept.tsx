@@ -9,6 +9,8 @@ import {
 import useMathQuestionToolPageStore from '@/store/mathStores/mathQuestionToolPageStore/mathQuestionToolPageStore';
 // hook
 import useResetMetadataConfirmModal from '../../../MathFormulaExtractorHeader/hooks/useResetMetadataConfirmModal';
+// API
+import ApiManager from '@/apis/ApiManager';
 // ui
 import SearchInput from '../../../SearchInput/SearchInput';
 import MetadataSearchModal from '../../../MetadataSearchModal/MetadataSearchModal';
@@ -22,15 +24,10 @@ import {
   knowledgeConceptMetadataTemplate,
 } from '../../mathFormulaAccordions.type';
 import { 
-  TRetrieveKnowledgeConceptListApiPayload,
   TSearchApiPagination,
-} from '@/components/pages/math/MathQuestionToolPage/network/network.type/searchApi.type';
-// API
-// FIXME: API 연동하기
-// import ApiManager from '@/network/ApiManager';
-import apiFeedbackMessageFactory, {
-  createErrorMessage,
-} from '@/components/pages/math/MathQuestionToolPage/network/apiFeedbackMessageFactory';
+  TRetrieveMathToolKnowledgeConceptsApiRequestParams,
+  TRetrieveMathToolKnowledgeConceptsApiResponse,
+} from '@/apis/mathTool/mathToolApi.type';
 // style
 import { 
   cn,
@@ -63,9 +60,6 @@ function _KnowledgeConcept(props: TKnowledgeConceptProps) {
   //
   const kc2State = useMathQuestionToolPageStore(state => state.ui.state.result.questionSets[indexOfResult].kc2_id);
 
-  const openErrorModal_action = useMathQuestionToolPageStore(state => state.ui.action.openErrorModal_action);
-  const resetApiLoadingUiState_action = useMathQuestionToolPageStore(state => state.ui.action.resetApiLoadingUiState_action);
-  const setApiLoadingUiState_action = useMathQuestionToolPageStore(state => state.ui.action.setApiLoadingUiState_action);
   const setQuestionSetsValue_action = useMathQuestionToolPageStore(state => state.ui.action.setQuestionSetsValue_action);
 
   //
@@ -93,78 +87,40 @@ function _KnowledgeConcept(props: TKnowledgeConceptProps) {
     setIsOpenSearchModal(true);
   }, []);
 
-  const retrieveKnowledgeConceptList = useCallback(async (
+  const retrieveKnowledgeConcepts = useCallback(async (
     searchValue: string,
     page = 1
   ) => {
-    try {
-      setApiLoadingUiState_action({
-        isLoading: true,
-        message: apiFeedbackMessageFactory
-          .searchApi
-          .retrieveKnowledgeConceptListRequest(),
-      });
+    const params: TRetrieveMathToolKnowledgeConceptsApiRequestParams = {
+      searchParams: {
+        title: searchValue,
+        page,
+      },
+    };
 
-      const payload: TRetrieveKnowledgeConceptListApiPayload = {
-        pathParams: {
-          title: searchValue,
-          page,
-        },
-      };
+    const response = await ApiManager
+      .mathTool
+      .retrieveMathToolKnowledgeConceptsApi
+      .callWithNoticeMessageGroup(params);
 
-      // FIXME: API 연동 후, 적용하기
-      // const response = await ApiManager.retrieveKnowledgeConceptList(payload);
-      console.log('retrieveKnowledgeConceptList() - payload: ', payload);
-
-      // FIXME: API 연동 후, 적용하기
-      // return response?.data;
-      return {
-        results: [],
-      };
-    } catch(error: any) {
-      const message = createErrorMessage({
-        error,
-        createDefaultErrorMessage: apiFeedbackMessageFactory
-          .searchApi
-          .retrieveKnowledgeConceptListFailure,
-      });
-
-      openErrorModal_action({
-        buttonActionType: 'close',
-        message,
-      });
-
-      return null;
-    } finally {
-      resetApiLoadingUiState_action();
-    }
-  }, [
-    setApiLoadingUiState_action,
-    resetApiLoadingUiState_action,
-    openErrorModal_action,
-  ]);
+    return response?.data ?? {} as TRetrieveMathToolKnowledgeConceptsApiResponse;
+  }, []);
 
   const onSearch = useCallback(async (
     value: string, 
     page?: number
   ) => {
-    console.group('onSearch()');
-    console.log('value: ', value);
-    console.log('page: ', page);
-    console.groupEnd();
-
     setSummarizedMetadataList(undefined);
 
-    // FIXME: API 연동 후, `any` 타입 삭제하기
-    const data: any = await retrieveKnowledgeConceptList(searchValue, page);
+    const data = await retrieveKnowledgeConcepts(searchValue, page);
 
     if (!data) {
       return;
     }
 
     const {
-      currentPage,
-      lastPage,
+      current_page,
+      last_page,
       results,
     } = data;
 
@@ -185,12 +141,12 @@ function _KnowledgeConcept(props: TKnowledgeConceptProps) {
 
     setSummarizedMetadataList(summarizedMetadataList);
     setPagination({
-      currentPage,
-      lastPage,
+      current_page,
+      last_page,
     });
   }, [
     id, searchValue, summaryKeys,
-    retrieveKnowledgeConceptList, 
+    retrieveKnowledgeConcepts, 
   ]);
 
   const resetSummarizedMetadataList = useCallback(() => {
