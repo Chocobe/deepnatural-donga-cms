@@ -21,6 +21,10 @@ const mathToolApiUrlFactory = (() => {
     retrieveMathToolChapter3Path() {
       return `${BASE_PATH}/chapter3/`;
     },
+
+    retrieveMathToolKnowledgeConceptsPath() {
+      return `${BASE_PATH}/kc2/`;
+    },
   } as const;
 })();
 

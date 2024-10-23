@@ -202,12 +202,12 @@ export const textbookMetadataTemplate = {
       label: '학교급',
     },
     {
-      label: '학년',
       key: 'grade',
+      label: '학년',
     },
     {
-      label: '학기',
       key: 'term',
+      label: '학기',
     },
     {
       key: 'author',

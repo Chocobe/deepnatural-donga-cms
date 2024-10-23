@@ -5,6 +5,7 @@ import {
   TMathToolChapter1Model,
   TMathToolChapter2Model,
   TMathToolChapter3Model,
+  TMathToolKnowledgeConceptModel,
 } from '@/apis/mathTool/mathToolApi.type';
 import { 
   TSummarizedMetadata, 
@@ -17,9 +18,6 @@ import {
   chapter2MetadataTemplate, 
   chapter3MetadataTemplate, 
 } from '@/components/pages/math/MathQuestionToolPage/components/MathFormulaExtractor/MathFormulaAccordions/mathFormulaAccordions.type';
-import { 
-  TRetrieveKnowledgeConceptListApiResult,
-} from '@/components/pages/math/MathQuestionToolPage/network/network.type/searchApi.type';
 
 export type TSubmissionStatistic = {
   numOfSubmission: number;
@@ -45,12 +43,12 @@ export type TCaptureState = {
   imageObjUrl?: string;
 };
 
-export type TResultItemPropertyValue = number | string | boolean | TSummarizedMetadata<TRetrieveKnowledgeConceptListApiResult>;
+export type TResultItemPropertyValue = number | string | boolean | TSummarizedMetadata<TMathToolKnowledgeConceptModel>;
 
 export type TResultItem = {
   [id: string]: TResultItemPropertyValue;
 } & {
-  [knowledgeConceptMetadataTemplate.id]?: TSummarizedMetadata<TRetrieveKnowledgeConceptListApiResult>;
+  [knowledgeConceptMetadataTemplate.id]?: TSummarizedMetadata<TMathToolKnowledgeConceptModel>;
 };
 
 export type TTargetElementState = {

@@ -12,21 +12,6 @@ const createFailureMessage = (
 };
 
 const apiFeedbackMessageFactory = {
-  searchApi: {
-    //
-    // retrieve KnowledgeConceptList
-    //
-    retrieveKnowledgeConceptListRequest() {
-      return '잠시만 기다려 주세요.\n지식개념 검색 중입니다.';
-    },
-    retrieveKnowledgeConceptListFailure(status: string | number) {
-      return createFailureMessage(
-        '지식개념 검색 중 네트워크 에러가 발생하였습니다.\n인터넷이 원활한 곳에서 다시 시도해 주세요.',
-        status
-      );
-    },
-  },
-
   taskApi: {
     submitRequest() {
       return '잠시만 기다려주세요.\n제출 중입니다.';

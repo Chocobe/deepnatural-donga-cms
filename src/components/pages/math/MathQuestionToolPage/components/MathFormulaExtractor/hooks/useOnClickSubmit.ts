@@ -20,8 +20,8 @@ import {
   textbookMetadataTemplate,
 } from '../MathFormulaAccordions/mathFormulaAccordions.type';
 import { 
-  TRetrieveKnowledgeConceptListApiResult,
-} from '../../../network/network.type/searchApi.type';
+  TMathToolKnowledgeConceptModel,
+} from '@/apis/mathTool/mathToolApi.type';
 // api
 // FIXME: API 연동 후, 적용하기
 // import ApiManager from '../../../network/ApiManager';
@@ -219,7 +219,7 @@ const useOnClickSubmit = () => {
             break;
           }
           case 'kc2': {
-            value = (value as TSummarizedMetadata<TRetrieveKnowledgeConceptListApiResult>)
+            value = (value as TSummarizedMetadata<TMathToolKnowledgeConceptModel>)
               ?.metadata
               ?.id;
             break;

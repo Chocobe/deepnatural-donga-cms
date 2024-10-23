@@ -20,6 +20,9 @@ import {
 
   TRetrieveMathToolChapter3ApiRequestParams,
   TRetrieveMathToolChapter3ApiResponse,
+
+  TRetrieveMathToolKnowledgeConceptsApiRequestParams,
+  TRetrieveMathToolKnowledgeConceptsApiResponse,
 } from './mathToolApi.type';
 
 //
@@ -130,4 +133,26 @@ export const retrieveMathToolChapter3Api = createApiWithNoticeMessageGroup({
     .apis
     .mathTool
     .retrieveMathToolChapter3,
+});
+
+//
+// 수학 작업도구 지식개념 목록
+//
+export const retrieveMathToolKnowledgeConceptsApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathToolKnowledgeConceptsApiRequestParams) => {
+    const {
+      searchParams,
+    } = params;
+
+    return api.get<TRetrieveMathToolKnowledgeConceptsApiResponse>(
+      mathToolApiUrlFactory.retrieveMathToolKnowledgeConceptsPath(),
+      {
+        params: searchParams,
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .mathTool
+    .retrieveMathToolKnowledgeConcepts,
 });

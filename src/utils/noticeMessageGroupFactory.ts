@@ -106,6 +106,7 @@ const noticeMessageGroupFactory: {
       retrieveMathToolChapter1: TNoticeMessageGroup;
       retrieveMathToolChapter2: TNoticeMessageGroup;
       retrieveMathToolChapter3: TNoticeMessageGroup;
+      retrieveMathToolKnowledgeConcepts: TNoticeMessageGroup;
     }
   };
 
@@ -1016,6 +1017,19 @@ const noticeMessageGroupFactory: {
         }),
         errorMessage: () => ({
           ...createNetworkErrorMessage('소단원 검색 중 네트워크 에러가 발생하였습니다.\n인터넷이 원활한 곳에서 다시 시도해 주세요.'),
+        }),
+        successMessage: undefined,
+        successSonner: undefined,
+      },
+
+      // (GET) 수학 작업도구 지식개념 목록
+      retrieveMathToolKnowledgeConcepts: {
+        loadingMessage: () => ({
+          title: '',
+          message: '잠시만 기다려 주세요.\n지식개념 검색 중입니다.',
+        }),
+        errorMessage: () => ({
+          ...createNetworkErrorMessage('지식개념 검색 중 네트워크 에러가 발생하였습니다.\n인터넷이 원활한 곳에서 다시 시도해 주세요.'),
         }),
         successMessage: undefined,
         successSonner: undefined,

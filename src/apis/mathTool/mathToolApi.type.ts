@@ -117,3 +117,25 @@ export type TRetrieveMathToolChapter3ApiRequestParams = TApiRequestNonBodyParams
 }>;
 /** (GET) 수학 작업도구 소단원 Response */
 export type TRetrieveMathToolChapter3ApiResponse = TPaginationModel<TMathToolChapter3Model>;
+
+//
+// 수학 작업도구 지식개념
+//
+/** (GET) 수학 작업도구 지식개념 Model */
+export type TMathToolKnowledgeConceptModel = {
+  id: string;
+  title: string;
+  kc1: string;
+  achievement3: string;
+  achievement2: string;
+  achievement1: string;
+
+  comment: any;
+};
+/** (GET) 수학 작업도구 지식개념 RequestParams */
+export type TRetrieveMathToolKnowledgeConceptsApiRequestParams = TApiRequestNonBodyParams<void, {
+  title: string;
+  page?: number;
+}>;
+/** (GET) 수학 작업도구 지식개념 Response */
+export type TRetrieveMathToolKnowledgeConceptsApiResponse = TPaginationModel<TMathToolKnowledgeConceptModel>;
