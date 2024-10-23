@@ -333,4 +333,18 @@ export const mathQuestionPreviewDrawerContentTemplates = [
       };
     },
   ),
+
+  //
+  // AIDT INFO
+  //
+  {
+    label: 'AIDT INFO',
+    type: 'string',
+    getIsShow: () => {
+      return true;
+    },
+    getValue: (mathQuestion: TMathQuestionModel) => {
+      return mathQuestion.aidt_info;
+    },
+  },
 ];

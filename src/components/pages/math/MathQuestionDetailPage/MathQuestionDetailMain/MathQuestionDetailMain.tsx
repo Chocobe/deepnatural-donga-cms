@@ -11,6 +11,7 @@ import MathQuestionDataSection from '../mathQuestionDetailSections/MathQuestionD
 import MathQuestionSolutionSection from '../mathQuestionDetailSections/MathQuestionSolutionSection/MathQuestionSolutionSection';
 import MathQuestionAttributesSection from '../mathQuestionDetailSections/MathQuestionAttributesSection/MathQuestionAttributesSection';
 import MathQuestionChaptersSection from '../mathQuestionDetailSections/MathQuestionChaptersSection/MathQuestionChaptersSection';
+import MathQuestionAIDTSection from '../MathQuestionAIDTSection/MathQuestionAIDTSection';
 import MathQuestionStatusSection from '../mathQuestionDetailSections/MathQuestionStatusSection/MathQuestionStatusSection';
 // style
 import './MathQuestionDetailMain.css';
@@ -45,6 +46,9 @@ function _MathQuestionDetailMain() {
 
         {/* 단원 */}
         <MathQuestionChaptersSection />
+
+        {/* AIDT INFO */}
+        <MathQuestionAIDTSection />
       </div>
 
       <div className="MathQuestionDetailMain-section">
