@@ -18,10 +18,15 @@ import {
   TRetrieveUsersCountApiResponse,
 
   TPatchUserApiRequestParams,
+  TPatchUserApiResponse,
+
   TSignupApiResponse,
   TSignupApiRequestParams,
+
   TRandomPasswordApiResponse,
-  TPatchUserApiResponse,
+
+  TPatchChangePasswordApiRequestParams,
+  TPatchChangePasswordApiResponse,
 } from './authApi.type';
 // util
 import noticeMessageGroupFactory from '@/utils/noticeMessageGroupFactory';
@@ -75,6 +80,22 @@ export const randomPasswordApi = createApiWithNoticeMessageGroup({
     .apis
     .auth
     .randomPassword,
+});
+
+//
+// 비밀번호 변경
+//
+export const changePasswordApi = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TPatchChangePasswordApiRequestParams) => {
+    return api.patch<TPatchChangePasswordApiResponse>(
+      authApiUrlFactory.changePassword(),
+      params.payload
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .auth
+    .changePassword,
 });
 
 //

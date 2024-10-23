@@ -7,8 +7,8 @@ import {
   ChangeEvent,
   FormEvent,
 } from 'react';
-// store
-import useResultNoticeModalStore from '@/store/modalStores/resultNoticeModalStore/resultNoticeModalStore';
+// api
+import ApiManager from '@/apis/ApiManager';
 // ui
 import { 
   Dialog,
@@ -28,18 +28,14 @@ import {
 import { 
   Label,
 } from '@/components/shadcn-ui/ui/label';
+// type
+import { 
+  TPatchChangePasswordApiRequestParams,
+} from '@/apis/auth/authApi.type';
 // style
 import './ChangePasswordModal.css';
 
 function ChangePasswordModal() {
-  //
-  // resultNoticeModal store
-  //
-  const {
-    openSuccessNoticeModal,
-    closeResultNoticeModal,
-  } = useResultNoticeModalStore();
-
   //
   // state
   //
@@ -97,27 +93,35 @@ function ChangePasswordModal() {
     }));
   }, []);
 
-  const onClickSubmit = useCallback((e: FormEvent) => {
+  const onClickSubmit = useCallback(async (e: FormEvent) => {
     e.preventDefault();
+    e.stopPropagation();
 
-    console.group('onClickSubmit()');
-    console.log('formState: ', formState);
-    console.groupEnd();
+    const {
+      password,
+      newPassword,
+      confirmNewPassword,
+    } = formState;
+
+    const params: TPatchChangePasswordApiRequestParams = {
+      payload: {
+        old_password: password,
+        new_password: newPassword,
+        new_password2: confirmNewPassword,
+      },
+    };
+
+    const response = await ApiManager
+      .auth
+      .changePasswordApi
+      .callWithNoticeMessageGroup(params);
+
+    if (!response?.data) {
+      return;
+    }
 
     setOpen(false);
-
-    // FIXME: ApiManager 의 callWithNoticeMessageGroup() 으로 사용하기
-    // FIXME: 적용 후, 지우기
-    openSuccessNoticeModal({
-      title: '비밀번호 변경 완료',
-      message: '새로운 비밀번호로 변경이 완료되었습니다.',
-      firstButton: {
-        text: '확인',
-        variant: 'default',
-        onClick: closeResultNoticeModal,
-      },
-    });
-  }, [formState, openSuccessNoticeModal, closeResultNoticeModal]);
+  }, [formState]);
 
   //
   // effect
@@ -141,8 +145,6 @@ function ChangePasswordModal() {
       <DialogTrigger asChild>
         <Button
           className="ChangePasswordModalTrigger"
-          // FIXME: 비밀번호 변경 API 기능 추가되면, 지우기
-          disabled
           onClick={onClickOpen}>
           비밀번호 변경
         </Button>

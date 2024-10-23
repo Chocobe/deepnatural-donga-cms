@@ -31,6 +31,18 @@ export type TRandomPasswordApiResponse = {
 };
 
 //
+// 비밀번호 변경
+//
+export type TPatchChangePasswordApiRequestParams = TApiRequestBodyParams<void, void, {
+  old_password: string;
+  new_password: string;
+  new_password2: string;
+}>;
+export type TPatchChangePasswordApiResponse = {
+  message: string;
+};
+
+//
 // 회원가입
 //
 export type TSignupApiRequestParams = TApiRequestBodyParams<void, void, TSignupModel>;

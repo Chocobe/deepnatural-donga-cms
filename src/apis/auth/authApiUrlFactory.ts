@@ -17,8 +17,14 @@ const authApiUrlFactory = (() => {
       return `${BASE_PATH}logout/`;
     },
 
+    // 임시 비밀번호 생성
     randomPassword() {
       return `${BASE_PATH}random-password/`;
+    },
+
+    // 비밀번호 변경
+    changePassword() {
+      return `${BASE_PATH}change-password/`;
     },
 
     // 회원가입
