@@ -9,6 +9,18 @@ const mathToolApiUrlFactory = (() => {
     retrieveMathToolTextbooksPath() {
       return `${BASE_PATH}/textbook/`;
     },
+
+    retrieveMathToolChapter1Path() {
+      return `${BASE_PATH}/chapter1/`;
+    },
+
+    retrieveMathToolChapter2Path() {
+      return `${BASE_PATH}/chapter2/`;
+    },
+
+    retrieveMathToolChapter3Path() {
+      return `${BASE_PATH}/chapter3/`;
+    },
   } as const;
 })();
 

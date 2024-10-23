@@ -54,3 +54,66 @@ export type TRetrieveMathToolTextbooksApiRequestParams = TApiRequestNonBodyParam
 }>;
 /** (GET) 수학 작업도구 교과서 목록 Response */
 export type TRetrieveMathToolTextbooksApiResponse = TPaginationModel<any>;
+
+//
+// 수학 작업도구 대단원
+//
+/** 수학 작업도구 대단원 Model */
+export type TMathToolChapter1Model = {
+  id: string;
+  textbook: string;
+  no: string | number;
+  title: string;
+};
+/** (GET) 수학 작업도구 대단원 RequestParams */
+export type TRetrieveMathToolChapter1ApiRequestParams = TApiRequestNonBodyParams<void, {
+  title: string;
+  textbook_title: string;
+  page?: number;
+}>;
+/** (GET) 수학 작업도구 대단원 Response */
+export type TRetrieveMathToolChapter1ApiResponse = TPaginationModel<TMathToolChapter1Model>;
+
+//
+// 수학 작업도구 중단원
+//
+/** 수학 작업도구 중단원 Model */
+export type TMathToolChapter2Model = {
+  id: string;
+  textbook: string;
+  chapter1: string;
+  no: string | number;
+  title: string;
+};
+/** (GET) 수학 작업도구 중단원 RequestParams */
+export type TRetrieveMathToolChapter2ApiRequestParams = TApiRequestNonBodyParams<void, {
+  title: string;
+  textbook_title: string;
+  chapter1_title: string;
+  page?: number;
+}>;
+/** (GET) 수학 작업도구 중단원 Response */
+export type TRetrieveMathToolChapter2ApiResponse = TPaginationModel<TMathToolChapter2Model>;
+
+//
+// 수학 작업도구 소단원
+//
+/** 수학 작업도구 소단원 Model */
+export type TMathToolChapter3Model = {
+  id: string;
+  textbook: string;
+  chapter1: string;
+  chapter2: string;
+  no: string | number;
+  title: string;
+};
+/** (GET) 수학 작업도구 소단원 RequestParams */
+export type TRetrieveMathToolChapter3ApiRequestParams = TApiRequestNonBodyParams<void, {
+  title: string;
+  textbook_title: string;
+  chapter1_title: string;
+  chapter2_title: string;
+  page?: number;
+}>;
+/** (GET) 수학 작업도구 소단원 Response */
+export type TRetrieveMathToolChapter3ApiResponse = TPaginationModel<TMathToolChapter3Model>;

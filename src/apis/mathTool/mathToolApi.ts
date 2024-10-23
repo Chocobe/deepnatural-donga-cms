@@ -11,6 +11,15 @@ import {
 
   TRetrieveMathToolTextbooksApiRequestParams,
   TRetrieveMathToolTextbooksApiResponse,
+
+  TRetrieveMathToolChapter1ApiRequestParams,
+  TRetrieveMathToolChapter1ApiResponse,
+
+  TRetrieveMathToolChapter2ApiRequestParams,
+  TRetrieveMathToolChapter2ApiResponse,
+
+  TRetrieveMathToolChapter3ApiRequestParams,
+  TRetrieveMathToolChapter3ApiResponse,
 } from './mathToolApi.type';
 
 //
@@ -55,4 +64,70 @@ export const retrieveMathToolTextbooksApi = createApiWithNoticeMessageGroup({
     .apis
     .mathTool
     .retrieveMathToolTextbooks,
+});
+
+//
+// 수학 작업도구 대단원 목록
+//
+export const retrieveMathToolChapter1Api = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathToolChapter1ApiRequestParams) => {
+    const {
+      searchParams,
+    } = params;
+
+    return api.get<TRetrieveMathToolChapter1ApiResponse>(
+      mathToolApiUrlFactory.retrieveMathToolChapter1Path(),
+      {
+        params: searchParams,
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .mathTool
+    .retrieveMathToolChapter1,
+});
+
+//
+// 수학 작업도구 중단원 목록
+//
+export const retrieveMathToolChapter2Api = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathToolChapter2ApiRequestParams) => {
+    const {
+      searchParams,
+    } = params;
+
+    return api.get<TRetrieveMathToolChapter2ApiResponse>(
+      mathToolApiUrlFactory.retrieveMathToolChapter2Path(),
+      {
+        params: searchParams,
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .mathTool
+    .retrieveMathToolChapter2,
+});
+
+//
+// 수학 작업도구 소단원 목록
+//
+export const retrieveMathToolChapter3Api = createApiWithNoticeMessageGroup({
+  apiFunction: (params: TRetrieveMathToolChapter3ApiRequestParams) => {
+    const {
+      searchParams,
+    } = params;
+
+    return api.get<TRetrieveMathToolChapter3ApiResponse>(
+      mathToolApiUrlFactory.retrieveMathToolChapter3Path(),
+      {
+        params: searchParams,
+      }
+    );
+  },
+  noticeMessageGroup: noticeMessageGroupFactory
+    .apis
+    .mathTool
+    .retrieveMathToolChapter3,
 });

@@ -2,6 +2,9 @@
 import { 
   TMathToolSourceModel, 
   TMathToolTextbookModel,
+  TMathToolChapter1Model,
+  TMathToolChapter2Model,
+  TMathToolChapter3Model,
 } from '@/apis/mathTool/mathToolApi.type';
 import { 
   TSummarizedMetadata, 
@@ -16,10 +19,6 @@ import {
 } from '@/components/pages/math/MathQuestionToolPage/components/MathFormulaExtractor/MathFormulaAccordions/mathFormulaAccordions.type';
 import { 
   TRetrieveKnowledgeConceptListApiResult,
-
-  TRetrieveChapter1ApiResult,
-  TRetrieveChapter2ApiResult,
-  TRetrieveChapter3ApiResult,
 } from '@/components/pages/math/MathQuestionToolPage/network/network.type/searchApi.type';
 
 export type TSubmissionStatistic = {
@@ -66,9 +65,9 @@ export type TResult = {
     [sourceMetadataTemplate.id]?: TSummarizedMetadata<TMathToolSourceModel>;
 
     [textbookMetadataTemplate.id]?: TSummarizedMetadata<TMathToolTextbookModel>;
-    [chapter1MetadataTemplate.id]?: TSummarizedMetadata<TRetrieveChapter1ApiResult>;
-    [chapter2MetadataTemplate.id]?: TSummarizedMetadata<TRetrieveChapter2ApiResult>;
-    [chapter3MetadataTemplate.id]?: TSummarizedMetadata<TRetrieveChapter3ApiResult>;
+    [chapter1MetadataTemplate.id]?: TSummarizedMetadata<TMathToolChapter1Model>;
+    [chapter2MetadataTemplate.id]?: TSummarizedMetadata<TMathToolChapter2Model>;
+    [chapter3MetadataTemplate.id]?: TSummarizedMetadata<TMathToolChapter3Model>;
   };
   questionSets: TResultItem[];
 };
