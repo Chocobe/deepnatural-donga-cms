@@ -156,7 +156,7 @@ function _MathQuestionTable() {
       id: 'kc1_title',
       header: 'KC1',
       cell: props => {
-        const kc1_title = props.row.original.kc2.kc1?.title ?? '';
+        const kc1_title = props.row.original.kc2?.kc1?.title ?? '';
 
         return (
           <TableEllipsisCell maxRows={2}>
@@ -169,7 +169,7 @@ function _MathQuestionTable() {
       id: 'kc2_title',
       header: 'KC2',
       cell: props => {
-        const kc2_title = props.row.original.kc2.title ?? '';
+        const kc2_title = props.row.original.kc2?.title ?? '';
 
         return (
           <TableEllipsisCell maxRows={2}>
