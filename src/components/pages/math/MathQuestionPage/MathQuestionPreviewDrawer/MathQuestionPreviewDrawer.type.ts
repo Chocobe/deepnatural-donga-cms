@@ -69,7 +69,7 @@ export const mathQuestionPreviewDrawerContentTemplates = [
       return true;
     },
     getValue: (mathQuestion: TMathQuestionModel) => {
-      return mathQuestion.kc2.kc1?.title ?? '';
+      return mathQuestion.kc2?.kc1?.title ?? '';
     },
   },
   {
@@ -79,7 +79,7 @@ export const mathQuestionPreviewDrawerContentTemplates = [
       return true;
     },
     getValue: (mathQuestion: TMathQuestionModel) => {
-      return mathQuestion.kc2.title;
+      return mathQuestion.kc2?.title ?? '';
     },
   },
 
